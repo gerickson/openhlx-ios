@@ -56,7 +56,7 @@ matrix without an intervening controller.
 
 First, the HLX is limited to no more than two active telnet-based
 network connections. This means in a consumer/residential or
-commercial/enterprise environment, no more than Open HLX mobile app
+commercial/enterprise environment, no more than two Open HLX mobile app
 users may be active at a time. Given the short background time out of
 the Open HLX mobile app on iOS, this may not be a practical day-to-day
 limitation, depending on the number of concurrent users for your
