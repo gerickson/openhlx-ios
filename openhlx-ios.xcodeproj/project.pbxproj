@@ -255,6 +255,20 @@
 			remoteGlobalIDString = 0B10170E22E0294800F0FBB2;
 			remoteInfo = telnet;
 		};
+		0BC825B22668090700CD1496 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0BBD821722B932E400554609 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0B565E6D23FB30C0001C71DB;
+			remoteInfo = "openhlx-common";
+		};
+		0BC825B42668090C00CD1496 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0BBD821722B932E400554609 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0B565E6D23FB30C0001C71DB;
+			remoteInfo = "openhlx-common";
+		};
 		0BD058AD22D9422C006BAAE6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0BBD821722B932E400554609 /* Project object */;
@@ -1361,6 +1375,7 @@
 				0B498280265AF29F00C735BB /* PBXTargetDependency */,
 				0B49827E265AF29A00C735BB /* PBXTargetDependency */,
 				0BD058B022D94231006BAAE6 /* PBXTargetDependency */,
+				0BC825B52668090C00CD1496 /* PBXTargetDependency */,
 				0BD058B222D94231006BAAE6 /* PBXTargetDependency */,
 				0BD058B422D94231006BAAE6 /* PBXTargetDependency */,
 				0BD058AE22D9422C006BAAE6 /* PBXTargetDependency */,
@@ -1435,6 +1450,7 @@
 				0B498280265AF29F00C735BB /* PBXTargetDependency */,
 				0B49827E265AF29A00C735BB /* PBXTargetDependency */,
 				0BD058B022D94231006BAAE6 /* PBXTargetDependency */,
+				0BC825B32668090700CD1496 /* PBXTargetDependency */,
 				0BD058B222D94231006BAAE6 /* PBXTargetDependency */,
 				0BD058B422D94231006BAAE6 /* PBXTargetDependency */,
 				0BD058AE22D9422C006BAAE6 /* PBXTargetDependency */,
@@ -1848,6 +1864,16 @@
 			isa = PBXTargetDependency;
 			target = 0B10170E22E0294800F0FBB2 /* telnet */;
 			targetProxy = 0B49827F265AF29F00C735BB /* PBXContainerItemProxy */;
+		};
+		0BC825B32668090700CD1496 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0B565E6D23FB30C0001C71DB /* openhlx-common */;
+			targetProxy = 0BC825B22668090700CD1496 /* PBXContainerItemProxy */;
+		};
+		0BC825B52668090C00CD1496 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0B565E6D23FB30C0001C71DB /* openhlx-common */;
+			targetProxy = 0BC825B42668090C00CD1496 /* PBXContainerItemProxy */;
 		};
 		0BD058AE22D9422C006BAAE6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
