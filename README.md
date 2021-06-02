@@ -87,14 +87,20 @@ the need for an intervening controller.
 
 ### Dependencies
 
-In addition to depending on the C and C++ Standard Libraries and the
-C++ Standard Template Library (STL), Open HLX depends on:
+In addition to depending on C, C++, Objective-C, and Objective-C++
+languages; the C and C++ Standard Libraries; and the C++ Standard
+Template Library (STL), Open HLX depends on:
 
   * [CoreFoundation](https://developer.apple.com/documentation/corefoundation)
   * [Foundation](https://developer.apple.com/documentation/foundation)
   * [LogUtilities](https://github.com/Nuovations/LogUtilities)
   * [UIKit](https://developer.apple.com/documentation/uikit)
   * [openhlx](https://github.com/gerickson/openhlx)
+
+For [openhlx](https://github.com/gerickson/openhlx) in particular,
+Open HLX builds the package natively within Xcode, relying upon an
+expanded archive distribution or source code control clone of it from
+which to build it.
 
 # Interact
 
