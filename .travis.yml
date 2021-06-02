@@ -1,0 +1,46 @@
+#
+#    Copyright (c) 2021 Grant Erickson. All Rights Reserved.
+#
+#    Licensed under the Apache License, Version 2.0 (the "License");
+#    you may not use this file except in compliance with the License.
+#    You may obtain a copy of the License at
+#
+#        http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS,
+#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    See the License for the specific language governing permissions and
+#    limitations under the License.
+#
+
+#
+#    Description:
+#      This file is the Travis CI hosted, distributed continuous 
+#      integration configuration file for Open HLX.
+#
+
+language: cpp
+
+sudo: false
+os:
+  - osx
+osx_image: xcode12.3
+
+before_install:
+  - .travis/before_install.sh
+
+before_script:
+  - ./bootstrap
+
+jobs:
+  include:
+    - stage: "Build"
+      name: "Open HLX [Debug]"
+      script: xcodebuild -project openhlx-ios.xcodeproj -target "Open HLX" -configuration "Debug" OPENHLX_ROOT="${HOME}/openhlx"
+      name: "Open HLX Installer [Debug]"
+      script: xcodebuild -project openhlx-ios.xcodeproj -target "Open HLX Installer" -configuration "Debug" OPENHLX_ROOT="${HOME}/openhlx"
+      name: "Open HLX [Release]"
+      script: xcodebuild -project openhlx-ios.xcodeproj -target "Open HLX" -configuration "Release" OPENHLX_ROOT="${HOME}/openhlx"
+      name: "Open HLX Installer [Release]"
+      script: xcodebuild -project openhlx-ios.xcodeproj -target "Open HLX Installer" -configuration "Release" OPENHLX_ROOT="${HOME}/openhlx"
