@@ -120,11 +120,38 @@ and Open HLX shares both the _LogUtilities_ and _nlassert_ dependencies.
 However, all four of these dependencies are satisfied for both by the
 [openhlx](https://github.com/gerickson/openhlx) package itself.
 
+#### Setting OPENHLX_ROOT
+
 Satisfying the [openhlx](https://github.com/gerickson/openhlx) dependency and
 its sub-dependencies may be accomplished by setting the _OPENHLX_ROOT_ build
-setting in your Xcode workspace to the absolute path to an
-[openhlx](https://github.com/gerickson/openhlx) source distribution, either an
-expanded archive or a source code control clone.
+setting to the absolute path to a
+[openhlx](https://github.com/gerickson/openhlx) source distribution--either an
+expanded archive or a source code control clone. This may be done either
+in Xcode itself or on the command line with _xcodebuild_:
+
+##### Using Xcode
+
+To set OPENHLX_ROOT using Xcode itself:
+
+  1. In the leftmost project inspector, click on the "openhlx-ios"
+     project.
+  2. In the editing window that appears for "openhlx-ios.xcodeproj",
+     select the PROJECT > "openhlx-ios", just above the list of targets
+     in TARGETS.
+  3. Click on "Build Settings".
+  4. Search for or navigate to "OPENHLX_ROOT", which should be under
+     "User-Defined", likely at the bottom of the settings list.
+  5. Enter an absolute path value for OPENHLX_ROOT, such as
+     "/Users/gerickson/git/github.com/gerickson/openhlx".
+
+##### Using xcodebuild
+
+When building the project targets from the command line using _xcodebuild_,
+simply set _OPENHLX_ROOT_ with a key/value pair option such as:
+
+```
+% xcodebuild ... OPENHLX_ROOT="/Users/gerickson/git/github.com/gerickson/openhlx" ...
+```
 
 # FAQ
 
@@ -141,7 +168,7 @@ A: The core package on which Open HLX is based,
 Q: What features of HLX hardware are not supported?
 
 A: There is no support at this time for favorites, restrictions, or
-   breakaway switching.
+   audio/video breakaway switching.
 
 # Interact
 
