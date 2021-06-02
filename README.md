@@ -85,6 +85,11 @@ the need for an intervening controller.
 
 ## Building Open HLX
 
+Open HLX is an [Xcode](https://developer.apple.com/documentation/xcode)-based
+project and, as a result, those interested in building Open HLX from source
+are expected to have a practical knowledge of using
+[Xcode](https://developer.apple.com/documentation/xcode).
+
 ### Dependencies
 
 In addition to depending on C, C++, Objective-C, and Objective-C++
@@ -95,12 +100,48 @@ Template Library (STL), Open HLX depends on:
   * [Foundation](https://developer.apple.com/documentation/foundation)
   * [LogUtilities](https://github.com/Nuovations/LogUtilities)
   * [UIKit](https://developer.apple.com/documentation/uikit)
+  * [nlassert](https://github.com/nestlabs/nlassert)
   * [openhlx](https://github.com/gerickson/openhlx)
+    - [CFUtilities](https://github.com/Nuovations/CFUtilities)
+    - [libtelnet](https://github.com/seanmiddleditch/libtelnet)
 
 For [openhlx](https://github.com/gerickson/openhlx) in particular,
 Open HLX builds the package natively within Xcode, relying upon an
 expanded archive distribution or source code control clone of it from
-which to build it.
+which to build it. [openhlx](https://github.com/gerickson/openhlx)
+uniquely depends on:
+
+  * [CFUtilities](https://github.com/Nuovations/CFUtilities)
+  * [LogUtilities](https://github.com/Nuovations/LogUtilities)
+  * [libtelnet](https://github.com/seanmiddleditch/libtelnet)
+  * [nlassert](https://github.com/nestlabs/nlassert)
+
+and Open HLX shares both the _LogUtilities_ and _nlassert_ dependencies.
+However, all four of these dependencies are satisfied for both by the
+[openhlx](https://github.com/gerickson/openhlx) package itself.
+
+Satisfying the [openhlx](https://github.com/gerickson/openhlx) dependency and
+its sub-dependencies may be accomplished by setting the _OPENHLX_ROOT_ build
+setting in your Xcode workspace to the absolute path to an
+[openhlx](https://github.com/gerickson/openhlx) source distribution, either an
+expanded archive or a source code control clone.
+
+# FAQ
+
+Q: I do not have Audio Authority HLX hardware; however, I would like to
+   try out Open HLX. How can I do that?
+
+A: The core package on which Open HLX is based,
+   [openhlx](https://github.com/gerickson/openhlx), contains an executable,
+   _hlxsimd_, that fully emulates the protocol and virtual behavior of
+   real HLX hardware. An instance of _hlxsimd_ can be built, launched,
+   and Open HLX can be targeted against that using whatever IPv4 or IPv6
+   address _hlxsimd_ has been configured to bind against and listen on.
+
+Q: What features of HLX hardware are not supported?
+
+A: There is no support at this time for favorites, restrictions, or
+   breakaway switching.
 
 # Interact
 
