@@ -16,16 +16,17 @@ With that in mind, Open HLX provides the following iOS apps:
 
   <dl>
       <dt><strong>Open HLX</strong></dt>
-      <dd>A set of adjunct utility interfaces and objects for working
-          with the other Open HLX libraries.</dd>
+      <dd>A user-centric app, with the ability to change the volume
+          level, volume mute state, and source (input) for any group
+          or zone.</dd>
       <dt><strong>Open HLX Installer</strong></dt>
-      <dd>An app, with all of the features of _Open HLX_, that adds
-          additional installer-centric functionality such as modifying
-	  zone stereophonic channel balance and zone equalizer sound
-	  modes and sound mode settings including: zone equalizer band
-	  levels, zone equalizer presets, zone tone bass and treble
-	  levels, and zone high- and lowpass crossover filter
-	  frequencies.</dd>
+      <dd>An installer-centric app, with all of the features of
+          <em>Open HLX</em>, that adds additional installer-centric
+          functionality such as modifying zone stereophonic channel
+          balance and zone equalizer sound modes and sound mode
+          settings including: zone equalizer band levels, zone
+          equalizer presets, zone tone bass and treble levels, and
+          zone high- and lowpass crossover filter frequencies.</dd>
   </dl>
 
 ## Background
