@@ -1,3 +1,7 @@
+[![Build Status][openhlx-ios-travis-svg]][openhlx-ios-travis]
+[OpenHLX-ios-travis]: https://travis-ci.com/gerickson/openhlx-ios
+[OpenHLX-ios-travis-svg]: https://travis-ci.com/gerickson/openhlx-ios.svg?branch=main
+
 Open HLX
 ========
 
