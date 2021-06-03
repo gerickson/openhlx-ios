@@ -39,16 +39,17 @@ jobs:
     - name: Install Dependencies
       run: |
         HOMEBREW_NO_AUTO_UPDATE=1 brew install autoconf automake libtool boost
+    - name: Checkout Dependencies
       uses: actions/checkout@v2
         with:
           repository: gerickson/openhlx
           ref: release/1.0
           path: openhlx
-
-#      - run: |
-#          cd ${GITHUB_WORKSPACE}/openhlx
-#          ./bootstrap-configure -C --with-boost=/usr/local
-#          make -C src/include
-#    - name: Build
-#      run: |
-#        xcodebuild -project openhlx-ios.xcodeproj -target "${{matrix.target}}" -configuration "${{matrix.configuration}}" OPENHLX_ROOT="${GITHUB_WORKSPACE}/openhlx"
+    - name: Bootstrap and Configure Checkout Dependencies
+      run: |
+        cd ${GITHUB_WORKSPACE}/openhlx
+        ./bootstrap-configure -C --with-boost=/usr/local
+        make -C src/include
+    - name: Build
+      run: |
+        xcodebuild -project openhlx-ios.xcodeproj -target "${{matrix.target}}" -configuration "${{matrix.configuration}}" OPENHLX_ROOT="${GITHUB_WORKSPACE}/openhlx"
