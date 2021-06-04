@@ -50,7 +50,9 @@ jobs:
         export PATH="$(brew --prefix m4)/bin:${PATH}"
         cd "${GITHUB_WORKSPACE}/openhlx"
         ./bootstrap-configure -C --with-boost=/usr/local
+    - name: Build Checkout Dependencies
+      run: |
         make -C src/include
     - name: Build
       run: |
-        xcodebuild -project openhlx-ios.xcodeproj -target "${{matrix.target}}" -configuration "${{matrix.configuration}}" OPENHLX_ROOT="${GITHUB_WORKSPACE}/openhlx"
+        xcodebuild -project openhlx-ios.xcodeproj -target "${{matrix.target}}" -configuration "${{matrix.configuration}}" CODE_SIGN_IDENTITY="iPhone Developer" OPENHLX_ROOT="${GITHUB_WORKSPACE}/openhlx"
