@@ -30,10 +30,10 @@
 
 #import <UIKit/UIKit.h>
 
-#include <OpenHLX/Client/HLXController.hpp>
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationController.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 
-#import "HLXClientControllerPointer.hpp"
+#import "ApplicationControllerPointer.hpp"
 
 
 namespace HLX
@@ -58,7 +58,7 @@ class ZoneModel;
 
 @interface EqualizerBandsDetailTableViewCell : UITableViewCell
 {
-    MutableHLXClientControllerPointer               mHLXClientController;
+    MutableApplicationControllerPointer               mApplicationController;
     bool                                            mIsPreset;
     union
 	{
@@ -97,7 +97,7 @@ class ZoneModel;
 
 // MARK: Workers
 
-- (HLX::Common::Status) configureCellForIdentifier: (const HLX::Model::IdentifierModel::IdentifierType &)aEqualizerIdentifier andEqualizerBand: (const HLX::Model::EqualizerBandModel::IdentifierType &)aEqualizerBandIdentifier withController: (MutableHLXClientControllerPointer &)aHLXClientController asPreset: (bool)aIsPreset;
+- (HLX::Common::Status) configureCellForIdentifier: (const HLX::Model::IdentifierModel::IdentifierType &)aEqualizerIdentifier andEqualizerBand: (const HLX::Model::EqualizerBandModel::IdentifierType &)aEqualizerBandIdentifier withController: (MutableApplicationControllerPointer &)aApplicationController asPreset: (bool)aIsPreset;
 
 @end
 

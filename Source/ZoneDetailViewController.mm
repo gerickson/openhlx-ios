@@ -32,17 +32,17 @@
 
 #include <LogUtilities/LogUtilities.hpp>
 
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 #include <OpenHLX/Client/GroupsStateChangeNotifications.hpp>
 #include <OpenHLX/Client/ZonesStateChangeNotifications.hpp>
 #include <OpenHLX/Model/VolumeModel.hpp>
 #include <OpenHLX/Utilities/Assert.hpp>
 
+#import "ApplicationControllerDelegate.hpp"
 #import "CrossoverDetailViewController.h"
 #import "EqualizerBandsDetailViewController.h"
 #import "EqualizerPresetChooserViewController.h"
 #import "GroupsAndZonesTableViewCell.h"
-#import "HLXClientControllerDelegate.hpp"
 #import "SoundModeChooserViewController.h"
 #import "SourceChooserViewController.h"
 #import "ToneDetailViewController.h"
@@ -109,7 +109,7 @@ enum
 
     [super viewWillAppear: aAnimated];
 
-    lStatus = mHLXClientController->SetDelegate(mHLXClientControllerDelegate.get());
+    lStatus = mApplicationController->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
 #if OPENHLX_INSTALLER
@@ -185,8 +185,8 @@ done:
  */
 - (void) initCommon
 {
-    mHLXClientControllerDelegate.reset(new HLXClientControllerDelegate(self));
-    nlREQUIRE(mHLXClientControllerDelegate != nullptr, done);
+    mApplicationControllerDelegate.reset(new ApplicationControllerDelegate(self));
+    nlREQUIRE(mApplicationControllerDelegate != nullptr, done);
 
     mZone = nullptr;
 
@@ -204,10 +204,10 @@ done:
             Status                         lStatus;
 
 
-            [lSourceChooserViewController setHLXClientController: mHLXClientController
+            [lSourceChooserViewController setApplicationController: mApplicationController
                                                          forZone: mZone];
 
-            lStatus = mHLXClientController->SetDelegate(nullptr);
+            lStatus = mApplicationController->SetDelegate(nullptr);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
 #if OPENHLX_INSTALLER
@@ -217,10 +217,10 @@ done:
             Status                         lStatus;
 
 
-            [lSoundModeChooserViewController setHLXClientController: mHLXClientController
+            [lSoundModeChooserViewController setApplicationController: mApplicationController
                                                             forZone: mZone];
 
-            lStatus = mHLXClientController->SetDelegate(nullptr);
+            lStatus = mApplicationController->SetDelegate(nullptr);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
 #endif // OPENHLX_INSTALLER
@@ -234,10 +234,10 @@ done:
             Status                                lStatus;
 
 
-            [lEqualizerBandsDetailViewController setHLXClientController: mHLXClientController
+            [lEqualizerBandsDetailViewController setApplicationController: mApplicationController
                                                                 forZone: mZone];
 
-            lStatus = mHLXClientController->SetDelegate(nullptr);
+            lStatus = mApplicationController->SetDelegate(nullptr);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
         else if ([[aSegue identifier] isEqual: @"Equalizer Preset Chooser Segue"])
@@ -246,10 +246,10 @@ done:
             Status                                  lStatus;
 
 
-            [lEqualizerPresetChooserViewController setHLXClientController: mHLXClientController
+            [lEqualizerPresetChooserViewController setApplicationController: mApplicationController
                                                                   forZone: mZone];
 
-            lStatus = mHLXClientController->SetDelegate(nullptr);
+            lStatus = mApplicationController->SetDelegate(nullptr);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
         else if ([[aSegue identifier] isEqual: @"Tone Detail Segue"])
@@ -258,10 +258,10 @@ done:
             Status                         lStatus;
 
 
-            [lToneDetailViewController setHLXClientController: mHLXClientController
+            [lToneDetailViewController setApplicationController: mApplicationController
                                                       forZone: mZone];
 
-            lStatus = mHLXClientController->SetDelegate(nullptr);
+            lStatus = mApplicationController->SetDelegate(nullptr);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
         else if ([[aSegue identifier] isEqual: @"Highpass Crossover Detail Segue"])
@@ -270,11 +270,11 @@ done:
             Status                           lStatus;
 
 
-            [lCrossoverDetailViewController setHLXClientController: mHLXClientController
+            [lCrossoverDetailViewController setApplicationController: mApplicationController
                                                            forZone: mZone
                                                         asHighpass: true];
 
-            lStatus = mHLXClientController->SetDelegate(nullptr);
+            lStatus = mApplicationController->SetDelegate(nullptr);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
         else if ([[aSegue identifier] isEqual: @"Lowpass Crossover Detail Segue"])
@@ -283,11 +283,11 @@ done:
             Status                           lStatus;
 
 
-            [lCrossoverDetailViewController setHLXClientController: mHLXClientController
+            [lCrossoverDetailViewController setApplicationController: mApplicationController
                                                            forZone: mZone
                                                         asHighpass: false];
 
-            lStatus = mHLXClientController->SetDelegate(nullptr);
+            lStatus = mApplicationController->SetDelegate(nullptr);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
     }
@@ -318,7 +318,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneSetBalance(lIdentifier, BalanceModel::kBalanceCenter);
+        lStatus = mApplicationController->ZoneSetBalance(lIdentifier, BalanceModel::kBalanceCenter);
         nlREQUIRE(lStatus >= kStatus_Success, done);
     }
 
@@ -346,7 +346,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneIncreaseBalanceLeft(lIdentifier);
+        lStatus = mApplicationController->ZoneIncreaseBalanceLeft(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -375,7 +375,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneSetBalance(lIdentifier, lBalance);
+        lStatus = mApplicationController->ZoneSetBalance(lIdentifier, lBalance);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -403,7 +403,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneIncreaseBalanceRight(lIdentifier);
+        lStatus = mApplicationController->ZoneIncreaseBalanceRight(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -435,7 +435,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneSetMute(lIdentifier, lMute);
+        lStatus = mApplicationController->ZoneSetMute(lIdentifier, lMute);
         nlREQUIRE(lStatus >= kStatus_Success, done);
     }
 
@@ -461,7 +461,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneDecreaseVolume(lIdentifier);
+        lStatus = mApplicationController->ZoneDecreaseVolume(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -488,7 +488,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneSetVolume(lIdentifier, lVolume);
+        lStatus = mApplicationController->ZoneSetVolume(lIdentifier, lVolume);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -514,7 +514,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneIncreaseVolume(lIdentifier);
+        lStatus = mApplicationController->ZoneIncreaseVolume(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -706,7 +706,7 @@ done:
  *  @brief
  *    Set the client controller and zone for the view.
  *
- *  @param[in]  aHLXClientController  A reference to a shared pointer
+ *  @param[in]  aApplicationController  A reference to a shared pointer
  *                                    to a mutable HLX client
  *                                    controller instance to use for
  *                                    this view controller.
@@ -715,10 +715,10 @@ done:
  *                                    be observed or mutated.
  *
  */
-- (void) setHLXClientController: (MutableHLXClientControllerPointer &)aHLXClientController
+- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
                         forZone: (const HLX::Model::ZoneModel *)aZone
 {
-    mHLXClientController = aHLXClientController;
+    mApplicationController = aApplicationController;
     mZone                = aZone;
 }
 
@@ -872,7 +872,7 @@ done:
     lStatus = mZone->GetSource(lSourceIdentifier);
     nlREQUIRE_SUCCESS(lStatus, done);
 
-    lStatus = mHLXClientController->SourceGet(lSourceIdentifier, lSource);
+    lStatus = mApplicationController->SourceGet(lSourceIdentifier, lSource);
     nlREQUIRE_SUCCESS(lStatus, done);
 
     lStatus = lSource->GetName(lUTF8StringSourceName);
@@ -919,14 +919,14 @@ done:
 
 // MARK: Controller Delegations
 
-- (void) controllerDidDisconnect: (HLX::Client::Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
+- (void) controllerDidDisconnect: (HLX::Client::Application::Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
 {
     [self presentDidDisconnectAlert: aURLRef
                           withError: aError
                       andNamedSegue: @"DidDisconnect"];
 }
 
-- (void) controllerStateDidChange: (HLX::Client::Controller &)aController withNotification: (const HLX::Client::StateChange::NotificationBasis &)aStateChangeNotification
+- (void) controllerStateDidChange: (HLX::Client::Application::Controller &)aController withNotification: (const HLX::Client::StateChange::NotificationBasis &)aStateChangeNotification
 {
     const StateChange::Type  lType = aStateChangeNotification.GetType();
 

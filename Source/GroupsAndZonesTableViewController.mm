@@ -30,15 +30,15 @@
 
 #include <LogUtilities/LogUtilities.hpp>
 
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 #include <OpenHLX/Client/GroupsStateChangeNotifications.hpp>
 #include <OpenHLX/Client/ZonesStateChangeNotifications.hpp>
 #include <OpenHLX/Model/VolumeModel.hpp>
 #include <OpenHLX/Utilities/Assert.hpp>
 
+#import "ApplicationControllerDelegate.hpp"
 #import "GroupsAndZonesTableViewCell.h"
 #import "GroupDetailViewController.h"
-#import "HLXClientControllerDelegate.hpp"
 #import "UIViewController+HLXClientDidDisconnectDelegateDefaultImplementations.h"
 #import "UIViewController+TopViewController.h"
 #import "ZoneDetailViewController.h"
@@ -87,7 +87,7 @@ class Controller;
 
     mShowStyle = self.mGroupZoneSegmentedControl.selectedSegmentIndex;
 
-    lStatus = mHLXClientController->SetDelegate(mHLXClientControllerDelegate.get());
+    lStatus = mApplicationController->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
     [self.tableView reloadData];
@@ -154,8 +154,8 @@ done:
  */
 - (void) initCommon
 {
-    mHLXClientControllerDelegate.reset(new HLXClientControllerDelegate(self));
-    nlREQUIRE(mHLXClientControllerDelegate != nullptr, done);
+    mApplicationControllerDelegate.reset(new ApplicationControllerDelegate(self));
+    nlREQUIRE(mApplicationControllerDelegate != nullptr, done);
 
     mShowStyle = self.mGroupZoneSegmentedControl.selectedSegmentIndex;
 
@@ -175,18 +175,18 @@ done:
         {
             GroupDetailViewController *  lGroupDetailViewController = [aSegue destinationViewController];
 
-            [lGroupDetailViewController setHLXClientController: mHLXClientController
+            [lGroupDetailViewController setApplicationController: mApplicationController
                                         forGroup: [lGroupsAndZonesCell group]];
         }
         else
         {
             ZoneDetailViewController *   lZoneDetailViewController = [aSegue destinationViewController];
 
-            [lZoneDetailViewController setHLXClientController: mHLXClientController
+            [lZoneDetailViewController setApplicationController: mApplicationController
                                        forZone: [lGroupsAndZonesCell zone]];
         }
 
-        lStatus = mHLXClientController->SetDelegate(nullptr);
+        lStatus = mApplicationController->SetDelegate(nullptr);
         nlREQUIRE_SUCCESS(lStatus, done);
     }
 
@@ -222,15 +222,15 @@ done:
  *  @brief
  *    Set the client controller for the view.
  *
- *  @param[in]  aHLXClientController  A reference to a shared pointer
+ *  @param[in]  aApplicationController  A reference to a shared pointer
  *                                    to a mutable HLX client
  *                                    controller instance to use for
  *                                    this view controller.
  *
  */
-- (void) setHLXClientController: (MutableHLXClientControllerPointer &)aHLXClientController
+- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
 {
-    mHLXClientController = aHLXClientController;
+    mApplicationController = aApplicationController;
 }
 
 // MARK: Table View Data Source Delegation
@@ -244,21 +244,21 @@ done:
 
 - (NSInteger) tableView: (UITableView *)aTableView numberOfRowsInSection: (NSInteger)aSection
 {
-    size_t     lValue = 0;
-    NSInteger  lRetval = 0;
-    Status     lStatus;
+    IdentifierModel::IdentifierType  lValue = 0;
+    NSInteger                        lRetval = 0;
+    Status                           lStatus;
 
 
     nlREQUIRE(aSection == 0, done);
 
     if (mShowStyle == kShowStyleGroups)
     {
-        lStatus = mHLXClientController->GroupsGetMax(lValue);
+        lStatus = mApplicationController->GroupsGetMax(lValue);
         nlREQUIRE_SUCCESS(lStatus, done);
     }
     else if (mShowStyle == kShowStyleZones)
     {
-        lStatus = mHLXClientController->ZonesGetMax(lValue);
+        lStatus = mApplicationController->ZonesGetMax(lValue);
         nlREQUIRE_SUCCESS(lStatus, done);
     }
 
@@ -315,7 +315,7 @@ done:
         // the row by one to account for this.
 
         lStatus = [aCell configureCellForIdentifier: (lRow + 1)
-                                     withController: mHLXClientController
+                                     withController: mApplicationController
                                             asGroup: lAsGroup];
         nlVERIFY_SUCCESS(lStatus);
     }
@@ -326,14 +326,14 @@ done:
 
 // MARK: Controller Delegations
 
-- (void) controllerDidDisconnect: (Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
+- (void) controllerDidDisconnect: (HLX::Client::Application::Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
 {
     [self presentDidDisconnectAlert: aURLRef
                           withError: aError
                       andNamedSegue: @"DidDisconnect"];
 }
 
-- (void) controllerStateDidChange: (Controller &)aController withNotification: (const StateChange::NotificationBasis &)aStateChangeNotification
+- (void) controllerStateDidChange: (HLX::Client::Application::Controller &)aController withNotification: (const StateChange::NotificationBasis &)aStateChangeNotification
 {
     const StateChange::Type  lType = aStateChangeNotification.GetType();
     NSIndexPath *            lIndexPath;

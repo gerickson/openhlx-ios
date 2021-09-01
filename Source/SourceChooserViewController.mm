@@ -33,7 +33,7 @@
 
 #include <LogUtilities/LogUtilities.hpp>
 
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 #include <OpenHLX/Client/GroupsStateChangeNotifications.hpp>
 #include <OpenHLX/Client/SourcesStateChangeNotifications.hpp>
 #include <OpenHLX/Client/ZonesStateChangeNotifications.hpp>
@@ -160,7 +160,7 @@ indexPathsForIdentifiers(const IdentifiersCollection &aIdentifiers)
 
     [super viewWillAppear: aAnimated];
 
-    lStatus = mHLXClientController->SetDelegate(mHLXClientControllerDelegate.get());
+    lStatus = mApplicationController->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
 done:
@@ -228,8 +228,8 @@ done:
     Status  lStatus;
 
 
-    mHLXClientControllerDelegate.reset(new HLXClientControllerDelegate(self));
-    nlREQUIRE(mHLXClientControllerDelegate != nullptr, done);
+    mApplicationControllerDelegate.reset(new ApplicationControllerDelegate(self));
+    nlREQUIRE(mApplicationControllerDelegate != nullptr, done);
 
     lStatus = mCurrentSourceIdentifiers.Init();
     nlREQUIRE_SUCCESS(lStatus, done);
@@ -251,7 +251,7 @@ done:
  *  @brief
  *    Set the client controller and group for the view.
  *
- *  @param[in]  aHLXClientController  A reference to a shared pointer
+ *  @param[in]  aApplicationController  A reference to a shared pointer
  *                                    to a mutable HLX client
  *                                    controller instance to use for
  *                                    this view controller.
@@ -261,13 +261,13 @@ done:
  *                                    or mutated.
  *
  */
-- (void) setHLXClientController: (MutableHLXClientControllerPointer &)aHLXClientController
+- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
                        forGroup: (const HLX::Model::GroupModel *)aGroup
 {
     Status  lStatus;
 
 
-    mHLXClientController = aHLXClientController;
+    mApplicationController = aApplicationController;
     mUnion.mGroup        = aGroup;
     mIsGroup             = true;
 
@@ -282,7 +282,7 @@ done:
  *  @brief
  *    Set the client controller and zone for the view.
  *
- *  @param[in]  aHLXClientController  A reference to a shared pointer
+ *  @param[in]  aApplicationController  A reference to a shared pointer
  *                                    to a mutable HLX client
  *                                    controller instance to use for
  *                                    this view controller.
@@ -291,14 +291,14 @@ done:
  *                                    is to be observed or mutated.
  *
  */
-- (void) setHLXClientController: (MutableHLXClientControllerPointer &)aHLXClientController
+- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
                         forZone: (const HLX::Model::ZoneModel *)aZone
 {
     SourceModel::IdentifierType  lSourceIdentifier;
     Status                       lStatus;
 
 
-    mHLXClientController = aHLXClientController;
+    mApplicationController = aApplicationController;
     mUnion.mZone         = aZone;
     mIsGroup             = false;
 
@@ -323,13 +323,13 @@ done:
 
 - (NSInteger) tableView: (UITableView *)aTableView numberOfRowsInSection: (NSInteger)aSection
 {
-    size_t     lValue = 0;
-    NSInteger  lRetval = 0;
-    Status     lStatus;
+    SourcesModel::IdentifierType  lValue = 0;
+    NSInteger                     lRetval = 0;
+    Status                        lStatus;
 
     nlREQUIRE(aSection == 0, done);
 
-    lStatus = mHLXClientController->SourcesGetMax(lValue);
+    lStatus = mApplicationController->SourcesGetMax(lValue);
     nlREQUIRE_SUCCESS(lStatus, done);
 
     lRetval = lValue;
@@ -432,7 +432,7 @@ done:
         lStatus = mUnion.mGroup->GetIdentifier(lGroupIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->GroupSetSource(lGroupIdentifier, lSelectedSourceIdentifier);
+        lStatus = mApplicationController->GroupSetSource(lGroupIdentifier, lSelectedSourceIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
     }
     else
@@ -442,7 +442,7 @@ done:
         lStatus = mUnion.mZone->GetIdentifier(lZoneIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneSetSource(lZoneIdentifier, lSelectedSourceIdentifier);
+        lStatus = mApplicationController->ZoneSetSource(lZoneIdentifier, lSelectedSourceIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
     }
 
@@ -460,7 +460,7 @@ done:
 
 
     lStatus = [aCell configureCellForIdentifier: aSourceIdentifier
-                                 withController: mHLXClientController
+                                 withController: mApplicationController
                                      isSelected: aIsSelected];
     nlREQUIRE_SUCCESS(lStatus, done);
 
@@ -604,14 +604,14 @@ done:
 
 // MARK: Controller Delegations
 
-- (void) controllerDidDisconnect: (Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
+- (void) controllerDidDisconnect: (HLX::Client::Application::Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
 {
     [self presentDidDisconnectAlert: aURLRef
                           withError: aError
                       andNamedSegue: @"DidDisconnect"];
 }
 
-- (void) controllerStateDidChange: (Controller &)aController withNotification: (const StateChange::NotificationBasis &)aStateChangeNotification
+- (void) controllerStateDidChange: (HLX::Client::Application::Controller &)aController withNotification: (const StateChange::NotificationBasis &)aStateChangeNotification
 {
     const StateChange::Type  lType = aStateChangeNotification.GetType();
 

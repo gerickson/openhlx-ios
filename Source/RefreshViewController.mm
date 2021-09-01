@@ -30,7 +30,7 @@
 
 #include <LogUtilities/LogUtilities.hpp>
 
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 #include <OpenHLX/Utilities/Assert.hpp>
 
 #import "GroupsAndZonesTableViewController.h"
@@ -206,7 +206,7 @@ class Controller;
             UINavigationController *             lNavigationController = [aSegue destinationViewController];
             GroupsAndZonesTableViewController *  lGroupsAndZonesTableViewController = static_cast<GroupsAndZonesTableViewController *>(lNavigationController.topViewController);
 
-            [lGroupsAndZonesTableViewController setHLXClientController: mHLXClientController];
+            [lGroupsAndZonesTableViewController setApplicationController: mApplicationController];
         }
         else if ([[aSegue identifier] isEqual: @"DidDisconnect"])
         {

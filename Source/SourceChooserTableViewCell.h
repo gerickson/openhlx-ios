@@ -30,10 +30,10 @@
 
 #import <UIKit/UIKit.h>
 
-#include <OpenHLX/Client/HLXController.hpp>
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationController.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 
-#import "HLXClientControllerPointer.hpp"
+#import "ApplicationControllerPointer.hpp"
 
 
 namespace HLX
@@ -61,7 +61,7 @@ class SourceModel;
      *  A shared pointer to the global HLX client controller instance.
      *
      */
-    MutableHLXClientControllerPointer  mHLXClientController;
+    MutableApplicationControllerPointer  mApplicationController;
 
     /**
      *  An immutable pointer to the source (input) data model for which
@@ -96,7 +96,7 @@ class SourceModel;
 // MARK: Workers
 
 - (HLX::Common::Status) configureCellForIdentifier: (const HLX::Model::SourceModel::IdentifierType &)aIdentifier
-                                    withController: (MutableHLXClientControllerPointer &)aHLXClientController
+                                    withController: (MutableApplicationControllerPointer &)aApplicationController
                                         isSelected: (const bool &)aIsSelected;
 
 @end

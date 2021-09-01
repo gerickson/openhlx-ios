@@ -33,7 +33,7 @@
 
 #include <LogUtilities/LogUtilities.hpp>
 
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 #include <OpenHLX/Utilities/Assert.hpp>
 
 #import "AppDelegate.h"
@@ -85,8 +85,8 @@ class Controller;
     self.mAppVariantLabel.hidden = NO;
 #endif
 
-    mHLXClientController = [lDelegate hlxClientController];
-    nlREQUIRE(mHLXClientController != nullptr, done);
+    mApplicationController = [lDelegate hlxClientController];
+    nlREQUIRE(mApplicationController != nullptr, done);
 
     // Set ourselves as the delegate for the network address or name
     // text field such that we can respond to a return / go keyboard
@@ -185,12 +185,12 @@ class Controller;
     // The disconnected check is essential since there are times when
     // this controller will temporarily be visible while connected.
 
-    if (((self.mNetworkAddressOrNameTextField.text != nullptr) && ([self.mNetworkAddressOrNameTextField.text length] > 0)) && !mHLXClientController->IsConnected())
+    if (((self.mNetworkAddressOrNameTextField.text != nullptr) && ([self.mNetworkAddressOrNameTextField.text length] > 0)) && !mApplicationController->IsConnected())
     {
         self.mConnectButton.enabled = YES;
     }
 
-    mHLXClientController->SetDelegate(mHLXClientControllerDelegate.get());
+    mApplicationController->SetDelegate(mApplicationControllerDelegate.get());
 
     return;
 }
@@ -253,8 +253,8 @@ class Controller;
  */
 - (void) initCommon
 {
-    mHLXClientControllerDelegate.reset(new HLXClientControllerDelegate(self));
-    nlREQUIRE(mHLXClientControllerDelegate != nullptr, done);
+    mApplicationControllerDelegate.reset(new ApplicationControllerDelegate(self));
+    nlREQUIRE(mApplicationControllerDelegate != nullptr, done);
 
     mAlertController = nullptr;
     mRefreshController = nullptr;
@@ -293,7 +293,7 @@ done:
             UINavigationController *             lNavigationController = [aSegue destinationViewController];
             GroupsAndZonesTableViewController *  lGroupsAndZonesTableViewController = static_cast<GroupsAndZonesTableViewController *>(lNavigationController.topViewController);
 
-            [lGroupsAndZonesTableViewController setHLXClientController: mHLXClientController];
+            [lGroupsAndZonesTableViewController setApplicationController: mApplicationController];
         }
     }
 
@@ -397,7 +397,7 @@ done:
         lNetworkAddressOrName = self.mNetworkAddressOrNameTextField.text;
         nlREQUIRE(lNetworkAddressOrName != nullptr, done);
 
-        lStatus = mHLXClientController->Connect([lNetworkAddressOrName UTF8String]);
+        lStatus = mApplicationController->Connect([lNetworkAddressOrName UTF8String]);
         nlREQUIRE_SUCCESS(lStatus, done);
     }
 
@@ -456,20 +456,20 @@ done:
  */
 - (void) onConnectCancelled: (UIAlertAction *)aAlertAction
 {
-    mHLXClientController->Disconnect();
+    mApplicationController->Disconnect();
 }
 
-- (void) controllerWillResolve: (HLX::Client::Controller &)aController withHost: (const char *)aHost
+- (void) controllerWillResolve: (HLX::Client::Application::Controller &)aController withHost: (const char *)aHost
 {
     Log::Info().Write("Will resolve \"%s\".\n", aHost);
 }
 
-- (void) controllerIsResolving: (HLX::Client::Controller &)aController withHost: (const char *)aHost
+- (void) controllerIsResolving: (HLX::Client::Application::Controller &)aController withHost: (const char *)aHost
 {
     Log::Info().Write("Is resolving \"%s\".\n", aHost);
 }
 
-- (void) controllerDidResolve: (HLX::Client::Controller &)aController withHost: (const char *)aHost andAddress: (const HLX::Common::IPAddress &)aIPAddress
+- (void) controllerDidResolve: (HLX::Client::Application::Controller &)aController withHost: (const char *)aHost andAddress: (const HLX::Common::IPAddress &)aIPAddress
 {
     char   lBuffer[INET6_ADDRSTRLEN];
     Status lStatus;
@@ -483,12 +483,12 @@ done:
     return;
 }
 
-- (void) controllerDidNotResolve: (HLX::Client::Controller &)aController withHost: (const char *)aHost andError: (const HLX::Common::Error &)aError
+- (void) controllerDidNotResolve: (HLX::Client::Application::Controller &)aController withHost: (const char *)aHost andError: (const HLX::Common::Error &)aError
 {
     Log::Error().Write("Did not resolve \"%s\": %d (%s).\n", aHost, aError, strerror(-aError));
 }
 
-- (void) controllerWillConnect: (HLX::Client::Controller &)aController withURL: (NSURL *)aURLRef andTimeout: (const HLX::Common::Timeout &)aTimeout
+- (void) controllerWillConnect: (HLX::Client::Application::Controller &)aController withURL: (NSURL *)aURLRef andTimeout: (const HLX::Common::Timeout &)aTimeout
 {
     UIAlertController *lAlertController;
     UIAlertAction     *lCancelAction;
@@ -523,14 +523,14 @@ done:
     return;
 }
 
-- (void) controllerIsConnecting: (HLX::Client::Controller &)aController withURL: (NSURL *)aURLRef andTimeout: (const HLX::Common::Timeout &)aTimeout
+- (void) controllerIsConnecting: (HLX::Client::Application::Controller &)aController withURL: (NSURL *)aURLRef andTimeout: (const HLX::Common::Timeout &)aTimeout
 {
     Log::Info().Write("Connecting to %s with %u ms timeout.\n",
                       [[aURLRef absoluteString] UTF8String],
                       aTimeout.GetMilliseconds());
 }
 
-- (void) controllerDidConnect: (HLX::Client::Controller &)aController withURL: (NSURL *)aURLRef
+- (void) controllerDidConnect: (HLX::Client::Application::Controller &)aController withURL: (NSURL *)aURLRef
 {
     NSDate *                    lDateNow = [NSDate date];
     ConnectHistoryController *  lSharedConnectHistoryController;
@@ -616,7 +616,7 @@ done:
     }];
 }
 
-- (void) controllerDidNotConnect: (HLX::Client::Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
+- (void) controllerDidNotConnect: (HLX::Client::Application::Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
 {
     NSString *    lDescription;
 
@@ -647,7 +647,7 @@ done:
     }];
 }
 
-- (void) controllerWillRefresh: (HLX::Client::Controller &)aController
+- (void) controllerWillRefresh: (HLX::Client::Application::ControllerBasis &)aController
 {
     DeclareLogIndentWithValue(lLogIndent, 0);
     DeclareLogLevelWithValue(lLogLevel, 1);
@@ -657,7 +657,7 @@ done:
              "Waiting for client data...\n");
 }
 
-- (void) controllerIsRefreshing: (HLX::Client::Controller &)aController withProgress: (const uint8_t &)aPercentComplete
+- (void) controllerIsRefreshing: (HLX::Client::Application::ControllerBasis &)aController withProgress: (const uint8_t &)aPercentComplete
 {
     DeclareLogIndentWithValue(lLogIndent, 0);
     DeclareLogLevelWithValue(lLogLevel, 1);
@@ -670,7 +670,7 @@ done:
     [mRefreshController updateRefreshProgress: lPercentComplete];
 }
 
-- (void) controllerDidRefresh: (HLX::Client::Controller &)aController
+- (void) controllerDidRefresh: (HLX::Client::Application::ControllerBasis &)aController
 {
     DeclareLogIndentWithValue(lLogIndent, 0);
     DeclareLogLevelWithValue(lLogLevel, 1);
@@ -696,12 +696,12 @@ done:
     }];
 }
 
-- (void) controllerWillDisconnect: (HLX::Client::Controller &)aController withURL: (NSURL *)aURLRef
+- (void) controllerWillDisconnect: (HLX::Client::Application::Controller &)aController withURL: (NSURL *)aURLRef
 {
     Log::Info().Write("Will disconnect from %s.\n", [[aURLRef absoluteString] UTF8String]);
 }
 
-- (void) controllerDidDisconnect: (HLX::Client::Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
+- (void) controllerDidDisconnect: (HLX::Client::Application::Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
 {
     if (self->mRefreshController != nullptr)
     {
@@ -736,7 +736,7 @@ done:
 
     [self->mRefreshController startRefreshActivity];
 
-    lStatus = self->mHLXClientController->Refresh();
+    lStatus = self->mApplicationController->Refresh();
     nlREQUIRE_SUCCESS(lStatus, done);
 
  done:
@@ -749,7 +749,7 @@ done:
 
     [aController stopRefreshActivity];
 
-    mHLXClientController->Disconnect();
+    mApplicationController->Disconnect();
 }
 
 // MARK: Workers

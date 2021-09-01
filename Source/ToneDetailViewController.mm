@@ -29,7 +29,7 @@
 
 #include <LogUtilities/LogUtilities.hpp>
 
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 #include <OpenHLX/Client/ZonesStateChangeNotifications.hpp>
 #include <OpenHLX/Model/ToneModel.hpp>
 #include <OpenHLX/Utilities/Assert.hpp>
@@ -87,7 +87,7 @@ class Controller;
 
     [super viewWillAppear: aAnimated];
 
-    lStatus = mHLXClientController->SetDelegate(mHLXClientControllerDelegate.get());
+    lStatus = mApplicationController->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
     [self refreshZoneTone];
@@ -155,8 +155,8 @@ done:
  */
 - (void) initCommon
 {
-    mHLXClientControllerDelegate.reset(new HLXClientControllerDelegate(self));
-    nlREQUIRE(mHLXClientControllerDelegate != nullptr, done);
+    mApplicationControllerDelegate.reset(new ApplicationControllerDelegate(self));
+    nlREQUIRE(mApplicationControllerDelegate != nullptr, done);
 
     mZone = nullptr;
 
@@ -189,7 +189,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneSetBass(lIdentifier, ToneModel::kLevelFlat);
+        lStatus = mApplicationController->ZoneSetBass(lIdentifier, ToneModel::kLevelFlat);
         nlREQUIRE(lStatus >= kStatus_Success, done);
     }
 
@@ -215,7 +215,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneDecreaseBass(lIdentifier);
+        lStatus = mApplicationController->ZoneDecreaseBass(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -242,7 +242,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneSetBass(lIdentifier, lBass);
+        lStatus = mApplicationController->ZoneSetBass(lIdentifier, lBass);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -268,7 +268,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneIncreaseBass(lIdentifier);
+        lStatus = mApplicationController->ZoneIncreaseBass(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -294,7 +294,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneSetTreble(lIdentifier, ToneModel::kLevelFlat);
+        lStatus = mApplicationController->ZoneSetTreble(lIdentifier, ToneModel::kLevelFlat);
         nlREQUIRE(lStatus >= kStatus_Success, done);
     }
 
@@ -320,7 +320,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneDecreaseTreble(lIdentifier);
+        lStatus = mApplicationController->ZoneDecreaseTreble(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -347,7 +347,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneSetTreble(lIdentifier, lTreble);
+        lStatus = mApplicationController->ZoneSetTreble(lIdentifier, lTreble);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -373,7 +373,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->ZoneIncreaseTreble(lIdentifier);
+        lStatus = mApplicationController->ZoneIncreaseTreble(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -387,7 +387,7 @@ done:
  *  @brief
  *    Set the client controller and zone for the view.
  *
- *  @param[in]  aHLXClientController  A reference to a shared pointer
+ *  @param[in]  aApplicationController  A reference to a shared pointer
  *                                    to a mutable HLX client
  *                                    controller instance to use for
  *                                    this view controller.
@@ -397,10 +397,10 @@ done:
  *                                    or mutated.
  *
  */
-- (void) setHLXClientController: (MutableHLXClientControllerPointer &)aHLXClientController
+- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
                         forZone: (const HLX::Model::ZoneModel *)aZone
 {
-    mHLXClientController = aHLXClientController;
+    mApplicationController = aApplicationController;
     mZone                = aZone;
 }
 
@@ -579,14 +579,14 @@ done:
 
 // MARK: Controller Delegations
 
-- (void) controllerDidDisconnect: (Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
+- (void) controllerDidDisconnect: (HLX::Client::Application::Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
 {
     [self presentDidDisconnectAlert: aURLRef
                           withError: aError
                       andNamedSegue: @"DidDisconnect"];
 }
 
-- (void) controllerStateDidChange: (Controller &)aController withNotification: (const StateChange::NotificationBasis &)aStateChangeNotification
+- (void) controllerStateDidChange: (HLX::Client::Application::Controller &)aController withNotification: (const StateChange::NotificationBasis &)aStateChangeNotification
 {
     const StateChange::Type  lType = aStateChangeNotification.GetType();
 

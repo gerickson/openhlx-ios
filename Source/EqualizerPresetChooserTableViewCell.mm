@@ -135,7 +135,7 @@ using namespace Nuovations;
  *  @param[in]  aEqualizerPresetIdentifier  An immutable reference
  *                                          to the identifier for the
  *                                          equalizer preset.
- *  @param[in]  aHLXClientController        A reference to a shared
+ *  @param[in]  aApplicationController        A reference to a shared
  *                                          pointer to a mutable HLX
  *                                          client controller instance
  *                                          to use for this table view
@@ -153,7 +153,7 @@ using namespace Nuovations;
  *
  */
 - (Status) configureCellForEqualizerPresetIdentifier: (const EqualizerPresetModel::IdentifierType &)aEqualizerPresetIdentifier
-                                      withController: (MutableHLXClientControllerPointer &)aHLXClientController
+                                      withController: (MutableApplicationControllerPointer &)aApplicationController
 				          isSelected: (const bool &)aIsSelected
 {
     const char *                 lUTF8StringEqualizerPresetName;
@@ -161,11 +161,11 @@ using namespace Nuovations;
     Status                       lRetval = kStatus_Success;
 
 
-    mHLXClientController = aHLXClientController;
+    mApplicationController = aApplicationController;
 
     // Get the equalizer preset data model from the identifier.
 
-    lRetval = mHLXClientController->EqualizerPresetGet(aEqualizerPresetIdentifier, mEqualizerPresetModel);
+    lRetval = mApplicationController->EqualizerPresetGet(aEqualizerPresetIdentifier, mEqualizerPresetModel);
     nlREQUIRE_SUCCESS(lRetval, done);
 
     // Get the equalizer preset name from the model.

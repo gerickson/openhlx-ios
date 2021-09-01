@@ -30,7 +30,7 @@
 
 #include <LogUtilities/LogUtilities.hpp>
 
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 #include <OpenHLX/Client/EqualizerPresetsStateChangeNotifications.hpp>
 #include <OpenHLX/Client/ZonesStateChangeNotifications.hpp>
 #include <OpenHLX/Model/CrossoverModel.hpp>
@@ -106,7 +106,7 @@ class Controller;
 
     [super viewWillAppear: aAnimated];
 
-    lStatus = mHLXClientController->SetDelegate(mHLXClientControllerDelegate.get());
+    lStatus = mApplicationController->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
     [self refreshCrossoverFrequency];
@@ -173,8 +173,8 @@ done:
  */
 - (void) initCommon
 {
-    mHLXClientControllerDelegate.reset(new HLXClientControllerDelegate(self));
-    nlREQUIRE(mHLXClientControllerDelegate != nullptr, done);
+    mApplicationControllerDelegate.reset(new ApplicationControllerDelegate(self));
+    nlREQUIRE(mApplicationControllerDelegate != nullptr, done);
 
     mZone             = nullptr;
     mCurrentFrequency = 0;
@@ -252,7 +252,7 @@ done:
  *    Set the client controller, zone, and highpass filter indicator
  *    for the view.
  *
- *  @param[in]  aHLXClientController  A reference to a shared pointer
+ *  @param[in]  aApplicationController  A reference to a shared pointer
  *                                    to a mutable HLX client
  *                                    controller instance to use for
  *                                    this view controller.
@@ -268,11 +268,11 @@ done:
  *                                    filter.
  *
  */
-- (void) setHLXClientController: (MutableHLXClientControllerPointer &)aHLXClientController
+- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
                         forZone: (const HLX::Model::ZoneModel *)aZone
                      asHighpass: (const bool &)aIsHighpass
 {
-    mHLXClientController = aHLXClientController;
+    mApplicationController = aApplicationController;
     mZone                = aZone;
     mIsHighpass          = aIsHighpass;
 }
@@ -311,12 +311,12 @@ done:
 
     if (mIsHighpass)
     {
-        lStatus = mHLXClientController->ZoneSetHighpassCrossover(lIdentifier, aFrequency);
+        lStatus = mApplicationController->ZoneSetHighpassCrossover(lIdentifier, aFrequency);
         nlREQUIRE(lStatus >= kStatus_Success, done);
     }
     else
     {
-        lStatus = mHLXClientController->ZoneSetLowpassCrossover(lIdentifier, aFrequency);
+        lStatus = mApplicationController->ZoneSetLowpassCrossover(lIdentifier, aFrequency);
         nlREQUIRE(lStatus >= kStatus_Success, done);
     }
 
@@ -428,14 +428,14 @@ done:
 
 // MARK: Controller Delegations
 
-- (void) controllerDidDisconnect: (Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
+- (void) controllerDidDisconnect: (HLX::Client::Application::Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
 {
     [self presentDidDisconnectAlert: aURLRef
                           withError: aError
                       andNamedSegue: @"DidDisconnect"];
 }
 
-- (void) controllerStateDidChange: (Controller &)aController withNotification: (const StateChange::NotificationBasis &)aStateChangeNotification
+- (void) controllerStateDidChange: (HLX::Client::Application::Controller &)aController withNotification: (const StateChange::NotificationBasis &)aStateChangeNotification
 {
     const StateChange::Type  lType = aStateChangeNotification.GetType();
 

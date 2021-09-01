@@ -25,7 +25,7 @@
 
 #include <memory>
 
-#include <OpenHLX/Client/HLXController.hpp>
+#include <OpenHLX/Client/ApplicationController.hpp>
 
 /**
  *  Smart or shared pointer to a mutable @a HLX::Client::Controller
@@ -33,4 +33,4 @@
  *  no further owners of the underlying pointer.
  *
  */
-typedef std::shared_ptr<HLX::Client::Controller> MutableHLXClientControllerPointer;
+typedef std::shared_ptr<HLX::Client::Application::Controller> MutableApplicationControllerPointer;

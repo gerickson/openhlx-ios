@@ -29,7 +29,7 @@
 
 #include <LogUtilities/LogUtilities.hpp>
 
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 #include <OpenHLX/Client/EqualizerPresetsStateChangeNotifications.hpp>
 #include <OpenHLX/Client/ZonesStateChangeNotifications.hpp>
 #include <OpenHLX/Model/EqualizerBandsModel.hpp>
@@ -81,7 +81,7 @@ class Controller;
 
     [super viewWillAppear: aAnimated];
 
-    lStatus = mHLXClientController->SetDelegate(mHLXClientControllerDelegate.get());
+    lStatus = mApplicationController->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
     [self.tableView reloadData];
@@ -148,8 +148,8 @@ done:
  */
 - (void) initCommon
 {
-    mHLXClientControllerDelegate.reset(new HLXClientControllerDelegate(self));
-    nlREQUIRE(mHLXClientControllerDelegate != nullptr, done);
+    mApplicationControllerDelegate.reset(new ApplicationControllerDelegate(self));
+    nlREQUIRE(mApplicationControllerDelegate != nullptr, done);
 
  done:
     return;
@@ -168,7 +168,7 @@ done:
  *  @brief
  *    Set the client controller and zone for the view.
  *
- *  @param[in]  aHLXClientController  A reference to a shared pointer
+ *  @param[in]  aApplicationController  A reference to a shared pointer
  *                                    to a mutable HLX client
  *                                    controller instance to use for
  *                                    this view controller.
@@ -178,10 +178,10 @@ done:
  *                                    observed or mutated.
  *
  */
-- (void) setHLXClientController: (MutableHLXClientControllerPointer &)aHLXClientController
+- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
                         forZone: (const HLX::Model::ZoneModel *)aZone
 {
-    mHLXClientController = aHLXClientController;
+    mApplicationController = aApplicationController;
     mZone                = aZone;
 }
 
@@ -196,8 +196,8 @@ done:
 
 - (NSInteger) tableView: (UITableView *)aTableView numberOfRowsInSection: (NSInteger)aSection
 {
-    static const size_t  kValue = EqualizerBandsModel::kEqualizerBandsMax;
-    NSInteger            lRetval = 0;
+    static const auto  kValue = EqualizerBandsModel::kEqualizerBandsMax;
+    NSInteger          lRetval = 0;
 
 
     nlREQUIRE(aSection == 0, done);
@@ -249,7 +249,7 @@ done:
 
     lStatus = [aCell configureCellForIdentifier: lZoneIdentifier
                                andEqualizerBand: lEqualizerBandIdentifier
-                                 withController: mHLXClientController
+                                 withController: mApplicationController
                                        asPreset: false];
     nlREQUIRE_SUCCESS(lStatus, done);
 
@@ -308,14 +308,14 @@ done:
 
 // MARK: Controller Delegations
 
-- (void) controllerDidDisconnect: (Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
+- (void) controllerDidDisconnect: (HLX::Client::Application::Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
 {
     [self presentDidDisconnectAlert: aURLRef
                           withError: aError
                       andNamedSegue: @"DidDisconnect"];
 }
 
-- (void) controllerStateDidChange: (Controller &)aController withNotification: (const StateChange::NotificationBasis &)aStateChangeNotification
+- (void) controllerStateDidChange: (HLX::Client::Application::Controller &)aController withNotification: (const StateChange::NotificationBasis &)aStateChangeNotification
 {
     const StateChange::Type  lType = aStateChangeNotification.GetType();
 

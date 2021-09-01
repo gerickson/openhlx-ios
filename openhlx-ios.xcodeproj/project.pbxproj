@@ -37,11 +37,15 @@
 		0B238919258F1584004C6E4A /* EqualizerBandsDetailViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0B238915258F1584004C6E4A /* EqualizerBandsDetailViewController.mm */; };
 		0B2BFAD923BD4FAC00C66853 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B2BFAD823BD4FAC00C66853 /* Localizable.strings */; };
 		0B31652C26673DA400F05B95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B53136F2667336600E5FD74 /* Assets.xcassets */; };
-		0B32EE2C232640EF00065E18 /* HLXClientControllerDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0B32EE2A232640EE00065E18 /* HLXClientControllerDelegate.mm */; };
+		0B32EE2C232640EF00065E18 /* ApplicationControllerDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0B32EE2A232640EE00065E18 /* ApplicationControllerDelegate.mm */; };
 		0B3406452538F14C0081A359 /* libopenhlx-common.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B565E6E23FB30C0001C71DB /* libopenhlx-common.a */; };
 		0B388B7B22D91CAD00148E44 /* HistoryButton@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B388B7822D91CAC00148E44 /* HistoryButton@1x.png */; };
 		0B388B7C22D91CAD00148E44 /* HistoryButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B388B7922D91CAD00148E44 /* HistoryButton@2x.png */; };
 		0B388B7D22D91CAD00148E44 /* HistoryButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B388B7A22D91CAD00148E44 /* HistoryButton@3x.png */; };
+		0B39061326DF182700CDDCAC /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B39061226DF182700CDDCAC /* Timer.cpp */; };
+		0B39062826DF187E00CDDCAC /* ApplicationControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B39062626DF187E00CDDCAC /* ApplicationControllerBasis.cpp */; };
+		0B39063A26DF18B600CDDCAC /* ApplicationControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B39063726DF18B600CDDCAC /* ApplicationControllerBasis.cpp */; };
+		0B39065126DF192A00CDDCAC /* ConfigurationControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B39065026DF192A00CDDCAC /* ConfigurationControllerBasis.cpp */; };
 		0B40B63C250ED1A6009A65DA /* ConnectHistoryViewTableCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0B40B63B250ED1A6009A65DA /* ConnectHistoryViewTableCell.mm */; };
 		0B4981E22659C7EC00C735BB /* Parse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B4981E02659C7EC00C735BB /* Parse.cpp */; };
 		0B6238472565F42300E07B8D /* EqualizerPresetsControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B62383E2565F42200E07B8D /* EqualizerPresetsControllerBasis.cpp */; };
@@ -74,12 +78,26 @@
 		0B8D727E265B475C00047A56 /* libopenhlx-utilities.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B7186FE22D91D7E0096BAF1 /* libopenhlx-utilities.a */; };
 		0B8D727F265B475C00047A56 /* libLogUtilities.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BC145AA22CEA85E00EE32AC /* libLogUtilities.a */; };
 		0B8D7280265B475C00047A56 /* libCFUtilities.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B10172022E029DF00F0FBB2 /* libCFUtilities.a */; };
+		0B9155E126CC34D30048B995 /* ZonesControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B9155CF26CC34D20048B995 /* ZonesControllerBasis.cpp */; };
+		0B9155E226CC34D30048B995 /* NetworkControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B9155D526CC34D20048B995 /* NetworkControllerBasis.cpp */; };
+		0B9155E326CC34D30048B995 /* InfraredControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B9155D626CC34D20048B995 /* InfraredControllerBasis.cpp */; };
+		0B9155E426CC34D30048B995 /* GroupsControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B9155D726CC34D20048B995 /* GroupsControllerBasis.cpp */; };
+		0B9155E526CC34D30048B995 /* FavoritesControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B9155D826CC34D20048B995 /* FavoritesControllerBasis.cpp */; };
+		0B9155E626CC34D30048B995 /* EqualizerPresetsControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B9155D926CC34D20048B995 /* EqualizerPresetsControllerBasis.cpp */; };
+		0B9155E726CC34D30048B995 /* SourcesControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B9155DC26CC34D20048B995 /* SourcesControllerBasis.cpp */; };
+		0B9155E826CC34D30048B995 /* ConfigurationControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B9155DD26CC34D20048B995 /* ConfigurationControllerBasis.cpp */; };
+		0B9155E926CC34D30048B995 /* FrontPanelControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B9155E026CC34D30048B995 /* FrontPanelControllerBasis.cpp */; };
+		0B9155FE26CC35150048B995 /* Percentage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B9155FC26CC35150048B995 /* Percentage.cpp */; };
+		0B91560A26CC35450048B995 /* NetworkModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B91560926CC35450048B995 /* NetworkModel.cpp */; };
+		0B91561A26CC356B0048B995 /* InfraredControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B91561426CC356A0048B995 /* InfraredControllerBasis.cpp */; };
+		0B91561B26CC356B0048B995 /* FrontPanelControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B91561626CC356B0048B995 /* FrontPanelControllerBasis.cpp */; };
+		0B91561C26CC356B0048B995 /* NetworkControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B91561826CC356B0048B995 /* NetworkControllerBasis.cpp */; };
 		0BA032E32538EF61009C9ED9 /* ConnectionBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B565E7823FB31C3001C71DB /* ConnectionBuffer.cpp */; };
 		0BA032E82538EFFE009C9ED9 /* CommandBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA032E42538EFFE009C9ED9 /* CommandBuffer.cpp */; };
 		0BA032E92538EFFE009C9ED9 /* CommandRegularExpression.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA032E72538EFFE009C9ED9 /* CommandRegularExpression.cpp */; };
 		0BA0D74F26537B4400B62E07 /* ConnectionManagerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0D74B26537B4400B62E07 /* ConnectionManagerBasis.cpp */; };
 		0BA0D75026537B4400B62E07 /* IPAddress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0D74D26537B4400B62E07 /* IPAddress.cpp */; };
-		0BA5D3D522D921EB00E837EF /* HLXController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D36922D921E700E837EF /* HLXController.cpp */; };
+		0BA5D3D522D921EB00E837EF /* ApplicationController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D36922D921E700E837EF /* ApplicationController.cpp */; };
 		0BA5D3D722D921EB00E837EF /* GroupsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D36F22D921E700E837EF /* GroupsController.cpp */; };
 		0BA5D3D822D921EB00E837EF /* SourceStateChangeNotificationBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D37022D921E800E837EF /* SourceStateChangeNotificationBasis.cpp */; };
 		0BA5D3D922D921EB00E837EF /* CommandPropertyRequestBases.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D37222D921E800E837EF /* CommandPropertyRequestBases.cpp */; };
@@ -94,7 +112,7 @@
 		0BA5D3E422D921EB00E837EF /* SourcesController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D38A22D921E900E837EF /* SourcesController.cpp */; };
 		0BA5D3E522D921EB00E837EF /* EqualizerPresetsStateChangeNotifications.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D39122D921E900E837EF /* EqualizerPresetsStateChangeNotifications.cpp */; };
 		0BA5D3E622D921EB00E837EF /* EqualizerBandStateChangeNotificationBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D39322D921E900E837EF /* EqualizerBandStateChangeNotificationBasis.cpp */; };
-		0BA5D3E722D921EB00E837EF /* ControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D39422D921E900E837EF /* ControllerBasis.cpp */; };
+		0BA5D3E722D921EB00E837EF /* ObjectControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D39422D921E900E837EF /* ObjectControllerBasis.cpp */; };
 		0BA5D3E822D921EB00E837EF /* ZonesControllerCommands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D39622D921E900E837EF /* ZonesControllerCommands.cpp */; };
 		0BA5D3EA22D921EB00E837EF /* SourcesControllerCommands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D39A22D921E900E837EF /* SourcesControllerCommands.cpp */; };
 		0BA5D3EB22D921EB00E837EF /* ConfigurationStateChangeNotifications.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D39C22D921E900E837EF /* ConfigurationStateChangeNotifications.cpp */; };
@@ -195,7 +213,7 @@
 		0BE8CBBD265B2FD700A17FCC /* UIViewController+HLXClientDidDisconnectDelegateDefaultImplementations.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BCFF47D258B0EC500DFDAC0 /* UIViewController+HLXClientDidDisconnectDelegateDefaultImplementations.mm */; };
 		0BE8CBBE265B2FD700A17FCC /* SoundModeChooserTableViewCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0B0C72902585DBD500BAE465 /* SoundModeChooserTableViewCell.mm */; };
 		0BE8CBBF265B2FD700A17FCC /* UIViewController+TopViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BCFF47B258AE56000DFDAC0 /* UIViewController+TopViewController.mm */; };
-		0BE8CBC0265B2FD700A17FCC /* HLXClientControllerDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0B32EE2A232640EE00065E18 /* HLXClientControllerDelegate.mm */; };
+		0BE8CBC0265B2FD700A17FCC /* ApplicationControllerDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0B32EE2A232640EE00065E18 /* ApplicationControllerDelegate.mm */; };
 		0BE8CBC1265B2FD700A17FCC /* SoundModeChooserViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0B0C72942585DE4900BAE465 /* SoundModeChooserViewController.mm */; };
 		0BE8CBC2265B2FD700A17FCC /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BBD822322B932E400554609 /* AppDelegate.mm */; };
 		0BE8CBC3265B2FD700A17FCC /* ConnectHistoryViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BB62F2E22D91C000013E943 /* ConnectHistoryViewController.mm */; };
@@ -418,11 +436,28 @@
 		0B238914258F1584004C6E4A /* EqualizerPresetChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EqualizerPresetChooserViewController.h; path = Source/EqualizerPresetChooserViewController.h; sourceTree = SOURCE_ROOT; };
 		0B238915258F1584004C6E4A /* EqualizerBandsDetailViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = EqualizerBandsDetailViewController.mm; path = Source/EqualizerBandsDetailViewController.mm; sourceTree = SOURCE_ROOT; };
 		0B2BFAD823BD4FAC00C66853 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		0B32EE2A232640EE00065E18 /* HLXClientControllerDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HLXClientControllerDelegate.mm; path = Source/HLXClientControllerDelegate.mm; sourceTree = SOURCE_ROOT; };
-		0B32EE2B232640EE00065E18 /* HLXClientControllerDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = HLXClientControllerDelegate.hpp; path = Source/HLXClientControllerDelegate.hpp; sourceTree = SOURCE_ROOT; };
+		0B32EE2A232640EE00065E18 /* ApplicationControllerDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ApplicationControllerDelegate.mm; path = Source/ApplicationControllerDelegate.mm; sourceTree = SOURCE_ROOT; };
+		0B32EE2B232640EE00065E18 /* ApplicationControllerDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationControllerDelegate.hpp; path = Source/ApplicationControllerDelegate.hpp; sourceTree = SOURCE_ROOT; };
 		0B388B7822D91CAC00148E44 /* HistoryButton@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HistoryButton@1x.png"; sourceTree = "<group>"; };
 		0B388B7922D91CAD00148E44 /* HistoryButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HistoryButton@2x.png"; sourceTree = "<group>"; };
 		0B388B7A22D91CAD00148E44 /* HistoryButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HistoryButton@3x.png"; sourceTree = "<group>"; };
+		0B39061026DF182700CDDCAC /* Timer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Timer.hpp; path = ../openhlx/src/lib/utilities/Timer.hpp; sourceTree = "<group>"; };
+		0B39061126DF182700CDDCAC /* TimerDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TimerDelegate.hpp; path = ../openhlx/src/lib/utilities/TimerDelegate.hpp; sourceTree = "<group>"; };
+		0B39061226DF182700CDDCAC /* Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Timer.cpp; path = ../openhlx/src/lib/utilities/Timer.cpp; sourceTree = "<group>"; };
+		0B39062626DF187E00CDDCAC /* ApplicationControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ApplicationControllerBasis.cpp; path = ../openhlx/src/lib/common/ApplicationControllerBasis.cpp; sourceTree = "<group>"; };
+		0B39062726DF187E00CDDCAC /* ApplicationControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationControllerBasis.hpp; path = ../openhlx/src/lib/common/ApplicationControllerBasis.hpp; sourceTree = "<group>"; };
+		0B39063226DF18B500CDDCAC /* ObjectControllerBasisErrorDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ObjectControllerBasisErrorDelegate.hpp; path = ../openhlx/src/lib/client/ObjectControllerBasisErrorDelegate.hpp; sourceTree = "<group>"; };
+		0B39063326DF18B500CDDCAC /* SourcesControllerCommands.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SourcesControllerCommands.hpp; path = ../openhlx/src/lib/client/SourcesControllerCommands.hpp; sourceTree = "<group>"; };
+		0B39063426DF18B500CDDCAC /* ApplicationControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationControllerBasis.hpp; path = ../openhlx/src/lib/client/ApplicationControllerBasis.hpp; sourceTree = "<group>"; };
+		0B39063526DF18B500CDDCAC /* ObjectControllerBasisDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ObjectControllerBasisDelegate.hpp; path = ../openhlx/src/lib/client/ObjectControllerBasisDelegate.hpp; sourceTree = "<group>"; };
+		0B39063626DF18B600CDDCAC /* ObjectControllerBasisRefreshDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ObjectControllerBasisRefreshDelegate.hpp; path = ../openhlx/src/lib/client/ObjectControllerBasisRefreshDelegate.hpp; sourceTree = "<group>"; };
+		0B39063726DF18B600CDDCAC /* ApplicationControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ApplicationControllerBasis.cpp; path = ../openhlx/src/lib/client/ApplicationControllerBasis.cpp; sourceTree = "<group>"; };
+		0B39063826DF18B600CDDCAC /* ObjectControllerBasisStateChangeDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ObjectControllerBasisStateChangeDelegate.hpp; path = ../openhlx/src/lib/client/ObjectControllerBasisStateChangeDelegate.hpp; sourceTree = "<group>"; };
+		0B39063926DF18B600CDDCAC /* ApplicationControllerRefreshDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationControllerRefreshDelegate.hpp; path = ../openhlx/src/lib/client/ApplicationControllerRefreshDelegate.hpp; sourceTree = "<group>"; };
+		0B39064D26DF192A00CDDCAC /* ApplicationObjectControllerContainerTemplate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationObjectControllerContainerTemplate.hpp; path = ../openhlx/src/lib/common/ApplicationObjectControllerContainerTemplate.hpp; sourceTree = "<group>"; };
+		0B39064E26DF192A00CDDCAC /* ConfigurationControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ConfigurationControllerBasis.hpp; path = ../openhlx/src/lib/common/ConfigurationControllerBasis.hpp; sourceTree = "<group>"; };
+		0B39064F26DF192A00CDDCAC /* ApplicationControllerErrorDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationControllerErrorDelegate.hpp; path = ../openhlx/src/lib/common/ApplicationControllerErrorDelegate.hpp; sourceTree = "<group>"; };
+		0B39065026DF192A00CDDCAC /* ConfigurationControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigurationControllerBasis.cpp; path = ../openhlx/src/lib/common/ConfigurationControllerBasis.cpp; sourceTree = "<group>"; };
 		0B40B63A250ED1A6009A65DA /* ConnectHistoryViewTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConnectHistoryViewTableCell.h; path = Source/ConnectHistoryViewTableCell.h; sourceTree = SOURCE_ROOT; };
 		0B40B63B250ED1A6009A65DA /* ConnectHistoryViewTableCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ConnectHistoryViewTableCell.mm; path = Source/ConnectHistoryViewTableCell.mm; sourceTree = SOURCE_ROOT; };
 		0B4981E02659C7EC00C735BB /* Parse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Parse.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/utilities/Parse.cpp; sourceTree = "<absolute>"; };
@@ -472,6 +507,34 @@
 		0B829882235942CE00BECF76 /* NetworkControllerCommands.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = NetworkControllerCommands.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/NetworkControllerCommands.hpp; sourceTree = "<absolute>"; };
 		0B829884235942FD00BECF76 /* FavoritesModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FavoritesModel.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/model/FavoritesModel.hpp; sourceTree = "<absolute>"; };
 		0B829885235942FD00BECF76 /* FavoritesModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FavoritesModel.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/model/FavoritesModel.cpp; sourceTree = "<absolute>"; };
+		0B9155CF26CC34D20048B995 /* ZonesControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZonesControllerBasis.cpp; path = ../openhlx/src/lib/client/ZonesControllerBasis.cpp; sourceTree = "<group>"; };
+		0B9155D026CC34D20048B995 /* NetworkControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = NetworkControllerBasis.hpp; path = ../openhlx/src/lib/client/NetworkControllerBasis.hpp; sourceTree = "<group>"; };
+		0B9155D126CC34D20048B995 /* InfraredControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InfraredControllerBasis.hpp; path = ../openhlx/src/lib/client/InfraredControllerBasis.hpp; sourceTree = "<group>"; };
+		0B9155D226CC34D20048B995 /* SourcesControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SourcesControllerBasis.hpp; path = ../openhlx/src/lib/client/SourcesControllerBasis.hpp; sourceTree = "<group>"; };
+		0B9155D326CC34D20048B995 /* EqualizerPresetsControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = EqualizerPresetsControllerBasis.hpp; path = ../openhlx/src/lib/client/EqualizerPresetsControllerBasis.hpp; sourceTree = "<group>"; };
+		0B9155D426CC34D20048B995 /* GroupsControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GroupsControllerBasis.hpp; path = ../openhlx/src/lib/client/GroupsControllerBasis.hpp; sourceTree = "<group>"; };
+		0B9155D526CC34D20048B995 /* NetworkControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkControllerBasis.cpp; path = ../openhlx/src/lib/client/NetworkControllerBasis.cpp; sourceTree = "<group>"; };
+		0B9155D626CC34D20048B995 /* InfraredControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InfraredControllerBasis.cpp; path = ../openhlx/src/lib/client/InfraredControllerBasis.cpp; sourceTree = "<group>"; };
+		0B9155D726CC34D20048B995 /* GroupsControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GroupsControllerBasis.cpp; path = ../openhlx/src/lib/client/GroupsControllerBasis.cpp; sourceTree = "<group>"; };
+		0B9155D826CC34D20048B995 /* FavoritesControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FavoritesControllerBasis.cpp; path = ../openhlx/src/lib/client/FavoritesControllerBasis.cpp; sourceTree = "<group>"; };
+		0B9155D926CC34D20048B995 /* EqualizerPresetsControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EqualizerPresetsControllerBasis.cpp; path = ../openhlx/src/lib/client/EqualizerPresetsControllerBasis.cpp; sourceTree = "<group>"; };
+		0B9155DA26CC34D20048B995 /* FavoritesControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FavoritesControllerBasis.hpp; path = ../openhlx/src/lib/client/FavoritesControllerBasis.hpp; sourceTree = "<group>"; };
+		0B9155DB26CC34D20048B995 /* FrontPanelControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FrontPanelControllerBasis.hpp; path = ../openhlx/src/lib/client/FrontPanelControllerBasis.hpp; sourceTree = "<group>"; };
+		0B9155DC26CC34D20048B995 /* SourcesControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SourcesControllerBasis.cpp; path = ../openhlx/src/lib/client/SourcesControllerBasis.cpp; sourceTree = "<group>"; };
+		0B9155DD26CC34D20048B995 /* ConfigurationControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigurationControllerBasis.cpp; path = ../openhlx/src/lib/client/ConfigurationControllerBasis.cpp; sourceTree = "<group>"; };
+		0B9155DE26CC34D20048B995 /* ConfigurationControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ConfigurationControllerBasis.hpp; path = ../openhlx/src/lib/client/ConfigurationControllerBasis.hpp; sourceTree = "<group>"; };
+		0B9155DF26CC34D30048B995 /* ZonesControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ZonesControllerBasis.hpp; path = ../openhlx/src/lib/client/ZonesControllerBasis.hpp; sourceTree = "<group>"; };
+		0B9155E026CC34D30048B995 /* FrontPanelControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FrontPanelControllerBasis.cpp; path = ../openhlx/src/lib/client/FrontPanelControllerBasis.cpp; sourceTree = "<group>"; };
+		0B9155FC26CC35150048B995 /* Percentage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Percentage.cpp; path = ../openhlx/src/lib/utilities/Percentage.cpp; sourceTree = "<group>"; };
+		0B9155FD26CC35150048B995 /* Percentage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Percentage.hpp; path = ../openhlx/src/lib/utilities/Percentage.hpp; sourceTree = "<group>"; };
+		0B91560826CC35450048B995 /* NetworkModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = NetworkModel.hpp; path = ../openhlx/src/lib/model/NetworkModel.hpp; sourceTree = "<group>"; };
+		0B91560926CC35450048B995 /* NetworkModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkModel.cpp; path = ../openhlx/src/lib/model/NetworkModel.cpp; sourceTree = "<group>"; };
+		0B91561426CC356A0048B995 /* InfraredControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InfraredControllerBasis.cpp; path = ../openhlx/src/lib/common/InfraredControllerBasis.cpp; sourceTree = "<group>"; };
+		0B91561526CC356A0048B995 /* FrontPanelControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FrontPanelControllerBasis.hpp; path = ../openhlx/src/lib/common/FrontPanelControllerBasis.hpp; sourceTree = "<group>"; };
+		0B91561626CC356B0048B995 /* FrontPanelControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FrontPanelControllerBasis.cpp; path = ../openhlx/src/lib/common/FrontPanelControllerBasis.cpp; sourceTree = "<group>"; };
+		0B91561726CC356B0048B995 /* InfraredControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InfraredControllerBasis.hpp; path = ../openhlx/src/lib/common/InfraredControllerBasis.hpp; sourceTree = "<group>"; };
+		0B91561826CC356B0048B995 /* NetworkControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkControllerBasis.cpp; path = ../openhlx/src/lib/common/NetworkControllerBasis.cpp; sourceTree = "<group>"; };
+		0B91561926CC356B0048B995 /* NetworkControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = NetworkControllerBasis.hpp; path = ../openhlx/src/lib/common/NetworkControllerBasis.hpp; sourceTree = "<group>"; };
 		0BA032E42538EFFE009C9ED9 /* CommandBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandBuffer.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/CommandBuffer.cpp; sourceTree = "<absolute>"; };
 		0BA032E52538EFFE009C9ED9 /* CommandBuffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CommandBuffer.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/CommandBuffer.hpp; sourceTree = "<absolute>"; };
 		0BA032E62538EFFE009C9ED9 /* CommandRegularExpression.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CommandRegularExpression.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/CommandRegularExpression.hpp; sourceTree = "<absolute>"; };
@@ -483,14 +546,14 @@
 		0BA0D74D26537B4400B62E07 /* IPAddress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IPAddress.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/IPAddress.cpp; sourceTree = "<absolute>"; };
 		0BA0D74E26537B4400B62E07 /* IPAddress.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = IPAddress.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/IPAddress.hpp; sourceTree = "<absolute>"; };
 		0BA5D36022D9218200E837EF /* libopenhlx-client.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libopenhlx-client.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0BA5D36922D921E700E837EF /* HLXController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HLXController.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/HLXController.cpp; sourceTree = "<absolute>"; };
+		0BA5D36922D921E700E837EF /* ApplicationController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ApplicationController.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ApplicationController.cpp; sourceTree = "<absolute>"; };
 		0BA5D36A22D921E700E837EF /* GroupsControllerCommands.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GroupsControllerCommands.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/GroupsControllerCommands.hpp; sourceTree = "<absolute>"; };
 		0BA5D36C22D921E700E837EF /* SourceStateChangeNotificationBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SourceStateChangeNotificationBasis.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/SourceStateChangeNotificationBasis.hpp; sourceTree = "<absolute>"; };
 		0BA5D36D22D921E700E837EF /* EqualizerPresetsStateChangeNotifications.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = EqualizerPresetsStateChangeNotifications.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/EqualizerPresetsStateChangeNotifications.hpp; sourceTree = "<absolute>"; };
 		0BA5D36E22D921E700E837EF /* NameStateChangeNotificationBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = NameStateChangeNotificationBasis.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/NameStateChangeNotificationBasis.hpp; sourceTree = "<absolute>"; };
 		0BA5D36F22D921E700E837EF /* GroupsController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GroupsController.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/GroupsController.cpp; sourceTree = "<absolute>"; };
 		0BA5D37022D921E800E837EF /* SourceStateChangeNotificationBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SourceStateChangeNotificationBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/SourceStateChangeNotificationBasis.cpp; sourceTree = "<absolute>"; };
-		0BA5D37122D921E800E837EF /* HLXControllerDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = HLXControllerDelegate.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/HLXControllerDelegate.hpp; sourceTree = "<absolute>"; };
+		0BA5D37122D921E800E837EF /* ApplicationControllerDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationControllerDelegate.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ApplicationControllerDelegate.hpp; sourceTree = "<absolute>"; };
 		0BA5D37222D921E800E837EF /* CommandPropertyRequestBases.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandPropertyRequestBases.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/CommandPropertyRequestBases.cpp; sourceTree = "<absolute>"; };
 		0BA5D37522D921E800E837EF /* ConnectionBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConnectionBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ConnectionBasis.cpp; sourceTree = "<absolute>"; };
 		0BA5D37622D921E800E837EF /* CommandNameSetRequestBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandNameSetRequestBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/CommandNameSetRequestBasis.cpp; sourceTree = "<absolute>"; };
@@ -513,7 +576,7 @@
 		0BA5D38822D921E900E837EF /* CommandSourceRequestBases.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandSourceRequestBases.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/CommandSourceRequestBases.cpp; sourceTree = "<absolute>"; };
 		0BA5D38A22D921E900E837EF /* SourcesController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SourcesController.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/SourcesController.cpp; sourceTree = "<absolute>"; };
 		0BA5D38B22D921E900E837EF /* ZonesControllerCommands.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ZonesControllerCommands.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ZonesControllerCommands.hpp; sourceTree = "<absolute>"; };
-		0BA5D38C22D921E900E837EF /* HLXController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = HLXController.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/HLXController.hpp; sourceTree = "<absolute>"; };
+		0BA5D38C22D921E900E837EF /* ApplicationController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationController.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ApplicationController.hpp; sourceTree = "<absolute>"; };
 		0BA5D38D22D921E900E837EF /* SourcesController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SourcesController.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/SourcesController.hpp; sourceTree = "<absolute>"; };
 		0BA5D38E22D921E900E837EF /* RunLoopQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RunLoopQueue.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/utilities/RunLoopQueue.hpp; sourceTree = "<absolute>"; };
 		0BA5D38F22D921E900E837EF /* NetworkController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = NetworkController.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/NetworkController.hpp; sourceTree = "<absolute>"; };
@@ -521,10 +584,10 @@
 		0BA5D39122D921E900E837EF /* EqualizerPresetsStateChangeNotifications.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EqualizerPresetsStateChangeNotifications.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/EqualizerPresetsStateChangeNotifications.cpp; sourceTree = "<absolute>"; };
 		0BA5D39222D921E900E837EF /* InfraredController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InfraredController.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/InfraredController.hpp; sourceTree = "<absolute>"; };
 		0BA5D39322D921E900E837EF /* EqualizerBandStateChangeNotificationBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EqualizerBandStateChangeNotificationBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/EqualizerBandStateChangeNotificationBasis.cpp; sourceTree = "<absolute>"; };
-		0BA5D39422D921E900E837EF /* ControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ControllerBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ControllerBasis.cpp; sourceTree = "<absolute>"; };
+		0BA5D39422D921E900E837EF /* ObjectControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObjectControllerBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ObjectControllerBasis.cpp; sourceTree = "<absolute>"; };
 		0BA5D39522D921E900E837EF /* SourcesStateChangeNotifications.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SourcesStateChangeNotifications.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/SourcesStateChangeNotifications.hpp; sourceTree = "<absolute>"; };
 		0BA5D39622D921E900E837EF /* ZonesControllerCommands.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZonesControllerCommands.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ZonesControllerCommands.cpp; sourceTree = "<absolute>"; };
-		0BA5D39722D921E900E837EF /* ControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ControllerBasis.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ControllerBasis.hpp; sourceTree = "<absolute>"; };
+		0BA5D39722D921E900E837EF /* ObjectControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ObjectControllerBasis.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ObjectControllerBasis.hpp; sourceTree = "<absolute>"; };
 		0BA5D39922D921E900E837EF /* EqualizerPresetsController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = EqualizerPresetsController.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/EqualizerPresetsController.hpp; sourceTree = "<absolute>"; };
 		0BA5D39A22D921E900E837EF /* SourcesControllerCommands.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SourcesControllerCommands.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/SourcesControllerCommands.cpp; sourceTree = "<absolute>"; };
 		0BA5D39B22D921E900E837EF /* ConnectionBasisDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ConnectionBasisDelegate.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ConnectionBasisDelegate.hpp; sourceTree = "<absolute>"; };
@@ -638,7 +701,7 @@
 		0BC939FD264B07AC009FD96F /* strntol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = strntol.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/utilities/strntol.cpp; sourceTree = "<absolute>"; };
 		0BC939FE264B07AC009FD96F /* strntol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = strntol.h; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/utilities/strntol.h; sourceTree = "<absolute>"; };
 		0BC939FF264B07AC009FD96F /* ElementsOf.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ElementsOf.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/utilities/ElementsOf.hpp; sourceTree = "<absolute>"; };
-		0BCA2F62265C71ED00385413 /* HLXClientControllerPointer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HLXClientControllerPointer.hpp; sourceTree = "<group>"; };
+		0BCA2F62265C71ED00385413 /* ApplicationControllerPointer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ApplicationControllerPointer.hpp; sourceTree = "<group>"; };
 		0BCA2F6C2666DF9A00385413 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		0BCD918F261E6D97004FCB21 /* SocketAddress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SocketAddress.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/SocketAddress.cpp; sourceTree = "<absolute>"; };
 		0BCFF47A258AE56000DFDAC0 /* UIViewController+TopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+TopViewController.h"; path = "Source/UIViewController+TopViewController.h"; sourceTree = SOURCE_ROOT; };
@@ -839,9 +902,9 @@
 				0B7B9B5522F4D28000D542DF /* GroupsAndZonesTableViewCell.mm */,
 				0B7B9B5722F4D28100D542DF /* GroupsAndZonesTableViewController.h */,
 				0B7B9B5622F4D28100D542DF /* GroupsAndZonesTableViewController.mm */,
-				0B32EE2B232640EE00065E18 /* HLXClientControllerDelegate.hpp */,
-				0B32EE2A232640EE00065E18 /* HLXClientControllerDelegate.mm */,
-				0BCA2F62265C71ED00385413 /* HLXClientControllerPointer.hpp */,
+				0B32EE2B232640EE00065E18 /* ApplicationControllerDelegate.hpp */,
+				0B32EE2A232640EE00065E18 /* ApplicationControllerDelegate.mm */,
+				0BCA2F62265C71ED00385413 /* ApplicationControllerPointer.hpp */,
 				0BBD823122B932E600554609 /* main.mm */,
 				0BC145EE22CEAAD600EE32AC /* RefreshViewController.h */,
 				0BC145ED22CEAAD500EE32AC /* RefreshViewController.mm */,
@@ -908,6 +971,8 @@
 				0B829876235941F300BECF76 /* InfraredModel.hpp */,
 				0B05B7DD22D920FD007DEB54 /* NameModel.cpp */,
 				0B05B7DF22D920FE007DEB54 /* NameModel.hpp */,
+				0B91560926CC35450048B995 /* NetworkModel.cpp */,
+				0B91560826CC35450048B995 /* NetworkModel.hpp */,
 				0B1396ED2565B7180029DB14 /* ToneModel.cpp */,
 				0B1396EE2565B7180029DB14 /* ToneModel.hpp */,
 				0B05B7DC22D920FD007DEB54 /* SoundModel.cpp */,
@@ -935,6 +1000,8 @@
 				0BC939FF264B07AC009FD96F /* ElementsOf.hpp */,
 				0B4981E02659C7EC00C735BB /* Parse.cpp */,
 				0B4981E12659C7EC00C735BB /* Parse.hpp */,
+				0B9155FC26CC35150048B995 /* Percentage.cpp */,
+				0B9155FD26CC35150048B995 /* Percentage.hpp */,
 				0BA5D3C722D921EA00E837EF /* RunLoopQueue.cpp */,
 				0BA5D38E22D921E900E837EF /* RunLoopQueue.hpp */,
 				0BA5D3CB22D921EB00E837EF /* RunLoopQueueDelegate.hpp */,
@@ -942,6 +1009,9 @@
 				0BC939FE264B07AC009FD96F /* strntol.h */,
 				0BC939FB264B07AC009FD96F /* strntoul.cpp */,
 				0BC939FC264B07AC009FD96F /* strntoul.h */,
+				0B39061226DF182700CDDCAC /* Timer.cpp */,
+				0B39061026DF182700CDDCAC /* Timer.hpp */,
+				0B39061126DF182700CDDCAC /* TimerDelegate.hpp */,
 				0B71870922D91DAC0096BAF1 /* Utilities.hpp */,
 			);
 			name = "openhlx-utilities";
@@ -950,10 +1020,14 @@
 		0B4981BA2659C2B200C735BB /* openhlx-client */ = {
 			isa = PBXGroup;
 			children = (
+				0BA5D36922D921E700E837EF /* ApplicationController.cpp */,
+				0BA5D38C22D921E900E837EF /* ApplicationController.hpp */,
+				0B39063726DF18B600CDDCAC /* ApplicationControllerBasis.cpp */,
+				0B39063426DF18B500CDDCAC /* ApplicationControllerBasis.hpp */,
+				0BA5D37122D921E800E837EF /* ApplicationControllerDelegate.hpp */,
+				0B39063926DF18B600CDDCAC /* ApplicationControllerRefreshDelegate.hpp */,
 				0BA5D3CC22D921EB00E837EF /* CommandBalanceRequestBases.cpp */,
 				0BA5D3AF22D921EA00E837EF /* CommandBalanceRequestBases.hpp */,
-				0BA5D37222D921E800E837EF /* CommandPropertyRequestBases.cpp */,
-				0BA5D3CE22D921EB00E837EF /* CommandPropertyRequestBases.hpp */,
 				0BA5D3C922D921EB00E837EF /* CommandEqualizerBandRequestBases.cpp */,
 				0BA5D3AC22D921EA00E837EF /* CommandEqualizerBandRequestBases.hpp */,
 				0BA5D3D122D921EB00E837EF /* CommandErrorResponse.cpp */,
@@ -965,6 +1039,8 @@
 				0BA5D3B222D921EA00E837EF /* CommandManagerDelegate.hpp */,
 				0BA5D37622D921E800E837EF /* CommandNameSetRequestBasis.cpp */,
 				0BA5D38322D921E800E837EF /* CommandNameSetRequestBasis.hpp */,
+				0BA5D37222D921E800E837EF /* CommandPropertyRequestBases.cpp */,
+				0BA5D3CE22D921EB00E837EF /* CommandPropertyRequestBases.hpp */,
 				0BA5D38722D921E800E837EF /* CommandQueryRequestBasis.cpp */,
 				0BA5D3A622D921EA00E837EF /* CommandQueryRequestBasis.hpp */,
 				0BA5D3BD22D921EA00E837EF /* CommandRequestBasis.cpp */,
@@ -977,6 +1053,8 @@
 				0BA5D3A222D921EA00E837EF /* CommandVolumeRequestBases.hpp */,
 				0BA5D37F22D921E800E837EF /* ConfigurationController.cpp */,
 				0BA5D38122D921E800E837EF /* ConfigurationController.hpp */,
+				0B9155DD26CC34D20048B995 /* ConfigurationControllerBasis.cpp */,
+				0B9155DE26CC34D20048B995 /* ConfigurationControllerBasis.hpp */,
 				0BA5D3B822D921EA00E837EF /* ConfigurationControllerCommands.cpp */,
 				0BA5D38022D921E800E837EF /* ConfigurationControllerCommands.hpp */,
 				0BA5D39C22D921E900E837EF /* ConfigurationStateChangeNotifications.cpp */,
@@ -991,42 +1069,47 @@
 				0BA5D3C422D921EA00E837EF /* ConnectionManagerDelegate.hpp */,
 				0BA5D3B022D921EA00E837EF /* ConnectionTelnet.cpp */,
 				0BA5D3B322D921EA00E837EF /* ConnectionTelnet.hpp */,
-				0BA5D39422D921E900E837EF /* ControllerBasis.cpp */,
-				0BA5D39722D921E900E837EF /* ControllerBasis.hpp */,
 				0BA5D39022D921E900E837EF /* ControllerBasisDelegate.hpp */,
 				0BA5D39322D921E900E837EF /* EqualizerBandStateChangeNotificationBasis.cpp */,
 				0BA5D39F22D921E900E837EF /* EqualizerBandStateChangeNotificationBasis.hpp */,
 				0BA5D3C322D921EA00E837EF /* EqualizerPresetsController.cpp */,
 				0BA5D39922D921E900E837EF /* EqualizerPresetsController.hpp */,
+				0B9155D926CC34D20048B995 /* EqualizerPresetsControllerBasis.cpp */,
+				0B9155D326CC34D20048B995 /* EqualizerPresetsControllerBasis.hpp */,
 				0BA5D37922D921E800E837EF /* EqualizerPresetsControllerCommands.cpp */,
 				0BA5D3C022D921EA00E837EF /* EqualizerPresetsControllerCommands.hpp */,
 				0BA5D39122D921E900E837EF /* EqualizerPresetsStateChangeNotifications.cpp */,
 				0BA5D36D22D921E700E837EF /* EqualizerPresetsStateChangeNotifications.hpp */,
 				0BA5D3BF22D921EA00E837EF /* FavoritesController.cpp */,
 				0BA5D3D222D921EB00E837EF /* FavoritesController.hpp */,
+				0B9155D826CC34D20048B995 /* FavoritesControllerBasis.cpp */,
+				0B9155DA26CC34D20048B995 /* FavoritesControllerBasis.hpp */,
 				0B82987D2359424B00BECF76 /* FavoritesControllerCommands.cpp */,
 				0B82987E2359424B00BECF76 /* FavoritesControllerCommands.hpp */,
 				0B82987B2359424B00BECF76 /* FavoritesStateChangeNotifications.cpp */,
 				0B82987C2359424B00BECF76 /* FavoritesStateChangeNotifications.hpp */,
 				0BA5D3BB22D921EA00E837EF /* FrontPanelController.cpp */,
 				0BA5D38622D921E800E837EF /* FrontPanelController.hpp */,
+				0B9155E026CC34D30048B995 /* FrontPanelControllerBasis.cpp */,
+				0B9155DB26CC34D20048B995 /* FrontPanelControllerBasis.hpp */,
 				0B82986E235941BA00BECF76 /* FrontPanelControllerCommands.cpp */,
 				0B829869235941BA00BECF76 /* FrontPanelControllerCommands.hpp */,
 				0B82986B235941BA00BECF76 /* FrontPanelStateChangeNotifications.cpp */,
 				0B82986F235941BA00BECF76 /* FrontPanelStateChangeNotifications.hpp */,
 				0BA5D36F22D921E700E837EF /* GroupsController.cpp */,
 				0BA5D3BA22D921EA00E837EF /* GroupsController.hpp */,
+				0B9155D726CC34D20048B995 /* GroupsControllerBasis.cpp */,
+				0B9155D426CC34D20048B995 /* GroupsControllerBasis.hpp */,
 				0BA5D38222D921E800E837EF /* GroupsControllerCommands.cpp */,
 				0BA5D36A22D921E700E837EF /* GroupsControllerCommands.hpp */,
 				0BA5D39D22D921E900E837EF /* GroupsStateChangeNotifications.cpp */,
 				0BA5D3AE22D921EA00E837EF /* GroupsStateChangeNotifications.hpp */,
-				0BA5D36922D921E700E837EF /* HLXController.cpp */,
-				0BA5D38C22D921E900E837EF /* HLXController.hpp */,
-				0BA5D37122D921E800E837EF /* HLXControllerDelegate.hpp */,
 				0BA5D3AB22D921EA00E837EF /* IdentifierStateChangeNotificationBasis.cpp */,
 				0BA5D3A822D921EA00E837EF /* IdentifierStateChangeNotificationBasis.hpp */,
 				0BA5D3B722D921EA00E837EF /* InfraredController.cpp */,
 				0BA5D39222D921E900E837EF /* InfraredController.hpp */,
+				0B9155D626CC34D20048B995 /* InfraredControllerBasis.cpp */,
+				0B9155D126CC34D20048B995 /* InfraredControllerBasis.hpp */,
 				0B82986C235941BA00BECF76 /* InfraredControllerCommands.cpp */,
 				0B82986D235941BA00BECF76 /* InfraredControllerCommands.hpp */,
 				0B82986A235941BA00BECF76 /* InfraredStateChangeNotifications.cpp */,
@@ -1035,11 +1118,22 @@
 				0BA5D36E22D921E700E837EF /* NameStateChangeNotificationBasis.hpp */,
 				0BA5D3C522D921EA00E837EF /* NetworkController.cpp */,
 				0BA5D38F22D921E900E837EF /* NetworkController.hpp */,
+				0B9155D526CC34D20048B995 /* NetworkControllerBasis.cpp */,
+				0B9155D026CC34D20048B995 /* NetworkControllerBasis.hpp */,
 				0B829881235942CD00BECF76 /* NetworkControllerCommands.cpp */,
 				0B829882235942CE00BECF76 /* NetworkControllerCommands.hpp */,
+				0BA5D39422D921E900E837EF /* ObjectControllerBasis.cpp */,
+				0BA5D39722D921E900E837EF /* ObjectControllerBasis.hpp */,
+				0B39063526DF18B500CDDCAC /* ObjectControllerBasisDelegate.hpp */,
+				0B39063226DF18B500CDDCAC /* ObjectControllerBasisErrorDelegate.hpp */,
+				0B39063626DF18B600CDDCAC /* ObjectControllerBasisRefreshDelegate.hpp */,
+				0B39063826DF18B600CDDCAC /* ObjectControllerBasisStateChangeDelegate.hpp */,
 				0BA5D38A22D921E900E837EF /* SourcesController.cpp */,
 				0BA5D38D22D921E900E837EF /* SourcesController.hpp */,
+				0B9155DC26CC34D20048B995 /* SourcesControllerBasis.cpp */,
+				0B9155D226CC34D20048B995 /* SourcesControllerBasis.hpp */,
 				0BA5D39A22D921E900E837EF /* SourcesControllerCommands.cpp */,
+				0B39063326DF18B500CDDCAC /* SourcesControllerCommands.hpp */,
 				0BA5D3A322D921EA00E837EF /* SourcesStateChangeNotifications.cpp */,
 				0BA5D39522D921E900E837EF /* SourcesStateChangeNotifications.hpp */,
 				0BA5D37022D921E800E837EF /* SourceStateChangeNotificationBasis.cpp */,
@@ -1051,6 +1145,8 @@
 				0BA5D37822D921E800E837EF /* VolumeStateChangeNotificationBasis.hpp */,
 				0BA5D39E22D921E900E837EF /* ZonesController.cpp */,
 				0BA5D37A22D921E800E837EF /* ZonesController.hpp */,
+				0B9155CF26CC34D20048B995 /* ZonesControllerBasis.cpp */,
+				0B9155DF26CC34D30048B995 /* ZonesControllerBasis.hpp */,
 				0BA5D39622D921E900E837EF /* ZonesControllerCommands.cpp */,
 				0BA5D38B22D921E900E837EF /* ZonesControllerCommands.hpp */,
 				0BA5D3D422D921EB00E837EF /* ZonesStateChangeNotifications.cpp */,
@@ -1062,6 +1158,10 @@
 		0B4981BB2659C2B600C735BB /* openhlx-common */ = {
 			isa = PBXGroup;
 			children = (
+				0B39062626DF187E00CDDCAC /* ApplicationControllerBasis.cpp */,
+				0B39062726DF187E00CDDCAC /* ApplicationControllerBasis.hpp */,
+				0B39064F26DF192A00CDDCAC /* ApplicationControllerErrorDelegate.hpp */,
+				0B39064D26DF192A00CDDCAC /* ApplicationObjectControllerContainerTemplate.hpp */,
 				0BF7FCA82584468D00F9836B /* CommandBalanceBufferBasis.cpp */,
 				0BF7FCA92584468D00F9836B /* CommandBalanceBufferBasis.hpp */,
 				0BA032E42538EFFE009C9ED9 /* CommandBuffer.cpp */,
@@ -1118,6 +1218,8 @@
 				0BF7FCC42584468E00F9836B /* CommandVolumeBufferBases.hpp */,
 				0BF7FCCD2584468F00F9836B /* CommandZonesRegularExpressionBases.cpp */,
 				0BF7FCAE2584468D00F9836B /* CommandZonesRegularExpressionBases.hpp */,
+				0B39065026DF192A00CDDCAC /* ConfigurationControllerBasis.cpp */,
+				0B39064E26DF192A00CDDCAC /* ConfigurationControllerBasis.hpp */,
 				0BF7FCC22584468E00F9836B /* ConnectionBasis.cpp */,
 				0BF7FCB02584468D00F9836B /* ConnectionBasis.hpp */,
 				0B565E7823FB31C3001C71DB /* ConnectionBuffer.cpp */,
@@ -1131,14 +1233,20 @@
 				0BF7FD04258446AE00F9836B /* Errors.hpp */,
 				0B6238432565F42300E07B8D /* FavoritesControllerBasis.cpp */,
 				0B62383D2565F42200E07B8D /* FavoritesControllerBasis.hpp */,
+				0B91561626CC356B0048B995 /* FrontPanelControllerBasis.cpp */,
+				0B91561526CC356A0048B995 /* FrontPanelControllerBasis.hpp */,
 				0B6238412565F42200E07B8D /* GroupsControllerBasis.cpp */,
 				0B6238422565F42300E07B8D /* GroupsControllerBasis.hpp */,
 				0BF7FCD72584468F00F9836B /* HostURL.cpp */,
 				0BF7FCE12584469000F9836B /* HostURL.hpp */,
 				0BF7FCDA2584468F00F9836B /* HostURLAddress.cpp */,
 				0BF7FCAB2584468D00F9836B /* HostURLAddress.hpp */,
+				0B91561426CC356A0048B995 /* InfraredControllerBasis.cpp */,
+				0B91561726CC356B0048B995 /* InfraredControllerBasis.hpp */,
 				0BA0D74D26537B4400B62E07 /* IPAddress.cpp */,
 				0BA0D74E26537B4400B62E07 /* IPAddress.hpp */,
+				0B91561826CC356B0048B995 /* NetworkControllerBasis.cpp */,
+				0B91561926CC356B0048B995 /* NetworkControllerBasis.hpp */,
 				0BF7FCB32584468D00F9836B /* OutputStringStream.cpp */,
 				0BF7FCD12584468F00F9836B /* OutputStringStream.hpp */,
 				0BF7FD01258446AE00F9836B /* RegularExpression.cpp */,
@@ -1618,6 +1726,7 @@
 				0B1396F22565B7340029DB14 /* EqualizerBandsModel.cpp in Sources */,
 				0B8298682359418400BECF76 /* FrontPanelModel.cpp in Sources */,
 				0B05B7F122D920FE007DEB54 /* ZoneModel.cpp in Sources */,
+				0B91560A26CC35450048B995 /* NetworkModel.cpp in Sources */,
 				0B1396EC2565B6F20029DB14 /* CrossoverModel.cpp in Sources */,
 				0B829877235941F300BECF76 /* InfraredModel.cpp in Sources */,
 			);
@@ -1658,7 +1767,7 @@
 				0BE8CBBD265B2FD700A17FCC /* UIViewController+HLXClientDidDisconnectDelegateDefaultImplementations.mm in Sources */,
 				0BE8CBBE265B2FD700A17FCC /* SoundModeChooserTableViewCell.mm in Sources */,
 				0BE8CBBF265B2FD700A17FCC /* UIViewController+TopViewController.mm in Sources */,
-				0BE8CBC0265B2FD700A17FCC /* HLXClientControllerDelegate.mm in Sources */,
+				0BE8CBC0265B2FD700A17FCC /* ApplicationControllerDelegate.mm in Sources */,
 				0BE8CBC1265B2FD700A17FCC /* SoundModeChooserViewController.mm in Sources */,
 				0BE8CBC2265B2FD700A17FCC /* AppDelegate.mm in Sources */,
 				0BE8CBC3265B2FD700A17FCC /* ConnectHistoryViewController.mm in Sources */,
@@ -1679,11 +1788,13 @@
 				0BF7FCFF2584469000F9836B /* CommandNetworkRegularExpressionBases.cpp in Sources */,
 				0BA032E92538EFFE009C9ED9 /* CommandRegularExpression.cpp in Sources */,
 				0BA032E32538EF61009C9ED9 /* ConnectionBuffer.cpp in Sources */,
+				0B91561A26CC356B0048B995 /* InfraredControllerBasis.cpp in Sources */,
 				0BF7FCE72584469000F9836B /* CommandPropertyBufferBases.cpp in Sources */,
 				0B6238492565F42300E07B8D /* GroupsControllerBasis.cpp in Sources */,
 				0B6238472565F42300E07B8D /* EqualizerPresetsControllerBasis.cpp in Sources */,
 				0BA0D75026537B4400B62E07 /* IPAddress.cpp in Sources */,
 				0BA0D74F26537B4400B62E07 /* ConnectionManagerBasis.cpp in Sources */,
+				0B91561C26CC356B0048B995 /* NetworkControllerBasis.cpp in Sources */,
 				0BA032E82538EFFE009C9ED9 /* CommandBuffer.cpp in Sources */,
 				0B62384B2565F42300E07B8D /* ZonesControllerBasis.cpp in Sources */,
 				0BF7FCFB2584469000F9836B /* CommandEqualizerBufferBases.cpp in Sources */,
@@ -1695,6 +1806,7 @@
 				0BF7FCFD2584469000F9836B /* CommandRoleDelimitedBuffer.cpp in Sources */,
 				0BF7FCEF2584469000F9836B /* CommandRoleDelimiters.cpp in Sources */,
 				0BF7FCEB2584469000F9836B /* CommandEqualizerPresetsRegularExpressionBases.cpp in Sources */,
+				0B39062826DF187E00CDDCAC /* ApplicationControllerBasis.cpp in Sources */,
 				0BF7FCF92584469000F9836B /* CommandQueryBufferBasis.cpp in Sources */,
 				0BF7FCF22584469000F9836B /* CommandVolumeBufferBases.cpp in Sources */,
 				0BF7FCF32584469000F9836B /* CommandSourceBufferBases.cpp in Sources */,
@@ -1704,6 +1816,7 @@
 				0BF7FCF82584469000F9836B /* CommandFrontPanelBufferBases.cpp in Sources */,
 				0BF7FCEA2584469000F9836B /* CommandConfigurationRegularExpressionBases.cpp in Sources */,
 				0BCD9190261E6D98004FCB21 /* SocketAddress.cpp in Sources */,
+				0B91561B26CC356B0048B995 /* FrontPanelControllerBasis.cpp in Sources */,
 				0B6238482565F42300E07B8D /* SourcesControllerBasis.cpp in Sources */,
 				0BF7FCE62584469000F9836B /* CommandSourcesRegularExpressionBases.cpp in Sources */,
 				0BF7FCED2584469000F9836B /* CommandGroupsRegularExpressionBases.cpp in Sources */,
@@ -1714,6 +1827,7 @@
 				0BC79CB3258453C0007A22A8 /* RegularExpression.cpp in Sources */,
 				0BF7FCEE2584469000F9836B /* CommandInfraredRegularExpressionBases.cpp in Sources */,
 				0BF7FCF02584469000F9836B /* CommandInfraredBufferBases.cpp in Sources */,
+				0B39065126DF192A00CDDCAC /* ConfigurationControllerBasis.cpp in Sources */,
 				0BC79CB2258453BD007A22A8 /* Timeout.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1723,7 +1837,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B4981E22659C7EC00C735BB /* Parse.cpp in Sources */,
+				0B9155FE26CC35150048B995 /* Percentage.cpp in Sources */,
 				0BC93A00264B07AC009FD96F /* strntoul.cpp in Sources */,
+				0B39061326DF182700CDDCAC /* Timer.cpp in Sources */,
 				0BC93A01264B07AC009FD96F /* strntol.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1737,10 +1853,13 @@
 				0BA5D3E522D921EB00E837EF /* EqualizerPresetsStateChangeNotifications.cpp in Sources */,
 				0BA5D3D822D921EB00E837EF /* SourceStateChangeNotificationBasis.cpp in Sources */,
 				0B829873235941BA00BECF76 /* InfraredControllerCommands.cpp in Sources */,
+				0B9155E926CC34D30048B995 /* FrontPanelControllerBasis.cpp in Sources */,
 				0BA5D40522D921EB00E837EF /* CommandVolumeRequestBases.cpp in Sources */,
 				0BA5D3E222D921EB00E837EF /* CommandSourceRequestBases.cpp in Sources */,
 				0BA5D3F822D921EB00E837EF /* RunLoopParameters.cpp in Sources */,
-				0BA5D3E722D921EB00E837EF /* ControllerBasis.cpp in Sources */,
+				0B9155E426CC34D30048B995 /* GroupsControllerBasis.cpp in Sources */,
+				0BA5D3E722D921EB00E837EF /* ObjectControllerBasis.cpp in Sources */,
+				0B9155E826CC34D30048B995 /* ConfigurationControllerBasis.cpp in Sources */,
 				0BA5D3EB22D921EB00E837EF /* ConfigurationStateChangeNotifications.cpp in Sources */,
 				0BA5D3DF22D921EB00E837EF /* ConfigurationController.cpp in Sources */,
 				0BA5D3FE22D921EB00E837EF /* EqualizerPresetsController.cpp in Sources */,
@@ -1750,19 +1869,24 @@
 				0BA5D3E122D921EB00E837EF /* CommandQueryRequestBasis.cpp in Sources */,
 				0BA5D3F722D921EB00E837EF /* ConfigurationControllerCommands.cpp in Sources */,
 				0BA5D3F222D921EB00E837EF /* ConnectionTelnet.cpp in Sources */,
-				0BA5D3D522D921EB00E837EF /* HLXController.cpp in Sources */,
+				0BA5D3D522D921EB00E837EF /* ApplicationController.cpp in Sources */,
 				0BA5D3FC22D921EB00E837EF /* FavoritesController.cpp in Sources */,
 				0B829874235941BA00BECF76 /* FrontPanelControllerCommands.cpp in Sources */,
 				0BA5D3EE22D921EB00E837EF /* NameStateChangeNotificationBasis.cpp in Sources */,
 				0B829871235941BA00BECF76 /* InfraredStateChangeNotifications.cpp in Sources */,
 				0BA5D3FD22D921EB00E837EF /* VolumeStateChangeNotificationBasis.cpp in Sources */,
 				0BA5D3FA22D921EB00E837EF /* StateChangeNotificationBasis.cpp in Sources */,
+				0B9155E626CC34D30048B995 /* EqualizerPresetsControllerBasis.cpp in Sources */,
+				0B9155E226CC34D30048B995 /* NetworkControllerBasis.cpp in Sources */,
 				0BA5D3EC22D921EB00E837EF /* GroupsStateChangeNotifications.cpp in Sources */,
+				0B39063A26DF18B600CDDCAC /* ApplicationControllerBasis.cpp in Sources */,
 				0BA5D3FF22D921EB00E837EF /* NetworkController.cpp in Sources */,
+				0B9155E326CC34D30048B995 /* InfraredControllerBasis.cpp in Sources */,
 				0BA5D3DD22D921EB00E837EF /* EqualizerPresetsControllerCommands.cpp in Sources */,
 				0BA5D3F922D921EB00E837EF /* FrontPanelController.cpp in Sources */,
 				0BA5D40A22D921EB00E837EF /* ZonesStateChangeNotifications.cpp in Sources */,
 				0BA5D40122D921EB00E837EF /* RunLoopQueue.cpp in Sources */,
+				0B9155E726CC34D30048B995 /* SourcesControllerBasis.cpp in Sources */,
 				0BA5D3DB22D921EB00E837EF /* ConnectionBasis.cpp in Sources */,
 				0BA5D3F522D921EB00E837EF /* CommandManager.cpp in Sources */,
 				0B829883235942CE00BECF76 /* NetworkControllerCommands.cpp in Sources */,
@@ -1771,6 +1895,8 @@
 				0BA5D3F022D921EB00E837EF /* CommandExchangeBasis.cpp in Sources */,
 				0BA5D3DC22D921EB00E837EF /* CommandNameSetRequestBasis.cpp in Sources */,
 				0BA5D3DE22D921EB00E837EF /* ConnectionFactory.cpp in Sources */,
+				0B9155E126CC34D30048B995 /* ZonesControllerBasis.cpp in Sources */,
+				0B9155E526CC34D30048B995 /* FavoritesControllerBasis.cpp in Sources */,
 				0BA5D3EA22D921EB00E837EF /* SourcesControllerCommands.cpp in Sources */,
 				0B829872235941BA00BECF76 /* FrontPanelStateChangeNotifications.cpp in Sources */,
 				0BA5D3F122D921EB00E837EF /* IdentifierStateChangeNotificationBasis.cpp in Sources */,
@@ -1806,7 +1932,7 @@
 				0BCFF47F258B0EC500DFDAC0 /* UIViewController+HLXClientDidDisconnectDelegateDefaultImplementations.mm in Sources */,
 				0B0C72922585DBD500BAE465 /* SoundModeChooserTableViewCell.mm in Sources */,
 				0BCFF47C258AE56000DFDAC0 /* UIViewController+TopViewController.mm in Sources */,
-				0B32EE2C232640EF00065E18 /* HLXClientControllerDelegate.mm in Sources */,
+				0B32EE2C232640EF00065E18 /* ApplicationControllerDelegate.mm in Sources */,
 				0B0C72952585DE4900BAE465 /* SoundModeChooserViewController.mm in Sources */,
 				0BBD822422B932E400554609 /* AppDelegate.mm in Sources */,
 				0BB62F3022D91C000013E943 /* ConnectHistoryViewController.mm in Sources */,
@@ -2270,7 +2396,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OPENHLX_ROOT = "";
+				OPENHLX_ROOT = /Users/gerickson/Source/git/github.com/gerickson/openhlx;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -2330,7 +2456,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				OPENHLX_ROOT = "";
+				OPENHLX_ROOT = /Users/gerickson/Source/git/github.com/gerickson/openhlx;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

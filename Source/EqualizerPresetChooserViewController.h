@@ -30,11 +30,11 @@
 
 #import <UIKit/UIKit.h>
 
-#include <OpenHLX/Client/HLXController.hpp>
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationController.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 
-#import "HLXClientControllerDelegate.hpp"
-#import "HLXClientControllerPointer.hpp"
+#import "ApplicationControllerDelegate.hpp"
+#import "ApplicationControllerPointer.hpp"
 
 
 namespace HLX
@@ -49,22 +49,22 @@ class Controller;
 
 };
 
-class HLXClientControllerDelegate;
+class ApplicationControllerDelegate;
 
-@interface EqualizerPresetChooserViewController : UITableViewController <HLXClientControllerDelegate>
+@interface EqualizerPresetChooserViewController : UITableViewController <ApplicationControllerDelegate>
 {
     /**
      *  A shared pointer to the global HLX client controller instance.
      *
      */
-    MutableHLXClientControllerPointer                 mHLXClientController;
+    MutableApplicationControllerPointer                 mApplicationController;
 
     /**
      *  A scoped pointer to the default HLX client controller
      *  delegate.
      *
      */
-    std::unique_ptr<HLXClientControllerDelegate>      mHLXClientControllerDelegate;
+    std::unique_ptr<ApplicationControllerDelegate>      mApplicationControllerDelegate;
 
     /**
      *  An immutable pointer to the zone for which its zone or preset
@@ -94,7 +94,7 @@ class HLXClientControllerDelegate;
 
 // MARK: Setters
 
-- (void) setHLXClientController: (MutableHLXClientControllerPointer &)aHLXClientController
+- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
                         forZone: (const HLX::Model::ZoneModel *)aZone;
 
 @end
