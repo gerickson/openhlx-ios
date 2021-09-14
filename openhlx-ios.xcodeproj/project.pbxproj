@@ -42,7 +42,6 @@
 		0B388B7B22D91CAD00148E44 /* HistoryButton@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B388B7822D91CAC00148E44 /* HistoryButton@1x.png */; };
 		0B388B7C22D91CAD00148E44 /* HistoryButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B388B7922D91CAD00148E44 /* HistoryButton@2x.png */; };
 		0B388B7D22D91CAD00148E44 /* HistoryButton@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B388B7A22D91CAD00148E44 /* HistoryButton@3x.png */; };
-		0B39061326DF182700CDDCAC /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B39061226DF182700CDDCAC /* Timer.cpp */; };
 		0B39062826DF187E00CDDCAC /* ApplicationControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B39062626DF187E00CDDCAC /* ApplicationControllerBasis.cpp */; };
 		0B39063A26DF18B600CDDCAC /* ApplicationControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B39063726DF18B600CDDCAC /* ApplicationControllerBasis.cpp */; };
 		0B39065126DF192A00CDDCAC /* ConfigurationControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B39065026DF192A00CDDCAC /* ConfigurationControllerBasis.cpp */; };
@@ -136,7 +135,6 @@
 		0BA5D3FE22D921EB00E837EF /* EqualizerPresetsController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D3C322D921EA00E837EF /* EqualizerPresetsController.cpp */; };
 		0BA5D3FF22D921EB00E837EF /* NetworkController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D3C522D921EA00E837EF /* NetworkController.cpp */; };
 		0BA5D40022D921EB00E837EF /* CommandResponseBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D3C622D921EA00E837EF /* CommandResponseBasis.cpp */; };
-		0BA5D40122D921EB00E837EF /* RunLoopQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D3C722D921EA00E837EF /* RunLoopQueue.cpp */; };
 		0BA5D40322D921EB00E837EF /* CommandEqualizerBandRequestBases.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D3C922D921EB00E837EF /* CommandEqualizerBandRequestBases.cpp */; };
 		0BA5D40422D921EB00E837EF /* CommandBalanceRequestBases.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D3CC22D921EB00E837EF /* CommandBalanceRequestBases.cpp */; };
 		0BA5D40522D921EB00E837EF /* CommandVolumeRequestBases.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D3CD22D921EB00E837EF /* CommandVolumeRequestBases.cpp */; };
@@ -256,6 +254,8 @@
 		0BF7FCFD2584469000F9836B /* CommandRoleDelimitedBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF7FCDC2584469000F9836B /* CommandRoleDelimitedBuffer.cpp */; };
 		0BF7FCFE2584469000F9836B /* CommandFrontPanelRegularExpressionBases.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF7FCE02584469000F9836B /* CommandFrontPanelRegularExpressionBases.cpp */; };
 		0BF7FCFF2584469000F9836B /* CommandNetworkRegularExpressionBases.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF7FCE22584469000F9836B /* CommandNetworkRegularExpressionBases.cpp */; };
+		0BFFA46626E01696000FBAAF /* RunLoopQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BFFA46126E01695000FBAAF /* RunLoopQueue.cpp */; };
+		0BFFA46726E01696000FBAAF /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BFFA46226E01695000FBAAF /* Timer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -441,9 +441,6 @@
 		0B388B7822D91CAC00148E44 /* HistoryButton@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HistoryButton@1x.png"; sourceTree = "<group>"; };
 		0B388B7922D91CAD00148E44 /* HistoryButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HistoryButton@2x.png"; sourceTree = "<group>"; };
 		0B388B7A22D91CAD00148E44 /* HistoryButton@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HistoryButton@3x.png"; sourceTree = "<group>"; };
-		0B39061026DF182700CDDCAC /* Timer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Timer.hpp; path = ../openhlx/src/lib/utilities/Timer.hpp; sourceTree = "<group>"; };
-		0B39061126DF182700CDDCAC /* TimerDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TimerDelegate.hpp; path = ../openhlx/src/lib/utilities/TimerDelegate.hpp; sourceTree = "<group>"; };
-		0B39061226DF182700CDDCAC /* Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Timer.cpp; path = ../openhlx/src/lib/utilities/Timer.cpp; sourceTree = "<group>"; };
 		0B39062626DF187E00CDDCAC /* ApplicationControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ApplicationControllerBasis.cpp; path = ../openhlx/src/lib/common/ApplicationControllerBasis.cpp; sourceTree = "<group>"; };
 		0B39062726DF187E00CDDCAC /* ApplicationControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationControllerBasis.hpp; path = ../openhlx/src/lib/common/ApplicationControllerBasis.hpp; sourceTree = "<group>"; };
 		0B39063226DF18B500CDDCAC /* ObjectControllerBasisErrorDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ObjectControllerBasisErrorDelegate.hpp; path = ../openhlx/src/lib/client/ObjectControllerBasisErrorDelegate.hpp; sourceTree = "<group>"; };
@@ -578,7 +575,6 @@
 		0BA5D38B22D921E900E837EF /* ZonesControllerCommands.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ZonesControllerCommands.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ZonesControllerCommands.hpp; sourceTree = "<absolute>"; };
 		0BA5D38C22D921E900E837EF /* ApplicationController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationController.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ApplicationController.hpp; sourceTree = "<absolute>"; };
 		0BA5D38D22D921E900E837EF /* SourcesController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SourcesController.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/SourcesController.hpp; sourceTree = "<absolute>"; };
-		0BA5D38E22D921E900E837EF /* RunLoopQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RunLoopQueue.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/utilities/RunLoopQueue.hpp; sourceTree = "<absolute>"; };
 		0BA5D38F22D921E900E837EF /* NetworkController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = NetworkController.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/NetworkController.hpp; sourceTree = "<absolute>"; };
 		0BA5D39022D921E900E837EF /* ControllerBasisDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ControllerBasisDelegate.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ControllerBasisDelegate.hpp; sourceTree = "<absolute>"; };
 		0BA5D39122D921E900E837EF /* EqualizerPresetsStateChangeNotifications.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EqualizerPresetsStateChangeNotifications.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/EqualizerPresetsStateChangeNotifications.cpp; sourceTree = "<absolute>"; };
@@ -632,10 +628,8 @@
 		0BA5D3C422D921EA00E837EF /* ConnectionManagerDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ConnectionManagerDelegate.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ConnectionManagerDelegate.hpp; sourceTree = "<absolute>"; };
 		0BA5D3C522D921EA00E837EF /* NetworkController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkController.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/NetworkController.cpp; sourceTree = "<absolute>"; };
 		0BA5D3C622D921EA00E837EF /* CommandResponseBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandResponseBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/CommandResponseBasis.cpp; sourceTree = "<absolute>"; };
-		0BA5D3C722D921EA00E837EF /* RunLoopQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RunLoopQueue.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/utilities/RunLoopQueue.cpp; sourceTree = "<absolute>"; };
 		0BA5D3C922D921EB00E837EF /* CommandEqualizerBandRequestBases.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandEqualizerBandRequestBases.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/CommandEqualizerBandRequestBases.cpp; sourceTree = "<absolute>"; };
 		0BA5D3CA22D921EB00E837EF /* ConnectionBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ConnectionBasis.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ConnectionBasis.hpp; sourceTree = "<absolute>"; };
-		0BA5D3CB22D921EB00E837EF /* RunLoopQueueDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RunLoopQueueDelegate.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/utilities/RunLoopQueueDelegate.hpp; sourceTree = "<absolute>"; };
 		0BA5D3CC22D921EB00E837EF /* CommandBalanceRequestBases.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandBalanceRequestBases.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/CommandBalanceRequestBases.cpp; sourceTree = "<absolute>"; };
 		0BA5D3CD22D921EB00E837EF /* CommandVolumeRequestBases.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandVolumeRequestBases.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/CommandVolumeRequestBases.cpp; sourceTree = "<absolute>"; };
 		0BA5D3CE22D921EB00E837EF /* CommandPropertyRequestBases.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CommandPropertyRequestBases.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/CommandPropertyRequestBases.hpp; sourceTree = "<absolute>"; };
@@ -784,6 +778,12 @@
 		0BF7FD02258446AE00F9836B /* Timeout.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Timeout.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/Timeout.hpp; sourceTree = "<absolute>"; };
 		0BF7FD03258446AE00F9836B /* Timeout.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Timeout.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/Timeout.cpp; sourceTree = "<absolute>"; };
 		0BF7FD04258446AE00F9836B /* Errors.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Errors.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/Errors.hpp; sourceTree = "<absolute>"; };
+		0BFFA46026E01695000FBAAF /* RunLoopQueueDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RunLoopQueueDelegate.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/RunLoopQueueDelegate.hpp; sourceTree = "<absolute>"; };
+		0BFFA46126E01695000FBAAF /* RunLoopQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RunLoopQueue.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/RunLoopQueue.cpp; sourceTree = "<absolute>"; };
+		0BFFA46226E01695000FBAAF /* Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Timer.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/Timer.cpp; sourceTree = "<absolute>"; };
+		0BFFA46326E01695000FBAAF /* Timer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Timer.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/Timer.hpp; sourceTree = "<absolute>"; };
+		0BFFA46426E01696000FBAAF /* TimerDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TimerDelegate.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/TimerDelegate.hpp; sourceTree = "<absolute>"; };
+		0BFFA46526E01696000FBAAF /* RunLoopQueue.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = RunLoopQueue.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/RunLoopQueue.hpp; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1002,16 +1002,10 @@
 				0B4981E12659C7EC00C735BB /* Parse.hpp */,
 				0B9155FC26CC35150048B995 /* Percentage.cpp */,
 				0B9155FD26CC35150048B995 /* Percentage.hpp */,
-				0BA5D3C722D921EA00E837EF /* RunLoopQueue.cpp */,
-				0BA5D38E22D921E900E837EF /* RunLoopQueue.hpp */,
-				0BA5D3CB22D921EB00E837EF /* RunLoopQueueDelegate.hpp */,
 				0BC939FD264B07AC009FD96F /* strntol.cpp */,
 				0BC939FE264B07AC009FD96F /* strntol.h */,
 				0BC939FB264B07AC009FD96F /* strntoul.cpp */,
 				0BC939FC264B07AC009FD96F /* strntoul.h */,
-				0B39061226DF182700CDDCAC /* Timer.cpp */,
-				0B39061026DF182700CDDCAC /* Timer.hpp */,
-				0B39061126DF182700CDDCAC /* TimerDelegate.hpp */,
 				0B71870922D91DAC0096BAF1 /* Utilities.hpp */,
 			);
 			name = "openhlx-utilities";
@@ -1253,12 +1247,18 @@
 				0BF7FD00258446AE00F9836B /* RegularExpression.hpp */,
 				0BA5D3B922D921EA00E837EF /* RunLoopParameters.cpp */,
 				0BA5D3A922D921EA00E837EF /* RunLoopParameters.hpp */,
+				0BFFA46126E01695000FBAAF /* RunLoopQueue.cpp */,
+				0BFFA46526E01696000FBAAF /* RunLoopQueue.hpp */,
+				0BFFA46026E01695000FBAAF /* RunLoopQueueDelegate.hpp */,
 				0BCD918F261E6D97004FCB21 /* SocketAddress.cpp */,
 				0BF7FCD62584468F00F9836B /* SocketAddress.hpp */,
 				0B62383F2565F42200E07B8D /* SourcesControllerBasis.cpp */,
 				0B6238402565F42200E07B8D /* SourcesControllerBasis.hpp */,
 				0BF7FD03258446AE00F9836B /* Timeout.cpp */,
 				0BF7FD02258446AE00F9836B /* Timeout.hpp */,
+				0BFFA46226E01695000FBAAF /* Timer.cpp */,
+				0BFFA46326E01695000FBAAF /* Timer.hpp */,
+				0BFFA46426E01696000FBAAF /* TimerDelegate.hpp */,
 				0B6238462565F42300E07B8D /* ZonesControllerBasis.cpp */,
 				0B6238452565F42300E07B8D /* ZonesControllerBasis.hpp */,
 			);
@@ -1810,6 +1810,7 @@
 				0BF7FCF92584469000F9836B /* CommandQueryBufferBasis.cpp in Sources */,
 				0BF7FCF22584469000F9836B /* CommandVolumeBufferBases.cpp in Sources */,
 				0BF7FCF32584469000F9836B /* CommandSourceBufferBases.cpp in Sources */,
+				0BFFA46726E01696000FBAAF /* Timer.cpp in Sources */,
 				0BF7FCE52584469000F9836B /* CommandBalanceBufferBasis.cpp in Sources */,
 				0BF7FCFE2584469000F9836B /* CommandFrontPanelRegularExpressionBases.cpp in Sources */,
 				0BF7FCE42584469000F9836B /* CommandNameSetBufferBasis.cpp in Sources */,
@@ -1821,6 +1822,7 @@
 				0BF7FCE62584469000F9836B /* CommandSourcesRegularExpressionBases.cpp in Sources */,
 				0BF7FCED2584469000F9836B /* CommandGroupsRegularExpressionBases.cpp in Sources */,
 				0BF7FCE82584469000F9836B /* OutputStringStream.cpp in Sources */,
+				0BFFA46626E01696000FBAAF /* RunLoopQueue.cpp in Sources */,
 				0BF7FCEC2584469000F9836B /* CommandFavoritesRegularExpressionBases.cpp in Sources */,
 				0BF7FCF72584469000F9836B /* CommandDelimitedBuffer.cpp in Sources */,
 				0BF7FCFC2584469000F9836B /* HostURLAddress.cpp in Sources */,
@@ -1839,7 +1841,6 @@
 				0B4981E22659C7EC00C735BB /* Parse.cpp in Sources */,
 				0B9155FE26CC35150048B995 /* Percentage.cpp in Sources */,
 				0BC93A00264B07AC009FD96F /* strntoul.cpp in Sources */,
-				0B39061326DF182700CDDCAC /* Timer.cpp in Sources */,
 				0BC93A01264B07AC009FD96F /* strntol.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1885,7 +1886,6 @@
 				0BA5D3DD22D921EB00E837EF /* EqualizerPresetsControllerCommands.cpp in Sources */,
 				0BA5D3F922D921EB00E837EF /* FrontPanelController.cpp in Sources */,
 				0BA5D40A22D921EB00E837EF /* ZonesStateChangeNotifications.cpp in Sources */,
-				0BA5D40122D921EB00E837EF /* RunLoopQueue.cpp in Sources */,
 				0B9155E726CC34D30048B995 /* SourcesControllerBasis.cpp in Sources */,
 				0BA5D3DB22D921EB00E837EF /* ConnectionBasis.cpp in Sources */,
 				0BA5D3F522D921EB00E837EF /* CommandManager.cpp in Sources */,
