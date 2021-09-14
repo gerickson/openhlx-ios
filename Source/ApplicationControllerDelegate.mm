@@ -25,7 +25,7 @@
  */
 
 
-#include "HLXClientControllerDelegate.hpp"
+#include "ApplicationControllerDelegate.hpp"
 
 
 /**
@@ -33,12 +33,12 @@
  *    This is a class constructor.
  *
  *  @param[in]  aObject  A pointer to an object, observing the
- *                       #HLXClientControllerDelegate protocol, to
+ *                       #ApplicationControllerDelegate protocol, to
  *                       initialize the class with.
  *
  */
-HLXClientControllerDelegate :: HLXClientControllerDelegate(id<HLXClientControllerDelegate> aObject) :
-    HLX::Client::ControllerDelegate(),
+ApplicationControllerDelegate :: ApplicationControllerDelegate(id<ApplicationControllerDelegate> aObject) :
+    HLX::Client::Application::ControllerDelegate(),
     mObject(aObject)
 {
     return;
@@ -49,7 +49,7 @@ HLXClientControllerDelegate :: HLXClientControllerDelegate(id<HLXClientControlle
  *    This is the class destructor.
  *
  */
-HLXClientControllerDelegate :: ~HLXClientControllerDelegate(void)
+ApplicationControllerDelegate :: ~ApplicationControllerDelegate(void)
 {
     return;
 }
@@ -69,7 +69,7 @@ HLXClientControllerDelegate :: ~HLXClientControllerDelegate(void)
  *
  */
 void
-HLXClientControllerDelegate :: ControllerWillResolve(HLX::Client::Controller &aController, const char *aHost)
+ApplicationControllerDelegate :: ControllerWillResolve(HLX::Client::Application::Controller &aController, const char *aHost)
 {
     const SEL lSelector = @selector(controllerWillResolve:withHost:);
 
@@ -93,7 +93,7 @@ HLXClientControllerDelegate :: ControllerWillResolve(HLX::Client::Controller &aC
  *
  */
 void
-HLXClientControllerDelegate :: ControllerIsResolving(HLX::Client::Controller &aController, const char *aHost)
+ApplicationControllerDelegate :: ControllerIsResolving(HLX::Client::Application::Controller &aController, const char *aHost)
 {
     const SEL lSelector = @selector(controllerIsResolving:withHost:);
 
@@ -125,7 +125,7 @@ HLXClientControllerDelegate :: ControllerIsResolving(HLX::Client::Controller &aC
  *
  */
 void
-HLXClientControllerDelegate :: ControllerDidResolve(HLX::Client::Controller &aController, const char *aHost, const HLX::Common::IPAddress &aIPAddress)
+ApplicationControllerDelegate :: ControllerDidResolve(HLX::Client::Application::Controller &aController, const char *aHost, const HLX::Common::IPAddress &aIPAddress)
 {
     const SEL lSelector = @selector(controllerDidResolve:withHost:andAddress:);
 
@@ -153,7 +153,7 @@ HLXClientControllerDelegate :: ControllerDidResolve(HLX::Client::Controller &aCo
  *
  */
 void
-HLXClientControllerDelegate :: ControllerDidNotResolve(HLX::Client::Controller &aController,
+ApplicationControllerDelegate :: ControllerDidNotResolve(HLX::Client::Application::Controller &aController,
                                                             const char *aHost,
                                                             const HLX::Common::Error &aError)
 {
@@ -181,7 +181,7 @@ HLXClientControllerDelegate :: ControllerDidNotResolve(HLX::Client::Controller &
  *
  */
 void
-HLXClientControllerDelegate :: ControllerWillConnect(HLX::Client::Controller &aController, CFURLRef aURLRef, const HLX::Common::Timeout &aTimeout)
+ApplicationControllerDelegate :: ControllerWillConnect(HLX::Client::Application::Controller &aController, CFURLRef aURLRef, const HLX::Common::Timeout &aTimeout)
 {
     const SEL lSelector = @selector(controllerWillConnect:withURL:andTimeout:);
 
@@ -205,7 +205,7 @@ HLXClientControllerDelegate :: ControllerWillConnect(HLX::Client::Controller &aC
  *
  */
 void
-HLXClientControllerDelegate :: ControllerIsConnecting(HLX::Client::Controller &aController, CFURLRef aURLRef, const HLX::Common::Timeout &aTimeout)
+ApplicationControllerDelegate :: ControllerIsConnecting(HLX::Client::Application::Controller &aController, CFURLRef aURLRef, const HLX::Common::Timeout &aTimeout)
 {
     const SEL lSelector = @selector(controllerIsConnecting:withURL:andTimeout:);
 
@@ -228,7 +228,7 @@ HLXClientControllerDelegate :: ControllerIsConnecting(HLX::Client::Controller &a
  *
  */
 void
-HLXClientControllerDelegate :: ControllerDidConnect(HLX::Client::Controller &aController, CFURLRef aURLRef)
+ApplicationControllerDelegate :: ControllerDidConnect(HLX::Client::Application::Controller &aController, CFURLRef aURLRef)
 {
     const SEL lSelector = @selector(controllerDidConnect:withURL:);
 
@@ -252,7 +252,7 @@ HLXClientControllerDelegate :: ControllerDidConnect(HLX::Client::Controller &aCo
  *
  */
 void
-HLXClientControllerDelegate :: ControllerDidNotConnect(HLX::Client::Controller &aController, CFURLRef aURLRef, const HLX::Common::Error &aError)
+ApplicationControllerDelegate :: ControllerDidNotConnect(HLX::Client::Application::Controller &aController, CFURLRef aURLRef, const HLX::Common::Error &aError)
 {
     const SEL lSelector = @selector(controllerDidNotConnect:withURL:andError:);
 
@@ -277,7 +277,7 @@ HLXClientControllerDelegate :: ControllerDidNotConnect(HLX::Client::Controller &
  *
  */
 void
-HLXClientControllerDelegate :: ControllerWillDisconnect(HLX::Client::Controller &aController, CFURLRef aURLRef)
+ApplicationControllerDelegate :: ControllerWillDisconnect(HLX::Client::Application::Controller &aController, CFURLRef aURLRef)
 {
     const SEL lSelector = @selector(controllerWillDisconnect:withURL:);
 
@@ -301,7 +301,7 @@ HLXClientControllerDelegate :: ControllerWillDisconnect(HLX::Client::Controller 
  *
  */
 void
-HLXClientControllerDelegate :: ControllerDidDisconnect(HLX::Client::Controller &aController, CFURLRef aURLRef, const HLX::Common::Error &aError)
+ApplicationControllerDelegate :: ControllerDidDisconnect(HLX::Client::Application::Controller &aController, CFURLRef aURLRef, const HLX::Common::Error &aError)
 {
     const SEL lSelector = @selector(controllerDidDisconnect:withURL:andError:);
 
@@ -327,7 +327,7 @@ HLXClientControllerDelegate :: ControllerDidDisconnect(HLX::Client::Controller &
  *
  */
 void
-HLXClientControllerDelegate :: ControllerDidNotDisconnect(HLX::Client::Controller &aController, CFURLRef aURLRef, const HLX::Common::Error &aError)
+ApplicationControllerDelegate :: ControllerDidNotDisconnect(HLX::Client::Application::Controller &aController, CFURLRef aURLRef, const HLX::Common::Error &aError)
 {
     const SEL lSelector = @selector(controllerDidNotDisconnect:withURL:andError:);
 
@@ -351,7 +351,7 @@ HLXClientControllerDelegate :: ControllerDidNotDisconnect(HLX::Client::Controlle
  *
  */
 void
-HLXClientControllerDelegate :: ControllerWillRefresh(HLX::Client::Controller &aController)
+ApplicationControllerDelegate :: ControllerWillRefresh(HLX::Client::Application::ControllerBasis &aController)
 {
     const SEL lSelector = @selector(controllerWillRefresh:);
 
@@ -374,7 +374,7 @@ HLXClientControllerDelegate :: ControllerWillRefresh(HLX::Client::Controller &aC
  *
  */
 void
-HLXClientControllerDelegate :: ControllerIsRefreshing(HLX::Client::Controller &aController, const uint8_t &aPercentComplete)
+ApplicationControllerDelegate :: ControllerIsRefreshing(HLX::Client::Application::ControllerBasis &aController, const uint8_t &aPercentComplete)
 {
     const SEL lSelector = @selector(controllerIsRefreshing:withProgress:);
 
@@ -395,7 +395,7 @@ HLXClientControllerDelegate :: ControllerIsRefreshing(HLX::Client::Controller &a
  *
  */
 void
-HLXClientControllerDelegate :: ControllerDidRefresh(HLX::Client::Controller &aController)
+ApplicationControllerDelegate :: ControllerDidRefresh(HLX::Client::Application::ControllerBasis &aController)
 {
     const SEL lSelector = @selector(controllerDidRefresh:);
 
@@ -417,7 +417,7 @@ HLXClientControllerDelegate :: ControllerDidRefresh(HLX::Client::Controller &aCo
  *
  */
 void
-HLXClientControllerDelegate :: ControllerDidNotRefresh(HLX::Client::Controller &aController, const HLX::Common::Error &aError)
+ApplicationControllerDelegate :: ControllerDidNotRefresh(HLX::Client::Application::ControllerBasis &aController, const HLX::Common::Error &aError)
 {
     const SEL lSelector = @selector(controllerDidNotRefresh:withError:);
 
@@ -446,7 +446,7 @@ HLXClientControllerDelegate :: ControllerDidNotRefresh(HLX::Client::Controller &
  *
  */
 void
-HLXClientControllerDelegate :: ControllerStateDidChange(HLX::Client::Controller &aController, const HLX::Client::StateChange::NotificationBasis &aStateChangeNotification)
+ApplicationControllerDelegate :: ControllerStateDidChange(HLX::Client::Application::Controller &aController, const HLX::Client::StateChange::NotificationBasis &aStateChangeNotification)
 {
     const SEL lSelector = @selector(controllerStateDidChange:withNotification:);
 
@@ -475,7 +475,7 @@ HLXClientControllerDelegate :: ControllerStateDidChange(HLX::Client::Controller 
  *
  */
 void
-HLXClientControllerDelegate :: ControllerError(HLX::Client::Controller &aController, const HLX::Common::Error &aError)
+ApplicationControllerDelegate :: ControllerError(HLX::Common::Application::ControllerBasis &aController, const HLX::Common::Error &aError)
 {
     const SEL lSelector = @selector(controllerError:withError:);
 

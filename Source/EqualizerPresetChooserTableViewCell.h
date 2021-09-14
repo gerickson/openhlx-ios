@@ -30,10 +30,10 @@
 
 #import <UIKit/UIKit.h>
 
-#include <OpenHLX/Client/HLXController.hpp>
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationController.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 
-#import "HLXClientControllerPointer.hpp"
+#import "ApplicationControllerPointer.hpp"
 
 
 namespace HLX
@@ -61,7 +61,7 @@ class EqualizerPresetModel;
      *  A shared pointer to the global HLX client controller instance.
      *
      */
-    MutableHLXClientControllerPointer         mHLXClientController;
+    MutableApplicationControllerPointer         mApplicationController;
 
     /**
      *  An immutable pointer to the zone preset equalizer for which its
@@ -97,7 +97,7 @@ class EqualizerPresetModel;
 // MARK: Workers
 
 - (HLX::Common::Status) configureCellForEqualizerPresetIdentifier: (const HLX::Model::EqualizerPresetModel::IdentifierType &)aEqualizerPresetIdentifier
-                                                   withController: (MutableHLXClientControllerPointer &)aHLXClientController
+                                                   withController: (MutableApplicationControllerPointer &)aApplicationController
                                                        isSelected: (const bool &)aIsSelected;
 
 @end

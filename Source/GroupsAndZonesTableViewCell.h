@@ -31,10 +31,10 @@
 
 #import <UIKit/UIKit.h>
 
-#include <OpenHLX/Client/HLXController.hpp>
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationController.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 
-#import "HLXClientControllerPointer.hpp"
+#import "ApplicationControllerPointer.hpp"
 
 
 namespace HLX
@@ -63,7 +63,7 @@ class ZoneModel;
      *  A shared pointer to the global HLX client controller instance.
      *
      */
-    MutableHLXClientControllerPointer  mHLXClientController;
+    MutableApplicationControllerPointer  mApplicationController;
 
     /**
      *  A Boolean indicating whether the table view cell is for a
@@ -157,7 +157,7 @@ class ZoneModel;
 // MARK: Workers
 
 - (HLX::Common::Status) configureCellForIdentifier: (const HLX::Model::IdentifierModel::IdentifierType &)aIdentifier
-                                    withController: (MutableHLXClientControllerPointer &)aHLXClientController
+                                    withController: (MutableApplicationControllerPointer &)aApplicationController
                                            asGroup: (bool)aIsGroup;
 
 @end

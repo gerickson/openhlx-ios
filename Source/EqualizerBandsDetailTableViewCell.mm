@@ -108,7 +108,7 @@ using namespace Nuovations;
             lStatus = mUnion.mEqualizerPresetModel->GetIdentifier(lEqualizerPresetIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mHLXClientController->EqualizerPresetSetBand(lEqualizerPresetIdentifier, mEqualizerBandIdentifier, EqualizerBandModel::kLevelFlat);
+            lStatus = mApplicationController->EqualizerPresetSetBand(lEqualizerPresetIdentifier, mEqualizerBandIdentifier, EqualizerBandModel::kLevelFlat);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
         else
@@ -119,7 +119,7 @@ using namespace Nuovations;
             lStatus = mUnion.mZoneModel->GetIdentifier(lZoneIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mHLXClientController->ZoneSetEqualizerBand(lZoneIdentifier, mEqualizerBandIdentifier, EqualizerBandModel::kLevelFlat);
+            lStatus = mApplicationController->ZoneSetEqualizerBand(lZoneIdentifier, mEqualizerBandIdentifier, EqualizerBandModel::kLevelFlat);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
     }
@@ -143,7 +143,7 @@ using namespace Nuovations;
             lStatus = mUnion.mEqualizerPresetModel->GetIdentifier(lEqualizerPresetIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mHLXClientController->EqualizerPresetDecreaseBand(lEqualizerPresetIdentifier, mEqualizerBandIdentifier);
+            lStatus = mApplicationController->EqualizerPresetDecreaseBand(lEqualizerPresetIdentifier, mEqualizerBandIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
         else
@@ -154,7 +154,7 @@ using namespace Nuovations;
             lStatus = mUnion.mZoneModel->GetIdentifier(lZoneIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mHLXClientController->ZoneDecreaseEqualizerBand(lZoneIdentifier, mEqualizerBandIdentifier);
+            lStatus = mApplicationController->ZoneDecreaseEqualizerBand(lZoneIdentifier, mEqualizerBandIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
     }
@@ -178,7 +178,7 @@ using namespace Nuovations;
             lStatus = mUnion.mEqualizerPresetModel->GetIdentifier(lEqualizerPresetIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mHLXClientController->EqualizerPresetSetBand(lEqualizerPresetIdentifier, mEqualizerBandIdentifier, lLevel);
+            lStatus = mApplicationController->EqualizerPresetSetBand(lEqualizerPresetIdentifier, mEqualizerBandIdentifier, lLevel);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
         else
@@ -189,7 +189,7 @@ using namespace Nuovations;
             lStatus = mUnion.mZoneModel->GetIdentifier(lZoneIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mHLXClientController->ZoneSetEqualizerBand(lZoneIdentifier, mEqualizerBandIdentifier, lLevel);
+            lStatus = mApplicationController->ZoneSetEqualizerBand(lZoneIdentifier, mEqualizerBandIdentifier, lLevel);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
     }
@@ -212,7 +212,7 @@ using namespace Nuovations;
             lStatus = mUnion.mEqualizerPresetModel->GetIdentifier(lEqualizerPresetIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mHLXClientController->EqualizerPresetIncreaseBand(lEqualizerPresetIdentifier, mEqualizerBandIdentifier);
+            lStatus = mApplicationController->EqualizerPresetIncreaseBand(lEqualizerPresetIdentifier, mEqualizerBandIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
         else
@@ -223,7 +223,7 @@ using namespace Nuovations;
             lStatus = mUnion.mZoneModel->GetIdentifier(lZoneIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mHLXClientController->ZoneIncreaseEqualizerBand(lZoneIdentifier, mEqualizerBandIdentifier);
+            lStatus = mApplicationController->ZoneIncreaseEqualizerBand(lZoneIdentifier, mEqualizerBandIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
     }
@@ -238,7 +238,7 @@ using namespace Nuovations;
 
 // MARK: Workers
 
-- (Status) configureCellForIdentifier: (const IdentifierModel::IdentifierType &)aEqualizerIdentifier andEqualizerBand: (const EqualizerBandModel::IdentifierType &)aEqualizerBandIdentifier withController: (std::shared_ptr<Controller> &)aHLXClientController asPreset: (bool)aIsPreset;
+- (Status) configureCellForIdentifier: (const IdentifierModel::IdentifierType &)aEqualizerIdentifier andEqualizerBand: (const EqualizerBandModel::IdentifierType &)aEqualizerBandIdentifier withController: (std::shared_ptr<HLX::Client::Application::Controller> &)aApplicationController asPreset: (bool)aIsPreset;
 {
     const EqualizerBandModel *         lEqualizerBandModel = nullptr;
     NSNumberFormatter *                lFrequencyFormatter = nullptr;
@@ -250,14 +250,14 @@ using namespace Nuovations;
 
 
     mIsPreset = aIsPreset;
-    mHLXClientController = aHLXClientController;
+    mApplicationController = aApplicationController;
 
     self.mBandSlider.minimumValue = static_cast<float>(EqualizerBandModel::kLevelMin);
     self.mBandSlider.maximumValue = static_cast<float>(EqualizerBandModel::kLevelMax);
 
     if (aIsPreset)
     {
-        lRetval = mHLXClientController->EqualizerPresetGet(aEqualizerIdentifier, mUnion.mEqualizerPresetModel);
+        lRetval = mApplicationController->EqualizerPresetGet(aEqualizerIdentifier, mUnion.mEqualizerPresetModel);
         nlREQUIRE_SUCCESS(lRetval, done);
 
         lRetval = mUnion.mEqualizerPresetModel->GetEqualizerBand(aEqualizerBandIdentifier, lEqualizerBandModel);
@@ -266,7 +266,7 @@ using namespace Nuovations;
     }
     else
     {
-        lRetval = mHLXClientController->ZoneGet(aEqualizerIdentifier, mUnion.mZoneModel);
+        lRetval = mApplicationController->ZoneGet(aEqualizerIdentifier, mUnion.mZoneModel);
         nlREQUIRE_SUCCESS(lRetval, done);
 
         lRetval = mUnion.mZoneModel->GetEqualizerBand(aEqualizerBandIdentifier, lEqualizerBandModel);

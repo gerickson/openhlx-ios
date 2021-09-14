@@ -135,7 +135,7 @@ using namespace Nuovations;
  *  @param[in]  aSoundMode                  An immutable reference to
  *                                          the current sound mode for
  *                                          the zone equalizer.
- *  @param[in]  aHLXClientController        A reference to a shared
+ *  @param[in]  aApplicationController        A reference to a shared
  *                                          pointer to a mutable HLX
  *                                          client controller instance
  *                                          to use for this table view
@@ -150,14 +150,14 @@ using namespace Nuovations;
  *
  */
 - (Status) configureCellForSoundMode: (const HLX::Model::SoundModel::SoundMode &)aSoundMode
-                      withController: (MutableHLXClientControllerPointer &)aHLXClientController
+                      withController: (MutableApplicationControllerPointer &)aApplicationController
                           isSelected: (const bool &)aIsSelected
 {
     NSString *  lSoundModeString;
     Status      lRetval = kStatus_Success;
 
 
-    mHLXClientController = aHLXClientController;
+    mApplicationController = aApplicationController;
 
     switch (aSoundMode)
     {

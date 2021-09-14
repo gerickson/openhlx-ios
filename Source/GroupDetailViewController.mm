@@ -30,14 +30,14 @@
 
 #include <LogUtilities/LogUtilities.hpp>
 
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 #include <OpenHLX/Client/GroupsStateChangeNotifications.hpp>
 #include <OpenHLX/Client/GroupsStateChangeNotifications.hpp>
 #include <OpenHLX/Model/VolumeModel.hpp>
 #include <OpenHLX/Utilities/Assert.hpp>
 
+#import "ApplicationControllerDelegate.hpp"
 #import "GroupsAndZonesTableViewCell.h"
-#import "HLXClientControllerDelegate.hpp"
 #import "SourceChooserViewController.h"
 #import "UIViewController+HLXClientDidDisconnectDelegateDefaultImplementations.h"
 #import "UIViewController+TopViewController.h"
@@ -89,7 +89,7 @@ class Controller;
 
     [super viewWillAppear: aAnimated];
 
-    lStatus = mHLXClientController->SetDelegate(mHLXClientControllerDelegate.get());
+    lStatus = mApplicationController->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
     [self refreshGroupMute];
@@ -159,8 +159,8 @@ done:
  */
 - (void) initCommon
 {
-    mHLXClientControllerDelegate.reset(new HLXClientControllerDelegate(self));
-    nlREQUIRE(mHLXClientControllerDelegate != nullptr, done);
+    mApplicationControllerDelegate.reset(new ApplicationControllerDelegate(self));
+    nlREQUIRE(mApplicationControllerDelegate != nullptr, done);
 
     mGroup = nullptr;
 
@@ -176,10 +176,10 @@ done:
         Status                         lStatus;
 
 
-        [lSourceChooserViewController setHLXClientController: mHLXClientController
+        [lSourceChooserViewController setApplicationController: mApplicationController
                                                     forGroup: mGroup];
 
-        lStatus = mHLXClientController->SetDelegate(nullptr);
+        lStatus = mApplicationController->SetDelegate(nullptr);
         nlREQUIRE_SUCCESS(lStatus, done);
     }
 
@@ -207,7 +207,7 @@ done:
         lStatus = mGroup->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->GroupSetMute(lIdentifier, lMute);
+        lStatus = mApplicationController->GroupSetMute(lIdentifier, lMute);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -233,7 +233,7 @@ done:
         lStatus = mGroup->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->GroupDecreaseVolume(lIdentifier);
+        lStatus = mApplicationController->GroupDecreaseVolume(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -260,7 +260,7 @@ done:
         lStatus = mGroup->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->GroupSetVolume(lIdentifier, lVolume);
+        lStatus = mApplicationController->GroupSetVolume(lIdentifier, lVolume);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -286,7 +286,7 @@ done:
         lStatus = mGroup->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->GroupIncreaseVolume(lIdentifier);
+        lStatus = mApplicationController->GroupIncreaseVolume(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -300,7 +300,7 @@ done:
  *  @brief
  *    Set the client controller and group for the view.
  *
- *  @param[in]  aHLXClientController  A reference to a shared pointer
+ *  @param[in]  aApplicationController  A reference to a shared pointer
  *                                    to a mutable HLX client
  *                                    controller instance to use for
  *                                    this view controller.
@@ -310,10 +310,10 @@ done:
  *                                    mutated.
  *
  */
-- (void) setHLXClientController: (MutableHLXClientControllerPointer &)aHLXClientController
+- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
                        forGroup: (const HLX::Model::GroupModel *)aGroup
 {
-    mHLXClientController = aHLXClientController;
+    mApplicationController = aApplicationController;
     mGroup               = aGroup;
 }
 
@@ -373,7 +373,7 @@ done:
         lStatus = mGroup->GetSources(&lSourceIdentifier, lSourceCount);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mHLXClientController->SourceGet(lSourceIdentifier, lSource);
+        lStatus = mApplicationController->SourceGet(lSourceIdentifier, lSource);
         nlREQUIRE_SUCCESS(lStatus, done);
 
         lStatus = lSource->GetName(lUTF8StringSourceName);
@@ -425,14 +425,14 @@ done:
 
 // MARK: Controller Delegations
 
-- (void) controllerDidDisconnect: (HLX::Client::Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
+- (void) controllerDidDisconnect: (HLX::Client::Application::Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
 {
     [self presentDidDisconnectAlert: aURLRef
                           withError: aError
                       andNamedSegue: @"DidDisconnect"];
 }
 
-- (void) controllerStateDidChange: (HLX::Client::Controller &)aController withNotification: (const HLX::Client::StateChange::NotificationBasis &)aStateChangeNotification
+- (void) controllerStateDidChange: (HLX::Client::Application::Controller &)aController withNotification: (const HLX::Client::StateChange::NotificationBasis &)aStateChangeNotification
 {
     const StateChange::Type  lType = aStateChangeNotification.GetType();
 

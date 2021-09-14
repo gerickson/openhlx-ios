@@ -29,8 +29,8 @@
 
 #include <LogUtilities/LogUtilities.hpp>
 
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 #include <OpenHLX/Client/ZonesStateChangeNotifications.hpp>
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
 #include <OpenHLX/Model/SoundModel.hpp>
 #include <OpenHLX/Utilities/Assert.hpp>
 
@@ -120,7 +120,7 @@ indexPathsForSoundMode(const SoundModel::SoundMode &aSoundMode)
 
     [super viewWillAppear: aAnimated];
 
-    lStatus = mHLXClientController->SetDelegate(mHLXClientControllerDelegate.get());
+    lStatus = mApplicationController->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
 done:
@@ -185,8 +185,8 @@ done:
  */
 - (void) initCommon
 {
-    mHLXClientControllerDelegate.reset(new HLXClientControllerDelegate(self));
-    nlREQUIRE(mHLXClientControllerDelegate != nullptr, done);
+    mApplicationControllerDelegate.reset(new ApplicationControllerDelegate(self));
+    nlREQUIRE(mApplicationControllerDelegate != nullptr, done);
 
     mCurrentSoundMode = SoundModel::kSoundModeDisabled;
 
@@ -207,7 +207,7 @@ done:
  *  @brief
  *    Set the client controller and zone for the view.
  *
- *  @param[in]  aHLXClientController  A reference to a shared pointer
+ *  @param[in]  aApplicationController  A reference to a shared pointer
  *                                    to a mutable HLX client
  *                                    controller instance to use for
  *                                    this view controller.
@@ -217,14 +217,14 @@ done:
  *                                    mutated.
  *
  */
-- (void) setHLXClientController: (MutableHLXClientControllerPointer &)aHLXClientController
+- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
                         forZone: (const HLX::Model::ZoneModel *)aZone
 {
     SoundModel::SoundMode  lSoundMode;
     Status                 lStatus;
 
 
-    mHLXClientController = aHLXClientController;
+    mApplicationController = aApplicationController;
     mZone                = aZone;
 
     lStatus = mZone->GetSoundMode(lSoundMode);
@@ -318,10 +318,10 @@ done:
     // up the sound mode set with a query for the same zone to force a
     // notification of the associated properties.
 
-    lStatus = mHLXClientController->ZoneSetSoundMode(lZoneIdentifier, lSelectedSoundMode);
+    lStatus = mApplicationController->ZoneSetSoundMode(lZoneIdentifier, lSelectedSoundMode);
     nlREQUIRE_SUCCESS(lStatus, done);
 
-    lStatus = mHLXClientController->ZoneQuery(lZoneIdentifier);
+    lStatus = mApplicationController->ZoneQuery(lZoneIdentifier);
     nlREQUIRE_SUCCESS(lStatus, done);
 
  done:
@@ -338,7 +338,7 @@ done:
 
 
     lStatus = [aCell configureCellForSoundMode: aSoundMode
-                                withController: mHLXClientController
+                                withController: mApplicationController
                                     isSelected: aIsSelected];
     nlREQUIRE_SUCCESS(lStatus, done);
 
@@ -402,14 +402,14 @@ done:
 
 // MARK: Controller Delegations
 
-- (void) controllerDidDisconnect: (Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
+- (void) controllerDidDisconnect: (HLX::Client::Application::Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
 {
     [self presentDidDisconnectAlert: aURLRef
                           withError: aError
                       andNamedSegue: @"DidDisconnect"];
 }
 
-- (void) controllerStateDidChange: (Controller &)aController withNotification: (const HLX::Client::StateChange::NotificationBasis &)aStateChangeNotification
+- (void) controllerStateDidChange: (HLX::Client::Application::Controller &)aController withNotification: (const HLX::Client::StateChange::NotificationBasis &)aStateChangeNotification
 {
     const StateChange::Type  lType = aStateChangeNotification.GetType();
 

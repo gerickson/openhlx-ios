@@ -30,10 +30,10 @@
 
 #import <UIKit/UIKit.h>
 
-#include <OpenHLX/Client/HLXController.hpp>
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationController.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 
-#import "HLXClientControllerPointer.hpp"
+#import "ApplicationControllerPointer.hpp"
 
 
 namespace HLX
@@ -54,7 +54,7 @@ class Controller;
      *  A shared pointer to the global HLX client controller instance.
      *
      */
-    MutableHLXClientControllerPointer  mHLXClientController;
+    MutableApplicationControllerPointer  mApplicationController;
 
     /**
      *  The zone equalizer sound mode to be observed for this cell.
@@ -88,7 +88,7 @@ class Controller;
 // MARK: Workers
 
 - (HLX::Common::Status) configureCellForSoundMode: (const HLX::Model::SoundModel::SoundMode &)aSoundMode
-                                   withController: (MutableHLXClientControllerPointer &)aHLXClientController
+                                   withController: (MutableApplicationControllerPointer &)aApplicationController
                                        isSelected: (const bool &)aIsSelected;
 
 @end

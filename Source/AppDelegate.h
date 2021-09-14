@@ -27,14 +27,14 @@
 
 #import <UIKit/UIKit.h>
 
-#include <OpenHLX/Client/HLXController.hpp>
+#include <OpenHLX/Client/ApplicationController.hpp>
 
-#import "HLXClientControllerPointer.hpp"
+#import "ApplicationControllerPointer.hpp"
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
-    MutableHLXClientControllerPointer  mHLXClientController;
+    MutableApplicationControllerPointer  mApplicationController;
 }
 
 // MARK: Properties
@@ -45,6 +45,6 @@
 
 // MARK: Getters
 
-- (MutableHLXClientControllerPointer) hlxClientController;
+- (MutableApplicationControllerPointer) hlxClientController;
 
 @end

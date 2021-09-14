@@ -92,10 +92,10 @@ using namespace Nuovations;
     lStatus = lRunLoopParameters.Init([[NSRunLoop currentRunLoop] getCFRunLoop], kCFRunLoopCommonModes);
     nlREQUIRE_SUCCESS(lStatus, done);
 
-    mHLXClientController.reset(new HLX::Client::Controller());
-    nlREQUIRE(mHLXClientController != nullptr, done);
+    mApplicationController.reset(new HLX::Client::Application::Controller());
+    nlREQUIRE(mApplicationController != nullptr, done);
 
-    lStatus = mHLXClientController->Init(lRunLoopParameters);
+    lStatus = mApplicationController->Init(lRunLoopParameters);
     nlREQUIRE_SUCCESS(lStatus, done);
 
  done:
@@ -149,7 +149,7 @@ using namespace Nuovations;
     UIApplication *lApplication = [UIApplication sharedApplication];
 
 
-    mHLXClientController->Disconnect();
+    mApplicationController->Disconnect();
 
     [lApplication endBackgroundTask: mBackgroundTaskIdentifier];
 
@@ -251,9 +251,9 @@ using namespace Nuovations;
  *    instance.
  *
  */
-- (std::shared_ptr<HLX::Client::Controller>) hlxClientController
+- (std::shared_ptr<HLX::Client::Application::Controller>) hlxClientController
 {
-    return (mHLXClientController);
+    return (mApplicationController);
 }
 
 @end

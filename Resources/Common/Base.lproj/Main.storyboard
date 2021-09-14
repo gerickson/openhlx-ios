@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="hwb-I7-WEx">
-                                <rect key="frame" x="40" y="159.5" width="240" height="65"/>
+                                <rect key="frame" x="40" y="190.5" width="240" height="65"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Network Address, Name, or URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XIz-ao-BWW" userLabel="Network Address, Name, or URL Text Field">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="34"/>
@@ -92,7 +92,7 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open HLX" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWL-Wu-bdg">
-                                <rect key="frame" x="106.5" y="100.5" width="107" height="25"/>
+                                <rect key="frame" x="106.5" y="131.5" width="107" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="VAa-vB-FCE"/>
                                 </constraints>
@@ -101,7 +101,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Installer" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IcA-ap-bNh">
-                                <rect key="frame" x="137.5" y="123.5" width="45" height="20"/>
+                                <rect key="frame" x="137.5" y="154.5" width="45" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="0xv-wt-ROy"/>
                                 </constraints>
@@ -118,9 +118,9 @@
                             <constraint firstItem="hwb-I7-WEx" firstAttribute="top" secondItem="IcA-ap-bNh" secondAttribute="bottom" constant="16" id="DmU-KJ-93B"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hwb-I7-WEx" secondAttribute="trailing" constant="40" id="Was-Bo-nub"/>
                             <constraint firstItem="hwb-I7-WEx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Yqu-Mw-WyN"/>
+                            <constraint firstItem="fWL-Wu-bdg" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="3:5" id="ekR-yP-Tul"/>
                             <constraint firstItem="IcA-ap-bNh" firstAttribute="centerX" secondItem="fWL-Wu-bdg" secondAttribute="centerX" id="gfD-eU-ySv"/>
                             <constraint firstItem="hwb-I7-WEx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="nqR-Fp-FEW"/>
-                            <constraint firstItem="hwb-I7-WEx" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="4:5" id="wda-Dm-KTk"/>
                         </constraints>
                     </view>
                     <connections>

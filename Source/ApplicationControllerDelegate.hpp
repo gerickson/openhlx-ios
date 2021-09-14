@@ -24,18 +24,18 @@
  *
  */
 
-#ifndef OBJC_HLXCLIENTCONTROLLERDELEGATE_HPP
-#define OBJC_HLXCLIENTCONTROLLERDELEGATE_HPP
+#ifndef OBJC_APPLICATIONCONTROLLERDELEGATE_HPP
+#define OBJC_APPLICATIONCONTROLLERDELEGATE_HPP
 
 #include <CoreFoundation/CFURL.h>
 #include <Foundation/Foundation.h>
 
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 #include <OpenHLX/Common/Errors.hpp>
 #include <OpenHLX/Common/Timeout.hpp>
 
 
-@protocol HLXClientControllerDelegate <NSObject>
+@protocol ApplicationControllerDelegate <NSObject>
 
 @optional
 
@@ -53,7 +53,7 @@
  *                                  name that will resolve.
  *
  */
-- (void) controllerWillResolve: (HLX::Client::Controller &)aController
+- (void) controllerWillResolve: (HLX::Client::Application::Controller &)aController
                       withHost: (const char *)aHost;
 
 /**
@@ -68,7 +68,7 @@
  *                                  name that is resolving.
  *
  */
-- (void) controllerIsResolving: (HLX::Client::Controller &)aController
+- (void) controllerIsResolving: (HLX::Client::Application::Controller &)aController
                       withHost: (const char *)aHost;
 
 /**
@@ -91,7 +91,7 @@
  *                                  resolved to.
  *
  */
-- (void) controllerDidResolve: (HLX::Client::Controller &)aController
+- (void) controllerDidResolve: (HLX::Client::Application::Controller &)aController
                      withHost: (const char *)aHost
                    andAddress: (const HLX::Common::IPAddress &)aIPAddress;
 
@@ -110,7 +110,7 @@
  *                                  resolution.
  *
  */
-- (void) controllerDidNotResolve: (HLX::Client::Controller &)aController
+- (void) controllerDidNotResolve: (HLX::Client::Application::Controller &)aController
                         withHost: (const char *)aHost
                         andError: (const HLX::Common::Error &)aError;
 
@@ -127,7 +127,7 @@
  *  @param[in]  aTimeout     The timeout for the connection.
  *
  */
-- (void) controllerWillConnect: (HLX::Client::Controller &)aController
+- (void) controllerWillConnect: (HLX::Client::Application::Controller &)aController
                        withURL: (NSURL *)aURL
                     andTimeout: (const HLX::Common::Timeout &)aTimeout;
 
@@ -142,7 +142,7 @@
  *  @param[in]  aTimeout     The timeout for the connection.
  *
  */
-- (void) controllerIsConnecting: (HLX::Client::Controller &)aController
+- (void) controllerIsConnecting: (HLX::Client::Application::Controller &)aController
                         withURL: (NSURL *)aURL
                      andTimeout: (const HLX::Common::Timeout &)aTimeout;
 
@@ -156,7 +156,7 @@
  *  @param[in]  aURL         The URL associated with the peer server.
  *
  */
-- (void) controllerDidConnect: (HLX::Client::Controller &)aController
+- (void) controllerDidConnect: (HLX::Client::Application::Controller &)aController
                       withURL: (NSURL *)aURL;
 
 /**
@@ -171,7 +171,7 @@
  *                           associated with the failed connection.
  *
  */
-- (void) controllerDidNotConnect: (HLX::Client::Controller &)aController
+- (void) controllerDidNotConnect: (HLX::Client::Application::Controller &)aController
                          withURL: (NSURL *)aURL
                         andError: (const HLX::Common::Error &)aError;
 
@@ -187,7 +187,7 @@
  *  @param[in]  aURL         The URL associated with the peer server.
  *
  */
-- (void) controllerWillDisconnect: (HLX::Client::Controller &)aController
+- (void) controllerWillDisconnect: (HLX::Client::Application::Controller &)aController
                           withURL: (NSURL *) aURL;
 
 /**
@@ -202,7 +202,7 @@
  *                           associated with the disconnection.
  *
  */
-- (void) controllerDidDisconnect: (HLX::Client::Controller &)aController
+- (void) controllerDidDisconnect: (HLX::Client::Application::Controller &)aController
                          withURL: (NSURL *) aURL
                         andError: (const HLX::Common::Error &)aError;
 
@@ -219,7 +219,7 @@
  *                           disconnection.
  *
  */
-- (void) controllerDidNotDisconnect: (HLX::Client::Controller &)aController
+- (void) controllerDidNotDisconnect: (HLX::Client::Application::Controller &)aController
                             withURL: (NSURL *) aURL
                            andError: (const HLX::Common::Error &) aError;
 
@@ -234,7 +234,7 @@
  *                           issued the notification.
  *
  */
-- (void) controllerWillRefresh: (HLX::Client::Controller &)aController;
+- (void) controllerWillRefresh: (HLX::Client::Application::ControllerBasis &)aController;
 
 /**
  *  @brief
@@ -248,7 +248,7 @@
  *                                that has completed.
  *
  */
-- (void) controllerIsRefreshing: (HLX::Client::Controller &)aController
+- (void) controllerIsRefreshing: (HLX::Client::Application::ControllerBasis &)aController
                    withProgress: (const uint8_t &)aPercentComplete;
 
 /**
@@ -260,7 +260,7 @@
  *                           issued the notification.
  *
  */
-- (void) controllerDidRefresh: (HLX::Client::Controller &)aController;
+- (void) controllerDidRefresh: (HLX::Client::Application::ControllerBasis &)aController;
 
 /**
  *  @brief
@@ -273,7 +273,7 @@
  *                           associated with the failure to refresh.
  *
  */
-- (void) controllerDidNotRefresh:  (HLX::Client::Controller &)aController
+- (void) controllerDidNotRefresh:  (HLX::Client::Application::ControllerBasis &)aController
                        withError: (const HLX::Common::Error &)aError;
 
 // State Change Method
@@ -293,7 +293,7 @@
  *                                        change.
  *
  */
-- (void) controllerStateDidChange: (HLX::Client::Controller &)aController
+- (void) controllerStateDidChange: (HLX::Client::Application::Controller &)aController
                  withNotification: (const HLX::Client::StateChange::NotificationBasis &)aStateChangeNotification;
 
 // Error Method
@@ -313,7 +313,7 @@
  *                           associated with the event.
  *
  */
-- (void) controllerError: (HLX::Client::Controller &)aController
+- (void) controllerError: (HLX::Common::Application::ControllerBasis &)aController
                withError: (const HLX::Common::Error) aError;
 
 @end
@@ -326,53 +326,53 @@
  *  This object can act as a default HLX client controller delegate
  *  for other Objective C/C++ objects in the app by instantiating this
  *  object with a pointer to the Objective C/C++ class object, so long
- *  as that object observes the HLXClientControllerDelegate protocol.
+ *  as that object observes the ApplicationControllerDelegate protocol.
  *
  */
-class HLXClientControllerDelegate :
-    public HLX::Client::ControllerDelegate
+class ApplicationControllerDelegate :
+    public HLX::Client::Application::ControllerDelegate
 {
  public:
-    HLXClientControllerDelegate(id<HLXClientControllerDelegate> aObject);
-    virtual ~HLXClientControllerDelegate(void);
+    ApplicationControllerDelegate(id<ApplicationControllerDelegate> aObject);
+    virtual ~ApplicationControllerDelegate(void);
 
     // Resolve
 
-    void ControllerWillResolve(HLX::Client::Controller &aController, const char *aHost) final;
-    void ControllerIsResolving(HLX::Client::Controller &aController, const char *aHost) final;
-    void ControllerDidResolve(HLX::Client::Controller &aController, const char *aHost, const HLX::Common::IPAddress &aIPAddress) final;
-    void ControllerDidNotResolve(HLX::Client::Controller &aController, const char *aHost, const HLX::Common::Error &aError) final;
+    void ControllerWillResolve(HLX::Client::Application::Controller &aController, const char *aHost) final;
+    void ControllerIsResolving(HLX::Client::Application::Controller &aController, const char *aHost) final;
+    void ControllerDidResolve(HLX::Client::Application::Controller &aController, const char *aHost, const HLX::Common::IPAddress &aIPAddress) final;
+    void ControllerDidNotResolve(HLX::Client::Application::Controller &aController, const char *aHost, const HLX::Common::Error &aError) final;
 
     // Connect
 
-    void ControllerWillConnect(HLX::Client::Controller &aController, CFURLRef aURLRef, const HLX::Common::Timeout &aTimeout) final;
-    void ControllerIsConnecting(HLX::Client::Controller &aController, CFURLRef aURLRef, const HLX::Common::Timeout &aTimeout) final;
-    void ControllerDidConnect(HLX::Client::Controller &aController, CFURLRef aURLRef) final;
-    void ControllerDidNotConnect(HLX::Client::Controller &aController, CFURLRef aURLRef, const HLX::Common::Error &aError) final;
+    void ControllerWillConnect(HLX::Client::Application::Controller &aController, CFURLRef aURLRef, const HLX::Common::Timeout &aTimeout) final;
+    void ControllerIsConnecting(HLX::Client::Application::Controller &aController, CFURLRef aURLRef, const HLX::Common::Timeout &aTimeout) final;
+    void ControllerDidConnect(HLX::Client::Application::Controller &aController, CFURLRef aURLRef) final;
+    void ControllerDidNotConnect(HLX::Client::Application::Controller &aController, CFURLRef aURLRef, const HLX::Common::Error &aError) final;
 
     // Disconnect
 
-    void ControllerWillDisconnect(HLX::Client::Controller &aController, CFURLRef aURLRef) final;
-    void ControllerDidDisconnect(HLX::Client::Controller &aController, CFURLRef aURLRef, const HLX::Common::Error &aError) final;
-    void ControllerDidNotDisconnect(HLX::Client::Controller &aController, CFURLRef aURLRef, const HLX::Common::Error &aError) final;
+    void ControllerWillDisconnect(HLX::Client::Application::Controller &aController, CFURLRef aURLRef) final;
+    void ControllerDidDisconnect(HLX::Client::Application::Controller &aController, CFURLRef aURLRef, const HLX::Common::Error &aError) final;
+    void ControllerDidNotDisconnect(HLX::Client::Application::Controller &aController, CFURLRef aURLRef, const HLX::Common::Error &aError) final;
 
     // Refresh / Reload
 
-    void ControllerWillRefresh(HLX::Client::Controller &aController) final;
-    void ControllerIsRefreshing(HLX::Client::Controller &aController, const uint8_t &aPercentComplete) final;
-    void ControllerDidRefresh(HLX::Client::Controller &aController) final;
-    void ControllerDidNotRefresh(HLX::Client::Controller &aController, const HLX::Common::Error &aError) final;
+    void ControllerWillRefresh(HLX::Client::Application::ControllerBasis &aController) final;
+    void ControllerIsRefreshing(HLX::Client::Application::ControllerBasis &aController, const uint8_t &aPercentComplete) final;
+    void ControllerDidRefresh(HLX::Client::Application::ControllerBasis &aController) final;
+    void ControllerDidNotRefresh(HLX::Client::Application::ControllerBasis &aController, const HLX::Common::Error &aError) final;
 
     // State Change
 
-    void ControllerStateDidChange(HLX::Client::Controller &aController, const HLX::Client::StateChange::NotificationBasis &aStateChangeNotification) final;
+    void ControllerStateDidChange(HLX::Client::Application::Controller &aController, const HLX::Client::StateChange::NotificationBasis &aStateChangeNotification) final;
 
     // Error
 
-    void ControllerError(HLX::Client::Controller &aController, const HLX::Common::Error &aError) final;
+    void ControllerError(HLX::Common::Application::ControllerBasis &aController, const HLX::Common::Error &aError) final;
 
  private:
-    id<HLXClientControllerDelegate> mObject;
+    id<ApplicationControllerDelegate> mObject;
 };
 
-#endif // OBJC_HLXCLIENTCONTROLLERDELEGATE_HPP
+#endif // OBJC_APPLICATIONCONTROLLERDELEGATE_HPP

@@ -29,7 +29,7 @@
 
 #include <LogUtilities/LogUtilities.hpp>
 
-#include <OpenHLX/Client/HLXControllerDelegate.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 #include <OpenHLX/Client/EqualizerPresetsStateChangeNotifications.hpp>
 #include <OpenHLX/Client/ZonesStateChangeNotifications.hpp>
 #include <OpenHLX/Model/EqualizerBandsModel.hpp>
@@ -119,7 +119,7 @@ static NSArray *indexPathsForEqualizerPreset(const SoundModel::SoundMode &aEqual
 
     [super viewWillAppear: aAnimated];
 
-    lStatus = mHLXClientController->SetDelegate(mHLXClientControllerDelegate.get());
+    lStatus = mApplicationController->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
 done:
@@ -187,8 +187,8 @@ done:
  */
 - (void) initCommon
 {
-    mHLXClientControllerDelegate.reset(new HLXClientControllerDelegate(self));
-    nlREQUIRE(mHLXClientControllerDelegate != nullptr, done);
+    mApplicationControllerDelegate.reset(new ApplicationControllerDelegate(self));
+    nlREQUIRE(mApplicationControllerDelegate != nullptr, done);
 
     mCurrentEqualizerPresetIdentifier = IdentifierModel::kIdentifierInvalid;
 
@@ -209,7 +209,7 @@ done:
  *  @brief
  *    Set the client controller and zone for the view.
  *
- *  @param[in]  aHLXClientController  A reference to a shared pointer
+ *  @param[in]  aApplicationController  A reference to a shared pointer
  *                                    to a mutable HLX client
  *                                    controller instance to use for
  *                                    this view controller.
@@ -219,14 +219,14 @@ done:
  *                                    observed or mutated.
  *
  */
-- (void) setHLXClientController: (MutableHLXClientControllerPointer &)aHLXClientController
+- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
                         forZone: (const HLX::Model::ZoneModel *)aZone
 {
     EqualizerPresetModel::IdentifierType  lEqualizerPresetIdentifier;
     Status                                lStatus;
 
 
-    mHLXClientController = aHLXClientController;
+    mApplicationController = aApplicationController;
     mZone                = aZone;
 
     lStatus = mZone->GetEqualizerPreset(lEqualizerPresetIdentifier);
@@ -249,14 +249,14 @@ done:
 
 - (NSInteger) tableView: (UITableView *)aTableView numberOfRowsInSection: (NSInteger)aSection
 {
-    size_t     lValue = 0;
-    NSInteger  lRetval = 0;
-    Status     lStatus;
+    EqualizerPresetsModel::IdentifierType  lValue = 0;
+    NSInteger                              lRetval = 0;
+    Status                                 lStatus;
 
 
     nlREQUIRE(aSection == 0, done);
 
-    lStatus = mHLXClientController->EqualizerPresetsGetMax(lValue);
+    lStatus = mApplicationController->EqualizerPresetsGetMax(lValue);
     nlREQUIRE_SUCCESS(lStatus, done);
 
     lRetval = lValue;
@@ -324,7 +324,7 @@ done:
     lStatus = mZone->GetIdentifier(lZoneIdentifier);
     nlREQUIRE_SUCCESS(lStatus, done);
 
-    lStatus = mHLXClientController->ZoneSetEqualizerPreset(lZoneIdentifier, lSelectedEqualizerPresetIdentifier);
+    lStatus = mApplicationController->ZoneSetEqualizerPreset(lZoneIdentifier, lSelectedEqualizerPresetIdentifier);
     nlREQUIRE_SUCCESS(lStatus, done);
 
  done:
@@ -339,7 +339,7 @@ done:
 
 
     lStatus = [aCell configureCellForEqualizerPresetIdentifier: aEqualizerPresetIdentifier
-                                                withController: mHLXClientController
+                                                withController: mApplicationController
                                                     isSelected: aIsSelected];
     nlREQUIRE_SUCCESS(lStatus, done);
 
@@ -427,14 +427,14 @@ done:
 
 // MARK: Controller Delegations
 
-- (void) controllerDidDisconnect: (Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
+- (void) controllerDidDisconnect: (HLX::Client::Application::Controller &)aController withURL: (NSURL *)aURLRef andError: (const HLX::Common::Error &)aError
 {
     [self presentDidDisconnectAlert: aURLRef
                           withError: aError
                       andNamedSegue: @"DidDisconnect"];
 }
 
-- (void) controllerStateDidChange: (Controller &)aController withNotification: (const StateChange::NotificationBasis &)aStateChangeNotification
+- (void) controllerStateDidChange: (HLX::Client::Application::Controller &)aController withNotification: (const StateChange::NotificationBasis &)aStateChangeNotification
 {
     const StateChange::Type  lType = aStateChangeNotification.GetType();
 
