@@ -293,7 +293,7 @@
  *                                        change.
  *
  */
-- (void) controllerStateDidChange: (HLX::Client::Application::Controller &)aController
+- (void) controllerStateDidChange: (HLX::Client::Application::ControllerBasis &)aController
                  withNotification: (const HLX::Client::StateChange::NotificationBasis &)aStateChangeNotification;
 
 // Error Method
@@ -365,7 +365,7 @@ class ApplicationControllerDelegate :
 
     // State Change
 
-    void ControllerStateDidChange(HLX::Client::Application::Controller &aController, const HLX::Client::StateChange::NotificationBasis &aStateChangeNotification) final;
+    void ControllerStateDidChange(HLX::Client::Application::ControllerBasis &aController, const HLX::Client::StateChange::NotificationBasis &aStateChangeNotification) final;
 
     // Error
 

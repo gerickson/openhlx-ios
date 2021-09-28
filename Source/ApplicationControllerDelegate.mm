@@ -446,7 +446,7 @@ ApplicationControllerDelegate :: ControllerDidNotRefresh(HLX::Client::Applicatio
  *
  */
 void
-ApplicationControllerDelegate :: ControllerStateDidChange(HLX::Client::Application::Controller &aController, const HLX::Client::StateChange::NotificationBasis &aStateChangeNotification)
+ApplicationControllerDelegate :: ControllerStateDidChange(HLX::Client::Application::ControllerBasis &aController, const HLX::Client::StateChange::NotificationBasis &aStateChangeNotification)
 {
     const SEL lSelector = @selector(controllerStateDidChange:withNotification:);
 

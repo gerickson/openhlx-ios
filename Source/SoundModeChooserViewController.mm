@@ -409,7 +409,7 @@ done:
                       andNamedSegue: @"DidDisconnect"];
 }
 
-- (void) controllerStateDidChange: (HLX::Client::Application::Controller &)aController withNotification: (const HLX::Client::StateChange::NotificationBasis &)aStateChangeNotification
+- (void) controllerStateDidChange: (HLX::Client::Application::ControllerBasis &)aController withNotification: (const HLX::Client::StateChange::NotificationBasis &)aStateChangeNotification
 {
     const StateChange::Type  lType = aStateChangeNotification.GetType();
 
