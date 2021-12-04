@@ -30,11 +30,15 @@
 #include <OpenHLX/Common/Errors.hpp>
 #include <OpenHLX/Utilities/Assert.hpp>
 
+#import "ConnectViewController.h"
+#import "UIViewController+TopViewController.h"
+
 
 using namespace HLX::Client;
 using namespace HLX::Common;
 using namespace HLX::Model;
 using namespace Nuovations;
+
 
 @interface AppDelegate ()
 {
@@ -235,6 +239,77 @@ using namespace Nuovations;
 - (void)applicationWillTerminate: (UIApplication *)aApplication
 {
     return;
+}
+
+/**
+ *  @brief
+ *    Asks the delegate to open a resource specified by a URL, and
+ *    provides a dictionary of launch options.
+ *
+ *  @param[in]  aApplication  A pointer to the application singleton.
+ *  @param[in]  aURL          A pointer to the URL to open.
+ *  @param[in]  aOptions      A pointer to an immutable dictionary or URL
+ *                            handling options. This dictionary may
+ *                            contain zero or more of the following
+ *                            key/value pairs: @a
+ *                            UIApplicationOpenURLOptionsSourceApplicationKey,
+ *                            a key to a value that is the string of
+ *                            the bundle ID of the app that sent the
+ *                            openURL request to this app; @a
+ *                            UIApplicationOpenURLOptionsAnnotationKey,
+ *                            a key to a value that contains the
+ *                            information passed to a document
+ *                            interaction controller object's
+ *                            annotation property; and
+ *                            UIApplicationOpenURLOptionsOpenInPlaceKey,
+ *                            a key to a value that is a Boolean
+ *                            indicating whether a document must be
+ *                            copied before you use it.
+ *
+ *  @returns
+ *     YES if the delegate successfully handled the request or NO if
+ *     the attempt to open the URL resource failed.
+ *
+ */
+- (BOOL)application: (UIApplication *)aApplication openURL: (NSURL *)aURL options: (NSDictionary<UIApplicationOpenURLOptionsKey, id> *)aOptions
+{
+    NSString * lScheme = [aURL scheme];
+    BOOL       lRetval = NO;
+
+    if (mApplicationController->SupportsScheme((__bridge CFStringRef)lScheme))
+    {
+        NSString * const   lStoryboardName = @"Main";
+        UIStoryboard *     lStoryboard;
+        NSString *const    lViewControllerId = @"Connect View Controller";
+        UIViewController * lViewController;
+
+
+        // Load the connect view controller programmatically.
+
+        lStoryboard = [UIStoryboard storyboardWithName: lStoryboardName
+                                                bundle: nullptr];
+        nlREQUIRE(lStoryboard != nullptr, done);
+
+        lViewController = [lStoryboard instantiateViewControllerWithIdentifier: lViewControllerId];
+        nlREQUIRE(lViewController != nullptr, done);
+
+        // Present the refreshing view controller modally, consuming
+        // the full screen.
+
+        lViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+        lViewController.modalTransitionStyle   = UIModalTransitionStyleCoverVertical;
+
+        [[UIViewController topViewController] presentViewController: lViewController
+                                                           animated: true
+                                                         completion: ^(void) {
+            [static_cast<ConnectViewController *>(lViewController) openURL: aURL];
+        }];
+
+        lRetval = YES;
+    }
+
+done:
+    return (lRetval);
 }
 
 // MARK: Instance Methods
