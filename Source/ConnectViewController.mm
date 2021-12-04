@@ -386,19 +386,12 @@ done:
 
     if ((aSender == self.mConnectButton) || (aSender == self.mNetworkAddressOrNameTextField))
     {
-        Status             lStatus;
-        NSString          *lNetworkAddressOrName = nullptr;
-
-
-        // Disable the connect button while connecting.
-
-        self.mConnectButton.enabled = NO;
+        NSString *lNetworkAddressOrName = nullptr;
 
         lNetworkAddressOrName = self.mNetworkAddressOrNameTextField.text;
         nlREQUIRE(lNetworkAddressOrName != nullptr, done);
 
-        lStatus = mApplicationController->Connect([lNetworkAddressOrName UTF8String]);
-        nlREQUIRE_SUCCESS(lStatus, done);
+        [self openNetworkAddressOrName: lNetworkAddressOrName];
     }
 
  done:
@@ -457,6 +450,39 @@ done:
 - (void) onConnectCancelled: (UIAlertAction *)aAlertAction
 {
     mApplicationController->Disconnect();
+}
+
+// MARK: Workers
+
+/**
+ *  @brief
+ *    Attempt to open (that is, connect to) the HLX server with the
+ *    specified IP address, host name, IP address and port, host name
+ *    and port, or URL.
+ *
+ *  @param[in]  aNetworkAddressOrName  A pointer to a string containing
+ *                                     the IP address, host name, IP
+ *                                     address and port, host name
+ *                                     and port, or URL to open (that
+ *                                     is, connect to).
+ *
+ */
+- (void) openNetworkAddressOrName: (NSString *)aNetworkAddressOrName
+{
+    Status lStatus;
+
+    nlREQUIRE(aNetworkAddressOrName != nullptr, done);
+    nlREQUIRE([aNetworkAddressOrName length] > 0, done);
+
+    // Disable the connect button while connecting.
+
+    self.mConnectButton.enabled = NO;
+
+    lStatus = mApplicationController->Connect([aNetworkAddressOrName UTF8String]);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+done:
+    return;
 }
 
 - (void) controllerWillResolve: (HLX::Client::Application::Controller &)aController withHost: (const char *)aHost
