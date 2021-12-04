@@ -463,8 +463,9 @@ done:
  *  @param[in]  aNetworkAddressOrName  A pointer to a string containing
  *                                     the IP address, host name, IP
  *                                     address and port, host name
- *                                     and port, or URL to open (that
- *                                     is, connect to).
+ *                                     and port, or URL of the HLX
+ *                                     server to open (that is,
+ *                                     connect to).
  *
  */
 - (void) openNetworkAddressOrName: (NSString *)aNetworkAddressOrName
@@ -483,6 +484,41 @@ done:
 
 done:
     return;
+}
+
+/**
+ *  @brief
+ *    Attempt to open (that is, connect to) the HLX server with the
+ *    specified URL.
+ *
+ *  @note
+ *    This will close (that is, disconnect) any existing HLX server
+ *    connection and will populate the @a
+ *    mNetworkAddressOrNameTextField field with the URL.
+ *
+ *  @param[in]  aURL  A pointer to the URL of the HLX server to open
+ *                    (that is, connect to).
+ *
+ */
+- (void) openURL: (NSURL *)aURL
+{
+    NSString *lNetworkAddressOrNameString = [aURL absoluteString];
+
+    // Disconnect from any existing HLX server that might currently be
+    // connected.
+
+    mApplicationController->Disconnect();
+
+    // Populate the network address or name text field such that the
+    // connection history is correctly populated if the connection is
+    // successful and such that the user has visibility into what URL
+    // is being opened.
+
+    self.mNetworkAddressOrNameTextField.text = lNetworkAddressOrNameString;
+
+    // Peform the actual open (that is, connection).
+
+    [self openNetworkAddressOrName: lNetworkAddressOrNameString];
 }
 
 - (void) controllerWillResolve: (HLX::Client::Application::Controller &)aController withHost: (const char *)aHost

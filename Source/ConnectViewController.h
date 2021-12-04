@@ -162,6 +162,7 @@ class ApplicationControllerDelegate;
 // MARK: Workers
 
 - (void) openNetworkAddressOrName: (NSString *)aNetworkAddressOrName;
+- (void) openURL: (NSURL *)aURL;
 
 @end
 
