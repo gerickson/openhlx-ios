@@ -159,6 +159,11 @@ class ApplicationControllerDelegate;
 
 - (void) onConnectCancelled: (UIAlertAction *)aAlertAction;
 
+// MARK: Workers
+
+- (void) openNetworkAddressOrName: (NSString *)aNetworkAddressOrName;
+- (void) openURL: (NSURL *)aURL;
+
 @end
 
 #endif // CONNECTVIEWCONTROLLER_H
