@@ -47,6 +47,7 @@
 		0B39065126DF192A00CDDCAC /* ConfigurationControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B39065026DF192A00CDDCAC /* ConfigurationControllerBasis.cpp */; };
 		0B40B63C250ED1A6009A65DA /* ConnectHistoryViewTableCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0B40B63B250ED1A6009A65DA /* ConnectHistoryViewTableCell.mm */; };
 		0B4981E22659C7EC00C735BB /* Parse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B4981E02659C7EC00C735BB /* Parse.cpp */; };
+		0B51DB3C27868204003EAE48 /* NetworkStateChangeNotifications.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B51DB3A27868204003EAE48 /* NetworkStateChangeNotifications.cpp */; };
 		0B6238472565F42300E07B8D /* EqualizerPresetsControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B62383E2565F42200E07B8D /* EqualizerPresetsControllerBasis.cpp */; };
 		0B6238482565F42300E07B8D /* SourcesControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B62383F2565F42200E07B8D /* SourcesControllerBasis.cpp */; };
 		0B6238492565F42300E07B8D /* GroupsControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B6238412565F42200E07B8D /* GroupsControllerBasis.cpp */; };
@@ -460,6 +461,8 @@
 		0B4981E02659C7EC00C735BB /* Parse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Parse.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/utilities/Parse.cpp; sourceTree = "<absolute>"; };
 		0B4981E12659C7EC00C735BB /* Parse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Parse.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/utilities/Parse.hpp; sourceTree = "<absolute>"; };
 		0B4982C3265B28F400C735BB /* Open HLX Installer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Open HLX Installer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B51DB3A27868204003EAE48 /* NetworkStateChangeNotifications.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkStateChangeNotifications.cpp; path = ../openhlx/src/lib/client/NetworkStateChangeNotifications.cpp; sourceTree = "<group>"; };
+		0B51DB3B27868204003EAE48 /* NetworkStateChangeNotifications.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = NetworkStateChangeNotifications.hpp; path = ../openhlx/src/lib/client/NetworkStateChangeNotifications.hpp; sourceTree = "<group>"; };
 		0B53136F2667336600E5FD74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0B565E6E23FB30C0001C71DB /* libopenhlx-common.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libopenhlx-common.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B565E7723FB31C3001C71DB /* ConnectionBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ConnectionBuffer.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/ConnectionBuffer.hpp; sourceTree = "<absolute>"; };
@@ -576,7 +579,6 @@
 		0BA5D38C22D921E900E837EF /* ApplicationController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ApplicationController.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ApplicationController.hpp; sourceTree = "<absolute>"; };
 		0BA5D38D22D921E900E837EF /* SourcesController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = SourcesController.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/SourcesController.hpp; sourceTree = "<absolute>"; };
 		0BA5D38F22D921E900E837EF /* NetworkController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = NetworkController.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/NetworkController.hpp; sourceTree = "<absolute>"; };
-		0BA5D39022D921E900E837EF /* ControllerBasisDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ControllerBasisDelegate.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/ControllerBasisDelegate.hpp; sourceTree = "<absolute>"; };
 		0BA5D39122D921E900E837EF /* EqualizerPresetsStateChangeNotifications.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EqualizerPresetsStateChangeNotifications.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/EqualizerPresetsStateChangeNotifications.cpp; sourceTree = "<absolute>"; };
 		0BA5D39222D921E900E837EF /* InfraredController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = InfraredController.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/InfraredController.hpp; sourceTree = "<absolute>"; };
 		0BA5D39322D921E900E837EF /* EqualizerBandStateChangeNotificationBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EqualizerBandStateChangeNotificationBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/client/EqualizerBandStateChangeNotificationBasis.cpp; sourceTree = "<absolute>"; };
@@ -1063,7 +1065,6 @@
 				0BA5D3C422D921EA00E837EF /* ConnectionManagerDelegate.hpp */,
 				0BA5D3B022D921EA00E837EF /* ConnectionTelnet.cpp */,
 				0BA5D3B322D921EA00E837EF /* ConnectionTelnet.hpp */,
-				0BA5D39022D921E900E837EF /* ControllerBasisDelegate.hpp */,
 				0BA5D39322D921E900E837EF /* EqualizerBandStateChangeNotificationBasis.cpp */,
 				0BA5D39F22D921E900E837EF /* EqualizerBandStateChangeNotificationBasis.hpp */,
 				0BA5D3C322D921EA00E837EF /* EqualizerPresetsController.cpp */,
@@ -1116,6 +1117,8 @@
 				0B9155D026CC34D20048B995 /* NetworkControllerBasis.hpp */,
 				0B829881235942CD00BECF76 /* NetworkControllerCommands.cpp */,
 				0B829882235942CE00BECF76 /* NetworkControllerCommands.hpp */,
+				0B51DB3A27868204003EAE48 /* NetworkStateChangeNotifications.cpp */,
+				0B51DB3B27868204003EAE48 /* NetworkStateChangeNotifications.hpp */,
 				0BA5D39422D921E900E837EF /* ObjectControllerBasis.cpp */,
 				0BA5D39722D921E900E837EF /* ObjectControllerBasis.hpp */,
 				0B39063526DF18B500CDDCAC /* ObjectControllerBasisDelegate.hpp */,
@@ -1906,6 +1909,7 @@
 				0BA5D3E422D921EB00E837EF /* SourcesController.cpp in Sources */,
 				0BA5D40422D921EB00E837EF /* CommandBalanceRequestBases.cpp in Sources */,
 				0BA5D3E822D921EB00E837EF /* ZonesControllerCommands.cpp in Sources */,
+				0B51DB3C27868204003EAE48 /* NetworkStateChangeNotifications.cpp in Sources */,
 				0BA5D3F322D921EB00E837EF /* ConnectionManager.cpp in Sources */,
 				0BA5D40822D921EB00E837EF /* CommandErrorResponse.cpp in Sources */,
 				0BA5D3E022D921EB00E837EF /* GroupsControllerCommands.cpp in Sources */,
