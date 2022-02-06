@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2019-2021 Grant Erickson
+ *    Copyright (c) 2019-2022 Grant Erickson
  *    All rights reserved.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
@@ -75,7 +75,45 @@ class Controller;
 
 - (void) viewDidLoad
 {
+    UIBarButtonItem *lFlexibleSpaceButtonItem;
+    UIBarButtonItem *lFilterButtonItem;
+    UIBarButtonItem *lSortButtonItem;
+    NSArray         *lToolbarItems;
+
     [super viewDidLoad];
+
+    lFlexibleSpaceButtonItem = [[ UIBarButtonItem alloc ] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace
+                                                                               target:nil
+                                                                               action:nil];
+    nlREQUIRE(lFlexibleSpaceButtonItem != nullptr, done);
+
+    lFilterButtonItem = [[ UIBarButtonItem alloc ] initWithTitle: @"Filter"
+                                                           style: UIBarButtonItemStylePlain
+                                                          target: self
+                                                          action: @selector(onFilterButtonAction:)];
+    nlREQUIRE(lFilterButtonItem != nullptr, done);
+
+    lSortButtonItem = [[ UIBarButtonItem alloc ] initWithTitle: @"Sort"
+                                                           style: UIBarButtonItemStylePlain
+                                                          target: self
+                                                          action: @selector(onSortButtonAction:)];
+    nlREQUIRE(lSortButtonItem != nullptr, done);
+
+    lToolbarItems = [ NSArray arrayWithObjects: lFlexibleSpaceButtonItem,
+                                                lFilterButtonItem,
+                                                lFlexibleSpaceButtonItem,
+                                                lSortButtonItem,
+                                                lFlexibleSpaceButtonItem,
+                                                nil ];
+    nlREQUIRE(lToolbarItems != nullptr, done);
+
+    [self setToolbarItems: lToolbarItems];
+
+    [self.navigationController setToolbarHidden: NO
+                               animated: YES];
+
+ done:
+    return;
 }
 
 - (void) viewWillAppear: (BOOL)aAnimated
@@ -214,6 +252,16 @@ done:
     }
 
     return;
+}
+
+- (IBAction) onFilterButtonAction: (id)aSender
+{
+    DeclareScopedFunctionTracer(lTracer);
+}
+
+- (IBAction) onSortButtonAction: (id)aSender
+{
+    DeclareScopedFunctionTracer(lTracer);
 }
 
 // MARK: Setters

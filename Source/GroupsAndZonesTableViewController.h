@@ -112,6 +112,8 @@ typedef NSInteger ShowStyle NS_TYPED_ENUM;
 // MARK: Actions
 
 - (IBAction) onGroupZoneSegmentedControlAction: (id)aSender;
+- (IBAction) onFilterButtonAction: (id)aSender;
+- (IBAction) onSortButtonAction: (id)aSender;
 
 // MARK: Setters
 
