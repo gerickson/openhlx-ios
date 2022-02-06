@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2019-2021 Grant Erickson
+ *    Copyright (c) 2019-2022 Grant Erickson
  *    All rights reserved.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
@@ -188,6 +188,18 @@ done:
 }
 
 // MARK: Actions
+
+/**
+ *  @brief
+ *    This is the action handler for the favorite preference switch.
+ *
+ *  @param[in]  aSender  The entity that triggered this action handler.
+ *
+ */
+- (IBAction) onFavoriteSwitchAction: (id)aSender
+{
+    DeclareScopedFunctionTracer(lTracer);
+}
 
 /**
  *  @brief

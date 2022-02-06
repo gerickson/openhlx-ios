@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2019-2021 Grant Erickson
+ *    Copyright (c) 2019-2022 Grant Erickson
  *    All rights reserved.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
@@ -110,6 +110,20 @@ class ApplicationControllerDelegate;
 @property (weak, nonatomic) IBOutlet UIButton *                mBalanceIncreaseButton;
 
 /**
+ *  A pointer to the switch which asserts (enables) or deasserts
+ *  (disables) the zone favorite preference.
+ *
+ */
+@property (weak, nonatomic) IBOutlet UISwitch *                mFavoriteSwitch;
+
+/**
+ *  A pointer to the label which describes the last used date of
+ *  the zone.
+ *
+ */
+@property (weak, nonatomic) IBOutlet UILabel *                 mLastUsedLabel;
+
+/**
  *  A pointer to the immutable switch that indicates the zone channel
  *  mode.
  *
@@ -179,6 +193,7 @@ class ApplicationControllerDelegate;
 - (IBAction) onBalanceLeftButtonAction: (id)aSender;
 - (IBAction) onBalanceSliderAction: (id)aSender;
 - (IBAction) onBalanceRightButtonAction: (id)aSender;
+- (IBAction) onFavoriteSwitchAction: (id)aSender;
 - (IBAction) onMonoSwitchAction: (id)aSender;
 - (IBAction) onMuteSwitchAction: (id)aSender;
 - (IBAction) onVolumeDecreaseButtonAction: (id)aSender;

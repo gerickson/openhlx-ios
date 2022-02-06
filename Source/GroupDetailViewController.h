@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2019-2021 Grant Erickson
+ *    Copyright (c) 2019-2022 Grant Erickson
  *    All rights reserved.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
@@ -79,6 +79,20 @@ class ApplicationControllerDelegate;
 
 /**
  *  A pointer to the switch which asserts (enables) or deasserts
+ *  (disables) the group favorite preference.
+ *
+ */
+@property (weak, nonatomic) IBOutlet UISwitch *                mFavoriteSwitch;
+
+/**
+ *  A pointer to the label which describes the last used date of
+ *  the group.
+ *
+ */
+@property (weak, nonatomic) IBOutlet UILabel *                 mLastUsedLabel;
+
+/**
+ *  A pointer to the switch which asserts (enables) or deasserts
  *  (disables) the group volume mute state.
  *
  */
@@ -124,6 +138,7 @@ class ApplicationControllerDelegate;
 
 // MARK: Actions
 
+- (IBAction) onFavoriteSwitchAction: (id)aSender;
 - (IBAction) onMuteSwitchAction: (id)aSender;
 - (IBAction) onVolumeDecreaseButtonAction: (id)aSender;
 - (IBAction) onVolumeSliderAction: (id)aSender;
