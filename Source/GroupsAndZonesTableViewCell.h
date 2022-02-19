@@ -96,6 +96,14 @@ class ZoneModel;
 // MARK: Properties
 
 /**
+ *  A pointer to the image which displays whether or not the
+ *  group or zone is a favorite.
+ *
+ */
+
+@property (weak, nonatomic) IBOutlet UIImageView *             mFavoriteImage;
+
+/**
  *  A pointer to the switch which asserts (enables) or deasserts
  *  (disables) the group or zone volume mute state.
  *
