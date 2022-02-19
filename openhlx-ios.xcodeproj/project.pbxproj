@@ -195,6 +195,18 @@
 		0BD058B522D94356006BAAE6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BBD823D22B9336200554609 /* UIKit.framework */; };
 		0BDA00ED2307784600BD75C6 /* SourceChooserTableViewCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BDA00EC2307784600BD75C6 /* SourceChooserTableViewCell.mm */; };
 		0BDA00F023077C0C00BD75C6 /* SourceChooserViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BDA00EF23077C0C00BD75C6 /* SourceChooserViewController.mm */; };
+		0BDCE9EF27BF390800D64FF1 /* HeartFilled@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BDCE9E927BF390800D64FF1 /* HeartFilled@1x.png */; };
+		0BDCE9F027BF390800D64FF1 /* HeartFilled@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BDCE9E927BF390800D64FF1 /* HeartFilled@1x.png */; };
+		0BDCE9F127BF390800D64FF1 /* HeartFilled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BDCE9EA27BF390800D64FF1 /* HeartFilled@2x.png */; };
+		0BDCE9F227BF390800D64FF1 /* HeartFilled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BDCE9EA27BF390800D64FF1 /* HeartFilled@2x.png */; };
+		0BDCE9F327BF390800D64FF1 /* HeartUnfilled@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BDCE9EB27BF390800D64FF1 /* HeartUnfilled@1x.png */; };
+		0BDCE9F427BF390800D64FF1 /* HeartUnfilled@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BDCE9EB27BF390800D64FF1 /* HeartUnfilled@1x.png */; };
+		0BDCE9F527BF390800D64FF1 /* HeartUnfilled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BDCE9EC27BF390800D64FF1 /* HeartUnfilled@2x.png */; };
+		0BDCE9F627BF390800D64FF1 /* HeartUnfilled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BDCE9EC27BF390800D64FF1 /* HeartUnfilled@2x.png */; };
+		0BDCE9F727BF390800D64FF1 /* HeartFilled@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BDCE9ED27BF390800D64FF1 /* HeartFilled@3x.png */; };
+		0BDCE9F827BF390800D64FF1 /* HeartFilled@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BDCE9ED27BF390800D64FF1 /* HeartFilled@3x.png */; };
+		0BDCE9F927BF390800D64FF1 /* HeartUnfilled@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BDCE9EE27BF390800D64FF1 /* HeartUnfilled@3x.png */; };
+		0BDCE9FA27BF390800D64FF1 /* HeartUnfilled@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BDCE9EE27BF390800D64FF1 /* HeartUnfilled@3x.png */; };
 		0BE3109923B0125A00AFC4F5 /* GroupDetailViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BE3109723B0125A00AFC4F5 /* GroupDetailViewController.mm */; };
 		0BE8201D238196E300287DAE /* IdentifiersCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BE8201B238196E300287DAE /* IdentifiersCollection.cpp */; };
 		0BE8CBB1265B2FD700A17FCC /* ConnectViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BBD822622B932E400554609 /* ConnectViewController.mm */; };
@@ -708,6 +720,12 @@
 		0BDA00EC2307784600BD75C6 /* SourceChooserTableViewCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SourceChooserTableViewCell.mm; path = Source/SourceChooserTableViewCell.mm; sourceTree = SOURCE_ROOT; };
 		0BDA00EE23077C0C00BD75C6 /* SourceChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SourceChooserViewController.h; path = Source/SourceChooserViewController.h; sourceTree = SOURCE_ROOT; };
 		0BDA00EF23077C0C00BD75C6 /* SourceChooserViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SourceChooserViewController.mm; path = Source/SourceChooserViewController.mm; sourceTree = SOURCE_ROOT; };
+		0BDCE9E927BF390800D64FF1 /* HeartFilled@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HeartFilled@1x.png"; sourceTree = "<group>"; };
+		0BDCE9EA27BF390800D64FF1 /* HeartFilled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HeartFilled@2x.png"; sourceTree = "<group>"; };
+		0BDCE9EB27BF390800D64FF1 /* HeartUnfilled@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HeartUnfilled@1x.png"; sourceTree = "<group>"; };
+		0BDCE9EC27BF390800D64FF1 /* HeartUnfilled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HeartUnfilled@2x.png"; sourceTree = "<group>"; };
+		0BDCE9ED27BF390800D64FF1 /* HeartFilled@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HeartFilled@3x.png"; sourceTree = "<group>"; };
+		0BDCE9EE27BF390800D64FF1 /* HeartUnfilled@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HeartUnfilled@3x.png"; sourceTree = "<group>"; };
 		0BE3109723B0125A00AFC4F5 /* GroupDetailViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GroupDetailViewController.mm; path = Source/GroupDetailViewController.mm; sourceTree = SOURCE_ROOT; };
 		0BE3109823B0125A00AFC4F5 /* GroupDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupDetailViewController.h; path = Source/GroupDetailViewController.h; sourceTree = SOURCE_ROOT; };
 		0BE8201B238196E300287DAE /* IdentifiersCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IdentifiersCollection.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/model/IdentifiersCollection.cpp; sourceTree = "<absolute>"; };
@@ -1352,13 +1370,19 @@
 		0B8D7283265B4ABE00047A56 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				0BCA2F6C2666DF9A00385413 /* Settings.bundle */,
+				0BDCE9E927BF390800D64FF1 /* HeartFilled@1x.png */,
+				0BDCE9EA27BF390800D64FF1 /* HeartFilled@2x.png */,
+				0BDCE9ED27BF390800D64FF1 /* HeartFilled@3x.png */,
+				0BDCE9EB27BF390800D64FF1 /* HeartUnfilled@1x.png */,
+				0BDCE9EC27BF390800D64FF1 /* HeartUnfilled@2x.png */,
+				0BDCE9EE27BF390800D64FF1 /* HeartUnfilled@3x.png */,
 				0B388B7822D91CAC00148E44 /* HistoryButton@1x.png */,
 				0B388B7922D91CAD00148E44 /* HistoryButton@2x.png */,
 				0B388B7A22D91CAD00148E44 /* HistoryButton@3x.png */,
 				0BBD823022B932E600554609 /* Info.plist */,
 				0B2BFAD823BD4FAC00C66853 /* Localizable.strings */,
 				0BBD822822B932E400554609 /* Main.storyboard */,
+				0BCA2F6C2666DF9A00385413 /* Settings.bundle */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1676,13 +1700,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BDCE9F627BF390800D64FF1 /* HeartUnfilled@2x.png in Resources */,
 				0B73243A265B4DF000FBC111 /* LaunchScreen.storyboard in Resources */,
+				0BDCE9F227BF390800D64FF1 /* HeartFilled@2x.png in Resources */,
+				0BDCE9FA27BF390800D64FF1 /* HeartUnfilled@3x.png in Resources */,
 				0BE8CBCA265B2FD700A17FCC /* HistoryButton@1x.png in Resources */,
 				0BE8CBCC265B2FD700A17FCC /* HistoryButton@2x.png in Resources */,
 				0BE8CBCD265B2FD700A17FCC /* HistoryButton@3x.png in Resources */,
+				0BDCE9F027BF390800D64FF1 /* HeartFilled@1x.png in Resources */,
 				0BE8CBCE265B2FD700A17FCC /* Localizable.strings in Resources */,
 				0B31652C26673DA400F05B95 /* Assets.xcassets in Resources */,
 				0BCA2F6E2666DF9A00385413 /* Settings.bundle in Resources */,
+				0BDCE9F427BF390800D64FF1 /* HeartUnfilled@1x.png in Resources */,
+				0BDCE9F827BF390800D64FF1 /* HeartFilled@3x.png in Resources */,
 				0BE8CBD0265B2FD700A17FCC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1691,13 +1721,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BDCE9F527BF390800D64FF1 /* HeartUnfilled@2x.png in Resources */,
 				0B73244D265B4DFB00FBC111 /* LaunchScreen.storyboard in Resources */,
+				0BDCE9F127BF390800D64FF1 /* HeartFilled@2x.png in Resources */,
+				0BDCE9F927BF390800D64FF1 /* HeartUnfilled@3x.png in Resources */,
 				0B388B7B22D91CAD00148E44 /* HistoryButton@1x.png in Resources */,
 				0B388B7C22D91CAD00148E44 /* HistoryButton@2x.png in Resources */,
 				0B388B7D22D91CAD00148E44 /* HistoryButton@3x.png in Resources */,
+				0BDCE9EF27BF390800D64FF1 /* HeartFilled@1x.png in Resources */,
 				0B2BFAD923BD4FAC00C66853 /* Localizable.strings in Resources */,
 				0BBD822C22B932E600554609 /* Assets.xcassets in Resources */,
 				0BCA2F6D2666DF9A00385413 /* Settings.bundle in Resources */,
+				0BDCE9F327BF390800D64FF1 /* HeartUnfilled@1x.png in Resources */,
+				0BDCE9F727BF390800D64FF1 /* HeartFilled@3x.png in Resources */,
 				0BBD822A22B932E400554609 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
