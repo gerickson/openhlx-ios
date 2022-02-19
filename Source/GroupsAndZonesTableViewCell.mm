@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2019-2021 Grant Erickson
+ *    Copyright (c) 2019-2022 Grant Erickson
  *    All rights reserved.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
@@ -378,6 +378,7 @@ using namespace Nuovations;
     NSString *                   lNSStringGroupOrZoneName;
     const char *                 lUTF8StringSourceName;
     NSString *                   lNSStringSourceName;
+    UIImage *                    lFavoriteImage;
     SourceModel::IdentifierType  lSourceIdentifier;
     const SourceModel *          lSource;
     VolumeModel::LevelType       lVolume = VolumeModel::kLevelMin;
@@ -391,6 +392,11 @@ using namespace Nuovations;
 
     self.mVolumeSlider.minimumValue = static_cast<float>(VolumeModel::kLevelMin);
     self.mVolumeSlider.maximumValue = static_cast<float>(VolumeModel::kLevelMax);
+
+    lFavoriteImage = [UIImage imageNamed: @"HeartUnfilled.png"];
+    nlREQUIRE(lFavoriteImage != nullptr, done);
+
+    [self.mFavoriteImage setImage: lFavoriteImage];
 
     if (aIsGroup)
     {
