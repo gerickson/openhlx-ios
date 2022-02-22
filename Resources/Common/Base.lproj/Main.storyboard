@@ -477,7 +477,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TqX-Bk-EYj">
-                                                    <rect key="frame" x="274" y="7" width="30" height="30"/>
+                                                    <rect key="frame" x="270" y="7" width="30" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
                                                     <state key="normal" title="+"/>
                                                     <connections>
@@ -485,13 +485,13 @@
                                                     </connections>
                                                 </button>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oPb-co-NdC">
-                                                    <rect key="frame" x="52" y="7" width="216" height="31"/>
+                                                    <rect key="frame" x="56" y="7" width="208" height="31"/>
                                                     <connections>
                                                         <action selector="onVolumeSliderAction:" destination="XBc-Em-SrC" eventType="valueChanged" id="9Or-42-X3k"/>
                                                     </connections>
                                                 </slider>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ia7-wZ-sjS">
-                                                    <rect key="frame" x="16" y="7" width="30" height="30"/>
+                                                    <rect key="frame" x="20" y="7" width="30" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
                                                     <state key="normal" title="-"/>
                                                     <connections>
@@ -503,10 +503,10 @@
                                                 <constraint firstItem="oPb-co-NdC" firstAttribute="centerY" secondItem="ia7-wZ-sjS" secondAttribute="centerY" id="KH6-34-R3J"/>
                                                 <constraint firstItem="oPb-co-NdC" firstAttribute="leading" secondItem="ia7-wZ-sjS" secondAttribute="trailing" constant="8" id="PZ1-aH-SKm"/>
                                                 <constraint firstItem="TqX-Bk-EYj" firstAttribute="leading" secondItem="oPb-co-NdC" secondAttribute="trailing" constant="8" id="Pfm-Fc-7Sq"/>
-                                                <constraint firstItem="ia7-wZ-sjS" firstAttribute="leading" secondItem="nc0-uv-CXZ" secondAttribute="leading" constant="16" id="Wrb-gQ-0GF"/>
+                                                <constraint firstItem="ia7-wZ-sjS" firstAttribute="leading" secondItem="nc0-uv-CXZ" secondAttribute="leading" constant="20" symbolic="YES" id="Wrb-gQ-0GF"/>
                                                 <constraint firstItem="TqX-Bk-EYj" firstAttribute="centerY" secondItem="ia7-wZ-sjS" secondAttribute="centerY" id="bJ4-gW-JuP"/>
                                                 <constraint firstItem="ia7-wZ-sjS" firstAttribute="centerY" secondItem="nc0-uv-CXZ" secondAttribute="centerY" id="hus-8O-Rxr"/>
-                                                <constraint firstAttribute="trailing" secondItem="TqX-Bk-EYj" secondAttribute="trailing" constant="16" id="t2n-Dq-p34"/>
+                                                <constraint firstAttribute="trailing" secondItem="TqX-Bk-EYj" secondAttribute="trailing" constant="20" symbolic="YES" id="t2n-Dq-p34"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1498,7 +1498,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="NYg-7C-wab"/>
+        <segue reference="NoA-8i-REi"/>
         <segue reference="wJl-ni-0wM"/>
     </inferredMetricsTieBreakers>
     <resources>
