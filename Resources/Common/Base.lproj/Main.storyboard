@@ -518,13 +518,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Mute" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfN-eT-ee2">
-                                                    <rect key="frame" x="16" y="11.5" width="239" height="21"/>
+                                                    <rect key="frame" x="16" y="11.5" width="227" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ONq-yg-khJ">
-                                                    <rect key="frame" x="263" y="6.5" width="51" height="31"/>
+                                                    <rect key="frame" x="251" y="6.5" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="onMuteSwitchAction:" destination="XBc-Em-SrC" eventType="valueChanged" id="zS4-SZ-ecl"/>
                                                     </connections>
@@ -535,7 +535,7 @@
                                                 <constraint firstItem="cfN-eT-ee2" firstAttribute="leading" secondItem="LEw-sU-BfN" secondAttribute="leadingMargin" id="R0z-WB-sKa"/>
                                                 <constraint firstItem="ONq-yg-khJ" firstAttribute="leading" secondItem="cfN-eT-ee2" secondAttribute="trailing" constant="8" id="aiN-OU-uye"/>
                                                 <constraint firstItem="ONq-yg-khJ" firstAttribute="centerY" secondItem="LEw-sU-BfN" secondAttribute="centerY" id="fpG-pT-Yxw"/>
-                                                <constraint firstAttribute="trailing" secondItem="ONq-yg-khJ" secondAttribute="trailing" constant="8" id="gBT-ml-ZQP"/>
+                                                <constraint firstAttribute="trailing" secondItem="ONq-yg-khJ" secondAttribute="trailing" constant="20" symbolic="YES" id="gBT-ml-ZQP"/>
                                                 <constraint firstItem="ONq-yg-khJ" firstAttribute="centerY" secondItem="cfN-eT-ee2" secondAttribute="centerY" id="kKm-yk-1zp"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -1498,7 +1498,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="NYg-7C-wab"/>
+        <segue reference="NoA-8i-REi"/>
         <segue reference="wJl-ni-0wM"/>
     </inferredMetricsTieBreakers>
     <resources>
