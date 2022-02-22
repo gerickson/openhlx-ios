@@ -552,13 +552,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorite" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fyi-M7-KFd">
-                                                    <rect key="frame" x="16" y="11.5" width="239" height="21"/>
+                                                    <rect key="frame" x="16" y="11.5" width="227" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ht5-H0-Vos" userLabel="Group Favorite Switch">
-                                                    <rect key="frame" x="263" y="6.5" width="51" height="31"/>
+                                                    <rect key="frame" x="251" y="6.5" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="onFavoriteSwitchAction:" destination="XBc-Em-SrC" eventType="valueChanged" id="z7i-0Q-SqP"/>
                                                     </connections>
@@ -567,7 +567,7 @@
                                             <constraints>
                                                 <constraint firstItem="Fyi-M7-KFd" firstAttribute="leading" secondItem="I2b-Xd-xKl" secondAttribute="leadingMargin" id="KZN-CK-wZU"/>
                                                 <constraint firstItem="ht5-H0-Vos" firstAttribute="leading" secondItem="Fyi-M7-KFd" secondAttribute="trailing" constant="8" id="WZ2-uz-OuH"/>
-                                                <constraint firstAttribute="trailing" secondItem="ht5-H0-Vos" secondAttribute="trailing" constant="8" id="aew-tj-D0c"/>
+                                                <constraint firstAttribute="trailing" secondItem="ht5-H0-Vos" secondAttribute="trailing" constant="20" symbolic="YES" id="aew-tj-D0c"/>
                                                 <constraint firstItem="Fyi-M7-KFd" firstAttribute="centerY" secondItem="I2b-Xd-xKl" secondAttribute="centerY" id="j2l-x9-CP6"/>
                                                 <constraint firstItem="ht5-H0-Vos" firstAttribute="centerY" secondItem="I2b-Xd-xKl" secondAttribute="centerY" id="tOj-Xs-nX7"/>
                                             </constraints>
@@ -854,13 +854,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorite" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jy8-TI-2Fg">
-                                                    <rect key="frame" x="16" y="11.5" width="239" height="21"/>
+                                                    <rect key="frame" x="16" y="11.5" width="227" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BvL-jZ-jU5" userLabel="Zone Favorite Switch">
-                                                    <rect key="frame" x="263" y="6.5" width="51" height="31"/>
+                                                    <rect key="frame" x="251" y="6.5" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="onFavoriteSwitchAction:" destination="MPF-t1-Li3" eventType="valueChanged" id="iCR-Vd-C9B"/>
                                                     </connections>
@@ -868,7 +868,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="BvL-jZ-jU5" firstAttribute="centerY" secondItem="HlP-AH-hcm" secondAttribute="centerY" id="4Np-xn-RA3"/>
-                                                <constraint firstItem="BvL-jZ-jU5" firstAttribute="trailing" secondItem="HlP-AH-hcm" secondAttribute="trailingMargin" id="9w7-wt-slF"/>
+                                                <constraint firstItem="BvL-jZ-jU5" firstAttribute="trailing" secondItem="HlP-AH-hcm" secondAttribute="trailingMargin" constant="-12" id="9w7-wt-slF"/>
                                                 <constraint firstItem="Jy8-TI-2Fg" firstAttribute="leading" secondItem="HlP-AH-hcm" secondAttribute="leadingMargin" constant="8" id="haL-Hb-3je"/>
                                                 <constraint firstItem="Jy8-TI-2Fg" firstAttribute="centerY" secondItem="HlP-AH-hcm" secondAttribute="centerY" id="mNb-EG-r4b"/>
                                                 <constraint firstItem="BvL-jZ-jU5" firstAttribute="leading" secondItem="Jy8-TI-2Fg" secondAttribute="trailing" constant="8" id="wBD-9Z-hna"/>
@@ -889,7 +889,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Used Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oqi-te-h8O">
-                                                    <rect key="frame" x="195" y="11.5" width="117" height="21"/>
+                                                    <rect key="frame" x="183" y="11.5" width="117" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -897,7 +897,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="qA2-Ds-DcH" firstAttribute="centerY" secondItem="XV0-8s-A7x" secondAttribute="centerY" id="3Wm-cE-bs7"/>
-                                                <constraint firstItem="oqi-te-h8O" firstAttribute="trailing" secondItem="XV0-8s-A7x" secondAttribute="trailingMargin" id="LTf-kn-4er"/>
+                                                <constraint firstItem="oqi-te-h8O" firstAttribute="trailing" secondItem="XV0-8s-A7x" secondAttribute="trailingMargin" constant="-12" id="LTf-kn-4er"/>
                                                 <constraint firstItem="oqi-te-h8O" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qA2-Ds-DcH" secondAttribute="trailing" constant="8" symbolic="YES" id="T7V-sK-Jw4"/>
                                                 <constraint firstItem="oqi-te-h8O" firstAttribute="centerY" secondItem="XV0-8s-A7x" secondAttribute="centerY" id="fiy-YL-ryd"/>
                                                 <constraint firstItem="qA2-Ds-DcH" firstAttribute="leading" secondItem="XV0-8s-A7x" secondAttribute="leadingMargin" constant="8" id="jiK-bE-pfn"/>
@@ -1498,7 +1498,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="NoA-8i-REi"/>
+        <segue reference="NYg-7C-wab"/>
         <segue reference="wJl-ni-0wM"/>
     </inferredMetricsTieBreakers>
     <resources>
