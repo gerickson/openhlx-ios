@@ -414,7 +414,7 @@
                     <navigationItem key="navigationItem" id="PB0-6c-59A">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="cqJ-90-pbm">
-                            <rect key="frame" x="95.5" y="9" width="129" height="32"/>
+                            <rect key="frame" x="95.5" y="6" width="129" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Groups"/>
@@ -820,13 +820,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3lF-hm-iWx">
-                                                    <rect key="frame" x="255" y="6.5" width="51" height="31"/>
+                                                    <rect key="frame" x="251" y="6.5" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="onMuteSwitchAction:" destination="MPF-t1-Li3" eventType="valueChanged" id="aKW-87-P5k"/>
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Mute" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kK7-um-LKe">
-                                                    <rect key="frame" x="8" y="11.5" width="239" height="21"/>
+                                                    <rect key="frame" x="8" y="11.5" width="235" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -836,7 +836,7 @@
                                                 <constraint firstItem="3lF-hm-iWx" firstAttribute="centerY" secondItem="kK7-um-LKe" secondAttribute="centerY" id="Grc-zE-rhv"/>
                                                 <constraint firstItem="kK7-um-LKe" firstAttribute="centerY" secondItem="pwB-hc-vbN" secondAttribute="centerY" id="Nvx-Za-f10"/>
                                                 <constraint firstItem="3lF-hm-iWx" firstAttribute="centerY" secondItem="pwB-hc-vbN" secondAttribute="centerY" id="Zmx-3p-AcO"/>
-                                                <constraint firstAttribute="trailing" secondItem="3lF-hm-iWx" secondAttribute="trailing" constant="16" id="a6P-3d-JfP"/>
+                                                <constraint firstAttribute="trailing" secondItem="3lF-hm-iWx" secondAttribute="trailing" constant="20" symbolic="YES" id="a6P-3d-JfP"/>
                                                 <constraint firstItem="3lF-hm-iWx" firstAttribute="leading" secondItem="kK7-um-LKe" secondAttribute="trailing" constant="8" id="wvZ-5d-MOa"/>
                                                 <constraint firstItem="kK7-um-LKe" firstAttribute="leading" secondItem="pwB-hc-vbN" secondAttribute="leadingMargin" id="xkb-RF-k8Z"/>
                                             </constraints>
