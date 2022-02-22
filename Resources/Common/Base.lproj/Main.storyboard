@@ -414,7 +414,7 @@
                     <navigationItem key="navigationItem" id="PB0-6c-59A">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="cqJ-90-pbm">
-                            <rect key="frame" x="95.5" y="6" width="129" height="32"/>
+                            <rect key="frame" x="95.5" y="9" width="129" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Groups"/>
@@ -721,13 +721,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mono Audio" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3La-NA-4gJ">
-                                                    <rect key="frame" x="16" y="11.5" width="231" height="21"/>
+                                                    <rect key="frame" x="16" y="11.5" width="227" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qlS-23-djo">
-                                                    <rect key="frame" x="255" y="6.5" width="51" height="31"/>
+                                                    <rect key="frame" x="251" y="6.5" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="onMonoSwitchAction:" destination="MPF-t1-Li3" eventType="valueChanged" id="bcR-5K-CjD"/>
                                                     </connections>
@@ -735,7 +735,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="3La-NA-4gJ" firstAttribute="leading" secondItem="tFY-SB-W4S" secondAttribute="leadingMargin" id="4cH-M2-H93"/>
-                                                <constraint firstAttribute="trailing" secondItem="qlS-23-djo" secondAttribute="trailing" constant="16" id="Cw1-r2-erI"/>
+                                                <constraint firstAttribute="trailing" secondItem="qlS-23-djo" secondAttribute="trailing" constant="20" symbolic="YES" id="Cw1-r2-erI"/>
                                                 <constraint firstItem="3La-NA-4gJ" firstAttribute="centerY" secondItem="tFY-SB-W4S" secondAttribute="centerY" id="RGC-LF-rIP"/>
                                                 <constraint firstItem="3La-NA-4gJ" firstAttribute="leading" secondItem="tFY-SB-W4S" secondAttribute="leadingMargin" id="WFh-xn-nWQ"/>
                                                 <constraint firstItem="qlS-23-djo" firstAttribute="leading" secondItem="3La-NA-4gJ" secondAttribute="trailing" constant="8" id="bBk-Nw-VdD"/>
@@ -1404,7 +1404,7 @@
             <objects>
                 <navigationController id="LxV-Bt-A93" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Lhh-bp-7Jg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Bei-aO-1OR">
@@ -1498,7 +1498,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="NoA-8i-REi"/>
+        <segue reference="NYg-7C-wab"/>
         <segue reference="wJl-ni-0wM"/>
     </inferredMetricsTieBreakers>
     <resources>
