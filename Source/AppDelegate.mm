@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2019-2021 Grant Erickson
+ *    Copyright (c) 2019-2022 Grant Erickson
  *    All rights reserved.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
@@ -93,13 +93,7 @@ using namespace Nuovations;
     // Simply allocate and initialize a global, shared HLX client
     // controller instance.
 
-    lStatus = lRunLoopParameters.Init([[NSRunLoop currentRunLoop] getCFRunLoop], kCFRunLoopCommonModes);
-    nlREQUIRE_SUCCESS(lStatus, done);
-
-    mApplicationController.reset(new HLX::Client::Application::Controller());
-    nlREQUIRE(mApplicationController != nullptr, done);
-
-    lStatus = mApplicationController->Init(lRunLoopParameters);
+    lStatus = mClientController.Init();
     nlREQUIRE_SUCCESS(lStatus, done);
 
  done:
@@ -153,7 +147,7 @@ using namespace Nuovations;
     UIApplication *lApplication = [UIApplication sharedApplication];
 
 
-    mApplicationController->Disconnect();
+    mClientController.GetApplicationController()->Disconnect();
 
     [lApplication endBackgroundTask: mBackgroundTaskIdentifier];
 
@@ -276,7 +270,7 @@ using namespace Nuovations;
     NSString * lScheme = [aURL scheme];
     BOOL       lRetval = NO;
 
-    if (mApplicationController->SupportsScheme((__bridge CFStringRef)lScheme))
+    if (mClientController.GetApplicationController()->SupportsScheme((__bridge CFStringRef)lScheme))
     {
         NSString * const   lStoryboardName = @"Main";
         UIStoryboard *     lStoryboard;
@@ -328,7 +322,7 @@ done:
  */
 - (MutableApplicationControllerPointer) hlxClientController
 {
-    return (mApplicationController);
+    return (mClientController.GetApplicationController());
 }
 
 @end

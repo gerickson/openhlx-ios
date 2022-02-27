@@ -1,5 +1,5 @@
 /*
- *    Copyright (c) 2019-2021 Grant Erickson
+ *    Copyright (c) 2019-2022 Grant Erickson
  *    All rights reserved.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,12 +29,12 @@
 
 #include <OpenHLX/Client/ApplicationController.hpp>
 
-#import "ApplicationControllerPointer.hpp"
+#import "ClientController.hpp"
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
-    MutableApplicationControllerPointer  mApplicationController;
+    ClientController  mClientController;
 }
 
 // MARK: Properties
