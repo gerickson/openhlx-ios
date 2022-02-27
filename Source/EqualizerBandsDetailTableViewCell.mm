@@ -238,7 +238,7 @@ using namespace Nuovations;
 
 // MARK: Workers
 
-- (Status) configureCellForIdentifier: (const IdentifierModel::IdentifierType &)aEqualizerIdentifier andEqualizerBand: (const EqualizerBandModel::IdentifierType &)aEqualizerBandIdentifier withController: (std::shared_ptr<HLX::Client::Application::Controller> &)aApplicationController asPreset: (bool)aIsPreset;
+- (Status) configureCellForIdentifier: (const IdentifierModel::IdentifierType &)aEqualizerIdentifier andEqualizerBand: (const EqualizerBandModel::IdentifierType &)aEqualizerBandIdentifier withController: (MutableApplicationControllerPointer &)aApplicationController asPreset: (bool)aIsPreset;
 {
     const EqualizerBandModel *         lEqualizerBandModel = nullptr;
     NSNumberFormatter *                lFrequencyFormatter = nullptr;

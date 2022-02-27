@@ -326,7 +326,7 @@ done:
  *    instance.
  *
  */
-- (std::shared_ptr<HLX::Client::Application::Controller>) hlxClientController
+- (MutableApplicationControllerPointer) hlxClientController
 {
     return (mApplicationController);
 }
