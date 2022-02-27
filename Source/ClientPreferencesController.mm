@@ -23,6 +23,12 @@
  */
 
 
+#import <Foundation/NSUserDefaults.h>
+
+#import <LogUtilities/LogUtilities.hpp>
+
+#import <OpenHLX/Utilities/Assert.hpp>
+
 #import "ClientPreferencesController.hpp"
 
 
@@ -30,7 +36,31 @@ using namespace HLX;
 using namespace HLX::Client;
 using namespace HLX::Common;
 using namespace HLX::Model;
+using namespace Nuovations;
 
+
+namespace Detail
+{
+
+static NSString *
+CreateControllerIdentifier(const HLX::Model::NetworkModel::EthernetEUI48Type &aEthernetEUI48)
+{
+    NSString *lRetval = nullptr;
+
+    lRetval = [[NSString alloc] initWithFormat: @"%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx",
+                                aEthernetEUI48[0],
+                                aEthernetEUI48[1],
+                                aEthernetEUI48[2],
+                                aEthernetEUI48[3],
+                                aEthernetEUI48[4],
+                                aEthernetEUI48[5]];
+    nlREQUIRE(lRetval != nullptr, done);
+
+ done:
+    return (lRetval);
+}
+
+}; // namespace Detail
 
 ClientPreferencesController :: ClientPreferencesController(void) :
     mControllerIdentifier(nullptr)
@@ -43,12 +73,48 @@ ClientPreferencesController :: ~ClientPreferencesController(void)
     return;
 }
 
-// Initializers
+// MARK: Initializers
 
 Status
 ClientPreferencesController :: Init(void)
 {
     Status lRetval = kStatus_Success;
+
+    return (lRetval);
+}
+
+Status
+ClientPreferencesController :: Bind(const HLX::Client::Application::Controller &aController)
+{
+    DeclareScopedFunctionTracer(lTracer);
+    NSString *                       lControllerIdentifier;
+    NSDictionary *                   lControllerPreferences;
+    NetworkModel::EthernetEUI48Type  lEthernetEUI48;
+    Status                           lRetval = kStatus_Success;
+
+
+    lRetval = aController.NetworkGetEthernetEUI48(lEthernetEUI48);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lControllerIdentifier = Detail::CreateControllerIdentifier(lEthernetEUI48);
+    nlREQUIRE(lControllerIdentifier != nullptr, done);
+
+    lControllerPreferences = [[NSUserDefaults standardUserDefaults] dictionaryForKey: lControllerIdentifier];
+
+    Log::Debug().Write("lControllerPreferences for %s is %p\n", [lControllerIdentifier UTF8String], lControllerPreferences);
+
+    mControllerIdentifier = lControllerIdentifier;
+
+ done:
+    return (lRetval);
+}
+
+Status
+ClientPreferencesController :: Unbind(void)
+{
+    Status lRetval = kStatus_Success;
+
+    mControllerIdentifier = nullptr;
 
     return (lRetval);
 }

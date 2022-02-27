@@ -39,6 +39,11 @@ public:
 
     HLX::Common::Status Init(void);
 
+    // Bind/unbind
+
+    HLX::Common::Status Bind(const HLX::Client::Application::Controller &aController);
+    HLX::Common::Status Unbind(void);
+
 #if 0
     HLX::Common::Status Init(const HLX::Client::Application::Controller &aController);
     HLX::Common::Status Init(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier);
@@ -46,9 +51,9 @@ public:
 
     // Mutators
 
-    void Reset(void);
-    void GroupReset(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier);
-    void ZoneReset(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier);
+    HLX::Common::Status Reset(void);
+    HLX::Common::Status GroupReset(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier);
+    HLX::Common::Status ZoneReset(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier);
 
     // Getters
 
@@ -117,18 +122,18 @@ private:
 
     // With controller identifier
 
-    void Reset(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier);
-    void GroupReset(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
+    HLX::Common::Status Reset(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier);
+    HLX::Common::Status GroupReset(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                     const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier);
-    void ZoneReset(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
+    HLX::Common::Status ZoneReset(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                    const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier);
 
     // With controller identifier string
 
-    void Reset(NSString *aControllerIdentifier);
-    void GroupReset(NSString *aControllerIdentifier,
+    HLX::Common::Status Reset(NSString *aControllerIdentifier);
+    HLX::Common::Status GroupReset(NSString *aControllerIdentifier,
                     const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier);
-    void ZoneReset(NSString *aControllerIdentifier,
+    HLX::Common::Status ZoneReset(NSString *aControllerIdentifier,
                    const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier);
 
     // Getters
