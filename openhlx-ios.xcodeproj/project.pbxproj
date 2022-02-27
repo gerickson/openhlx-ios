@@ -146,6 +146,8 @@
 		0BA5D41622D9220900E837EF /* EqualizerPresetModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D41222D9220900E837EF /* EqualizerPresetModel.cpp */; };
 		0BB62F3022D91C000013E943 /* ConnectHistoryViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BB62F2E22D91C000013E943 /* ConnectHistoryViewController.mm */; };
 		0BB8D6FE25155B2B009D083A /* ConnectHistoryController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BB8D6FD25155B2B009D083A /* ConnectHistoryController.mm */; };
+		0BB94FD627CB3F6D0055B422 /* ClientController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BB94FD527CB3F6D0055B422 /* ClientController.mm */; };
+		0BB94FEB27CB411D0055B422 /* ClientPreferencesController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BB94FE927CB411D0055B422 /* ClientPreferencesController.mm */; };
 		0BBD822422B932E400554609 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BBD822322B932E400554609 /* AppDelegate.mm */; };
 		0BBD822722B932E400554609 /* ConnectViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BBD822622B932E400554609 /* ConnectViewController.mm */; };
 		0BBD822A22B932E400554609 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BBD822822B932E400554609 /* Main.storyboard */; };
@@ -660,6 +662,10 @@
 		0BB62F2F22D91C000013E943 /* ConnectHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConnectHistoryViewController.h; path = Source/ConnectHistoryViewController.h; sourceTree = SOURCE_ROOT; };
 		0BB8D6FC25155B2B009D083A /* ConnectHistoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConnectHistoryController.h; path = Source/ConnectHistoryController.h; sourceTree = SOURCE_ROOT; };
 		0BB8D6FD25155B2B009D083A /* ConnectHistoryController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ConnectHistoryController.mm; path = Source/ConnectHistoryController.mm; sourceTree = SOURCE_ROOT; };
+		0BB94FD427CB3F6D0055B422 /* ClientController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClientController.hpp; sourceTree = "<group>"; };
+		0BB94FD527CB3F6D0055B422 /* ClientController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ClientController.mm; sourceTree = "<group>"; };
+		0BB94FE927CB411D0055B422 /* ClientPreferencesController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ClientPreferencesController.mm; sourceTree = "<group>"; };
+		0BB94FEA27CB411D0055B422 /* ClientPreferencesController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClientPreferencesController.hpp; sourceTree = "<group>"; };
 		0BBD821F22B932E400554609 /* Open HLX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Open HLX.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BBD822222B932E400554609 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Source/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		0BBD822322B932E400554609 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Source/AppDelegate.mm; sourceTree = SOURCE_ROOT; };
@@ -898,6 +904,10 @@
 			children = (
 				0BBD822222B932E400554609 /* AppDelegate.h */,
 				0BBD822322B932E400554609 /* AppDelegate.mm */,
+				0BB94FD427CB3F6D0055B422 /* ClientController.hpp */,
+				0BB94FD527CB3F6D0055B422 /* ClientController.mm */,
+				0BB94FEA27CB411D0055B422 /* ClientPreferencesController.hpp */,
+				0BB94FE927CB411D0055B422 /* ClientPreferencesController.mm */,
 				0BB8D6FC25155B2B009D083A /* ConnectHistoryController.h */,
 				0BB8D6FD25155B2B009D083A /* ConnectHistoryController.mm */,
 				0BB62F2F22D91C000013E943 /* ConnectHistoryViewController.h */,
@@ -1964,6 +1974,7 @@
 				0B2388FD258EE9F3004C6E4A /* ToneDetailViewController.mm in Sources */,
 				0B7B9B5922F4D28100D542DF /* GroupsAndZonesTableViewController.mm in Sources */,
 				0BDA00ED2307784600BD75C6 /* SourceChooserTableViewCell.mm in Sources */,
+				0BB94FEB27CB411D0055B422 /* ClientPreferencesController.mm in Sources */,
 				0BBD823222B932E600554609 /* main.mm in Sources */,
 				0B238916258F1584004C6E4A /* CrossoverDetailViewController.mm in Sources */,
 				0B0F3E34258FBC4500F275A6 /* EqualizerPresetChooserTableViewCell.mm in Sources */,
@@ -1973,6 +1984,7 @@
 				0B0C72922585DBD500BAE465 /* SoundModeChooserTableViewCell.mm in Sources */,
 				0BCFF47C258AE56000DFDAC0 /* UIViewController+TopViewController.mm in Sources */,
 				0B32EE2C232640EF00065E18 /* ApplicationControllerDelegate.mm in Sources */,
+				0BB94FD627CB3F6D0055B422 /* ClientController.mm in Sources */,
 				0B0C72952585DE4900BAE465 /* SoundModeChooserViewController.mm in Sources */,
 				0BBD822422B932E400554609 /* AppDelegate.mm in Sources */,
 				0BB62F3022D91C000013E943 /* ConnectHistoryViewController.mm in Sources */,
