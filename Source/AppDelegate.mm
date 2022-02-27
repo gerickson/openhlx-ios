@@ -310,17 +310,22 @@ done:
 
 // MARK: Getters
 
+- (ClientController &)                  hlxClientController
+{
+    return (mClientController);
+}
+
 /**
  *  @brief
- *    Get a shared pointer to the global app HLX client controller
- *    instance.
+ *    Get a shared pointer to the global app HLX client application
+ *    controller instance.
  *
  *  @returns
- *    A shared pointer to the global app HLX client controller
- *    instance.
+ *    A shared pointer to the global app HLX client application
+ *    controller instance.
  *
  */
-- (MutableApplicationControllerPointer) hlxClientController
+- (MutableApplicationControllerPointer) hlxApplicationController
 {
     return (mClientController.GetApplicationController());
 }
