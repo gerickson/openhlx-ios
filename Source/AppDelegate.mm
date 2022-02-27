@@ -325,4 +325,9 @@ done:
     return (mClientController.GetApplicationController());
 }
 
+- (ClientPreferencesController &)       hlxPreferencesController
+{
+    return (mClientController.GetPreferencesController());
+}
+
 @end

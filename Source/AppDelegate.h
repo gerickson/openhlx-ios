@@ -46,5 +46,6 @@
 // MARK: Getters
 
 - (MutableApplicationControllerPointer) hlxClientController;
+- (ClientPreferencesController &)       hlxPreferencesController;
 
 @end
