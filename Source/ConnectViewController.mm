@@ -736,6 +736,8 @@ done:
 {
     DeclareLogIndentWithValue(lLogIndent, 0);
     DeclareLogLevelWithValue(lLogLevel, 1);
+    AppDelegate *  lDelegate = static_cast<AppDelegate *>([[UIApplication sharedApplication] delegate]);
+    Status         lStatus;
 
     LogDebug(lLogIndent,
              lLogLevel,
@@ -745,6 +747,13 @@ done:
 
     [mRefreshController stopRefreshActivity];
 
+    // Bind the preferences controller to the application controller
+    // identifier for the connection.
+
+    lStatus = [lDelegate hlxPreferencesController].Bind(*mApplicationController);
+    nlREQUIRE_SUCCESS(lStatus, dismiss);
+
+ dismiss:
     // Dismiss the refreshing view controller and segue to the 'did
     // refresh' transition on completion of the dismissal.
 
