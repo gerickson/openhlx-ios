@@ -34,7 +34,7 @@
 #include <OpenHLX/Client/ApplicationController.hpp>
 #include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 
-#import "ApplicationControllerPointer.hpp"
+#import "ClientController.hpp"
 
 
 namespace HLX
@@ -60,10 +60,10 @@ class ZoneModel;
 @interface GroupsAndZonesTableViewCell : UITableViewCell
 {
     /**
-     *  A shared pointer to the global HLX client controller instance.
+     *  A pointer to the global app HLX client controller instance.
      *
      */
-    MutableApplicationControllerPointer  mApplicationController;
+    ClientController *                 mClientController;
 
     /**
      *  A Boolean indicating whether the table view cell is for a
@@ -165,7 +165,7 @@ class ZoneModel;
 // MARK: Workers
 
 - (HLX::Common::Status) configureCellForIdentifier: (const HLX::Model::IdentifierModel::IdentifierType &)aIdentifier
-                                    withController: (MutableApplicationControllerPointer &)aApplicationController
+                                    withController: (ClientController &)aClientController
                                            asGroup: (bool)aIsGroup;
 
 @end

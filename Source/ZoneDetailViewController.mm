@@ -109,7 +109,7 @@ enum
 
     [super viewWillAppear: aAnimated];
 
-    lStatus = mApplicationController->SetDelegate(mApplicationControllerDelegate.get());
+    lStatus = mClientController->GetApplicationController()->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
 #if OPENHLX_INSTALLER
@@ -204,10 +204,10 @@ done:
             Status                         lStatus;
 
 
-            [lSourceChooserViewController setApplicationController: mApplicationController
-                                                         forZone: mZone];
+            [lSourceChooserViewController setApplicationController: mClientController->GetApplicationController()
+                                                           forZone: mZone];
 
-            lStatus = mApplicationController->SetDelegate(nullptr);
+            lStatus = mClientController->GetApplicationController()->SetDelegate(nullptr);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
 #if OPENHLX_INSTALLER
@@ -217,10 +217,10 @@ done:
             Status                         lStatus;
 
 
-            [lSoundModeChooserViewController setApplicationController: mApplicationController
-                                                            forZone: mZone];
+            [lSoundModeChooserViewController setApplicationController: mClientController->GetApplicationController()
+                                                              forZone: mZone];
 
-            lStatus = mApplicationController->SetDelegate(nullptr);
+            lStatus = mClientController->GetApplicationController()->SetDelegate(nullptr);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
 #endif // OPENHLX_INSTALLER
@@ -234,10 +234,10 @@ done:
             Status                                lStatus;
 
 
-            [lEqualizerBandsDetailViewController setApplicationController: mApplicationController
-                                                                forZone: mZone];
+            [lEqualizerBandsDetailViewController setApplicationController: mClientController->GetApplicationController()
+                                                                  forZone: mZone];
 
-            lStatus = mApplicationController->SetDelegate(nullptr);
+            lStatus = mClientController->GetApplicationController()->SetDelegate(nullptr);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
         else if ([[aSegue identifier] isEqual: @"Equalizer Preset Chooser Segue"])
@@ -246,10 +246,10 @@ done:
             Status                                  lStatus;
 
 
-            [lEqualizerPresetChooserViewController setApplicationController: mApplicationController
-                                                                  forZone: mZone];
+            [lEqualizerPresetChooserViewController setApplicationController: mClientController->GetApplicationController()
+                                                                    forZone: mZone];
 
-            lStatus = mApplicationController->SetDelegate(nullptr);
+            lStatus = mClientController->GetApplicationController()->SetDelegate(nullptr);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
         else if ([[aSegue identifier] isEqual: @"Tone Detail Segue"])
@@ -258,10 +258,10 @@ done:
             Status                         lStatus;
 
 
-            [lToneDetailViewController setApplicationController: mApplicationController
-                                                      forZone: mZone];
+            [lToneDetailViewController setApplicationController: mClientController->GetApplicationController()
+                                                        forZone: mZone];
 
-            lStatus = mApplicationController->SetDelegate(nullptr);
+            lStatus = mClientController->GetApplicationController()->SetDelegate(nullptr);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
         else if ([[aSegue identifier] isEqual: @"Highpass Crossover Detail Segue"])
@@ -270,11 +270,11 @@ done:
             Status                           lStatus;
 
 
-            [lCrossoverDetailViewController setApplicationController: mApplicationController
-                                                           forZone: mZone
-                                                        asHighpass: true];
+            [lCrossoverDetailViewController setApplicationController: mClientController->GetApplicationController()
+                                                             forZone: mZone
+                                                          asHighpass: true];
 
-            lStatus = mApplicationController->SetDelegate(nullptr);
+            lStatus = mClientController->GetApplicationController()->SetDelegate(nullptr);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
         else if ([[aSegue identifier] isEqual: @"Lowpass Crossover Detail Segue"])
@@ -283,11 +283,11 @@ done:
             Status                           lStatus;
 
 
-            [lCrossoverDetailViewController setApplicationController: mApplicationController
-                                                           forZone: mZone
-                                                        asHighpass: false];
+            [lCrossoverDetailViewController setApplicationController: mClientController->GetApplicationController()
+                                                             forZone: mZone
+                                                          asHighpass: false];
 
-            lStatus = mApplicationController->SetDelegate(nullptr);
+            lStatus = mClientController->GetApplicationController()->SetDelegate(nullptr);
             nlREQUIRE_SUCCESS(lStatus, done);
         }
     }
@@ -318,7 +318,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mApplicationController->ZoneSetBalance(lIdentifier, BalanceModel::kBalanceCenter);
+        lStatus = mClientController->GetApplicationController()->ZoneSetBalance(lIdentifier, BalanceModel::kBalanceCenter);
         nlREQUIRE(lStatus >= kStatus_Success, done);
     }
 
@@ -346,7 +346,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mApplicationController->ZoneIncreaseBalanceLeft(lIdentifier);
+        lStatus = mClientController->GetApplicationController()->ZoneIncreaseBalanceLeft(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -375,7 +375,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mApplicationController->ZoneSetBalance(lIdentifier, lBalance);
+        lStatus = mClientController->GetApplicationController()->ZoneSetBalance(lIdentifier, lBalance);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -403,7 +403,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mApplicationController->ZoneIncreaseBalanceRight(lIdentifier);
+        lStatus = mClientController->GetApplicationController()->ZoneIncreaseBalanceRight(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -447,7 +447,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mApplicationController->ZoneSetMute(lIdentifier, lMute);
+        lStatus = mClientController->GetApplicationController()->ZoneSetMute(lIdentifier, lMute);
         nlREQUIRE(lStatus >= kStatus_Success, done);
     }
 
@@ -473,7 +473,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mApplicationController->ZoneDecreaseVolume(lIdentifier);
+        lStatus = mClientController->GetApplicationController()->ZoneDecreaseVolume(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -500,7 +500,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mApplicationController->ZoneSetVolume(lIdentifier, lVolume);
+        lStatus = mClientController->GetApplicationController()->ZoneSetVolume(lIdentifier, lVolume);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -526,7 +526,7 @@ done:
         lStatus = mZone->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mApplicationController->ZoneIncreaseVolume(lIdentifier);
+        lStatus = mClientController->GetApplicationController()->ZoneIncreaseVolume(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -718,20 +718,19 @@ done:
  *  @brief
  *    Set the client controller and zone for the view.
  *
- *  @param[in]  aApplicationController  A reference to a shared pointer
- *                                    to a mutable HLX client
- *                                    controller instance to use for
- *                                    this view controller.
- *  @param[in]  aZone                 An immutable pointer to the zone
- *                                    for which its zone detail is to
- *                                    be observed or mutated.
+ *  @param[in]  aClientController  A reference to an app client
+ *                                 controller instance to use for
+ *                                 this view controller.
+ *  @param[in]  aZone              An immutable pointer to the zone
+ *                                 for which its zone detail is to
+ *                                 be observed or mutated.
  *
  */
-- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
-                        forZone: (const HLX::Model::ZoneModel *)aZone
+- (void) setClientController: (ClientController &)aClientController
+                     forZone: (const HLX::Model::ZoneModel *)aZone
 {
-    mApplicationController = aApplicationController;
-    mZone                = aZone;
+    mClientController = &aClientController;
+    mZone             = aZone;
 }
 
 // MARK: Workers
@@ -884,7 +883,7 @@ done:
     lStatus = mZone->GetSource(lSourceIdentifier);
     nlREQUIRE_SUCCESS(lStatus, done);
 
-    lStatus = mApplicationController->SourceGet(lSourceIdentifier, lSource);
+    lStatus = mClientController->GetApplicationController()->SourceGet(lSourceIdentifier, lSource);
     nlREQUIRE_SUCCESS(lStatus, done);
 
     lStatus = lSource->GetName(lUTF8StringSourceName);

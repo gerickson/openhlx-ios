@@ -37,7 +37,7 @@
 #include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 
 #import "ApplicationControllerDelegate.hpp"
-#import "ApplicationControllerPointer.hpp"
+#import "ClientController.hpp"
 
 
 namespace HLX
@@ -57,17 +57,17 @@ class ApplicationControllerDelegate;
 @interface ZoneDetailViewController : UITableViewController <ApplicationControllerDelegate>
 {
     /**
-     *  A shared pointer to the global HLX client controller instance.
+     *  A pointer to the global app HLX client controller instance.
      *
      */
-    MutableApplicationControllerPointer             mApplicationController;
+    ClientController *                                  mClientController;
 
     /**
      *  A scoped pointer to the default HLX client controller
      *  delegate.
      *
      */
-    std::unique_ptr<ApplicationControllerDelegate>  mApplicationControllerDelegate;
+    std::unique_ptr<ApplicationControllerDelegate>      mApplicationControllerDelegate;
 
     /**
      *  An immutable pointer to the zone for which its stereophonic
@@ -76,7 +76,7 @@ class ApplicationControllerDelegate;
      *  level and mute state) detail are to be observed or mutated.
      *
      */
-    const HLX::Model::ZoneModel *                 mZone;
+    const HLX::Model::ZoneModel *                       mZone;
 }
 
 // MARK: Properties
@@ -86,99 +86,99 @@ class ApplicationControllerDelegate;
  *  channel balance (installer-only) level.
  *
  */
-@property (weak, nonatomic) IBOutlet UIButton *                mBalanceCenterButton;
+@property (weak, nonatomic) IBOutlet UIButton *         mBalanceCenterButton;
 
 /**
  *  A pointer to the slider for adjusting to the left the zone
  *  stereophonic channel balance (installer-only) level.
  *
  */
-@property (weak, nonatomic) IBOutlet UIButton *                mBalanceDecreaseButton;
+@property (weak, nonatomic) IBOutlet UIButton *         mBalanceDecreaseButton;
 
 /**
  *  A pointer to the slider for setting the zone stereophonic
  *  channel balance (installer-only) level.
  *
  */
-@property (weak, nonatomic) IBOutlet UISlider *                mBalanceSlider;
+@property (weak, nonatomic) IBOutlet UISlider *         mBalanceSlider;
 
 /**
  *  A pointer to the slider for adjusting to the right the zone
  *  stereophonic channel balance (installer-only) level.
  *
  */
-@property (weak, nonatomic) IBOutlet UIButton *                mBalanceIncreaseButton;
+@property (weak, nonatomic) IBOutlet UIButton *         mBalanceIncreaseButton;
 
 /**
  *  A pointer to the switch which asserts (enables) or deasserts
  *  (disables) the zone favorite preference.
  *
  */
-@property (weak, nonatomic) IBOutlet UISwitch *                mFavoriteSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *         mFavoriteSwitch;
 
 /**
  *  A pointer to the label which describes the last used date of
  *  the zone.
  *
  */
-@property (weak, nonatomic) IBOutlet UILabel *                 mLastUsedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *          mLastUsedLabel;
 
 /**
  *  A pointer to the immutable switch that indicates the zone channel
  *  mode.
  *
  */
-@property (weak, nonatomic) IBOutlet UISwitch *                mMonoAudioSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *         mMonoAudioSwitch;
 
 /**
  *  A pointer to the switch which asserts (enables) or deasserts
  *  (disables) the zone volume mute state.
  *
  */
-@property (weak, nonatomic) IBOutlet UISwitch *                mMuteSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *         mMuteSwitch;
 
 /**
  *  A pointer to the label containing the zone source (input) name.
  *
  */
-@property (weak, nonatomic) IBOutlet UILabel *                 mSourceName;
+@property (weak, nonatomic) IBOutlet UILabel *          mSourceName;
 
 /**
  *  A pointer to the table cell for the zone equalizer sound mode.
  *
  */
-@property (weak, nonatomic) IBOutlet UITableViewCell *         mSoundModeCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *  mSoundModeCell;
 
 /**
  *  A pointer to the label for the zone equalizer sound mode name.
  *
  */
-@property (weak, nonatomic) IBOutlet UILabel *                 mSoundModeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *          mSoundModeLabel;
 
 /**
  *  A pointer to the button for decreasing the volume level.
  *
  */
-@property (weak, nonatomic) IBOutlet UIButton *                mVolumeDecreaseButton;
+@property (weak, nonatomic) IBOutlet UIButton *         mVolumeDecreaseButton;
 
 /**
  *  A pointer to the slider for setting the volume level.
  *
  */
-@property (weak, nonatomic) IBOutlet UISlider *                mVolumeSlider;
+@property (weak, nonatomic) IBOutlet UISlider *         mVolumeSlider;
 
 /**
  *  A pointer to the button for increasing the volume level.
  *
  */
-@property (weak, nonatomic) IBOutlet UIButton *                mVolumeIncreaseButton;
+@property (weak, nonatomic) IBOutlet UIButton *         mVolumeIncreaseButton;
 
 /**
  *  A pointer to the navigation bar item which is to be dynamically
  *  updated to the current zone name.
  *
  */
-@property (weak, nonatomic) IBOutlet UINavigationItem *        mZoneName;
+@property (weak, nonatomic) IBOutlet UINavigationItem * mZoneName;
 
 // MARK: Instance Methods
 
@@ -202,8 +202,8 @@ class ApplicationControllerDelegate;
 
 // MARK: Setters
 
-- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
-                        forZone: (const HLX::Model::ZoneModel *)aZone;
+- (void) setClientController: (ClientController &)aClientController
+                     forZone: (const HLX::Model::ZoneModel *)aZone;
 
 @end
 

@@ -150,7 +150,7 @@ using namespace Nuovations;
             lStatus = mUnion.mGroup->GetIdentifier(lIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mApplicationController->GroupSetMute(lIdentifier, lMute);
+            lStatus = mClientController->GetApplicationController()->GroupSetMute(lIdentifier, lMute);
             nlEXPECT(lStatus >= 0, done);
         }
         else
@@ -160,7 +160,7 @@ using namespace Nuovations;
             lStatus = mUnion.mZone->GetIdentifier(lIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mApplicationController->ZoneSetMute(lIdentifier, lMute);
+            lStatus = mClientController->GetApplicationController()->ZoneSetMute(lIdentifier, lMute);
             nlEXPECT(lStatus >= 0, done);
         }
     }
@@ -190,7 +190,7 @@ using namespace Nuovations;
             lStatus = mUnion.mGroup->GetIdentifier(lIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mApplicationController->GroupDecreaseVolume(lIdentifier);
+            lStatus = mClientController->GetApplicationController()->GroupDecreaseVolume(lIdentifier);
             nlEXPECT(lStatus >= 0, done);
         }
         else
@@ -200,7 +200,7 @@ using namespace Nuovations;
             lStatus = mUnion.mZone->GetIdentifier(lIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mApplicationController->ZoneDecreaseVolume(lIdentifier);
+            lStatus = mClientController->GetApplicationController()->ZoneDecreaseVolume(lIdentifier);
             nlEXPECT(lStatus >= 0, done);
         }
     }
@@ -231,7 +231,7 @@ using namespace Nuovations;
             lStatus = mUnion.mGroup->GetIdentifier(lIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mApplicationController->GroupSetVolume(lIdentifier, lVolume);
+            lStatus = mClientController->GetApplicationController()->GroupSetVolume(lIdentifier, lVolume);
             nlEXPECT(lStatus >= 0, done);
         }
         else
@@ -241,7 +241,7 @@ using namespace Nuovations;
             lStatus = mUnion.mZone->GetIdentifier(lIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mApplicationController->ZoneSetVolume(lIdentifier, lVolume);
+            lStatus = mClientController->GetApplicationController()->ZoneSetVolume(lIdentifier, lVolume);
             nlEXPECT(lStatus >= 0, done);
         }
     }
@@ -271,7 +271,7 @@ using namespace Nuovations;
             lStatus = mUnion.mGroup->GetIdentifier(lIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mApplicationController->GroupIncreaseVolume(lIdentifier);
+            lStatus = mClientController->GetApplicationController()->GroupIncreaseVolume(lIdentifier);
             nlEXPECT(lStatus >= 0, done);
         }
         else
@@ -281,7 +281,7 @@ using namespace Nuovations;
             lStatus = mUnion.mZone->GetIdentifier(lIdentifier);
             nlREQUIRE_SUCCESS(lStatus, done);
 
-            lStatus = mApplicationController->ZoneIncreaseVolume(lIdentifier);
+            lStatus = mClientController->GetApplicationController()->ZoneIncreaseVolume(lIdentifier);
             nlEXPECT(lStatus >= 0, done);
         }
     }
@@ -354,11 +354,9 @@ using namespace Nuovations;
  *  @param[in]  aIdentifier           An immutable reference to the
  *                                    identifier for the group or
  *                                    zone.
- *  @param[in]  aApplicationController  A reference to a shared
- *                                    pointer to a mutable HLX
- *                                    client controller instance
- *                                    to use for this table view
- *                                    cell.
+ *  @param[in]  aClientController     A reference to an app client
+ *                                    controller instance to use for
+ *                                    this table view cell.
  *  @param[in]  aIsGroup              A Boolean indicating whether
  *                                    or not this table view cell is
  *                                    for a group.
@@ -371,8 +369,8 @@ using namespace Nuovations;
  *
  */
 - (Status) configureCellForIdentifier: (const IdentifierModel::IdentifierType &)aIdentifier
-                       withController: (MutableApplicationControllerPointer &)aApplicationController
-		              asGroup: (bool)aIsGroup
+                       withController: (ClientController &)aClientController
+		                      asGroup: (bool)aIsGroup
 {
     const char *                 lUTF8StringGroupOrZoneName;
     NSString *                   lNSStringGroupOrZoneName;
@@ -388,7 +386,7 @@ using namespace Nuovations;
 
     mIsGroup = aIsGroup;
 
-    mApplicationController = aApplicationController;
+    mClientController = &aClientController;
 
     self.mVolumeSlider.minimumValue = static_cast<float>(VolumeModel::kLevelMin);
     self.mVolumeSlider.maximumValue = static_cast<float>(VolumeModel::kLevelMax);
@@ -402,7 +400,7 @@ using namespace Nuovations;
     {
         size_t lSourceCount;
 
-        lRetval = mApplicationController->GroupGet(aIdentifier, mUnion.mGroup);
+        lRetval = mClientController->GetApplicationController()->GroupGet(aIdentifier, mUnion.mGroup);
         nlREQUIRE_SUCCESS(lRetval, done);
 
         lRetval = mUnion.mGroup->GetName(lUTF8StringGroupOrZoneName);
@@ -419,7 +417,7 @@ using namespace Nuovations;
             lRetval = mUnion.mGroup->GetSources(&lSourceIdentifier, lSourceCount);
             nlREQUIRE_SUCCESS(lRetval, done);
 
-            lRetval = mApplicationController->SourceGet(lSourceIdentifier, lSource);
+            lRetval = mClientController->GetApplicationController()->SourceGet(lSourceIdentifier, lSource);
             nlREQUIRE_SUCCESS(lRetval, done);
 
             lRetval = lSource->GetName(lUTF8StringSourceName);
@@ -441,7 +439,7 @@ using namespace Nuovations;
     }
     else
     {
-        lRetval = mApplicationController->ZoneGet(aIdentifier, mUnion.mZone);
+        lRetval = mClientController->GetApplicationController()->ZoneGet(aIdentifier, mUnion.mZone);
         nlREQUIRE_SUCCESS(lRetval, done);
 
         lRetval = mUnion.mZone->GetName(lUTF8StringGroupOrZoneName);
@@ -453,7 +451,7 @@ using namespace Nuovations;
         lRetval = mUnion.mZone->GetSource(lSourceIdentifier);
         nlREQUIRE_SUCCESS(lRetval, done);
 
-        lRetval = mApplicationController->SourceGet(lSourceIdentifier, lSource);
+        lRetval = mClientController->GetApplicationController()->SourceGet(lSourceIdentifier, lSource);
         nlREQUIRE_SUCCESS(lRetval, done);
 
         lRetval = lSource->GetName(lUTF8StringSourceName);

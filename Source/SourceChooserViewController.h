@@ -113,11 +113,11 @@ class ApplicationControllerDelegate;
 
 // MARK: Setters
 
-- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
-                       forGroup: (const HLX::Model::GroupModel *)aGroup;
+- (void) setApplicationController: (MutableApplicationControllerPointer)aApplicationController
+                         forGroup: (const HLX::Model::GroupModel *)aGroup;
 
-- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
-                        forZone: (const HLX::Model::ZoneModel *)aZone;
+- (void) setApplicationController: (MutableApplicationControllerPointer)aApplicationController
+                          forZone: (const HLX::Model::ZoneModel *)aZone;
 
 @end
 

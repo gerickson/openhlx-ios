@@ -34,7 +34,7 @@
 #include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 
 #import "ApplicationControllerDelegate.hpp"
-#import "ApplicationControllerPointer.hpp"
+#import "ClientController.hpp"
 
 
 namespace HLX
@@ -54,10 +54,10 @@ class Controller;
 @interface RefreshViewController : UIViewController <ApplicationControllerDelegate>
 {
     /**
-     *  A shared pointer to the global HLX client controller instance.
+     *  A pointer to the global app HLX client controller instance.
      *
      */
-    MutableApplicationControllerPointer             mApplicationController;
+    ClientController *                              mClientController;
 
     /**
      *  A scoped pointer to the default HLX client controller

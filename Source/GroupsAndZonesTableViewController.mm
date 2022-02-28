@@ -125,7 +125,7 @@ class Controller;
 
     mShowStyle = self.mGroupZoneSegmentedControl.selectedSegmentIndex;
 
-    lStatus = mApplicationController->SetDelegate(mApplicationControllerDelegate.get());
+    lStatus = mClientController->GetApplicationController()->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
     [self.tableView reloadData];
@@ -213,18 +213,18 @@ done:
         {
             GroupDetailViewController *  lGroupDetailViewController = [aSegue destinationViewController];
 
-            [lGroupDetailViewController setApplicationController: mApplicationController
-                                        forGroup: [lGroupsAndZonesCell group]];
+            [lGroupDetailViewController setClientController: *mClientController
+                                                   forGroup: [lGroupsAndZonesCell group]];
         }
         else
         {
             ZoneDetailViewController *   lZoneDetailViewController = [aSegue destinationViewController];
 
-            [lZoneDetailViewController setApplicationController: mApplicationController
-                                       forZone: [lGroupsAndZonesCell zone]];
+            [lZoneDetailViewController setClientController: *mClientController
+                                                   forZone: [lGroupsAndZonesCell zone]];
         }
 
-        lStatus = mApplicationController->SetDelegate(nullptr);
+        lStatus = mClientController->GetApplicationController()->SetDelegate(nullptr);
         nlREQUIRE_SUCCESS(lStatus, done);
     }
 
@@ -270,15 +270,14 @@ done:
  *  @brief
  *    Set the client controller for the view.
  *
- *  @param[in]  aApplicationController  A reference to a shared pointer
- *                                    to a mutable HLX client
- *                                    controller instance to use for
- *                                    this view controller.
+ *  @param[in]  aClientController  A reference to an app client
+ *                                 controller instance to use for
+ *                                 this view controller.
  *
  */
-- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
+- (void) setClientController: (ClientController &)aClientController
 {
-    mApplicationController = aApplicationController;
+    mClientController = &aClientController;
 }
 
 // MARK: Table View Data Source Delegation
@@ -301,12 +300,12 @@ done:
 
     if (mShowStyle == kShowStyleGroups)
     {
-        lStatus = mApplicationController->GroupsGetMax(lValue);
+        lStatus = mClientController->GetApplicationController()->GroupsGetMax(lValue);
         nlREQUIRE_SUCCESS(lStatus, done);
     }
     else if (mShowStyle == kShowStyleZones)
     {
-        lStatus = mApplicationController->ZonesGetMax(lValue);
+        lStatus = mClientController->GetApplicationController()->ZonesGetMax(lValue);
         nlREQUIRE_SUCCESS(lStatus, done);
     }
 
@@ -363,7 +362,7 @@ done:
         // the row by one to account for this.
 
         lStatus = [aCell configureCellForIdentifier: (lRow + 1)
-                                     withController: mApplicationController
+                                     withController: *mClientController
                                             asGroup: lAsGroup];
         nlVERIFY_SUCCESS(lStatus);
     }

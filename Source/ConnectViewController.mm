@@ -85,8 +85,8 @@ class Controller;
     self.mAppVariantLabel.hidden = NO;
 #endif
 
-    mApplicationController = [lDelegate hlxClientController];
-    nlREQUIRE(mApplicationController != nullptr, done);
+    mClientController = &[lDelegate hlxClientController];
+    nlREQUIRE(mClientController != nullptr, done);
 
     // Set ourselves as the delegate for the network address or name
     // text field such that we can respond to a return / go keyboard
@@ -185,12 +185,12 @@ class Controller;
     // The disconnected check is essential since there are times when
     // this controller will temporarily be visible while connected.
 
-    if (((self.mNetworkAddressOrNameTextField.text != nullptr) && ([self.mNetworkAddressOrNameTextField.text length] > 0)) && !mApplicationController->IsConnected())
+    if (((self.mNetworkAddressOrNameTextField.text != nullptr) && ([self.mNetworkAddressOrNameTextField.text length] > 0)) && !mClientController->GetApplicationController()->IsConnected())
     {
         self.mConnectButton.enabled = YES;
     }
 
-    mApplicationController->SetDelegate(mApplicationControllerDelegate.get());
+    mClientController->GetApplicationController()->SetDelegate(mApplicationControllerDelegate.get());
 
     return;
 }
@@ -293,7 +293,7 @@ done:
             UINavigationController *             lNavigationController = [aSegue destinationViewController];
             GroupsAndZonesTableViewController *  lGroupsAndZonesTableViewController = static_cast<GroupsAndZonesTableViewController *>(lNavigationController.topViewController);
 
-            [lGroupsAndZonesTableViewController setApplicationController: mApplicationController];
+            [lGroupsAndZonesTableViewController setClientController: *mClientController];
         }
     }
 
@@ -449,7 +449,7 @@ done:
  */
 - (void) onConnectCancelled: (UIAlertAction *)aAlertAction
 {
-    mApplicationController->Disconnect();
+    mClientController->GetApplicationController()->Disconnect();
 }
 
 // MARK: Workers
@@ -479,7 +479,7 @@ done:
 
     self.mConnectButton.enabled = NO;
 
-    lStatus = mApplicationController->Connect([aNetworkAddressOrName UTF8String]);
+    lStatus = mClientController->GetApplicationController()->Connect([aNetworkAddressOrName UTF8String]);
     nlREQUIRE_SUCCESS(lStatus, done);
 
 done:
@@ -507,7 +507,7 @@ done:
     // Disconnect from any existing HLX server that might currently be
     // connected.
 
-    mApplicationController->Disconnect();
+    mClientController->GetApplicationController()->Disconnect();
 
     // Populate the network address or name text field such that the
     // connection history is correctly populated if the connection is
@@ -750,7 +750,7 @@ done:
     // Bind the preferences controller to the application controller
     // identifier for the connection.
 
-    lStatus = [lDelegate hlxPreferencesController].Bind(*mApplicationController);
+    lStatus = [lDelegate hlxPreferencesController].Bind(*mClientController->GetApplicationController());
     nlREQUIRE_SUCCESS(lStatus, dismiss);
 
  dismiss:
@@ -807,7 +807,7 @@ done:
 
     [self->mRefreshController startRefreshActivity];
 
-    lStatus = self->mApplicationController->Refresh();
+    lStatus = self->mClientController->GetApplicationController()->Refresh();
     nlREQUIRE_SUCCESS(lStatus, done);
 
  done:
@@ -820,7 +820,7 @@ done:
 
     [aController stopRefreshActivity];
 
-    mApplicationController->Disconnect();
+    mClientController->GetApplicationController()->Disconnect();
 }
 
 // MARK: Workers

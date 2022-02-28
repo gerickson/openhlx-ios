@@ -206,7 +206,7 @@ class Controller;
             UINavigationController *             lNavigationController = [aSegue destinationViewController];
             GroupsAndZonesTableViewController *  lGroupsAndZonesTableViewController = static_cast<GroupsAndZonesTableViewController *>(lNavigationController.topViewController);
 
-            [lGroupsAndZonesTableViewController setApplicationController: mApplicationController];
+            [lGroupsAndZonesTableViewController setClientController: *mClientController];
         }
         else if ([[aSegue identifier] isEqual: @"DidDisconnect"])
         {

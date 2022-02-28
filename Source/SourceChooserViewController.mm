@@ -251,18 +251,18 @@ done:
  *  @brief
  *    Set the client controller and group for the view.
  *
- *  @param[in]  aApplicationController  A reference to a shared pointer
- *                                    to a mutable HLX client
- *                                    controller instance to use for
- *                                    this view controller.
- *  @param[in]  aGroup                An immutable pointer to the
- *                                    group for which its group
- *                                    source(s) is/are to be observed
- *                                    or mutated.
+ *  @param[in]  aApplicationController  A shared pointer
+ *                                      to a mutable HLX client
+ *                                      controller instance to use for
+ *                                      this view controller.
+ *  @param[in]  aGroup                  An immutable pointer to the
+ *                                      group for which its group
+ *                                      source(s) is/are to be observed
+ *                                      or mutated.
  *
  */
-- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
-                       forGroup: (const HLX::Model::GroupModel *)aGroup
+- (void) setApplicationController: (MutableApplicationControllerPointer)aApplicationController
+                         forGroup: (const HLX::Model::GroupModel *)aGroup
 {
     Status  lStatus;
 
@@ -282,17 +282,17 @@ done:
  *  @brief
  *    Set the client controller and zone for the view.
  *
- *  @param[in]  aApplicationController  A reference to a shared pointer
- *                                    to a mutable HLX client
- *                                    controller instance to use for
- *                                    this view controller.
- *  @param[in]  aZone                 An immutable pointer to the
- *                                    zone for which its zone source
- *                                    is to be observed or mutated.
+ *  @param[in]  aApplicationController  A shared pointer
+ *                                      to a mutable HLX client
+ *                                      controller instance to use for
+ *                                      this view controller.
+ *  @param[in]  aZone                   An immutable pointer to the
+ *                                      zone for which its zone source
+ *                                      is to be observed or mutated.
  *
  */
-- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
-                        forZone: (const HLX::Model::ZoneModel *)aZone
+- (void) setApplicationController: (MutableApplicationControllerPointer)aApplicationController
+                          forZone: (const HLX::Model::ZoneModel *)aZone
 {
     SourceModel::IdentifierType  lSourceIdentifier;
     Status                       lStatus;

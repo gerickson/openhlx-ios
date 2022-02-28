@@ -35,7 +35,7 @@
 #include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 
 #import "ApplicationControllerDelegate.hpp"
-#import "ApplicationControllerPointer.hpp"
+#import "ClientController.hpp"
 
 
 namespace HLX
@@ -55,24 +55,24 @@ class ApplicationControllerDelegate;
 @interface GroupDetailViewController : UITableViewController <ApplicationControllerDelegate>
 {
     /**
-     *  A shared pointer to the global HLX client controller instance.
+     *  A pointer to the global app HLX client controller instance.
      *
      */
-    MutableApplicationControllerPointer             mApplicationController;
+    ClientController *                                  mClientController;
 
     /**
      *  A scoped pointer to the default HLX client controller
      *  delegate.
      *
      */
-    std::unique_ptr<ApplicationControllerDelegate>  mApplicationControllerDelegate;
+    std::unique_ptr<ApplicationControllerDelegate>      mApplicationControllerDelegate;
 
     /**
      *  An immutable pointer to the group for which its source and volume
      *  detail is to be observed or mutated.
      *
      */
-    const HLX::Model::GroupModel *                mGroup;
+    const HLX::Model::GroupModel *                      mGroup;
 }
 
 // MARK: Properties
@@ -82,52 +82,52 @@ class ApplicationControllerDelegate;
  *  (disables) the group favorite preference.
  *
  */
-@property (weak, nonatomic) IBOutlet UISwitch *                mFavoriteSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *         mFavoriteSwitch;
 
 /**
  *  A pointer to the label which describes the last used date of
  *  the group.
  *
  */
-@property (weak, nonatomic) IBOutlet UILabel *                 mLastUsedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *          mLastUsedLabel;
 
 /**
  *  A pointer to the switch which asserts (enables) or deasserts
  *  (disables) the group volume mute state.
  *
  */
-@property (weak, nonatomic) IBOutlet UISwitch *                mMuteSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *         mMuteSwitch;
 
 /**
  *  A pointer to the label containing the group source (input) name.
  *
  */
-@property (weak, nonatomic) IBOutlet UILabel *                 mSourceName;
+@property (weak, nonatomic) IBOutlet UILabel *          mSourceName;
 
 /**
  *  A pointer to the button for decreasing the volume level.
  *
  */
-@property (weak, nonatomic) IBOutlet UIButton *                mVolumeDecreaseButton;
+@property (weak, nonatomic) IBOutlet UIButton *         mVolumeDecreaseButton;
 
 /**
  *  A pointer to the slider for setting the volume level.
  *
  */
-@property (weak, nonatomic) IBOutlet UISlider *                mVolumeSlider;
+@property (weak, nonatomic) IBOutlet UISlider *         mVolumeSlider;
 
 /**
  *  A pointer to the button for increasing the volume level.
  *
  */
-@property (weak, nonatomic) IBOutlet UIButton *                mVolumeIncreaseButton;
+@property (weak, nonatomic) IBOutlet UIButton *         mVolumeIncreaseButton;
 
 /**
  *  A pointer to the navigation bar item which is to be dynamically
  *  updated to the current group name.
  *
  */
-@property (weak, nonatomic) IBOutlet UINavigationItem *        mGroupName;
+@property (weak, nonatomic) IBOutlet UINavigationItem * mGroupName;
 
 // MARK: Instance Methods
 
@@ -146,8 +146,8 @@ class ApplicationControllerDelegate;
 
 // MARK: Setters
 
-- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
-                       forGroup: (const HLX::Model::GroupModel *)aGroup;
+- (void) setClientController: (ClientController &)aClientController
+                    forGroup: (const HLX::Model::GroupModel *)aGroup;
 
 @end
 

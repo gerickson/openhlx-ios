@@ -89,7 +89,7 @@ class Controller;
 
     [super viewWillAppear: aAnimated];
 
-    lStatus = mApplicationController->SetDelegate(mApplicationControllerDelegate.get());
+    lStatus = mClientController->GetApplicationController()->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
     [self refreshGroupMute];
@@ -176,10 +176,10 @@ done:
         Status                         lStatus;
 
 
-        [lSourceChooserViewController setApplicationController: mApplicationController
-                                                    forGroup: mGroup];
+        [lSourceChooserViewController setApplicationController: mClientController->GetApplicationController()
+                                                      forGroup: mGroup];
 
-        lStatus = mApplicationController->SetDelegate(nullptr);
+        lStatus = mClientController->GetApplicationController()->SetDelegate(nullptr);
         nlREQUIRE_SUCCESS(lStatus, done);
     }
 
@@ -219,7 +219,7 @@ done:
         lStatus = mGroup->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mApplicationController->GroupSetMute(lIdentifier, lMute);
+        lStatus = mClientController->GetApplicationController()->GroupSetMute(lIdentifier, lMute);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -245,7 +245,7 @@ done:
         lStatus = mGroup->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mApplicationController->GroupDecreaseVolume(lIdentifier);
+        lStatus = mClientController->GetApplicationController()->GroupDecreaseVolume(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -272,7 +272,7 @@ done:
         lStatus = mGroup->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mApplicationController->GroupSetVolume(lIdentifier, lVolume);
+        lStatus = mClientController->GetApplicationController()->GroupSetVolume(lIdentifier, lVolume);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -298,7 +298,7 @@ done:
         lStatus = mGroup->GetIdentifier(lIdentifier);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mApplicationController->GroupIncreaseVolume(lIdentifier);
+        lStatus = mClientController->GetApplicationController()->GroupIncreaseVolume(lIdentifier);
         nlEXPECT(lStatus >= 0, done);
     }
 
@@ -312,21 +312,20 @@ done:
  *  @brief
  *    Set the client controller and group for the view.
  *
- *  @param[in]  aApplicationController  A reference to a shared pointer
- *                                    to a mutable HLX client
- *                                    controller instance to use for
- *                                    this view controller.
- *  @param[in]  aGroup                An immutable pointer to the group
- *                                    for which its source and volume
- *                                    detail is to be observed or
- *                                    mutated.
+ *  @param[in]  aClientController  A reference to an app client
+ *                                 controller instance to use for
+ *                                 this view controller.
+ *  @param[in]  aGroup             An immutable pointer to the group
+ *                                 for which its source and volume
+ *                                 detail is to be observed or
+ *                                 mutated.
  *
  */
-- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController
-                       forGroup: (const HLX::Model::GroupModel *)aGroup
+- (void) setClientController: (ClientController &)aClientController
+                    forGroup: (const HLX::Model::GroupModel *)aGroup
 {
-    mApplicationController = aApplicationController;
-    mGroup               = aGroup;
+    mClientController = &aClientController;
+    mGroup            = aGroup;
 }
 
 // MARK: Table View Data Source Delegation
@@ -385,7 +384,7 @@ done:
         lStatus = mGroup->GetSources(&lSourceIdentifier, lSourceCount);
         nlREQUIRE_SUCCESS(lStatus, done);
 
-        lStatus = mApplicationController->SourceGet(lSourceIdentifier, lSource);
+        lStatus = mClientController->GetApplicationController()->SourceGet(lSourceIdentifier, lSource);
         nlREQUIRE_SUCCESS(lStatus, done);
 
         lStatus = lSource->GetName(lUTF8StringSourceName);

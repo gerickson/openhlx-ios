@@ -35,7 +35,7 @@
 #include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 
 #import "ApplicationControllerDelegate.hpp"
-#import "ApplicationControllerPointer.hpp"
+#import "ClientController.hpp"
 
 
 namespace HLX
@@ -73,10 +73,10 @@ typedef NSInteger ShowStyle NS_TYPED_ENUM;
 @interface GroupsAndZonesTableViewController : UITableViewController <ApplicationControllerDelegate>
 {
     /**
-     *  A shared pointer to the global HLX client controller instance.
+     *  A pointer to the global app HLX client controller instance.
      *
      */
-    MutableApplicationControllerPointer             mApplicationController;
+    ClientController *                            mClientController;
 
     /**
      *  A scoped pointer to the default HLX client controller
@@ -117,7 +117,7 @@ typedef NSInteger ShowStyle NS_TYPED_ENUM;
 
 // MARK: Setters
 
-- (void) setApplicationController: (MutableApplicationControllerPointer &)aApplicationController; 
+- (void) setClientController: (ClientController &)aClientController; 
 
 @end
 
