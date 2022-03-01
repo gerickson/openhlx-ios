@@ -22,14 +22,13 @@
  *
  */
 
+#import "ClientPreferencesController.hpp"
 
 #import <Foundation/NSUserDefaults.h>
 
 #import <LogUtilities/LogUtilities.hpp>
 
 #import <OpenHLX/Utilities/Assert.hpp>
-
-#import "ClientPreferencesController.hpp"
 
 
 using namespace HLX;
@@ -120,24 +119,6 @@ ClientPreferencesController :: Unbind(void)
 }
 
 #if 0
-Status
-ClientPreferencesController :: Init(const Client::Application::Controller &aController)
-{
-
-}
-
-Status
-ClientPreferencesController :: Init(const NetworkModel::EthernetEUI48Type &aControllerIdentifier)
-{
-
-}
-
-Status
-ClientPreferencesController :: Init(NSString *aControllerIdentifier)
-{
-    mControllerIdentifier = [aControllerIdentifier retain];
-}
-
 // Mutators
 
 void
@@ -170,21 +151,53 @@ ClientPreferencesController :: ZoneReset(const ZoneModel::IdentifierType &aZoneI
 {
 
 }
+#endif // 0
 
 // Getters
 
 Status
 ClientPreferencesController :: GroupGetFavorite(const GroupModel::IdentifierType &aGroupIdentifier,
-                                bool &aFavorite) const;
+                                                FavoriteType &aFavorite) const
+{
+    Status lRetval = kStatus_Success;
+
+    aFavorite = false;
+
+    return (lRetval);
+}
+
 Status
 ClientPreferencesController :: GroupGetLastUsedDate(const GroupModel::IdentifierType &aGroupIdentifier,
-                                    NSDate *&aDate) const;
+                                                    NSDate **aDate) const
+{
+    Status lRetval = kStatus_Success;
+
+    *aDate = [NSDate date];
+
+    return (lRetval);
+}
+
 Status
 ClientPreferencesController :: ZoneGetFavorite(const ZoneModel::IdentifierType &aZoneIdentifier,
-                               bool &aFavorite) const;
+                                               FavoriteType &aFavorite) const
+{
+    Status lRetval = kStatus_Success;
+
+    aFavorite = false;
+
+    return (lRetval);
+}
+
 Status
 ClientPreferencesController :: ZoneGetLastUsedDate(const ZoneModel::IdentifierType &aZoneIdentifier,
-                                   NSDate *&aDate) const;
+                                                   NSDate **aDate) const
+{
+    Status lRetval = kStatus_Success;
+
+    *aDate = [NSDate date];
+
+    return (lRetval);
+}
 
 // Setters
 
@@ -194,11 +207,19 @@ ClientPreferencesController :: ZoneGetLastUsedDate(const ZoneModel::IdentifierTy
 
 Status
 ClientPreferencesController :: GroupSetFavorite(const GroupModel::IdentifierType &aGroupIdentifier,
-                                const bool &aFavorite)
+                                                const FavoriteType &aFavorite)
 {
+    NSDate * lNow    = [NSDate date];
+    Status   lRetval = kStatus_Success;
 
+    lRetval = GroupSetFavorite(aGroupIdentifier, aFavorite, lNow);
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
+ done:
+    return (lRetval);
 }
 
+#if 0
 Status
 ClientPreferencesController :: GroupSetSource(const GroupModel::IdentifierType &aGroupIdentifier,
                               const SourceModel::IdentifierType &aSourceIdentifier)
@@ -219,14 +240,23 @@ ClientPreferencesController :: GroupSetVolumeMute(const GroupModel::IdentifierTy
 {
 
 }
+#endif // 0
 
 Status
 ClientPreferencesController :: ZoneSetFavorite(const ZoneModel::IdentifierType &aZoneIdentifier,
-                               const bool &aFavorite)
+                                               const FavoriteType &aFavorite)
 {
+    NSDate * lNow    = [NSDate date];
+    Status   lRetval = kStatus_Success;
 
+    lRetval = ZoneSetFavorite(aZoneIdentifier, aFavorite, lNow);
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
+ done:
+    return (lRetval);
 }
 
+#if 0
 Status
 ClientPreferencesController :: ZoneSetSource(const ZoneModel::IdentifierType &aZoneIdentifier,
                              const SourceModel::IdentifierType &aSourceIdentifier)
@@ -247,18 +277,21 @@ ClientPreferencesController :: ZoneSetVolumeMute(const ZoneModel::IdentifierType
 {
 
 }
-
+#endif // 0
 
 // With explicit date
 
 Status
 ClientPreferencesController :: GroupSetFavorite(const GroupModel::IdentifierType &aGroupIdentifier,
-                                const bool &aFavorite,
-                                NSDate *aDate)
+                                                const FavoriteType &aFavorite,
+                                                NSDate *aDate)
 {
+    Status lRetval = kStatus_Success;
 
+    return (lRetval);
 }
 
+#if 0
 Status
 ClientPreferencesController :: GroupSetSource(const GroupModel::IdentifierType &aGroupIdentifier,
                               const SourceModel::IdentifierType &aSourceIdentifier,
@@ -282,15 +315,19 @@ ClientPreferencesController :: GroupSetVolumeMute(const GroupModel::IdentifierTy
 {
 
 }
+#endif // 0
 
 Status
 ClientPreferencesController :: ZoneSetFavorite(const ZoneModel::IdentifierType &aZoneIdentifier,
-                               const bool &aFavorite,
-                               NSDate *aDate)
+                                               const FavoriteType &aFavorite,
+                                               NSDate *aDate)
 {
+    Status lRetval = kStatus_Success;
 
+    return (lRetval);
 }
 
+#if 0
 Status
 ClientPreferencesController :: ZoneSetSource(const ZoneModel::IdentifierType &aZoneIdentifier,
                              const SourceModel::IdentifierType &aSourceIdentifier,
@@ -366,16 +403,16 @@ void ZoneReset(NSString *aControllerIdentifier,
 
 Status
 ClientPreferencesController :: GroupGetFavorite(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                const GroupModel::IdentifierType &aGroupIdentifier,
-                                bool &aFavorite) const;
+                                                const GroupModel::IdentifierType &aGroupIdentifier,
+                                                FavoriteType &aFavorite) const;
 Status
 ClientPreferencesController :: GroupGetLastUsedDate(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                                     const GroupModel::IdentifierType &aGroupIdentifier,
                                     NSDate *&aDate) const;
 Status
 ClientPreferencesController :: ZoneGetFavorite(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                               const ZoneModel::IdentifierType &aZoneIdentifier,
-                               bool &aFavorite) const;
+                                               const ZoneModel::IdentifierType &aZoneIdentifier,
+                                               FavoriteType &aFavorite) const;
 Status
 ClientPreferencesController :: ZoneGetLastUsedDate(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                                    const ZoneModel::IdentifierType &aZoneIdentifier,
@@ -385,16 +422,16 @@ ClientPreferencesController :: ZoneGetLastUsedDate(const NetworkModel::EthernetE
 
 Status
 ClientPreferencesController :: GroupGetFavorite(NSString *aControllerIdentifier,
-                                const GroupModel::IdentifierType &aGroupIdentifier,
-                                bool &aFavorite) const;
+                                                const GroupModel::IdentifierType &aGroupIdentifier,
+                                                FavoriteType &aFavorite) const;
 Status
 ClientPreferencesController :: GroupGetLastUsedDate(NSString *aControllerIdentifier,
                                     const GroupModel::IdentifierType &aGroupIdentifier,
                                     NSDate *&aDate) const;
 Status
 ClientPreferencesController :: ZoneGetFavorite(NSString *aControllerIdentifier,
-                               const ZoneModel::IdentifierType &aZoneIdentifier,
-                               bool &aFavorite) const;
+                                               const ZoneModel::IdentifierType &aZoneIdentifier,
+                                               FavoriteType &aFavorite) const;
 Status
 ClientPreferencesController :: ZoneGetLastUsedDate(NSString *aControllerIdentifier,
                                    const ZoneModel::IdentifierType &aZoneIdentifier,
@@ -408,8 +445,8 @@ ClientPreferencesController :: ZoneGetLastUsedDate(NSString *aControllerIdentifi
 
 Status
 ClientPreferencesController :: GroupSetFavorite(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                const GroupModel::IdentifierType &aGroupIdentifier,
-                                const bool &aFavorite)
+                                                const GroupModel::IdentifierType &aGroupIdentifier,
+                                                const FavoriteType &aFavorite)
 {
 
 }
@@ -440,8 +477,8 @@ ClientPreferencesController :: GroupSetVolumeMute(const NetworkModel::EthernetEU
 
 Status
 ClientPreferencesController :: ZoneSetFavorite(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                               const ZoneModel::IdentifierType &aZoneIdentifier,
-                               const bool &aFavorite)
+                                               const ZoneModel::IdentifierType &aZoneIdentifier,
+                                               const FavoriteType &aFavorite)
 {
 
 }
@@ -475,9 +512,9 @@ ClientPreferencesController :: ZoneSetVolumeMute(const NetworkModel::EthernetEUI
 
 Status
 ClientPreferencesController :: GroupSetFavorite(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                const GroupModel::IdentifierType &aGroupIdentifier,
-                                const bool &aFavorite,
-                                NSDate *aDate)
+                                                const GroupModel::IdentifierType &aGroupIdentifier,
+                                                const FavoriteType &aFavorite,
+                                                NSDate *aDate)
 {
 
 }
@@ -511,9 +548,9 @@ ClientPreferencesController :: GroupSetVolumeMute(const NetworkModel::EthernetEU
 
 Status
 ClientPreferencesController :: ZoneSetFavorite(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                               const ZoneModel::IdentifierType &aZoneIdentifier,
-                               const bool &aFavorite,
-                               NSDate *aDate)
+                                               const ZoneModel::IdentifierType &aZoneIdentifier,
+                                               const FavoriteType &aFavorite,
+                                               NSDate *aDate)
 {
 
 }
@@ -552,8 +589,8 @@ ClientPreferencesController :: ZoneSetVolumeMute(const NetworkModel::EthernetEUI
 
 Status
 ClientPreferencesController :: GroupSetFavorite(NSString *aControllerIdentifier,
-                                const GroupModel::IdentifierType &aGroupIdentifier,
-                                const bool &aFavorite)
+                                                const GroupModel::IdentifierType &aGroupIdentifier,
+                                                const FavoriteType &aFavorite)
 {
 
 }
@@ -584,8 +621,8 @@ ClientPreferencesController :: GroupSetVolumeMute(NSString *aControllerIdentifie
 
 Status
 ClientPreferencesController :: ZoneSetFavorite(NSString *aControllerIdentifier,
-                               const ZoneModel::IdentifierType &aZoneIdentifier,
-                               const bool &aFavorite)
+                                               const ZoneModel::IdentifierType &aZoneIdentifier,
+                                               const FavoriteType &aFavorite)
 {
 
 }
@@ -619,9 +656,9 @@ ClientPreferencesController :: ZoneSetVolumeMute(NSString *aControllerIdentifier
 
 Status
 ClientPreferencesController :: GroupSetFavorite(NSString *aControllerIdentifier,
-                                const GroupModel::IdentifierType &aGroupIdentifier,
-                                const bool &aFavorite,
-                                NSDate *aDate)
+                                                const GroupModel::IdentifierType &aGroupIdentifier,
+                                                const FavoriteType &aFavorite,
+                                                NSDate *aDate)
 {
 
 }
@@ -655,9 +692,9 @@ ClientPreferencesController :: GroupSetVolumeMute(NSString *aControllerIdentifie
 
 Status
 ClientPreferencesController :: ZoneSetFavorite(NSString *aControllerIdentifier,
-                               const ZoneModel::IdentifierType &aZoneIdentifier,
-                               const bool &aFavorite,
-                               NSDate *aDate)
+                                               const ZoneModel::IdentifierType &aZoneIdentifier,
+                                               const FavoriteType &aFavorite,
+                                               NSDate *aDate)
 {
 
 }
@@ -689,4 +726,3 @@ ClientPreferencesController :: ZoneSetVolumeMute(NSString *aControllerIdentifier
 
 }
 #endif // 0
-

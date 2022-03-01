@@ -23,14 +23,22 @@
  */
 
 
+#import <Foundation/NSDate.h>
 #import <Foundation/NSString.h>
 
 #import <OpenHLX/Client/ApplicationController.hpp>
 #import <OpenHLX/Common/Errors.hpp>
+#import <OpenHLX/Model/GroupModel.hpp>
+#import <OpenHLX/Model/ZoneModel.hpp>
+
+//#import "ClientFavoriteModel.hpp"
 
 
 class ClientPreferencesController
 {
+public:
+    typedef bool FavoriteType;
+
 public:
     ClientPreferencesController(void);
     ~ClientPreferencesController(void);
@@ -45,26 +53,23 @@ public:
     HLX::Common::Status Unbind(void);
 
 #if 0
-    HLX::Common::Status Init(const HLX::Client::Application::Controller &aController);
-    HLX::Common::Status Init(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier);
-    HLX::Common::Status Init(NSString *aControllerIdentifier);
-
     // Mutators
 
     HLX::Common::Status Reset(void);
     HLX::Common::Status GroupReset(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier);
     HLX::Common::Status ZoneReset(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier);
+#endif // 0
 
     // Getters
 
     HLX::Common::Status GroupGetFavorite(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                    bool &aFavorite) const;
+                                         FavoriteType &aFavorite) const;
     HLX::Common::Status GroupGetLastUsedDate(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                        NSDate *&aDate) const;
+                                             NSDate **aDate) const;
     HLX::Common::Status ZoneGetFavorite(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                   bool &aFavorite) const;
+                                        FavoriteType &aFavorite) const;
     HLX::Common::Status ZoneGetLastUsedDate(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                       NSDate *&aDate) const;
+                                            NSDate **aDate) const;
 
     // Setters
 
@@ -73,51 +78,51 @@ public:
     // With implicit date
 
     HLX::Common::Status GroupSetFavorite(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                    const bool &aFavorite);
-    HLX::Common::Status GroupSetSource(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                  const HLX::Model::SourceModel::IdentifierType &aSourceIdentifier);
-    HLX::Common::Status GroupSetVolumeLevel(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                       const HLX::Model::VolumeModel::LevelType &aLevel);
-    HLX::Common::Status GroupSetVolumeMute(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                      const HLX::Model::VolumeModel::MuteType &aMute);
+                                         const FavoriteType &aFavorite);
+    //HLX::Common::Status GroupSetSource(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
+    //const HLX::Model::SourceModel::IdentifierType &aSourceIdentifier);
+    //HLX::Common::Status GroupSetVolumeLevel(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
+    //const HLX::Model::VolumeModel::LevelType &aLevel);
+    //HLX::Common::Status GroupSetVolumeMute(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
+    //const HLX::Model::VolumeModel::MuteType &aMute);
     HLX::Common::Status ZoneSetFavorite(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                   const bool &aFavorite);
-    HLX::Common::Status ZoneSetSource(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                 const HLX::Model::SourceModel::IdentifierType &aSourceIdentifier);
-    HLX::Common::Status ZoneSetVolumeLevel(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                      const HLX::Model::VolumeModel::LevelType &aLevel);
-    HLX::Common::Status ZoneSetVolumeMute(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                     const HLX::Model::VolumeModel::MuteType &aMute);
+                                        const FavoriteType &aFavorite);
+    //HLX::Common::Status ZoneSetSource(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
+    //const HLX::Model::SourceModel::IdentifierType &aSourceIdentifier);
+    //HLX::Common::Status ZoneSetVolumeLevel(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
+    //const HLX::Model::VolumeModel::LevelType &aLevel);
+    //HLX::Common::Status ZoneSetVolumeMute(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
+    //const HLX::Model::VolumeModel::MuteType &aMute);
 
     // With explicit date
 
     HLX::Common::Status GroupSetFavorite(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                    const bool &aFavorite,
-                                    NSDate *aDate);
-    HLX::Common::Status GroupSetSource(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                  const HLX::Model::SourceModel::IdentifierType &aSourceIdentifier,
-                                  NSDate *aDate);
-    HLX::Common::Status GroupSetVolumeLevel(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                       const HLX::Model::VolumeModel::LevelType &aLevel,
-                                       NSDate *aDate);
-    HLX::Common::Status GroupSetVolumeMute(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                      const HLX::Model::VolumeModel::MuteType &aMute,
-                                      NSDate *aDate);
+                                         const FavoriteType &aFavorite,
+                                         NSDate *aDate);
+    //HLX::Common::Status GroupSetSource(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
+    //const HLX::Model::SourceModel::IdentifierType &aSourceIdentifier,
+    //NSDate *aDate);
+    //HLX::Common::Status GroupSetVolumeLevel(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
+    //const HLX::Model::VolumeModel::LevelType &aLevel,
+    //NSDate *aDate);
+    //HLX::Common::Status GroupSetVolumeMute(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
+    //const HLX::Model::VolumeModel::MuteType &aMute,
+    //NSDate *aDate);
     HLX::Common::Status ZoneSetFavorite(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                   const bool &aFavorite,
-                                   NSDate *aDate);
-    HLX::Common::Status ZoneSetSource(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                 const HLX::Model::SourceModel::IdentifierType &aSourceIdentifier,
-                                 NSDate *aDate);
-    HLX::Common::Status ZoneSetVolumeLevel(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                      const HLX::Model::VolumeModel::LevelType &aLevel,
-                                      NSDate *aDate);
-    HLX::Common::Status ZoneSetVolumeMute(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                     const HLX::Model::VolumeModel::MuteType &aMute,
-                                     NSDate *aDate);
+                                        const FavoriteType &aFavorite,
+                                        NSDate *aDate);
+#if 0
+    //HLX::Common::Status ZoneSetSource(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
+    //const HLX::Model::SourceModel::IdentifierType &aSourceIdentifier,
+    //NSDate *aDate);
+    //HLX::Common::Status ZoneSetVolumeLevel(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
+    //const HLX::Model::VolumeModel::LevelType &aLevel,
+    //NSDate *aDate);
+    //HLX::Common::Status ZoneSetVolumeMute(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
+    //const HLX::Model::VolumeModel::MuteType &aMute,
+    //NSDate *aDate);
 
 private:
-
     // Mutators
 
     // With controller identifier
@@ -142,13 +147,13 @@ private:
 
     HLX::Common::Status GroupGetFavorite(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                                     const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                    bool &aFavorite) const;
+                                    FavoriteType &aFavorite) const;
     HLX::Common::Status GroupGetLastUsedDate(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                                         const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
                                         NSDate *&aDate) const;
     HLX::Common::Status ZoneGetFavorite(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                                    const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                   bool &aFavorite) const;
+                                   FavoriteType &aFavorite) const;
     HLX::Common::Status ZoneGetLastUsedDate(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                                        const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
                                        NSDate *&aDate) const;
@@ -157,13 +162,13 @@ private:
     
     HLX::Common::Status GroupGetFavorite(NSString *aControllerIdentifier,
                                     const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                    bool &aFavorite) const;
+                                    FavoriteType &aFavorite) const;
     HLX::Common::Status GroupGetLastUsedDate(NSString *aControllerIdentifier,
                                         const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
                                         NSDate *&aDate) const;
     HLX::Common::Status ZoneGetFavorite(NSString *aControllerIdentifier,
                                    const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                   bool &aFavorite) const;
+                                   FavoriteType &aFavorite) const;
     HLX::Common::Status ZoneGetLastUsedDate(NSString *aControllerIdentifier,
                                        const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
                                        NSDate *&aDate) const;
@@ -176,7 +181,7 @@ private:
 
     HLX::Common::Status GroupSetFavorite(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                                     const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                    const bool &aFavorite);
+                                    const FavoriteType &aFavorite);
     HLX::Common::Status GroupSetSource(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                                   const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
                                   const HLX::Model::SourceModel::IdentifierType &aSourceIdentifier);
@@ -188,7 +193,7 @@ private:
                                       const HLX::Model::VolumeModel::MuteType &aMute);
     HLX::Common::Status ZoneSetFavorite(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                                    const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                   const bool &aFavorite);
+                                   const FavoriteType &aFavorite);
     HLX::Common::Status ZoneSetSource(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                                  const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
                                  const HLX::Model::SourceModel::IdentifierType &aSourceIdentifier);
@@ -203,7 +208,7 @@ private:
 
     HLX::Common::Status GroupSetFavorite(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                                     const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                    const bool &aFavorite,
+                                    const FavoriteType &aFavorite,
                                     NSDate *aDate);
     HLX::Common::Status GroupSetSource(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                                   const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
@@ -219,7 +224,7 @@ private:
                                       NSDate *aDate);
     HLX::Common::Status ZoneSetFavorite(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                                    const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                   const bool &aFavorite,
+                                   const FavoriteType &aFavorite,
                                    NSDate *aDate);
     HLX::Common::Status ZoneSetSource(const HLX::Model::NetworkModel::EthernetEUI48Type &aControllerIdentifier,
                                  const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
@@ -240,7 +245,7 @@ private:
 
     HLX::Common::Status GroupSetFavorite(NSString *aControllerIdentifier,
                                     const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                    const bool &aFavorite);
+                                    const FavoriteType &aFavorite);
     HLX::Common::Status GroupSetSource(NSString *aControllerIdentifier,
                                   const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
                                   const HLX::Model::SourceModel::IdentifierType &aSourceIdentifier);
@@ -252,7 +257,7 @@ private:
                                       const HLX::Model::VolumeModel::MuteType &aMute);
     HLX::Common::Status ZoneSetFavorite(NSString *aControllerIdentifier,
                                    const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                   const bool &aFavorite);
+                                   const FavoriteType &aFavorite);
     HLX::Common::Status ZoneSetSource(NSString *aControllerIdentifier,
                                  const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
                                  const HLX::Model::SourceModel::IdentifierType &aSourceIdentifier);
@@ -267,7 +272,7 @@ private:
 
     HLX::Common::Status GroupSetFavorite(NSString *aControllerIdentifier,
                                     const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
-                                    const bool &aFavorite,
+                                    const FavoriteType &aFavorite,
                                     NSDate *aDate);
     HLX::Common::Status GroupSetSource(NSString *aControllerIdentifier,
                                   const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
@@ -283,7 +288,7 @@ private:
                                       NSDate *aDate);
     HLX::Common::Status ZoneSetFavorite(NSString *aControllerIdentifier,
                                    const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
-                                   const bool &aFavorite,
+                                   const FavoriteType &aFavorite,
                                    NSDate *aDate);
     HLX::Common::Status ZoneSetSource(NSString *aControllerIdentifier,
                                  const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
