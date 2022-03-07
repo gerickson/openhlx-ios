@@ -48,6 +48,10 @@
 		0B40B63C250ED1A6009A65DA /* ConnectHistoryViewTableCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0B40B63B250ED1A6009A65DA /* ConnectHistoryViewTableCell.mm */; };
 		0B4981E22659C7EC00C735BB /* Parse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B4981E02659C7EC00C735BB /* Parse.cpp */; };
 		0B51DB3C27868204003EAE48 /* NetworkStateChangeNotifications.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B51DB3A27868204003EAE48 /* NetworkStateChangeNotifications.cpp */; };
+		0B6041C227CEED120002F835 /* ClientFavoriteModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B6041BF27CEED120002F835 /* ClientFavoriteModel.cpp */; };
+		0B6041D727CEF56B0002F835 /* ClientObjectPreferencesModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B6041D527CEF56B0002F835 /* ClientObjectPreferencesModel.cpp */; };
+		0B6041D827CEF56B0002F835 /* ClientObjectsPreferencesModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B6041D627CEF56B0002F835 /* ClientObjectsPreferencesModel.cpp */; };
+		0B6041EC27CEF7CB0002F835 /* ClientLastUsedDateModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B6041EB27CEF7CB0002F835 /* ClientLastUsedDateModel.cpp */; };
 		0B6238472565F42300E07B8D /* EqualizerPresetsControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B62383E2565F42200E07B8D /* EqualizerPresetsControllerBasis.cpp */; };
 		0B6238482565F42300E07B8D /* SourcesControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B62383F2565F42200E07B8D /* SourcesControllerBasis.cpp */; };
 		0B6238492565F42300E07B8D /* GroupsControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B6238412565F42200E07B8D /* GroupsControllerBasis.cpp */; };
@@ -481,6 +485,14 @@
 		0B565E6E23FB30C0001C71DB /* libopenhlx-common.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libopenhlx-common.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B565E7723FB31C3001C71DB /* ConnectionBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ConnectionBuffer.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/ConnectionBuffer.hpp; sourceTree = "<absolute>"; };
 		0B565E7823FB31C3001C71DB /* ConnectionBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConnectionBuffer.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/ConnectionBuffer.cpp; sourceTree = "<absolute>"; };
+		0B6041BD27CEED120002F835 /* ClientFavoriteModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClientFavoriteModel.hpp; sourceTree = "<group>"; };
+		0B6041BE27CEED120002F835 /* ClientLastUsedDateModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClientLastUsedDateModel.hpp; sourceTree = "<group>"; };
+		0B6041BF27CEED120002F835 /* ClientFavoriteModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClientFavoriteModel.cpp; sourceTree = "<group>"; };
+		0B6041C027CEED120002F835 /* ClientObjectPreferencesModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClientObjectPreferencesModel.hpp; sourceTree = "<group>"; };
+		0B6041C127CEED120002F835 /* ClientObjectsPreferencesModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClientObjectsPreferencesModel.hpp; sourceTree = "<group>"; };
+		0B6041D527CEF56B0002F835 /* ClientObjectPreferencesModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClientObjectPreferencesModel.cpp; sourceTree = "<group>"; };
+		0B6041D627CEF56B0002F835 /* ClientObjectsPreferencesModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClientObjectsPreferencesModel.cpp; sourceTree = "<group>"; };
+		0B6041EB27CEF7CB0002F835 /* ClientLastUsedDateModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClientLastUsedDateModel.cpp; sourceTree = "<group>"; };
 		0B62383D2565F42200E07B8D /* FavoritesControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FavoritesControllerBasis.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/FavoritesControllerBasis.hpp; sourceTree = "<absolute>"; };
 		0B62383E2565F42200E07B8D /* EqualizerPresetsControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EqualizerPresetsControllerBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/EqualizerPresetsControllerBasis.cpp; sourceTree = "<absolute>"; };
 		0B62383F2565F42200E07B8D /* SourcesControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SourcesControllerBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/SourcesControllerBasis.cpp; sourceTree = "<absolute>"; };
@@ -904,8 +916,19 @@
 			children = (
 				0BBD822222B932E400554609 /* AppDelegate.h */,
 				0BBD822322B932E400554609 /* AppDelegate.mm */,
+				0B32EE2B232640EE00065E18 /* ApplicationControllerDelegate.hpp */,
+				0B32EE2A232640EE00065E18 /* ApplicationControllerDelegate.mm */,
+				0BCA2F62265C71ED00385413 /* ApplicationControllerPointer.hpp */,
 				0BB94FD427CB3F6D0055B422 /* ClientController.hpp */,
 				0BB94FD527CB3F6D0055B422 /* ClientController.mm */,
+				0B6041BF27CEED120002F835 /* ClientFavoriteModel.cpp */,
+				0B6041BD27CEED120002F835 /* ClientFavoriteModel.hpp */,
+				0B6041EB27CEF7CB0002F835 /* ClientLastUsedDateModel.cpp */,
+				0B6041BE27CEED120002F835 /* ClientLastUsedDateModel.hpp */,
+				0B6041D527CEF56B0002F835 /* ClientObjectPreferencesModel.cpp */,
+				0B6041C027CEED120002F835 /* ClientObjectPreferencesModel.hpp */,
+				0B6041D627CEF56B0002F835 /* ClientObjectsPreferencesModel.cpp */,
+				0B6041C127CEED120002F835 /* ClientObjectsPreferencesModel.hpp */,
 				0BB94FEA27CB411D0055B422 /* ClientPreferencesController.hpp */,
 				0BB94FE927CB411D0055B422 /* ClientPreferencesController.mm */,
 				0BB8D6FC25155B2B009D083A /* ConnectHistoryController.h */,
@@ -932,9 +955,6 @@
 				0B7B9B5522F4D28000D542DF /* GroupsAndZonesTableViewCell.mm */,
 				0B7B9B5722F4D28100D542DF /* GroupsAndZonesTableViewController.h */,
 				0B7B9B5622F4D28100D542DF /* GroupsAndZonesTableViewController.mm */,
-				0B32EE2B232640EE00065E18 /* ApplicationControllerDelegate.hpp */,
-				0B32EE2A232640EE00065E18 /* ApplicationControllerDelegate.mm */,
-				0BCA2F62265C71ED00385413 /* ApplicationControllerPointer.hpp */,
 				0BBD823122B932E600554609 /* main.mm */,
 				0BC145EE22CEAAD600EE32AC /* RefreshViewController.h */,
 				0BC145ED22CEAAD500EE32AC /* RefreshViewController.mm */,
@@ -1974,7 +1994,9 @@
 				0B2388FD258EE9F3004C6E4A /* ToneDetailViewController.mm in Sources */,
 				0B7B9B5922F4D28100D542DF /* GroupsAndZonesTableViewController.mm in Sources */,
 				0BDA00ED2307784600BD75C6 /* SourceChooserTableViewCell.mm in Sources */,
+				0B6041D827CEF56B0002F835 /* ClientObjectsPreferencesModel.cpp in Sources */,
 				0BB94FEB27CB411D0055B422 /* ClientPreferencesController.mm in Sources */,
+				0B6041D727CEF56B0002F835 /* ClientObjectPreferencesModel.cpp in Sources */,
 				0BBD823222B932E600554609 /* main.mm in Sources */,
 				0B238916258F1584004C6E4A /* CrossoverDetailViewController.mm in Sources */,
 				0B0F3E34258FBC4500F275A6 /* EqualizerPresetChooserTableViewCell.mm in Sources */,
@@ -1988,9 +2010,11 @@
 				0B0C72952585DE4900BAE465 /* SoundModeChooserViewController.mm in Sources */,
 				0BBD822422B932E400554609 /* AppDelegate.mm in Sources */,
 				0BB62F3022D91C000013E943 /* ConnectHistoryViewController.mm in Sources */,
+				0B6041C227CEED120002F835 /* ClientFavoriteModel.cpp in Sources */,
 				0B238917258F1584004C6E4A /* EqualizerPresetChooserViewController.mm in Sources */,
 				0B238919258F1584004C6E4A /* EqualizerBandsDetailViewController.mm in Sources */,
 				0B40B63C250ED1A6009A65DA /* ConnectHistoryViewTableCell.mm in Sources */,
+				0B6041EC27CEF7CB0002F835 /* ClientLastUsedDateModel.cpp in Sources */,
 				0B238918258F1584004C6E4A /* EqualizerBandsDetailTableViewCell.mm in Sources */,
 				0BE3109923B0125A00AFC4F5 /* GroupDetailViewController.mm in Sources */,
 			);
