@@ -26,7 +26,7 @@
 
 #import "GroupDetailViewController.h"
 
-#include <Foundation/Foundation.h>
+#import <Foundation/Foundation.h>
 
 #include <LogUtilities/LogUtilities.hpp>
 
@@ -92,6 +92,8 @@ class Controller;
     lStatus = mClientController->GetApplicationController()->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
+    [self refreshGroupFavorite];
+    [self refreshGroupLastUsedDate];
     [self refreshGroupMute];
     [self refreshGroupName];
     [self refreshGroupSourceName];
@@ -198,7 +200,21 @@ done:
  */
 - (IBAction) onFavoriteSwitchAction: (id)aSender
 {
-    DeclareScopedFunctionTracer(lTracer);
+    if (aSender == self.mFavoriteSwitch)
+    {
+        const ClientPreferencesController::FavoriteType  lFavorite = static_cast<ClientPreferencesController::FavoriteType>(self.mFavoriteSwitch.on);
+        GroupModel::IdentifierType                       lIdentifier;
+        Status                                           lStatus;
+
+        lStatus = mGroup->GetIdentifier(lIdentifier);
+        nlREQUIRE_SUCCESS(lStatus, done);
+
+        lStatus = mClientController->GetPreferencesController().GroupSetFavorite(lIdentifier, lFavorite);
+        nlREQUIRE_SUCCESS(lStatus, done);
+    }
+
+ done:
+    return;
 }
 
 /**
@@ -220,7 +236,7 @@ done:
         nlREQUIRE_SUCCESS(lStatus, done);
 
         lStatus = mClientController->GetApplicationController()->GroupSetMute(lIdentifier, lMute);
-        nlEXPECT(lStatus >= 0, done);
+        nlEXPECT(lStatus >= kStatus_Success, done);
     }
 
 done:
@@ -306,6 +322,8 @@ done:
     return;
 }
 
+// MARK: Table View Data Source Delegation
+
 // MARK: Setters
 
 /**
@@ -328,10 +346,55 @@ done:
     mGroup            = aGroup;
 }
 
-// MARK: Table View Data Source Delegation
-
-
 // MARK: Workers
+
+- (void) refreshGroupFavorite
+{
+    GroupModel::IdentifierType                 lIdentifier;
+    ClientPreferencesController::FavoriteType  lFavorite = false;
+    Status                                     lStatus;
+
+    lStatus = mGroup->GetIdentifier(lIdentifier);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lStatus = mClientController->GetPreferencesController().GroupGetFavorite(lIdentifier, lFavorite);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    self.mFavoriteSwitch.on   = lFavorite;
+
+ done:
+    return;
+}
+
+- (void) refreshGroupLastUsedDate
+{
+    GroupModel::IdentifierType lIdentifier;
+    NSDate *                   lLastUsedDate = nullptr;
+    NSString *                 lLastUsedDateString = nullptr;
+    NSDateFormatter *          lFormatter = nullptr;
+    Status                     lStatus;
+
+    lFormatter = [[NSDateFormatter alloc] init];
+    nlREQUIRE(lFormatter != nullptr, done);
+
+    lStatus = mGroup->GetIdentifier(lIdentifier);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lStatus = mClientController->GetPreferencesController().GroupGetLastUsedDate(lIdentifier, &lLastUsedDate);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lFormatter.doesRelativeDateFormatting = YES;
+    lFormatter.dateStyle                  = NSDateFormatterShortStyle;
+    lFormatter.timeStyle                  = NSDateFormatterShortStyle;
+
+    lLastUsedDateString = [lFormatter stringFromDate: lLastUsedDate];
+    nlREQUIRE(lLastUsedDateString != nullptr, done);
+
+    self.mLastUsedLabel.text   = lLastUsedDateString;
+
+ done:
+    return;
+}
 
 - (void) refreshGroupMute
 {

@@ -28,7 +28,7 @@
 
 #import "ZoneDetailViewController.h"
 
-#include <Foundation/Foundation.h>
+#import <Foundation/Foundation.h>
 
 #include <LogUtilities/LogUtilities.hpp>
 
@@ -115,6 +115,8 @@ enum
 #if OPENHLX_INSTALLER
     [self refreshZoneBalance];
 #endif
+    [self refreshZoneFavorite];
+    [self refreshZoneLastUsedDate];
     [self refreshZoneMute];
     [self refreshZoneName];
 #if OPENHLX_INSTALLER
@@ -426,7 +428,21 @@ done:
  */
 - (IBAction) onFavoriteSwitchAction: (id)aSender
 {
-    DeclareScopedFunctionTracer(lTracer);
+    if (aSender == self.mFavoriteSwitch)
+    {
+        const ClientPreferencesController::FavoriteType  lFavorite = static_cast<ClientPreferencesController::FavoriteType>(self.mFavoriteSwitch.on);
+        ZoneModel::IdentifierType                        lIdentifier;
+        Status                                           lStatus;
+
+        lStatus = mZone->GetIdentifier(lIdentifier);
+        nlREQUIRE_SUCCESS(lStatus, done);
+
+        lStatus = mClientController->GetPreferencesController().ZoneSetFavorite(lIdentifier, lFavorite);
+        nlREQUIRE_SUCCESS(lStatus, done);
+    }
+
+ done:
+    return;
 }
 
 /**
@@ -448,7 +464,7 @@ done:
         nlREQUIRE_SUCCESS(lStatus, done);
 
         lStatus = mClientController->GetApplicationController()->ZoneSetMute(lIdentifier, lMute);
-        nlREQUIRE(lStatus >= kStatus_Success, done);
+        nlEXPECT(lStatus >= kStatus_Success, done);
     }
 
 done:
@@ -775,6 +791,54 @@ done:
     return;
 }
 #endif // OPENHLX_INSTALLER
+
+- (void) refreshZoneFavorite
+{
+    ZoneModel::IdentifierType                  lIdentifier;
+    ClientPreferencesController::FavoriteType  lFavorite = false;
+    Status                                     lStatus;
+
+    lStatus = mZone->GetIdentifier(lIdentifier);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lStatus = mClientController->GetPreferencesController().ZoneGetFavorite(lIdentifier, lFavorite);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    self.mFavoriteSwitch.on   = lFavorite;
+
+ done:
+    return;
+}
+
+- (void) refreshZoneLastUsedDate
+{
+    ZoneModel::IdentifierType  lIdentifier;
+    NSDate *                   lLastUsedDate = nullptr;
+    NSString *                 lLastUsedDateString = nullptr;
+    NSDateFormatter *          lFormatter = nullptr;
+    Status                     lStatus;
+
+    lFormatter = [[NSDateFormatter alloc] init];
+    nlREQUIRE(lFormatter != nullptr, done);
+
+    lStatus = mZone->GetIdentifier(lIdentifier);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lStatus = mClientController->GetPreferencesController().ZoneGetLastUsedDate(lIdentifier, &lLastUsedDate);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lFormatter.doesRelativeDateFormatting = YES;
+    lFormatter.dateStyle                  = NSDateFormatterShortStyle;
+    lFormatter.timeStyle                  = NSDateFormatterShortStyle;
+
+    lLastUsedDateString = [lFormatter stringFromDate: lLastUsedDate];
+    nlREQUIRE(lLastUsedDateString != nullptr, done);
+
+    self.mLastUsedLabel.text   = lLastUsedDateString;
+
+ done:
+    return;
+}
 
 - (void) refreshZoneMute
 {
