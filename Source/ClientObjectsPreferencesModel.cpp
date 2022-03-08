@@ -1,8 +1,11 @@
 #import "ClientObjectsPreferencesModel.hpp"
 
+#import <errno.h>
+
 #import <OpenHLX/Utilities/Assert.hpp>
 
 
+using namespace std;
 using namespace HLX::Common;
 
 
@@ -34,10 +37,16 @@ ClientObjectsPreferencesModel :: operator =(const ClientObjectsPreferencesModel 
 Status
 ClientObjectsPreferencesModel :: GetObjectPreferences(const IdentifierType &aObjectIdentifier, ClientObjectPreferencesModel *&aObjectPreferencesModel)
 {
-    Status lRetval = kStatus_Success;
+    ObjectsPreferences::iterator lIterator = mPreferences.find(aObjectIdentifier);
+    Status                       lRetval   = kStatus_Success;
 
 
-    aObjectPreferencesModel = &mPreferences.at(aObjectIdentifier);
+    // There may be no preferences at all for this object. Consequently,
+    // it is expected that there will be no valid iterator.
+
+    nlEXPECT_ACTION(lIterator != mPreferences.end(), done, lRetval = -ENOENT);
+
+    aObjectPreferencesModel = &lIterator->second;
 
  done:
     return (lRetval);
@@ -46,10 +55,16 @@ ClientObjectsPreferencesModel :: GetObjectPreferences(const IdentifierType &aObj
 Status
 ClientObjectsPreferencesModel :: GetObjectPreferences(const IdentifierType &aObjectIdentifier, const ClientObjectPreferencesModel *&aObjectPreferencesModel) const
 {
-    Status lRetval = kStatus_Success;
+    ObjectsPreferences::const_iterator lIterator = mPreferences.find(aObjectIdentifier);
+    Status                             lRetval   = kStatus_Success;
 
 
-    aObjectPreferencesModel = &mPreferences.at(aObjectIdentifier);
+    // There may be no preferences at all for this object. Consequently,
+    // it is expected that there will be no valid iterator.
+
+    nlEXPECT_ACTION(lIterator != mPreferences.end(), done, lRetval = -ENOENT);
+
+    aObjectPreferencesModel = &lIterator->second;
 
  done:
     return (lRetval);
