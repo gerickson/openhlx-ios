@@ -31,7 +31,7 @@
 #import <OpenHLX/Model/GroupModel.hpp>
 #import <OpenHLX/Model/ZoneModel.hpp>
 
-//#import "ClientFavoriteModel.hpp"
+#import "ClientObjectsPreferencesModel.hpp"
 
 
 class ClientPreferencesController
@@ -52,13 +52,16 @@ public:
     HLX::Common::Status Bind(const HLX::Client::Application::Controller &aController);
     HLX::Common::Status Unbind(void);
 
-#if 0
     // Mutators
 
     HLX::Common::Status Reset(void);
     HLX::Common::Status GroupReset(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier);
     HLX::Common::Status ZoneReset(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier);
-#endif // 0
+
+    // Observers
+
+    bool GroupHasPreferences(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier) const;
+    bool ZoneHasPreferences(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier) const;
 
     // Getters
 
@@ -305,5 +308,10 @@ private:
 #endif // 0
 
 private:
-    NSString * mControllerIdentifier;
+    typedef ClientObjectsPreferencesModel ClientGroupsPreferencesModel;
+    typedef ClientObjectsPreferencesModel ClientZonesPreferencesModel;
+
+    NSString *                    mControllerIdentifier;
+    ClientGroupsPreferencesModel  mGroupsPreferences;
+    ClientGroupsPreferencesModel  mZonesPreferences;
 };
