@@ -801,12 +801,18 @@ done:
     lStatus = mZone->GetIdentifier(lIdentifier);
     nlREQUIRE_SUCCESS(lStatus, done);
 
-    lStatus = mClientController->GetPreferencesController().ZoneGetFavorite(lIdentifier, lFavorite);
-    nlREQUIRE_SUCCESS(lStatus, done);
+    // There may be no preferences at all for this zone or there
+    // may be no favorite preference for this zone. Consequently,
+    // it is expected that this call can and likely will
+    // fail. Favorite has already been defaulted above to a sane
+    // value to handle such a failure.
 
-    self.mFavoriteSwitch.on   = lFavorite;
+    lStatus = mClientController->GetPreferencesController().ZoneGetFavorite(lIdentifier, lFavorite);
+    nlEXPECT_SUCCESS(lStatus, done);
 
  done:
+    self.mFavoriteSwitch.on   = lFavorite;
+
     return;
 }
 
@@ -814,7 +820,7 @@ done:
 {
     ZoneModel::IdentifierType  lIdentifier;
     NSDate *                   lLastUsedDate = nullptr;
-    NSString *                 lLastUsedDateString = nullptr;
+    NSString *                 lLastUsedDateString = NSLocalizedString(@"NeverUsedDateKey", @"");
     NSDateFormatter *          lFormatter = nullptr;
     Status                     lStatus;
 
@@ -824,8 +830,14 @@ done:
     lStatus = mZone->GetIdentifier(lIdentifier);
     nlREQUIRE_SUCCESS(lStatus, done);
 
+    // There may be no preferences at all for this zone or there may
+    // be no last used date preference for this zone. Consequently, it
+    // is expected that this call can and likely will fail. A default
+    // last used date string has already been defaulted above to a
+    // sane value to handle such a failure.
+
     lStatus = mClientController->GetPreferencesController().ZoneGetLastUsedDate(lIdentifier, &lLastUsedDate);
-    nlREQUIRE_SUCCESS(lStatus, done);
+    nlEXPECT_SUCCESS(lStatus, done);
 
     lFormatter.doesRelativeDateFormatting = YES;
     lFormatter.dateStyle                  = NSDateFormatterShortStyle;
@@ -834,9 +846,9 @@ done:
     lLastUsedDateString = [lFormatter stringFromDate: lLastUsedDate];
     nlREQUIRE(lLastUsedDateString != nullptr, done);
 
+ done:
     self.mLastUsedLabel.text   = lLastUsedDateString;
 
- done:
     return;
 }
 
