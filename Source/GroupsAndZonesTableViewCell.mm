@@ -35,6 +35,8 @@
 #include <OpenHLX/Model/VolumeModel.hpp>
 #include <OpenHLX/Utilities/Assert.hpp>
 
+#import "ClientPreferencesController.hpp"
+
 
 using namespace HLX::Client;
 using namespace HLX::Common;
@@ -372,16 +374,21 @@ using namespace Nuovations;
                        withController: (ClientController &)aClientController
 		                      asGroup: (bool)aIsGroup
 {
-    const char *                 lUTF8StringGroupOrZoneName;
-    NSString *                   lNSStringGroupOrZoneName;
-    const char *                 lUTF8StringSourceName;
-    NSString *                   lNSStringSourceName;
-    UIImage *                    lFavoriteImage;
-    SourceModel::IdentifierType  lSourceIdentifier;
-    const SourceModel *          lSource;
-    VolumeModel::LevelType       lVolume = VolumeModel::kLevelMin;
-    VolumeModel::MuteType        lMute = true;
-    Status                       lRetval = kStatus_Success;
+    static NSString * const                    kHeartImageNames[2] = {
+        @"HeartUnfilled.png",
+        @"HeartFilled.png"
+    };
+    const char *                               lUTF8StringGroupOrZoneName;
+    NSString *                                 lNSStringGroupOrZoneName;
+    const char *                               lUTF8StringSourceName;
+    NSString *                                 lNSStringSourceName;
+    ClientPreferencesController::FavoriteType  lFavorite = false;
+    UIImage *                                  lFavoriteImage;
+    SourceModel::IdentifierType                lSourceIdentifier;
+    const SourceModel *                        lSource;
+    VolumeModel::LevelType                     lVolume = VolumeModel::kLevelMin;
+    VolumeModel::MuteType                      lMute = true;
+    Status                                     lRetval = kStatus_Success;
 
 
     mIsGroup = aIsGroup;
@@ -391,14 +398,18 @@ using namespace Nuovations;
     self.mVolumeSlider.minimumValue = static_cast<float>(VolumeModel::kLevelMin);
     self.mVolumeSlider.maximumValue = static_cast<float>(VolumeModel::kLevelMax);
 
-    lFavoriteImage = [UIImage imageNamed: @"HeartUnfilled.png"];
-    nlREQUIRE(lFavoriteImage != nullptr, done);
-
-    [self.mFavoriteImage setImage: lFavoriteImage];
-
     if (aIsGroup)
     {
         size_t lSourceCount;
+
+        // There may be no preferences at all for this group or there
+        // may be no favorite preference for this group. Consequently,
+        // it is expected that this call can and likely will
+        // fail. Favorite has already been defaulted above to a sane
+        // value to handle such a failure.
+
+        lRetval = mClientController->GetPreferencesController().GroupGetFavorite(aIdentifier, lFavorite);
+        (void)lRetval;
 
         lRetval = mClientController->GetApplicationController()->GroupGet(aIdentifier, mUnion.mGroup);
         nlREQUIRE_SUCCESS(lRetval, done);
@@ -439,6 +450,15 @@ using namespace Nuovations;
     }
     else
     {
+        // There may be no preferences at all for this zone or there
+        // may be no favorite preference for this zone. Consequently,
+        // it is expected that this call can and likely will
+        // fail. Favorite has already been defaulted above to a sane
+        // value to handle such a failure.
+
+        lRetval = mClientController->GetPreferencesController().ZoneGetFavorite(aIdentifier, lFavorite);
+        (void)lRetval;
+
         lRetval = mClientController->GetApplicationController()->ZoneGet(aIdentifier, mUnion.mZone);
         nlREQUIRE_SUCCESS(lRetval, done);
 
@@ -466,6 +486,11 @@ using namespace Nuovations;
         lRetval = mUnion.mZone->GetMute(lMute);
         nlREQUIRE_SUCCESS(lRetval, done);
     }
+
+    lFavoriteImage = [UIImage imageNamed: kHeartImageNames[lFavorite]];
+    nlREQUIRE(lFavoriteImage != nullptr, done);
+
+    [self.mFavoriteImage setImage: lFavoriteImage];
 
     self.mGroupOrZoneName.text = lNSStringGroupOrZoneName;
     self.mSourceName.text      = lNSStringSourceName;
