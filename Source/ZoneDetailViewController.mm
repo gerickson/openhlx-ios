@@ -119,6 +119,7 @@ enum
     [self refreshZoneLastUsedDate];
     [self refreshZoneMute];
     [self refreshZoneName];
+    [self refreshZoneReset];
 #if OPENHLX_INSTALLER
     [self refreshZoneSoundMode];
 #endif
@@ -972,6 +973,22 @@ done:
 
  done:
     return;
+}
+
+- (void) refreshZoneReset
+{
+    ZoneModel::IdentifierType  lIdentifier;
+    Status                     lStatus;
+    bool                       lHasPreferences = false;
+
+
+    lStatus = mZone->GetIdentifier(lIdentifier);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lHasPreferences = mClientController->GetPreferencesController().ZoneHasPreferences(lIdentifier);
+
+done:
+    self.mResetCell.hidden = !lHasPreferences;
 }
 
 - (void) refreshZoneVolume

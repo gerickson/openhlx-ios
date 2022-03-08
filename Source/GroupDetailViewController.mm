@@ -96,6 +96,7 @@ class Controller;
     [self refreshGroupLastUsedDate];
     [self refreshGroupMute];
     [self refreshGroupName];
+    [self refreshGroupReset];
     [self refreshGroupSourceName];
     [self refreshGroupVolume];
 
@@ -477,6 +478,22 @@ done:
 
  done:
     return;
+}
+
+- (void) refreshGroupReset
+{
+    GroupModel::IdentifierType  lIdentifier;
+    Status                      lStatus;
+    bool                        lHasPreferences = false;
+
+
+    lStatus = mGroup->GetIdentifier(lIdentifier);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lHasPreferences = mClientController->GetPreferencesController().GroupHasPreferences(lIdentifier);
+
+done:
+    self.mResetCell.hidden = !lHasPreferences;
 }
 
 - (void) refreshGroupVolume

@@ -138,6 +138,12 @@ class ApplicationControllerDelegate;
 @property (weak, nonatomic) IBOutlet UISwitch *         mMuteSwitch;
 
 /**
+ *  A pointer to the table view cell that contextually allows
+ *  resetting the group preferences.
+ */
+@property (weak, nonatomic) IBOutlet UITableViewCell *  mResetCell;
+
+/**
  *  A pointer to the label containing the zone source (input) name.
  *
  */
