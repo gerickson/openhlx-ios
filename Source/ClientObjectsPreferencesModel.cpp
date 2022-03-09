@@ -2,13 +2,16 @@
 
 #import <errno.h>
 
+#import <LogUtilities/LogUtilities.hpp>
+
 #import <OpenHLX/Utilities/Assert.hpp>
 
 
-using namespace std;
 using namespace HLX;
 using namespace HLX::Common;
 using namespace HLX::Model;
+using namespace Nuovations;
+using namespace std;
 
 
 ClientObjectsPreferencesModel :: ClientObjectsPreferencesModel(const ClientObjectsPreferencesModel &aClientObjectsPreferencesModel) :

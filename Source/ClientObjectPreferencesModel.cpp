@@ -1,10 +1,13 @@
 #import "ClientObjectPreferencesModel.hpp"
 
+#import <LogUtilities/LogUtilities.hpp>
+
 #import <OpenHLX/Utilities/Assert.hpp>
 
 
 using namespace HLX;
 using namespace HLX::Common;
+using namespace Nuovations;
 
 
 Status
