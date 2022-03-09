@@ -24,8 +24,10 @@
 
 #import "ClientPreferencesController.hpp"
 
+#import <Foundation/NSDictionary.h>
 #import <Foundation/NSUserDefaults.h>
 
+#import <CFUtilities/CFUtilities.hpp>
 #import <LogUtilities/LogUtilities.hpp>
 
 #import <OpenHLX/Utilities/Assert.hpp>
@@ -42,7 +44,7 @@ namespace Detail
 {
 
 static NSString *
-CreateControllerIdentifier(const HLX::Model::NetworkModel::EthernetEUI48Type &aEthernetEUI48)
+CreateControllerIdentifier(const NetworkModel::EthernetEUI48Type &aEthernetEUI48)
 {
     NSString *lRetval = nullptr;
 
@@ -59,10 +61,258 @@ CreateControllerIdentifier(const HLX::Model::NetworkModel::EthernetEUI48Type &aE
     return (lRetval);
 }
 
+static bool
+ObjectHasPreferences(const ClientObjectsPreferencesModel &aObjectsPreferencesModel, const IdentifierModel::IdentifierType &aObjectIdentifier)
+{
+    const ClientObjectPreferencesModel * lObjectPreferencesModel = nullptr;
+    Status                               lStatus;
+    bool                                 lRetval = false;
+
+
+    // There may be no preferences at all for this object. Consequently,
+    // it is expected that there may be no object preferences model.
+
+    lStatus = aObjectsPreferencesModel.GetObjectPreferences(aObjectIdentifier, lObjectPreferencesModel);
+    nlEXPECT_SUCCESS(lStatus, done);
+
+    lRetval = (lObjectPreferencesModel != nullptr);
+
+ done:
+    return (lRetval);
+}
+
+static Status
+ObjectGetFavorite(const ClientObjectsPreferencesModel &aObjectsPreferencesModel, const IdentifierModel::IdentifierType &aObjectIdentifier, ClientPreferencesController::FavoriteType &aFavorite)
+{
+    const ClientObjectPreferencesModel * lObjectPreferencesModel = nullptr;
+    Status                               lRetval = kStatus_Success;
+
+
+    // There may be no preferences at all for this object. Consequently,
+    // it is expected that there may be no object preferences model.
+
+    lRetval = aObjectsPreferencesModel.GetObjectPreferences(aObjectIdentifier, lObjectPreferencesModel);
+    nlEXPECT_SUCCESS(lRetval, done);
+
+    lRetval = lObjectPreferencesModel->GetFavorite(aFavorite);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
+}
+
+static Status
+ObjectGetLastUsedDate(const ClientObjectsPreferencesModel &aObjectsPreferencesModel, const IdentifierModel::IdentifierType &aObjectIdentifier, NSDate **aLastUsedDate)
+{
+    const ClientObjectPreferencesModel *       lObjectPreferencesModel = nullptr;
+    ClientLastUsedDateModel::LastUsedDateType  lLastUsedDate = nullptr;
+    Status                                     lRetval = kStatus_Success;
+
+
+    // There may be no preferences at all for this object. Consequently,
+    // it is expected that there may be no object preferences model.
+
+    lRetval = aObjectsPreferencesModel.GetObjectPreferences(aObjectIdentifier, lObjectPreferencesModel);
+    nlEXPECT_SUCCESS(lRetval, done);
+
+    lRetval = lObjectPreferencesModel->GetLastUsedDate(lLastUsedDate);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    *aLastUsedDate = (__bridge NSDate *)lLastUsedDate;
+
+ done:
+    return (lRetval);
+}
+
+static Status
+ObjectSetFavorite(ClientObjectsPreferencesModel &aObjectsPreferencesModel, const IdentifierModel::IdentifierType &aObjectIdentifier, const ClientPreferencesController::FavoriteType &aFavorite, NSDate *aDate)
+{
+    ClientObjectPreferencesModel *       lObjectPreferencesModel = nullptr;
+    Status                               lRetval = kStatus_Success;
+
+    lRetval = aObjectsPreferencesModel.GetObjectPreferences(aObjectIdentifier, lObjectPreferencesModel);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lRetval = lObjectPreferencesModel->SetFavorite(aFavorite);
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
+    lRetval = lObjectPreferencesModel->SetLastUsedDate((__bridge CFDateRef)(aDate));
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
+ done:
+    return (lRetval);
+}
+
+static Status
+ObjectSetLastUsedDate(ClientObjectsPreferencesModel &aObjectsPreferencesModel, const IdentifierModel::IdentifierType &aObjectIdentifier, NSDate **aLastUsedDate)
+{
+    ClientObjectPreferencesModel *             lObjectPreferencesModel = nullptr;
+    ClientLastUsedDateModel::LastUsedDateType  lLastUsedDate = (__bridge_retained CFDateRef)*aLastUsedDate;
+    Status                                     lRetval = kStatus_Success;
+
+    lRetval = aObjectsPreferencesModel.GetObjectPreferences(aObjectIdentifier, lObjectPreferencesModel);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lRetval = lObjectPreferencesModel->SetLastUsedDate(lLastUsedDate);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
+}
+
+static Status
+ObjectReset(NSMutableDictionary *aControllerDictionary, NSString *aObjectsKey, const IdentifierModel::IdentifierType &aObjectIdentifier)
+{
+    Status lRetval = kStatus_Success;
+
+    return (lRetval);
+}
+
+static Status
+ObjectReset(NSString *aControllerIdentifier, NSString *aObjectsKey, const IdentifierModel::IdentifierType &aObjectIdentifier)
+{
+    NSUserDefaults *      lDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *        lImmutableControllerDefaults;
+    NSMutableDictionary * lMutableControllerDefaults;
+    Status                lRetval = kStatus_Success;
+
+    lImmutableControllerDefaults = [lDefaults dictionaryForKey: aControllerIdentifier];
+    nlEXPECT(lImmutableControllerDefaults != nullptr, done);
+
+    lMutableControllerDefaults = [NSMutableDictionary dictionaryWithDictionary: lImmutableControllerDefaults];
+    nlREQUIRE_ACTION(lMutableControllerDefaults != nullptr, done, lRetval = -EINVAL);
+
+    lRetval = ObjectReset(lMutableControllerDefaults, aObjectsKey, aObjectIdentifier);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    [lDefaults setObject: lMutableControllerDefaults forKey: aControllerIdentifier];
+
+ done:
+    return (lRetval);
+}
+
+static Status
+LoadObjectFavoritePreference(ClientObjectPreferencesModel &aObjectPreferencesModel,
+                             NSString *aFavoriteKey,
+                             NSDictionary *aObjectDictionary)
+{
+    NSNumber *                       lFavoriteNumber;
+    Status                           lRetval = kStatus_Success;
+
+
+    nlREQUIRE_ACTION(aFavoriteKey != nullptr, done, lRetval = -EINVAL);
+    nlREQUIRE_ACTION(aObjectDictionary != nullptr, done, lRetval = -EINVAL);
+
+    lFavoriteNumber = [aObjectDictionary objectForKey: aFavoriteKey];
+    nlEXPECT(lFavoriteNumber != nullptr, done);
+
+    lRetval = aObjectPreferencesModel.SetFavorite([lFavoriteNumber boolValue]);
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
+done:
+   return (lRetval);
+}
+
+static Status
+LoadObjectLastUsedDatePreference(ClientObjectPreferencesModel &aObjectPreferencesModel,
+                                 NSString *aLastUsedDateKey,
+                                 NSDictionary *aObjectDictionary)
+{
+    NSDate *                         lLastUsedDate;
+    Status                           lRetval = kStatus_Success;
+
+
+    nlREQUIRE_ACTION(aLastUsedDateKey != nullptr, done, lRetval = -EINVAL);
+    nlREQUIRE_ACTION(aObjectDictionary != nullptr, done, lRetval = -EINVAL);
+
+    lLastUsedDate = [aObjectDictionary objectForKey: aLastUsedDateKey];
+    nlEXPECT(lLastUsedDate != nullptr, done);
+
+    lRetval = aObjectPreferencesModel.SetLastUsedDate((__bridge CFDateRef)lLastUsedDate);
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
+done:
+   return (lRetval);
+}
+
+static Status
+LoadObjectPreferences(ClientObjectPreferencesModel &aObjectPreferencesModel,
+                      NSString *aObjectKey,
+                      NSDictionary *aObjectsDictionary)
+{
+    NSDictionary *                   lObjectDictionary;
+    Status                           lRetval = kStatus_Success;
+
+
+    nlREQUIRE_ACTION(aObjectKey != nullptr, done, lRetval = -EINVAL);
+    nlREQUIRE_ACTION(aObjectsDictionary != nullptr, done, lRetval = -EINVAL);
+
+    lObjectDictionary = [aObjectsDictionary objectForKey: aObjectKey];
+    nlEXPECT(lObjectDictionary != nullptr, done);
+
+    lRetval = LoadObjectFavoritePreference(aObjectPreferencesModel,
+                                           @"Favorite",
+                                           lObjectDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lRetval = LoadObjectLastUsedDatePreference(aObjectPreferencesModel,
+                                               @"Last Used",
+                                               lObjectDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+done:
+   return (lRetval);
+}
+
+static Status
+LoadObjectsPreferences(ClientObjectsPreferencesModel &aObjectsPreferencesModel,
+                       NSString *aObjectsKey,
+                       NSDictionary *aControllerDictionary)
+{
+    NSDictionary *                   lObjectsDictionary;
+    NSArray *                        lObjectKeysArray;
+    Status                           lRetval = kStatus_Success;
+
+
+    nlREQUIRE_ACTION(aObjectsKey != nullptr, done, lRetval = -EINVAL);
+    nlREQUIRE_ACTION(aControllerDictionary != nullptr, done, lRetval = -EINVAL);
+
+    lObjectsDictionary = [aControllerDictionary objectForKey: aObjectsKey];
+    nlEXPECT(lObjectsDictionary != nullptr, done);
+
+    lObjectKeysArray = [lObjectsDictionary allKeys];
+    nlEXPECT(lObjectKeysArray != nullptr, done);
+
+    for (NSString * lObjectKey in lObjectKeysArray)
+    {
+        IdentifierModel::IdentifierType  lObjectIdentifier;
+        ClientObjectPreferencesModel     lObjectPreferencesModel;
+
+        lRetval = lObjectPreferencesModel.Init();
+        nlREQUIRE_SUCCESS(lRetval, done);
+
+        lRetval = LoadObjectPreferences(lObjectPreferencesModel,
+                                        lObjectKey,
+                                        lObjectsDictionary);
+        nlREQUIRE_SUCCESS(lRetval, done);
+
+        lRetval = aObjectsPreferencesModel.SetObjectPreferences(lObjectIdentifier,
+                                                                lObjectPreferencesModel);
+        nlREQUIRE_SUCCESS(lRetval, done);
+    }
+
+done:
+   return (lRetval);
+}
+
 }; // namespace Detail
 
+// MARK: Con/destructor(s)
+
 ClientPreferencesController :: ClientPreferencesController(void) :
-    mControllerIdentifier(nullptr)
+    mControllerIdentifier(nullptr),
+    mGroupsPreferences(),
+    mZonesPreferences()
 {
     return;
 }
@@ -87,7 +337,6 @@ ClientPreferencesController :: Bind(const HLX::Client::Application::Controller &
 {
     DeclareScopedFunctionTracer(lTracer);
     NSString *                       lControllerIdentifier;
-    NSDictionary *                   lControllerPreferences;
     NetworkModel::EthernetEUI48Type  lEthernetEUI48;
     Status                           lRetval = kStatus_Success;
 
@@ -98,11 +347,10 @@ ClientPreferencesController :: Bind(const HLX::Client::Application::Controller &
     lControllerIdentifier = Detail::CreateControllerIdentifier(lEthernetEUI48);
     nlREQUIRE(lControllerIdentifier != nullptr, done);
 
-    lControllerPreferences = [[NSUserDefaults standardUserDefaults] dictionaryForKey: lControllerIdentifier];
-
-    Log::Debug().Write("lControllerPreferences for %s is %p\n", [lControllerIdentifier UTF8String], lControllerPreferences);
-
     mControllerIdentifier = lControllerIdentifier;
+
+    lRetval = LoadPreferences();
+    nlREQUIRE_SUCCESS(lRetval, done);
 
  done:
     return (lRetval);
@@ -118,62 +366,87 @@ ClientPreferencesController :: Unbind(void)
     return (lRetval);
 }
 
-#if 0
-// Mutators
-
-void
-ClientPreferencesController :: Reset(void)
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-    [defaults removeObjectForKey: mControllerIdentifier];
-}
-
-void
-ClientPreferencesController :: GroupReset(const GroupModel::IdentifierType &aGroupIdentifier)
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *controllerDefaults;
-    NSString *groupIdentifier;
-    NSDictionary *groupDefaults;
-
-    controllerDefaults = [defaults dictionaryForKey: mControllerIdentifier];
-    nlEXPECT(controllerDefaults != nullptr, done);
-
-
-
- done:
-    return;
-}
-
-void
-ClientPreferencesController :: ZoneReset(const ZoneModel::IdentifierType &aZoneIdentifier)
-{
-
-}
-#endif // 0
-
-// Getters
+// MARK: Mutators
 
 Status
-ClientPreferencesController :: GroupGetFavorite(const GroupModel::IdentifierType &aGroupIdentifier,
-                                                FavoriteType &aFavorite) const
+ClientPreferencesController :: Reset(void)
 {
     Status lRetval = kStatus_Success;
 
-    aFavorite = false;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    [defaults removeObjectForKey: mControllerIdentifier];
 
     return (lRetval);
 }
 
 Status
-ClientPreferencesController :: GroupGetLastUsedDate(const GroupModel::IdentifierType &aGroupIdentifier,
-                                                    NSDate **aDate) const
+ClientPreferencesController :: GroupReset(const GroupModel::IdentifierType &aGroupIdentifier)
 {
-    Status lRetval = kStatus_Success;
+    Status  lRetval = kStatus_Success;
 
-    *aDate = [NSDate date];
+    lRetval = Detail::ObjectReset(mControllerIdentifier, @"Groups", aGroupIdentifier);
+    nlREQUIRE_SUCCESS(lRetval, done);
 
+ done:
+    return (lRetval);
+}
+
+Status
+ClientPreferencesController :: ZoneReset(const ZoneModel::IdentifierType &aZoneIdentifier)
+{
+    Status  lRetval = kStatus_Success;
+
+    lRetval = Detail::ObjectReset(mControllerIdentifier, @"Zones", aZoneIdentifier);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
+}
+
+// MARK: Observers
+
+bool
+ClientPreferencesController :: GroupHasPreferences(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier) const
+{
+    const bool lRetval = Detail::ObjectHasPreferences(mGroupsPreferences, aGroupIdentifier);
+
+    return (lRetval);
+}
+
+bool
+ClientPreferencesController :: ZoneHasPreferences(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier) const
+{
+    const bool lRetval = Detail::ObjectHasPreferences(mZonesPreferences, aZoneIdentifier);
+
+    return (lRetval);
+}
+
+// MARK: Getters
+
+Status
+ClientPreferencesController :: GroupGetFavorite(const GroupModel::IdentifierType &aGroupIdentifier,
+                                                FavoriteType &aFavorite) const
+{
+    Status  lRetval = kStatus_Success;
+
+    lRetval = Detail::ObjectGetFavorite(mGroupsPreferences, aGroupIdentifier, aFavorite);
+    nlEXPECT_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
+}
+
+Status
+ClientPreferencesController :: GroupGetLastUsedDate(const GroupModel::IdentifierType &aGroupIdentifier,
+                                                    NSDate **aLastUsedDate) const
+{
+    Status  lRetval = kStatus_Success;
+
+    lRetval = Detail::ObjectGetLastUsedDate(mGroupsPreferences, aGroupIdentifier, aLastUsedDate);
+    nlEXPECT_SUCCESS(lRetval, done);
+
+ done:
     return (lRetval);
 }
 
@@ -181,29 +454,31 @@ Status
 ClientPreferencesController :: ZoneGetFavorite(const ZoneModel::IdentifierType &aZoneIdentifier,
                                                FavoriteType &aFavorite) const
 {
-    Status lRetval = kStatus_Success;
+    Status  lRetval = kStatus_Success;
 
-    aFavorite = false;
+    lRetval = Detail::ObjectGetFavorite(mZonesPreferences, aZoneIdentifier, aFavorite);
+    nlEXPECT_SUCCESS(lRetval, done);
 
+ done:
     return (lRetval);
 }
 
 Status
 ClientPreferencesController :: ZoneGetLastUsedDate(const ZoneModel::IdentifierType &aZoneIdentifier,
-                                                   NSDate **aDate) const
+                                                   NSDate **aLastUsedDate) const
 {
-    Status lRetval = kStatus_Success;
+    Status  lRetval = kStatus_Success;
 
-    *aDate = [NSDate date];
+    lRetval = Detail::ObjectGetLastUsedDate(mZonesPreferences, aZoneIdentifier, aLastUsedDate);
+    nlEXPECT_SUCCESS(lRetval, done);
 
+ done:
     return (lRetval);
 }
 
-// Setters
+// MARK: Setters
 
-// With controller identifier
-
-// With implicit date
+// MARK: Setters with implicit date
 
 Status
 ClientPreferencesController :: GroupSetFavorite(const GroupModel::IdentifierType &aGroupIdentifier,
@@ -219,29 +494,6 @@ ClientPreferencesController :: GroupSetFavorite(const GroupModel::IdentifierType
     return (lRetval);
 }
 
-#if 0
-Status
-ClientPreferencesController :: GroupSetSource(const GroupModel::IdentifierType &aGroupIdentifier,
-                              const SourceModel::IdentifierType &aSourceIdentifier)
-{
-
-}
-
-Status
-ClientPreferencesController :: GroupSetVolumeLevel(const GroupModel::IdentifierType &aGroupIdentifier,
-                                   const VolumeModel::LevelType &aLevel)
-{
-
-}
-
-Status
-ClientPreferencesController :: GroupSetVolumeMute(const GroupModel::IdentifierType &aGroupIdentifier,
-                                  const VolumeModel::MuteType &aMute)
-{
-
-}
-#endif // 0
-
 Status
 ClientPreferencesController :: ZoneSetFavorite(const ZoneModel::IdentifierType &aZoneIdentifier,
                                                const FavoriteType &aFavorite)
@@ -256,30 +508,7 @@ ClientPreferencesController :: ZoneSetFavorite(const ZoneModel::IdentifierType &
     return (lRetval);
 }
 
-#if 0
-Status
-ClientPreferencesController :: ZoneSetSource(const ZoneModel::IdentifierType &aZoneIdentifier,
-                             const SourceModel::IdentifierType &aSourceIdentifier)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetVolumeLevel(const ZoneModel::IdentifierType &aZoneIdentifier,
-                                  const VolumeModel::LevelType &aLevel)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetVolumeMute(const ZoneModel::IdentifierType &aZoneIdentifier,
-                                 const VolumeModel::MuteType &aMute)
-{
-
-}
-#endif // 0
-
-// With explicit date
+// MARK: Setters with explicit date
 
 Status
 ClientPreferencesController :: GroupSetFavorite(const GroupModel::IdentifierType &aGroupIdentifier,
@@ -288,34 +517,15 @@ ClientPreferencesController :: GroupSetFavorite(const GroupModel::IdentifierType
 {
     Status lRetval = kStatus_Success;
 
+    lRetval = Detail::ObjectSetFavorite(mGroupsPreferences,
+                                        aGroupIdentifier,
+                                        aFavorite,
+                                        aDate);
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
+ done:
     return (lRetval);
 }
-
-#if 0
-Status
-ClientPreferencesController :: GroupSetSource(const GroupModel::IdentifierType &aGroupIdentifier,
-                              const SourceModel::IdentifierType &aSourceIdentifier,
-                              NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: GroupSetVolumeLevel(const GroupModel::IdentifierType &aGroupIdentifier,
-                                   const VolumeModel::LevelType &aLevel,
-                                   NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: GroupSetVolumeMute(const GroupModel::IdentifierType &aGroupIdentifier,
-                                  const VolumeModel::MuteType &aMute,
-                                  NSDate *aDate)
-{
-
-}
-#endif // 0
 
 Status
 ClientPreferencesController :: ZoneSetFavorite(const ZoneModel::IdentifierType &aZoneIdentifier,
@@ -324,405 +534,77 @@ ClientPreferencesController :: ZoneSetFavorite(const ZoneModel::IdentifierType &
 {
     Status lRetval = kStatus_Success;
 
+    lRetval = Detail::ObjectSetFavorite(mZonesPreferences,
+                                        aZoneIdentifier,
+                                        aFavorite,
+                                        aDate);
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
+ done:
     return (lRetval);
 }
 
-#if 0
-Status
-ClientPreferencesController :: ZoneSetSource(const ZoneModel::IdentifierType &aZoneIdentifier,
-                             const SourceModel::IdentifierType &aSourceIdentifier,
-                             NSDate *aDate)
-{
+// MARK: TBD
 
+Status
+ClientPreferencesController :: LoadPreferences(void)
+{
+    NSDictionary *  lControllerPreferences;
+    Status          lRetval = kStatus_Success;
+
+    lControllerPreferences = [[NSUserDefaults standardUserDefaults] dictionaryForKey: mControllerIdentifier];
+    nlEXPECT(lControllerPreferences != nullptr, done);
+
+    Log::Debug().Write("lControllerPreferences for %s is %p\n", [mControllerIdentifier UTF8String], lControllerPreferences);
+
+    lRetval = LoadPreferences(lControllerPreferences);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
 }
 
 Status
-ClientPreferencesController :: ZoneSetVolumeLevel(const ZoneModel::IdentifierType &aZoneIdentifier,
-                                  const VolumeModel::LevelType &aLevel,
-                                  NSDate *aDate)
+ClientPreferencesController :: LoadPreferences(NSDictionary *aControllerDictionary)
 {
+    Status  lRetval = kStatus_Success;
 
+    nlREQUIRE_ACTION(aControllerDictionary != nullptr, done, lRetval = -EINVAL);
+
+    lRetval = LoadGroupsPreferences(aControllerDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lRetval = LoadZonesPreferences(aControllerDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
 }
 
 Status
-ClientPreferencesController :: ZoneSetVolumeMute(const ZoneModel::IdentifierType &aZoneIdentifier,
-                                 const VolumeModel::MuteType &aMute,
-                                 NSDate *aDate)
+ClientPreferencesController :: LoadGroupsPreferences(NSDictionary *aControllerDictionary)
 {
+    Status  lRetval = kStatus_Success;
 
-}
+    lRetval = Detail::LoadObjectsPreferences(mGroupsPreferences,
+                                             @"Groups",
+                                             aControllerDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
 
-
-ate:
-
-// Mutators
-
-// With controller identifier
-
-void Reset(const NetworkModel::EthernetEUI48Type &aControllerIdentifier)
-{
-
-}
-
-void GroupReset(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                const GroupModel::IdentifierType &aGroupIdentifier)
-{
-
-}
-
-void ZoneReset(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-               const ZoneModel::IdentifierType &aZoneIdentifier)
-{
-
-}
-
-
-// With controller identifier string
-
-void Reset(NSString *aControllerIdentifier)
-{
-
-}
-
-void GroupReset(NSString *aControllerIdentifier,
-                const GroupModel::IdentifierType &aGroupIdentifier)
-{
-
-}
-
-void ZoneReset(NSString *aControllerIdentifier,
-               const ZoneModel::IdentifierType &aZoneIdentifier)
-{
-
-}
-
-
-// Getters
-
-// With controller identifier
-
-Status
-ClientPreferencesController :: GroupGetFavorite(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                                const GroupModel::IdentifierType &aGroupIdentifier,
-                                                FavoriteType &aFavorite) const;
-Status
-ClientPreferencesController :: GroupGetLastUsedDate(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                    const GroupModel::IdentifierType &aGroupIdentifier,
-                                    NSDate *&aDate) const;
-Status
-ClientPreferencesController :: ZoneGetFavorite(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                               const ZoneModel::IdentifierType &aZoneIdentifier,
-                                               FavoriteType &aFavorite) const;
-Status
-ClientPreferencesController :: ZoneGetLastUsedDate(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                   const ZoneModel::IdentifierType &aZoneIdentifier,
-                                   NSDate *&aDate) const;
-
-// With controller identifier string
-
-Status
-ClientPreferencesController :: GroupGetFavorite(NSString *aControllerIdentifier,
-                                                const GroupModel::IdentifierType &aGroupIdentifier,
-                                                FavoriteType &aFavorite) const;
-Status
-ClientPreferencesController :: GroupGetLastUsedDate(NSString *aControllerIdentifier,
-                                    const GroupModel::IdentifierType &aGroupIdentifier,
-                                    NSDate *&aDate) const;
-Status
-ClientPreferencesController :: ZoneGetFavorite(NSString *aControllerIdentifier,
-                                               const ZoneModel::IdentifierType &aZoneIdentifier,
-                                               FavoriteType &aFavorite) const;
-Status
-ClientPreferencesController :: ZoneGetLastUsedDate(NSString *aControllerIdentifier,
-                                   const ZoneModel::IdentifierType &aZoneIdentifier,
-                                   NSDate *&aDate) const;
-
-// Setters
-
-// With controller identifier
-
-// With implicit date
-
-Status
-ClientPreferencesController :: GroupSetFavorite(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                                const GroupModel::IdentifierType &aGroupIdentifier,
-                                                const FavoriteType &aFavorite)
-{
-
+ done:
+    return (lRetval);
 }
 
 Status
-ClientPreferencesController :: GroupSetSource(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                              const GroupModel::IdentifierType &aGroupIdentifier,
-                              const SourceModel::IdentifierType &aSourceIdentifier)
+ClientPreferencesController :: LoadZonesPreferences(NSDictionary *aControllerDictionary)
 {
+    Status  lRetval = kStatus_Success;
 
+    lRetval = Detail::LoadObjectsPreferences(mZonesPreferences,
+                                             @"Zones",
+                                             aControllerDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
 }
-
-Status
-ClientPreferencesController :: GroupSetVolumeLevel(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                   const GroupModel::IdentifierType &aGroupIdentifier,
-                                   const VolumeModel::LevelType &aLevel)
-{
-
-}
-
-Status
-ClientPreferencesController :: GroupSetVolumeMute(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                  const GroupModel::IdentifierType &aGroupIdentifier,
-                                  const VolumeModel::MuteType &aMute)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetFavorite(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                               const ZoneModel::IdentifierType &aZoneIdentifier,
-                                               const FavoriteType &aFavorite)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetSource(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                             const ZoneModel::IdentifierType &aZoneIdentifier,
-                             const SourceModel::IdentifierType &aSourceIdentifier)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetVolumeLevel(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                  const ZoneModel::IdentifierType &aZoneIdentifier,
-                                  const VolumeModel::LevelType &aLevel)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetVolumeMute(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                 const ZoneModel::IdentifierType &aZoneIdentifier,
-                                 const VolumeModel::MuteType &aMute)
-{
-
-}
-
-
-// With explicit date
-
-Status
-ClientPreferencesController :: GroupSetFavorite(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                                const GroupModel::IdentifierType &aGroupIdentifier,
-                                                const FavoriteType &aFavorite,
-                                                NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: GroupSetSource(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                              const GroupModel::IdentifierType &aGroupIdentifier,
-                              const SourceModel::IdentifierType &aSourceIdentifier,
-                              NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: GroupSetVolumeLevel(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                   const GroupModel::IdentifierType &aGroupIdentifier,
-                                   const VolumeModel::LevelType &aLevel,
-                                   NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: GroupSetVolumeMute(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                  const GroupModel::IdentifierType &aGroupIdentifier,
-                                  const VolumeModel::MuteType &aMute,
-                                  NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetFavorite(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                               const ZoneModel::IdentifierType &aZoneIdentifier,
-                                               const FavoriteType &aFavorite,
-                                               NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetSource(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                             const ZoneModel::IdentifierType &aZoneIdentifier,
-                             const SourceModel::IdentifierType &aSourceIdentifier,
-                             NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetVolumeLevel(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                  const ZoneModel::IdentifierType &aZoneIdentifier,
-                                  const VolumeModel::LevelType &aLevel,
-                                  NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetVolumeMute(const NetworkModel::EthernetEUI48Type &aControllerIdentifier,
-                                 const ZoneModel::IdentifierType &aZoneIdentifier,
-                                 const VolumeModel::MuteType &aMute,
-                                 NSDate *aDate)
-{
-
-}
-
-
-// With controller identifier string
-
-// With implicit date
-
-Status
-ClientPreferencesController :: GroupSetFavorite(NSString *aControllerIdentifier,
-                                                const GroupModel::IdentifierType &aGroupIdentifier,
-                                                const FavoriteType &aFavorite)
-{
-
-}
-
-Status
-ClientPreferencesController :: GroupSetSource(NSString *aControllerIdentifier,
-                              const GroupModel::IdentifierType &aGroupIdentifier,
-                              const SourceModel::IdentifierType &aSourceIdentifier)
-{
-
-}
-
-Status
-ClientPreferencesController :: GroupSetVolumeLevel(NSString *aControllerIdentifier,
-                                   const GroupModel::IdentifierType &aGroupIdentifier,
-                                   const VolumeModel::LevelType &aLevel)
-{
-
-}
-
-Status
-ClientPreferencesController :: GroupSetVolumeMute(NSString *aControllerIdentifier,
-                                  const GroupModel::IdentifierType &aGroupIdentifier,
-                                  const VolumeModel::MuteType &aMute)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetFavorite(NSString *aControllerIdentifier,
-                                               const ZoneModel::IdentifierType &aZoneIdentifier,
-                                               const FavoriteType &aFavorite)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetSource(NSString *aControllerIdentifier,
-                             const ZoneModel::IdentifierType &aZoneIdentifier,
-                             const SourceModel::IdentifierType &aSourceIdentifier)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetVolumeLevel(NSString *aControllerIdentifier,
-                                  const ZoneModel::IdentifierType &aZoneIdentifier,
-                                  const VolumeModel::LevelType &aLevel)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetVolumeMute(NSString *aControllerIdentifier,
-                                 const ZoneModel::IdentifierType &aZoneIdentifier,
-                                 const VolumeModel::MuteType &aMute)
-{
-
-}
-
-
-// With explicit date
-
-Status
-ClientPreferencesController :: GroupSetFavorite(NSString *aControllerIdentifier,
-                                                const GroupModel::IdentifierType &aGroupIdentifier,
-                                                const FavoriteType &aFavorite,
-                                                NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: GroupSetSource(NSString *aControllerIdentifier,
-                              const GroupModel::IdentifierType &aGroupIdentifier,
-                              const SourceModel::IdentifierType &aSourceIdentifier,
-                              NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: GroupSetVolumeLevel(NSString *aControllerIdentifier,
-                                   const GroupModel::IdentifierType &aGroupIdentifier,
-                                   const VolumeModel::LevelType &aLevel,
-                                   NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: GroupSetVolumeMute(NSString *aControllerIdentifier,
-                                  const GroupModel::IdentifierType &aGroupIdentifier,
-                                  const VolumeModel::MuteType &aMute,
-                                  NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetFavorite(NSString *aControllerIdentifier,
-                                               const ZoneModel::IdentifierType &aZoneIdentifier,
-                                               const FavoriteType &aFavorite,
-                                               NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetSource(NSString *aControllerIdentifier,
-                             const ZoneModel::IdentifierType &aZoneIdentifier,
-                             const SourceModel::IdentifierType &aSourceIdentifier,
-                             NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetVolumeLevel(NSString *aControllerIdentifier,
-                                  const ZoneModel::IdentifierType &aZoneIdentifier,
-                                  const VolumeModel::LevelType &aLevel,
-                                  NSDate *aDate)
-{
-
-}
-
-Status
-ClientPreferencesController :: ZoneSetVolumeMute(NSString *aControllerIdentifier,
-                                 const ZoneModel::IdentifierType &aZoneIdentifier,
-                                 const VolumeModel::MuteType &aMute,
-                                 NSDate *aDate)
-{
-
-}
-#endif // 0
