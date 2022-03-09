@@ -6,7 +6,9 @@
 
 
 using namespace std;
+using namespace HLX;
 using namespace HLX::Common;
+using namespace HLX::Model;
 
 
 ClientObjectsPreferencesModel :: ClientObjectsPreferencesModel(const ClientObjectsPreferencesModel &aClientObjectsPreferencesModel) :
@@ -32,6 +34,27 @@ ClientObjectsPreferencesModel :: operator =(const ClientObjectsPreferencesModel 
     mPreferences = aClientObjectsPreferencesModel.mPreferences;
 
     return (*this);
+}
+
+Status
+ClientObjectsPreferencesModel :: GetObjectIdentifiers(IdentifiersCollection &aObjectIdentifiers) const
+{
+    ObjectsPreferences::const_iterator lIterator = mPreferences.begin();
+    Status lRetval = kStatus_Success;
+
+    lRetval = aObjectIdentifiers.ClearIdentifiers();
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    while (lIterator != mPreferences.end())
+    {
+        lRetval = aObjectIdentifiers.AddIdentifier(lIterator->first);
+        nlREQUIRE_SUCCESS(lRetval, done);
+
+        lIterator++;
+    }
+
+ done:
+    return (lRetval);
 }
 
 Status

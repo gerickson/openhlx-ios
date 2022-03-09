@@ -4,7 +4,8 @@
 
 #import <map>
 
-#include <OpenHLX/Common/Errors.hpp>
+#import <OpenHLX/Common/Errors.hpp>
+#import <OpenHLX/Model/IdentifiersCollection.hpp>
 #import <OpenHLX/Model/IdentifierModel.hpp>
 
 #import "ClientObjectPreferencesModel.hpp"
@@ -23,6 +24,8 @@ public:
     HLX::Common::Status Init(const ClientObjectsPreferencesModel &aClientObjectsPreferencesModel);
 
     ClientObjectsPreferencesModel &operator =(const ClientObjectsPreferencesModel &aClientObjectsPreferencesModel);
+
+    HLX::Common::Status GetObjectIdentifiers(HLX::Model::IdentifiersCollection &aObjectIdentifiers) const;
 
     HLX::Common::Status GetObjectPreferences(const IdentifierType &aObjectIdentifier, ClientObjectPreferencesModel *&aObjectPreferencesModel);
     HLX::Common::Status GetObjectPreferences(const IdentifierType &aObjectIdentifier, const ClientObjectPreferencesModel *&aObjectPreferencesModel) const;
