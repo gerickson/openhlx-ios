@@ -914,11 +914,11 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="qA2-Ds-DcH" firstAttribute="centerY" secondItem="XV0-8s-A7x" secondAttribute="centerY" id="3Wm-cE-bs7"/>
-                                                <constraint firstItem="oqi-te-h8O" firstAttribute="trailing" secondItem="XV0-8s-A7x" secondAttribute="trailingMargin" id="LTf-kn-4er"/>
                                                 <constraint firstItem="oqi-te-h8O" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qA2-Ds-DcH" secondAttribute="trailing" constant="8" symbolic="YES" id="T7V-sK-Jw4"/>
+                                                <constraint firstItem="qA2-Ds-DcH" firstAttribute="leading" secondItem="XV0-8s-A7x" secondAttribute="leadingMargin" id="jiK-bE-pfn"/>
+                                                <constraint firstItem="oqi-te-h8O" firstAttribute="trailing" secondItem="XV0-8s-A7x" secondAttribute="trailingMargin" id="LTf-kn-4er"/>
+                                                <constraint firstItem="qA2-Ds-DcH" firstAttribute="centerY" secondItem="XV0-8s-A7x" secondAttribute="centerY" id="3Wm-cE-bs7"/>
                                                 <constraint firstItem="oqi-te-h8O" firstAttribute="centerY" secondItem="XV0-8s-A7x" secondAttribute="centerY" id="fiy-YL-ryd"/>
-                                                <constraint firstItem="qA2-Ds-DcH" firstAttribute="leading" secondItem="XV0-8s-A7x" secondAttribute="leadingMargin" constant="8" id="jiK-bE-pfn"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
