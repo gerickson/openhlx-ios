@@ -641,7 +641,7 @@
                         <segue destination="xT9-hf-wVK" kind="unwind" identifier="DidDisconnect" unwindAction="prepareForUnwind:" id="F0k-xD-iLB"/>
                     </connections>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="egC-hT-HGW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="egC-hT-HGW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2512.5" y="-510"/>
         </scene>
