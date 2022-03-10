@@ -796,14 +796,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2D7-D6-tEd">
-                                                    <rect key="frame" x="20" y="7" width="30" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
-                                                    <state key="normal" title="-"/>
-                                                    <connections>
-                                                        <action selector="onVolumeDecreaseButtonAction:" destination="MPF-t1-Li3" eventType="touchUpInside" id="7I0-Qe-MCa"/>
-                                                    </connections>
-                                                </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mlO-8j-gwu">
                                                     <rect key="frame" x="270" y="7" width="30" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
@@ -818,6 +810,14 @@
                                                         <action selector="onVolumeSliderAction:" destination="MPF-t1-Li3" eventType="valueChanged" id="7Kv-Xr-Uhi"/>
                                                     </connections>
                                                 </slider>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2D7-D6-tEd">
+                                                    <rect key="frame" x="20" y="7" width="30" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
+                                                    <state key="normal" title="-"/>
+                                                    <connections>
+                                                        <action selector="onVolumeDecreaseButtonAction:" destination="MPF-t1-Li3" eventType="touchUpInside" id="7I0-Qe-MCa"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="2D7-D6-tEd" firstAttribute="centerY" secondItem="4UE-l1-q0X" secondAttribute="centerY" id="IQZ-wq-tId"/>
