@@ -823,8 +823,8 @@
                                                 <constraint firstItem="2D7-D6-tEd" firstAttribute="centerY" secondItem="4UE-l1-q0X" secondAttribute="centerY" id="IQZ-wq-tId"/>
                                                 <constraint firstItem="mlO-8j-gwu" firstAttribute="leading" secondItem="zJ7-hM-FJ6" secondAttribute="trailing" constant="8" id="MEa-ni-eP9"/>
                                                 <constraint firstItem="zJ7-hM-FJ6" firstAttribute="leading" secondItem="2D7-D6-tEd" secondAttribute="trailing" constant="8" id="MXo-fz-BZ2"/>
-                                                <constraint firstItem="mlO-8j-gwu" firstAttribute="centerY" secondItem="2D7-D6-tEd" secondAttribute="centerY" id="MZj-Kw-o0c"/>
                                                 <constraint firstItem="2D7-D6-tEd" firstAttribute="leading" secondItem="4UE-l1-q0X" secondAttribute="leading" constant="20" symbolic="YES" id="Su5-VX-qVC"/>
+                                                <constraint firstItem="mlO-8j-gwu" firstAttribute="centerY" secondItem="2D7-D6-tEd" secondAttribute="centerY" id="MZj-Kw-o0c"/>
                                                 <constraint firstItem="zJ7-hM-FJ6" firstAttribute="centerY" secondItem="2D7-D6-tEd" secondAttribute="centerY" id="TxL-2V-bGG"/>
                                                 <constraint firstAttribute="trailing" secondItem="mlO-8j-gwu" secondAttribute="trailing" constant="20" symbolic="YES" id="juZ-5F-s79"/>
                                             </constraints>
@@ -852,11 +852,11 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="3lF-hm-iWx" firstAttribute="centerY" secondItem="kK7-um-LKe" secondAttribute="centerY" id="Grc-zE-rhv"/>
-                                                <constraint firstItem="kK7-um-LKe" firstAttribute="centerY" secondItem="pwB-hc-vbN" secondAttribute="centerY" id="Nvx-Za-f10"/>
-                                                <constraint firstItem="3lF-hm-iWx" firstAttribute="centerY" secondItem="pwB-hc-vbN" secondAttribute="centerY" id="Zmx-3p-AcO"/>
-                                                <constraint firstAttribute="trailing" secondItem="3lF-hm-iWx" secondAttribute="trailing" constant="20" symbolic="YES" id="a6P-3d-JfP"/>
                                                 <constraint firstItem="3lF-hm-iWx" firstAttribute="leading" secondItem="kK7-um-LKe" secondAttribute="trailing" constant="8" id="wvZ-5d-MOa"/>
                                                 <constraint firstItem="kK7-um-LKe" firstAttribute="leading" secondItem="pwB-hc-vbN" secondAttribute="leadingMargin" constant="8" id="xkb-RF-k8Z"/>
+                                                <constraint firstItem="kK7-um-LKe" firstAttribute="centerY" secondItem="pwB-hc-vbN" secondAttribute="centerY" id="Nvx-Za-f10"/>
+                                                <constraint firstAttribute="trailing" secondItem="3lF-hm-iWx" secondAttribute="trailing" constant="20" symbolic="YES" id="a6P-3d-JfP"/>
+                                                <constraint firstItem="3lF-hm-iWx" firstAttribute="centerY" secondItem="pwB-hc-vbN" secondAttribute="centerY" id="Zmx-3p-AcO"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -885,11 +885,11 @@
                                                 </switch>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="BvL-jZ-jU5" firstAttribute="centerY" secondItem="HlP-AH-hcm" secondAttribute="centerY" id="4Np-xn-RA3"/>
-                                                <constraint firstAttribute="trailing" secondItem="BvL-jZ-jU5" secondAttribute="trailing" constant="20" symbolic="YES" id="9w7-wt-slF"/>
                                                 <constraint firstItem="Jy8-TI-2Fg" firstAttribute="leading" secondItem="HlP-AH-hcm" secondAttribute="leadingMargin" constant="8" id="haL-Hb-3je"/>
-                                                <constraint firstItem="Jy8-TI-2Fg" firstAttribute="centerY" secondItem="HlP-AH-hcm" secondAttribute="centerY" id="mNb-EG-r4b"/>
                                                 <constraint firstItem="BvL-jZ-jU5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Jy8-TI-2Fg" secondAttribute="trailing" constant="8" id="wBD-9Z-hna"/>
+                                                <constraint firstAttribute="trailing" secondItem="BvL-jZ-jU5" secondAttribute="trailing" constant="20" symbolic="YES" id="9w7-wt-slF"/>
+                                                <constraint firstItem="Jy8-TI-2Fg" firstAttribute="centerY" secondItem="HlP-AH-hcm" secondAttribute="centerY" id="mNb-EG-r4b"/>
+                                                <constraint firstItem="BvL-jZ-jU5" firstAttribute="centerY" secondItem="HlP-AH-hcm" secondAttribute="centerY" id="4Np-xn-RA3"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -914,11 +914,11 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="qA2-Ds-DcH" firstAttribute="centerY" secondItem="XV0-8s-A7x" secondAttribute="centerY" id="3Wm-cE-bs7"/>
-                                                <constraint firstItem="oqi-te-h8O" firstAttribute="trailing" secondItem="XV0-8s-A7x" secondAttribute="trailingMargin" id="LTf-kn-4er"/>
                                                 <constraint firstItem="oqi-te-h8O" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qA2-Ds-DcH" secondAttribute="trailing" constant="8" symbolic="YES" id="T7V-sK-Jw4"/>
-                                                <constraint firstItem="oqi-te-h8O" firstAttribute="centerY" secondItem="XV0-8s-A7x" secondAttribute="centerY" id="fiy-YL-ryd"/>
                                                 <constraint firstItem="qA2-Ds-DcH" firstAttribute="leading" secondItem="XV0-8s-A7x" secondAttribute="leadingMargin" id="jiK-bE-pfn"/>
+                                                <constraint firstItem="oqi-te-h8O" firstAttribute="trailing" secondItem="XV0-8s-A7x" secondAttribute="trailingMargin" id="LTf-kn-4er"/>
+                                                <constraint firstItem="qA2-Ds-DcH" firstAttribute="centerY" secondItem="XV0-8s-A7x" secondAttribute="centerY" id="3Wm-cE-bs7"/>
+                                                <constraint firstItem="oqi-te-h8O" firstAttribute="centerY" secondItem="XV0-8s-A7x" secondAttribute="centerY" id="fiy-YL-ryd"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
