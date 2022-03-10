@@ -954,6 +954,7 @@
                         <outlet property="mBalanceIncreaseButton" destination="TsR-k9-w2G" id="Hio-R3-zej"/>
                         <outlet property="mBalanceSlider" destination="NbQ-l2-npl" id="JJH-re-YsR"/>
                         <outlet property="mFavoriteSwitch" destination="BvL-jZ-jU5" id="pJp-4g-wUT"/>
+                        <outlet property="mZoneName" destination="3co-cP-U0c" id="qRn-xj-EVy"/>
                         <outlet property="mLastUsedLabel" destination="oqi-te-h8O" id="1EW-rc-dCr"/>
                         <outlet property="mMonoAudioSwitch" destination="qlS-23-djo" id="vge-xw-bLo"/>
                         <outlet property="mMuteSwitch" destination="3lF-hm-iWx" id="ioT-2A-Vba"/>
@@ -964,7 +965,6 @@
                         <outlet property="mVolumeDecreaseButton" destination="2D7-D6-tEd" id="eAI-3d-Pdf"/>
                         <outlet property="mVolumeIncreaseButton" destination="mlO-8j-gwu" id="1GU-Vd-cBh"/>
                         <outlet property="mVolumeSlider" destination="zJ7-hM-FJ6" id="S53-SB-JRh"/>
-                        <outlet property="mZoneName" destination="3co-cP-U0c" id="qRn-xj-EVy"/>
                         <segue destination="xT9-hf-wVK" kind="unwind" identifier="DidDisconnect" unwindAction="prepareForUnwind:" id="fbC-4c-BXS"/>
                         <segue destination="nAF-3K-k0R" kind="show" identifier="Equalizer Bands Detail Segue" id="cHn-dV-wRd"/>
                         <segue destination="IAY-dd-6ON" kind="show" identifier="Equalizer Preset Chooser Segue" id="nj0-Sv-61G"/>
