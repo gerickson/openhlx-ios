@@ -24,6 +24,7 @@
 
 
 #import <Foundation/NSDate.h>
+#import <Foundation/NSDictionary.h>
 #import <Foundation/NSString.h>
 
 #import <OpenHLX/Client/ApplicationController.hpp>
@@ -97,6 +98,11 @@ private:
     HLX::Common::Status LoadPreferences(NSDictionary *aControllerDictionary);
     HLX::Common::Status LoadGroupsPreferences(NSDictionary *aControllerDictionary);
     HLX::Common::Status LoadZonesPreferences(NSDictionary *aControllerDictionary);
+
+    HLX::Common::Status StorePreferences(void) const;
+    HLX::Common::Status StorePreferences(NSMutableDictionary *aControllerDictionary) const;
+    HLX::Common::Status StoreGroupsPreferences(NSMutableDictionary *aControllerDictionary) const;
+    HLX::Common::Status StoreZonesPreferences(NSMutableDictionary *aControllerDictionary) const;
 
 private:
     typedef ClientObjectsPreferencesModel ClientGroupsPreferencesModel;
