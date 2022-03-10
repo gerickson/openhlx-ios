@@ -942,6 +942,10 @@
                                 </cells>
                             </tableViewSection>
                         </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="MPF-t1-Li3" id="Veq-bC-khi"/>
+                            <outlet property="delegate" destination="MPF-t1-Li3" id="f1I-Dm-LCz"/>
+                        </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Zone Name" id="3co-cP-U0c"/>
                     <connections>
