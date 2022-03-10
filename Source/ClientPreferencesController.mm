@@ -24,7 +24,10 @@
 
 #import "ClientPreferencesController.hpp"
 
+#import <vector>
+
 #import <Foundation/NSDictionary.h>
+#import <Foundation/NSNumberFormatter.h>
 #import <Foundation/NSUserDefaults.h>
 
 #import <CFUtilities/CFUtilities.hpp>
@@ -38,7 +41,13 @@ using namespace HLX::Client;
 using namespace HLX::Common;
 using namespace HLX::Model;
 using namespace Nuovations;
+using namespace std;
 
+
+static NSString * kFavoriteKey     = @"Favorite";
+static NSString * kGroupsKey       = @"Groups";
+static NSString * kLastUsedDateKey = @"Last Used";
+static NSString * kZonesKey        = @"Zones";
 
 namespace Detail
 {
@@ -56,6 +65,62 @@ CreateControllerIdentifier(const NetworkModel::EthernetEUI48Type &aEthernetEUI48
                                 aEthernetEUI48[4],
                                 aEthernetEUI48[5]];
     nlREQUIRE(lRetval != nullptr, done);
+
+ done:
+    return (lRetval);
+}
+
+static NSNumberFormatter *
+CreateObjectIdentifierFormatter(void)
+{
+    NSNumberFormatter *lRetval = nullptr;
+
+    lRetval = [[NSNumberFormatter alloc] init];
+    nlREQUIRE(lRetval != nullptr, done);
+
+    [lRetval setFormatterBehavior: NSNumberFormatterBehaviorDefault];
+    [lRetval setNumberStyle:       NSNumberFormatterNoStyle];
+
+ done:
+    return (lRetval);
+}
+
+static NSString *
+CreateObjectIdentifier(const IdentifierModel::IdentifierType &aObjectIdentifier)
+{
+    NSNumberFormatter *  lObjectIdentifierFormatter = nullptr;
+    NSNumber *           lObjectIdentifier = nullptr;
+    NSString *           lRetval = nullptr;
+
+
+    lObjectIdentifierFormatter = CreateObjectIdentifierFormatter();
+    nlREQUIRE(lObjectIdentifierFormatter != nullptr, done);
+
+    lObjectIdentifier = [[NSNumber alloc] initWithUnsignedChar: aObjectIdentifier];
+    nlREQUIRE(lObjectIdentifier != nullptr, done);
+
+    lRetval = [lObjectIdentifierFormatter stringFromNumber: lObjectIdentifier];
+    nlREQUIRE(lRetval != nullptr, done);
+
+ done:
+    return (lRetval);
+}
+
+static IdentifierModel::IdentifierType
+GetObjectIdentifier(NSString *aObjectIdentifier)
+{
+    NSNumberFormatter *              lObjectIdentifierFormatter = nullptr;
+    NSNumber *                       lObjectIdentifier = nullptr;
+    IdentifierModel::IdentifierType  lRetval = IdentifierModel::kIdentifierInvalid;
+
+
+    lObjectIdentifierFormatter = CreateObjectIdentifierFormatter();
+    nlREQUIRE(lObjectIdentifierFormatter != nullptr, done);
+
+    lObjectIdentifier = [lObjectIdentifierFormatter numberFromString: aObjectIdentifier];
+    nlREQUIRE(lObjectIdentifier != nullptr, done);
+        
+    lRetval = [lObjectIdentifier unsignedCharValue];
 
  done:
     return (lRetval);
@@ -128,16 +193,34 @@ static Status
 ObjectSetFavorite(ClientObjectsPreferencesModel &aObjectsPreferencesModel, const IdentifierModel::IdentifierType &aObjectIdentifier, const ClientPreferencesController::FavoriteType &aFavorite, NSDate *aDate)
 {
     ClientObjectPreferencesModel *       lObjectPreferencesModel = nullptr;
+    ClientObjectPreferencesModel         lTempPreferencesModel;
     Status                               lRetval = kStatus_Success;
 
     lRetval = aObjectsPreferencesModel.GetObjectPreferences(aObjectIdentifier, lObjectPreferencesModel);
-    nlREQUIRE_SUCCESS(lRetval, done);
 
-    lRetval = lObjectPreferencesModel->SetFavorite(aFavorite);
-    nlREQUIRE(lRetval >= kStatus_Success, done);
+    if (lRetval == -ENOENT)
+    {
+        lRetval = lTempPreferencesModel.Init();
+        nlREQUIRE_SUCCESS(lRetval, done);
+        
+        lObjectPreferencesModel = &lTempPreferencesModel;
+    }
 
-    lRetval = lObjectPreferencesModel->SetLastUsedDate((__bridge CFDateRef)(aDate));
-    nlREQUIRE(lRetval >= kStatus_Success, done);
+    if (lObjectPreferencesModel != nullptr)
+    {
+        lRetval = lObjectPreferencesModel->SetFavorite(aFavorite);
+        nlREQUIRE(lRetval >= kStatus_Success, done);
+
+        lRetval = lObjectPreferencesModel->SetLastUsedDate((__bridge CFDateRef)(aDate));
+        nlREQUIRE(lRetval >= kStatus_Success, done);
+    
+        if (lObjectPreferencesModel == &lTempPreferencesModel)
+        {
+            lRetval = aObjectsPreferencesModel.SetObjectPreferences(aObjectIdentifier,
+                                                                    *lObjectPreferencesModel);
+            nlREQUIRE_SUCCESS(lRetval, done);
+        }
+    }
 
  done:
     return (lRetval);
@@ -147,14 +230,32 @@ static Status
 ObjectSetLastUsedDate(ClientObjectsPreferencesModel &aObjectsPreferencesModel, const IdentifierModel::IdentifierType &aObjectIdentifier, NSDate **aLastUsedDate)
 {
     ClientObjectPreferencesModel *             lObjectPreferencesModel = nullptr;
+    ClientObjectPreferencesModel         lTempPreferencesModel;
     ClientLastUsedDateModel::LastUsedDateType  lLastUsedDate = (__bridge_retained CFDateRef)*aLastUsedDate;
     Status                                     lRetval = kStatus_Success;
 
     lRetval = aObjectsPreferencesModel.GetObjectPreferences(aObjectIdentifier, lObjectPreferencesModel);
-    nlREQUIRE_SUCCESS(lRetval, done);
 
-    lRetval = lObjectPreferencesModel->SetLastUsedDate(lLastUsedDate);
-    nlREQUIRE_SUCCESS(lRetval, done);
+    if (lRetval == -ENOENT)
+    {
+        lRetval = lTempPreferencesModel.Init();
+        nlREQUIRE_SUCCESS(lRetval, done);
+        
+        lObjectPreferencesModel = &lTempPreferencesModel;
+    }
+
+    if (lObjectPreferencesModel != nullptr)
+    {
+        lRetval = lObjectPreferencesModel->SetLastUsedDate(lLastUsedDate);
+        nlREQUIRE_SUCCESS(lRetval, done);
+
+        if (lObjectPreferencesModel == &lTempPreferencesModel)
+        {
+            lRetval = aObjectsPreferencesModel.SetObjectPreferences(aObjectIdentifier,
+                                                                    *lObjectPreferencesModel);
+            nlREQUIRE_SUCCESS(lRetval, done);
+        }
+    }
 
  done:
     return (lRetval);
@@ -251,12 +352,12 @@ LoadObjectPreferences(ClientObjectPreferencesModel &aObjectPreferencesModel,
     nlEXPECT(lObjectDictionary != nullptr, done);
 
     lRetval = LoadObjectFavoritePreference(aObjectPreferencesModel,
-                                           @"Favorite",
+                                           kFavoriteKey,
                                            lObjectDictionary);
     nlREQUIRE_SUCCESS(lRetval, done);
 
     lRetval = LoadObjectLastUsedDatePreference(aObjectPreferencesModel,
-                                               @"Last Used",
+                                               kLastUsedDateKey,
                                                lObjectDictionary);
     nlREQUIRE_SUCCESS(lRetval, done);
 
@@ -287,6 +388,7 @@ LoadObjectsPreferences(ClientObjectsPreferencesModel &aObjectsPreferencesModel,
     {
         IdentifierModel::IdentifierType  lObjectIdentifier;
         ClientObjectPreferencesModel     lObjectPreferencesModel;
+                           
 
         lRetval = lObjectPreferencesModel.Init();
         nlREQUIRE_SUCCESS(lRetval, done);
@@ -296,10 +398,153 @@ LoadObjectsPreferences(ClientObjectsPreferencesModel &aObjectsPreferencesModel,
                                         lObjectsDictionary);
         nlREQUIRE_SUCCESS(lRetval, done);
 
+        lObjectIdentifier = GetObjectIdentifier(lObjectKey);
+
         lRetval = aObjectsPreferencesModel.SetObjectPreferences(lObjectIdentifier,
                                                                 lObjectPreferencesModel);
         nlREQUIRE_SUCCESS(lRetval, done);
     }
+
+done:
+   return (lRetval);
+}
+
+static Status
+StoreObjectFavoritePreference(const ClientObjectPreferencesModel &aObjectPreferencesModel,
+                             NSString *aFavoriteKey,
+                             NSMutableDictionary *aObjectDictionary)
+{
+    ClientPreferencesController::FavoriteType  lFavorite;
+    NSNumber *                                 lFavoriteNumber;
+    Status                                     lRetval = kStatus_Success;
+
+    nlREQUIRE_ACTION(aFavoriteKey != nullptr, done, lRetval = -EINVAL);
+    nlREQUIRE_ACTION(aObjectDictionary != nullptr, done, lRetval = -EINVAL);
+
+    lRetval = aObjectPreferencesModel.GetFavorite(lFavorite);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lFavoriteNumber = [[NSNumber alloc] initWithBool: lFavorite];
+    nlREQUIRE_ACTION(lFavoriteNumber != nullptr, done, lRetval = -ENOMEM);
+
+    [aObjectDictionary setObject: lFavoriteNumber
+                          forKey: aFavoriteKey];
+
+done:
+   return (lRetval);
+}
+
+static Status
+StoreObjectLastUsedDatePreference(const ClientObjectPreferencesModel &aObjectPreferencesModel,
+                                  NSString *aLastUsedDateKey,
+                                  NSMutableDictionary *aObjectDictionary)
+{
+    CFDateRef  lLastUsedDate;
+    Status     lRetval = kStatus_Success;
+
+    nlREQUIRE_ACTION(aLastUsedDateKey != nullptr, done, lRetval = -EINVAL);
+    nlREQUIRE_ACTION(aObjectDictionary != nullptr, done, lRetval = -EINVAL);
+
+    lRetval = aObjectPreferencesModel.GetLastUsedDate(lLastUsedDate);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    [aObjectDictionary setObject: (__bridge NSDate *)lLastUsedDate
+                          forKey: aLastUsedDateKey];
+
+done:
+   return (lRetval);
+}
+
+static Status
+StoreObjectPreferences(const ClientObjectPreferencesModel &aObjectPreferencesModel,
+                       NSString *aObjectKey,
+                       NSMutableDictionary *aObjectsDictionary)
+{
+    NSMutableDictionary *            lObjectDictionary;
+    Status                           lRetval = kStatus_Success;
+
+
+    nlREQUIRE_ACTION(aObjectKey != nullptr, done, lRetval = -EINVAL);
+    nlREQUIRE_ACTION(aObjectsDictionary != nullptr, done, lRetval = -EINVAL);
+
+    lObjectDictionary = [[NSMutableDictionary alloc] init];
+
+    lRetval = StoreObjectFavoritePreference(aObjectPreferencesModel,
+                                            kFavoriteKey,
+                                            lObjectDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lRetval = StoreObjectLastUsedDatePreference(aObjectPreferencesModel,
+                                                kLastUsedDateKey,
+                                                lObjectDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    [aObjectsDictionary setObject: lObjectDictionary
+                           forKey: aObjectKey];
+
+done:
+   return (lRetval);
+}
+
+static Status
+StoreObjectsPreferences(const ClientObjectsPreferencesModel &aObjectsPreferencesModel,
+                        NSString *aObjectsKey,
+                        NSMutableDictionary *aControllerDictionary)
+{
+    NSMutableDictionary *                    lObjectsDictionary;
+    IdentifiersCollection                    lObjectIdentifiersCollection;
+    size_t                                   lObjectIdentifierCount;
+    vector<IdentifierModel::IdentifierType>  lObjectIdentifiers;
+    vector<IdentifierModel::IdentifierType>::const_iterator lObjectIdentifierIterator;
+    Status                                   lRetval = kStatus_Success;
+
+    nlREQUIRE_ACTION(aObjectsKey != nullptr, done, lRetval = -EINVAL);
+    nlREQUIRE_ACTION(aControllerDictionary != nullptr, done, lRetval = -EINVAL);
+
+    lObjectsDictionary = [[NSMutableDictionary alloc] init];
+    nlREQUIRE_ACTION(lObjectsDictionary != nullptr, done, lRetval = -ENOMEM);
+    
+    lRetval = lObjectIdentifiersCollection.Init();
+    nlREQUIRE_SUCCESS(lRetval, done);
+    
+    lRetval = aObjectsPreferencesModel.GetObjectIdentifiers(lObjectIdentifiersCollection);
+    nlREQUIRE_SUCCESS(lRetval, done);
+    
+    lRetval = lObjectIdentifiersCollection.GetCount(lObjectIdentifierCount);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lObjectIdentifiers.resize(lObjectIdentifierCount);
+    
+    lRetval = lObjectIdentifiersCollection.GetIdentifiers(&lObjectIdentifiers[0],
+                                                          lObjectIdentifierCount);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lObjectIdentifierIterator = lObjectIdentifiers.begin();
+
+    while (lObjectIdentifierIterator != lObjectIdentifiers.end())
+    {
+        const IdentifierModel::IdentifierType  lObjectIdentifier = *lObjectIdentifierIterator;
+        NSString *                             lObjectKey;
+        const ClientObjectPreferencesModel *   lObjectPreferencesModel;
+
+
+        lRetval = aObjectsPreferencesModel.GetObjectPreferences(lObjectIdentifier,
+                                                                lObjectPreferencesModel);
+        nlREQUIRE_SUCCESS(lRetval, done);
+
+        lObjectKey = CreateObjectIdentifier(lObjectIdentifier);
+        nlREQUIRE_ACTION(lObjectKey != nullptr, done, lRetval = -EINVAL);
+
+        lRetval = StoreObjectPreferences(*lObjectPreferencesModel,
+                                         lObjectKey,
+                                         lObjectsDictionary);
+        nlREQUIRE_SUCCESS(lRetval, done);
+        
+        lObjectIdentifierIterator++;
+    }
+
+    [aControllerDictionary setObject: lObjectsDictionary
+                              forKey: aObjectsKey];
 
 done:
    return (lRetval);
@@ -335,7 +580,6 @@ ClientPreferencesController :: Init(void)
 Status
 ClientPreferencesController :: Bind(const HLX::Client::Application::Controller &aController)
 {
-    DeclareScopedFunctionTracer(lTracer);
     NSString *                       lControllerIdentifier;
     NetworkModel::EthernetEUI48Type  lEthernetEUI48;
     Status                           lRetval = kStatus_Success;
@@ -385,7 +629,9 @@ ClientPreferencesController :: GroupReset(const GroupModel::IdentifierType &aGro
 {
     Status  lRetval = kStatus_Success;
 
-    lRetval = Detail::ObjectReset(mControllerIdentifier, @"Groups", aGroupIdentifier);
+    lRetval = Detail::ObjectReset(mControllerIdentifier,
+                                  kGroupsKey,
+                                  aGroupIdentifier);
     nlREQUIRE_SUCCESS(lRetval, done);
 
  done:
@@ -397,7 +643,9 @@ ClientPreferencesController :: ZoneReset(const ZoneModel::IdentifierType &aZoneI
 {
     Status  lRetval = kStatus_Success;
 
-    lRetval = Detail::ObjectReset(mControllerIdentifier, @"Zones", aZoneIdentifier);
+    lRetval = Detail::ObjectReset(mControllerIdentifier,
+                                  kZonesKey,
+                                  aZoneIdentifier);
     nlREQUIRE_SUCCESS(lRetval, done);
 
  done:
@@ -521,7 +769,10 @@ ClientPreferencesController :: GroupSetFavorite(const GroupModel::IdentifierType
                                         aGroupIdentifier,
                                         aFavorite,
                                         aDate);
-    nlREQUIRE(lRetval >= kStatus_Success, done);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lRetval = StorePreferences();
+    nlREQUIRE_SUCCESS(lRetval, done);
 
  done:
     return (lRetval);
@@ -538,7 +789,10 @@ ClientPreferencesController :: ZoneSetFavorite(const ZoneModel::IdentifierType &
                                         aZoneIdentifier,
                                         aFavorite,
                                         aDate);
-    nlREQUIRE(lRetval >= kStatus_Success, done);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lRetval = StorePreferences();
+    nlREQUIRE_SUCCESS(lRetval, done);
 
  done:
     return (lRetval);
@@ -549,15 +803,16 @@ ClientPreferencesController :: ZoneSetFavorite(const ZoneModel::IdentifierType &
 Status
 ClientPreferencesController :: LoadPreferences(void)
 {
-    NSDictionary *  lControllerPreferences;
+    NSDictionary *  lControllerDictionary;
     Status          lRetval = kStatus_Success;
 
-    lControllerPreferences = [[NSUserDefaults standardUserDefaults] dictionaryForKey: mControllerIdentifier];
-    nlEXPECT(lControllerPreferences != nullptr, done);
+    lControllerDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey: mControllerIdentifier];
+    nlEXPECT(lControllerDictionary != nullptr, done);
 
-    Log::Debug().Write("lControllerPreferences for %s is %p\n", [mControllerIdentifier UTF8String], lControllerPreferences);
+    Log::Debug().Write("lControllerDictionary: %s\n",
+                       [[lControllerDictionary description] UTF8String]);
 
-    lRetval = LoadPreferences(lControllerPreferences);
+    lRetval = LoadPreferences(lControllerDictionary);
     nlREQUIRE_SUCCESS(lRetval, done);
 
  done:
@@ -568,6 +823,7 @@ Status
 ClientPreferencesController :: LoadPreferences(NSDictionary *aControllerDictionary)
 {
     Status  lRetval = kStatus_Success;
+
 
     nlREQUIRE_ACTION(aControllerDictionary != nullptr, done, lRetval = -EINVAL);
 
@@ -587,7 +843,7 @@ ClientPreferencesController :: LoadGroupsPreferences(NSDictionary *aControllerDi
     Status  lRetval = kStatus_Success;
 
     lRetval = Detail::LoadObjectsPreferences(mGroupsPreferences,
-                                             @"Groups",
+                                             kGroupsKey,
                                              aControllerDictionary);
     nlREQUIRE_SUCCESS(lRetval, done);
 
@@ -601,8 +857,79 @@ ClientPreferencesController :: LoadZonesPreferences(NSDictionary *aControllerDic
     Status  lRetval = kStatus_Success;
 
     lRetval = Detail::LoadObjectsPreferences(mZonesPreferences,
-                                             @"Zones",
+                                             kZonesKey,
                                              aControllerDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
+}
+
+Status
+ClientPreferencesController :: StorePreferences(void) const
+{
+    NSMutableDictionary *  lControllerDictionary;
+    Status                 lRetval = kStatus_Success;
+
+
+    lControllerDictionary = [[NSMutableDictionary alloc] init];
+    nlREQUIRE_ACTION(lControllerDictionary != nullptr, done, lRetval = -ENOMEM);
+
+    lRetval = StorePreferences(lControllerDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    Log::Debug().Write("Storing lControllerDictionary %p for controller %s\n", lControllerDictionary, [mControllerIdentifier UTF8String]);
+
+    Log::Debug().Write("lControllerDictionary: %s\n",
+                       [[lControllerDictionary description] UTF8String]);
+
+    [[NSUserDefaults standardUserDefaults] setObject: lControllerDictionary
+                                              forKey: mControllerIdentifier];
+
+ done:
+    return (lRetval);
+}
+
+Status
+ClientPreferencesController :: StorePreferences(NSMutableDictionary *aControllerDictionary) const
+{
+    Status  lRetval = kStatus_Success;
+
+
+    nlREQUIRE_ACTION(aControllerDictionary != nullptr, done, lRetval = -EINVAL);
+
+    lRetval = StoreGroupsPreferences(aControllerDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lRetval = StoreZonesPreferences(aControllerDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
+}
+
+Status
+ClientPreferencesController :: StoreGroupsPreferences(NSMutableDictionary *aControllerDictionary) const
+{
+    Status  lRetval = kStatus_Success;
+
+    lRetval = Detail::StoreObjectsPreferences(mGroupsPreferences,
+                                              kGroupsKey,
+                                              aControllerDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
+}
+
+Status
+ClientPreferencesController :: StoreZonesPreferences(NSMutableDictionary *aControllerDictionary) const
+{
+    Status  lRetval = kStatus_Success;
+
+    lRetval = Detail::StoreObjectsPreferences(mZonesPreferences,
+                                              kZonesKey,
+                                              aControllerDictionary);
     nlREQUIRE_SUCCESS(lRetval, done);
 
  done:
