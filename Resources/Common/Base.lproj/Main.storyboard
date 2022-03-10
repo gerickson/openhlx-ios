@@ -462,7 +462,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="clu-w4-fcJ" kind="show" id="NoA-8i-REi"/>
+                                            <segue destination="clu-w4-fcJ" kind="show" identifier="Source Chooser Segue" id="NoA-8i-REi"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
