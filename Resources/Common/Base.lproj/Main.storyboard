@@ -544,7 +544,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Preferences" id="Rsx-TV-p99">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="G67-1Z-SmU" userLabel="Favorite Cell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="G67-1Z-SmU" userLabel="Group Favorite Cell">
                                         <rect key="frame" x="0.0" y="298" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="G67-1Z-SmU" id="I2b-Xd-xKl">
@@ -566,14 +566,14 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Fyi-M7-KFd" firstAttribute="leading" secondItem="I2b-Xd-xKl" secondAttribute="leadingMargin" id="KZN-CK-wZU"/>
-                                                <constraint firstItem="ht5-H0-Vos" firstAttribute="leading" secondItem="Fyi-M7-KFd" secondAttribute="trailing" constant="8" id="WZ2-uz-OuH"/>
+                                                <constraint firstItem="ht5-H0-Vos" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Fyi-M7-KFd" secondAttribute="trailing" constant="8" id="WZ2-uz-OuH"/>
                                                 <constraint firstAttribute="trailing" secondItem="ht5-H0-Vos" secondAttribute="trailing" constant="20" symbolic="YES" id="aew-tj-D0c"/>
                                                 <constraint firstItem="Fyi-M7-KFd" firstAttribute="centerY" secondItem="I2b-Xd-xKl" secondAttribute="centerY" id="j2l-x9-CP6"/>
                                                 <constraint firstItem="ht5-H0-Vos" firstAttribute="centerY" secondItem="I2b-Xd-xKl" secondAttribute="centerY" id="tOj-Xs-nX7"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="VDu-6N-Ox6" userLabel="Last Used Cell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="VDu-6N-Ox6" userLabel="Group Last Used Cell">
                                         <rect key="frame" x="0.0" y="342" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VDu-6N-Ox6" id="dRY-9X-GZP">
@@ -602,7 +602,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" textLabel="Y4q-ld-Oxb" style="IBUITableViewCellStyleDefault" id="9aC-Vt-9fa" userLabel="Reset Cell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" textLabel="Y4q-ld-Oxb" style="IBUITableViewCellStyleDefault" id="9aC-Vt-9fa" userLabel="Group Reset Cell">
                                         <rect key="frame" x="0.0" y="386" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9aC-Vt-9fa" id="dGz-Yq-0w4">
@@ -886,14 +886,14 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="BvL-jZ-jU5" firstAttribute="centerY" secondItem="HlP-AH-hcm" secondAttribute="centerY" id="4Np-xn-RA3"/>
-                                                <constraint firstItem="BvL-jZ-jU5" firstAttribute="trailing" secondItem="HlP-AH-hcm" secondAttribute="trailingMargin" id="9w7-wt-slF"/>
+                                                <constraint firstAttribute="trailing" secondItem="BvL-jZ-jU5" secondAttribute="trailing" constant="20" symbolic="YES" id="9w7-wt-slF"/>
                                                 <constraint firstItem="Jy8-TI-2Fg" firstAttribute="leading" secondItem="HlP-AH-hcm" secondAttribute="leadingMargin" constant="8" id="haL-Hb-3je"/>
                                                 <constraint firstItem="Jy8-TI-2Fg" firstAttribute="centerY" secondItem="HlP-AH-hcm" secondAttribute="centerY" id="mNb-EG-r4b"/>
-                                                <constraint firstItem="BvL-jZ-jU5" firstAttribute="leading" secondItem="Jy8-TI-2Fg" secondAttribute="trailing" constant="8" id="wBD-9Z-hna"/>
+                                                <constraint firstItem="BvL-jZ-jU5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Jy8-TI-2Fg" secondAttribute="trailing" constant="8" id="wBD-9Z-hna"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="eNT-FO-Enp" userLabel="Last Used Cell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="eNT-FO-Enp" userLabel="Zone Last Used Cell">
                                         <rect key="frame" x="0.0" y="618" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eNT-FO-Enp" id="XV0-8s-A7x">
@@ -914,15 +914,15 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="oqi-te-h8O" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qA2-Ds-DcH" secondAttribute="trailing" constant="8" symbolic="YES" id="T7V-sK-Jw4"/>
-                                                <constraint firstItem="qA2-Ds-DcH" firstAttribute="leading" secondItem="XV0-8s-A7x" secondAttribute="leadingMargin" id="jiK-bE-pfn"/>
-                                                <constraint firstItem="oqi-te-h8O" firstAttribute="trailing" secondItem="XV0-8s-A7x" secondAttribute="trailingMargin" id="LTf-kn-4er"/>
                                                 <constraint firstItem="qA2-Ds-DcH" firstAttribute="centerY" secondItem="XV0-8s-A7x" secondAttribute="centerY" id="3Wm-cE-bs7"/>
+                                                <constraint firstItem="oqi-te-h8O" firstAttribute="trailing" secondItem="XV0-8s-A7x" secondAttribute="trailingMargin" id="LTf-kn-4er"/>
+                                                <constraint firstItem="oqi-te-h8O" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qA2-Ds-DcH" secondAttribute="trailing" constant="8" symbolic="YES" id="T7V-sK-Jw4"/>
                                                 <constraint firstItem="oqi-te-h8O" firstAttribute="centerY" secondItem="XV0-8s-A7x" secondAttribute="centerY" id="fiy-YL-ryd"/>
+                                                <constraint firstItem="qA2-Ds-DcH" firstAttribute="leading" secondItem="XV0-8s-A7x" secondAttribute="leadingMargin" id="jiK-bE-pfn"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" textLabel="7T6-N0-60Z" style="IBUITableViewCellStyleDefault" id="mTE-Fe-AKh" userLabel="Reset Cell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" textLabel="7T6-N0-60Z" style="IBUITableViewCellStyleDefault" id="mTE-Fe-AKh" userLabel="Zone Reset Cell">
                                         <rect key="frame" x="0.0" y="662" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mTE-Fe-AKh" id="YbP-La-e6C">
