@@ -115,11 +115,9 @@ enum
 #if OPENHLX_INSTALLER
     [self refreshZoneBalance];
 #endif
-    [self refreshZoneFavorite];
-    [self refreshZoneLastUsedDate];
     [self refreshZoneMute];
     [self refreshZoneName];
-    [self refreshZoneReset];
+    [self refreshZonePreferences];
 #if OPENHLX_INSTALLER
     [self refreshZoneSoundMode];
 #endif
@@ -415,11 +413,6 @@ done:
     return;
 }
 
-- (IBAction) onMonoSwitchAction: (id)aSender
-{
-    return;
-}
-
 /**
  *  @brief
  *    This is the action handler for the favorite preference switch.
@@ -446,6 +439,11 @@ done:
     return;
 }
 
+- (IBAction) onMonoSwitchAction: (id)aSender
+{
+    return;
+}
+
 /**
  *  @brief
  *    This is the action handler for the volume mute state switch.
@@ -469,6 +467,36 @@ done:
     }
 
 done:
+    return;
+}
+
+/**
+ *  @brief
+ *    This is the action handler for the zone preferences reset
+ *    button.
+ *
+ *  @param[in]  aSender  The entity that triggered this action handler.
+ *
+ */
+- (IBAction) onResetButtonAction: (id)aSender
+{
+    DeclareScopedFunctionTracer(lTracer);
+
+    if (aSender == self.mResetButton)
+    {
+        ZoneModel::IdentifierType  lIdentifier;
+        Status                     lStatus;
+
+        lStatus = mZone->GetIdentifier(lIdentifier);
+        nlREQUIRE_SUCCESS(lStatus, done);
+
+        lStatus = mClientController->GetPreferencesController().ZoneReset(lIdentifier);
+        nlREQUIRE_SUCCESS(lStatus, done);
+
+        [self refreshZonePreferences];
+    }
+
+ done:
     return;
 }
 
@@ -883,6 +911,13 @@ done:
 
  done:
     return;
+}
+
+- (void) refreshZonePreferences
+{
+    [self refreshZoneFavorite];
+    [self refreshZoneLastUsedDate];
+    [self refreshZoneReset];
 }
 
 #if OPENHLX_INSTALLER

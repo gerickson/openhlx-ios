@@ -138,6 +138,12 @@ class ApplicationControllerDelegate;
 @property (weak, nonatomic) IBOutlet UISwitch *         mMuteSwitch;
 
 /**
+ *  A pointer to the button that allows resetting the zone
+ *  preferences.
+ */
+@property (weak, nonatomic) IBOutlet UIButton *         mResetButton;
+
+/**
  *  A pointer to the table view cell that contextually allows
  *  resetting the group preferences.
  */
@@ -202,6 +208,7 @@ class ApplicationControllerDelegate;
 - (IBAction) onFavoriteSwitchAction: (id)aSender;
 - (IBAction) onMonoSwitchAction: (id)aSender;
 - (IBAction) onMuteSwitchAction: (id)aSender;
+- (IBAction) onResetButtonAction: (id)aSender;
 - (IBAction) onVolumeDecreaseButtonAction: (id)aSender;
 - (IBAction) onVolumeSliderAction: (id)aSender;
 - (IBAction) onVolumeIncreaseButtonAction: (id)aSender;
