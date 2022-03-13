@@ -552,7 +552,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorite" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fyi-M7-KFd">
-                                                    <rect key="frame" x="16" y="11.5" width="227" height="21"/>
+                                                    <rect key="frame" x="16" y="11.5" width="60.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -602,21 +602,29 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" textLabel="Y4q-ld-Oxb" style="IBUITableViewCellStyleDefault" id="9aC-Vt-9fa" userLabel="Group Reset Cell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="9aC-Vt-9fa" userLabel="Group Reset Cell">
                                         <rect key="frame" x="0.0" y="386" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9aC-Vt-9fa" id="dGz-Yq-0w4">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Reset" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Y4q-ld-Oxb">
-                                                    <rect key="frame" x="16" y="0.0" width="288" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c6z-tn-Rcv">
+                                                    <rect key="frame" x="16" y="5.5" width="44" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" systemColor="systemRedColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                    <state key="normal" title="Reset">
+                                                        <color key="titleColor" systemColor="systemRedColor"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="onResetButtonAction:" destination="XBc-Em-SrC" eventType="touchUpInside" id="6Wk-WJ-fFd"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="c6z-tn-Rcv" firstAttribute="leading" secondItem="dGz-Yq-0w4" secondAttribute="leadingMargin" id="KAp-eV-LbB"/>
+                                                <constraint firstItem="c6z-tn-Rcv" firstAttribute="centerY" secondItem="dGz-Yq-0w4" secondAttribute="centerY" id="cCW-pY-9v1"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="c6z-tn-Rcv" secondAttribute="trailing" id="d0R-aI-nV5"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -633,6 +641,7 @@
                         <outlet property="mGroupName" destination="1so-lg-8mX" id="te3-qg-4gD"/>
                         <outlet property="mLastUsedLabel" destination="uvT-zF-n1w" id="qiB-uG-hr2"/>
                         <outlet property="mMuteSwitch" destination="ONq-yg-khJ" id="UMV-11-syE"/>
+                        <outlet property="mResetButton" destination="c6z-tn-Rcv" id="udU-Hj-jQi"/>
                         <outlet property="mResetCell" destination="9aC-Vt-9fa" id="eh0-x6-8yc"/>
                         <outlet property="mSourceName" destination="Dio-vk-59G" id="aGt-id-ZgD"/>
                         <outlet property="mVolumeDecreaseButton" destination="ia7-wZ-sjS" id="0sn-Mn-StD"/>
@@ -790,7 +799,7 @@
                             <tableViewSection headerTitle="Volume" id="Qjd-EM-wsx">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Gd4-7s-Whs" userLabel="Zone Volume Cell">
-                                        <rect key="frame" x="0.0" y="430.5" width="320" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="430" width="320" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gd4-7s-Whs" id="4UE-l1-q0X">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -823,15 +832,15 @@
                                                 <constraint firstItem="2D7-D6-tEd" firstAttribute="centerY" secondItem="4UE-l1-q0X" secondAttribute="centerY" id="IQZ-wq-tId"/>
                                                 <constraint firstItem="mlO-8j-gwu" firstAttribute="leading" secondItem="zJ7-hM-FJ6" secondAttribute="trailing" constant="8" id="MEa-ni-eP9"/>
                                                 <constraint firstItem="zJ7-hM-FJ6" firstAttribute="leading" secondItem="2D7-D6-tEd" secondAttribute="trailing" constant="8" id="MXo-fz-BZ2"/>
-                                                <constraint firstItem="2D7-D6-tEd" firstAttribute="leading" secondItem="4UE-l1-q0X" secondAttribute="leading" constant="20" symbolic="YES" id="Su5-VX-qVC"/>
                                                 <constraint firstItem="mlO-8j-gwu" firstAttribute="centerY" secondItem="2D7-D6-tEd" secondAttribute="centerY" id="MZj-Kw-o0c"/>
+                                                <constraint firstItem="2D7-D6-tEd" firstAttribute="leading" secondItem="4UE-l1-q0X" secondAttribute="leading" constant="20" symbolic="YES" id="Su5-VX-qVC"/>
                                                 <constraint firstItem="zJ7-hM-FJ6" firstAttribute="centerY" secondItem="2D7-D6-tEd" secondAttribute="centerY" id="TxL-2V-bGG"/>
                                                 <constraint firstAttribute="trailing" secondItem="mlO-8j-gwu" secondAttribute="trailing" constant="20" symbolic="YES" id="juZ-5F-s79"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="HcA-cv-dpO" userLabel="Zone Mute Cell">
-                                        <rect key="frame" x="0.0" y="474.5" width="320" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="473.5" width="320" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HcA-cv-dpO" id="pwB-hc-vbN">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -852,11 +861,11 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="3lF-hm-iWx" firstAttribute="centerY" secondItem="kK7-um-LKe" secondAttribute="centerY" id="Grc-zE-rhv"/>
+                                                <constraint firstItem="kK7-um-LKe" firstAttribute="centerY" secondItem="pwB-hc-vbN" secondAttribute="centerY" id="Nvx-Za-f10"/>
+                                                <constraint firstItem="3lF-hm-iWx" firstAttribute="centerY" secondItem="pwB-hc-vbN" secondAttribute="centerY" id="Zmx-3p-AcO"/>
+                                                <constraint firstAttribute="trailing" secondItem="3lF-hm-iWx" secondAttribute="trailing" constant="20" symbolic="YES" id="a6P-3d-JfP"/>
                                                 <constraint firstItem="3lF-hm-iWx" firstAttribute="leading" secondItem="kK7-um-LKe" secondAttribute="trailing" constant="8" id="wvZ-5d-MOa"/>
                                                 <constraint firstItem="kK7-um-LKe" firstAttribute="leading" secondItem="pwB-hc-vbN" secondAttribute="leadingMargin" constant="8" id="xkb-RF-k8Z"/>
-                                                <constraint firstItem="kK7-um-LKe" firstAttribute="centerY" secondItem="pwB-hc-vbN" secondAttribute="centerY" id="Nvx-Za-f10"/>
-                                                <constraint firstAttribute="trailing" secondItem="3lF-hm-iWx" secondAttribute="trailing" constant="20" symbolic="YES" id="a6P-3d-JfP"/>
-                                                <constraint firstItem="3lF-hm-iWx" firstAttribute="centerY" secondItem="pwB-hc-vbN" secondAttribute="centerY" id="Zmx-3p-AcO"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -865,43 +874,43 @@
                             <tableViewSection headerTitle="Preferences" id="m3R-FQ-R16">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="CXF-g8-KYD" userLabel="Zone Favorite Cell">
-                                        <rect key="frame" x="0.0" y="574" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="573" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CXF-g8-KYD" id="HlP-AH-hcm">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="CXF-g8-KYD" id="HlP-AH-hcm">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorite" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jy8-TI-2Fg">
-                                                    <rect key="frame" x="16" y="11.5" width="227" height="21"/>
+                                                    <rect key="frame" x="16" y="11.5" width="60.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BvL-jZ-jU5" userLabel="Zone Favorite Switch">
-                                                    <rect key="frame" x="263" y="6.5" width="51" height="31"/>
+                                                    <rect key="frame" x="251" y="6.5" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="onFavoriteSwitchAction:" destination="MPF-t1-Li3" eventType="valueChanged" id="iCR-Vd-C9B"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Jy8-TI-2Fg" firstAttribute="leading" secondItem="HlP-AH-hcm" secondAttribute="leadingMargin" constant="8" id="haL-Hb-3je"/>
-                                                <constraint firstItem="BvL-jZ-jU5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Jy8-TI-2Fg" secondAttribute="trailing" constant="8" id="wBD-9Z-hna"/>
-                                                <constraint firstAttribute="trailing" secondItem="BvL-jZ-jU5" secondAttribute="trailing" constant="20" symbolic="YES" id="9w7-wt-slF"/>
-                                                <constraint firstItem="Jy8-TI-2Fg" firstAttribute="centerY" secondItem="HlP-AH-hcm" secondAttribute="centerY" id="mNb-EG-r4b"/>
                                                 <constraint firstItem="BvL-jZ-jU5" firstAttribute="centerY" secondItem="HlP-AH-hcm" secondAttribute="centerY" id="4Np-xn-RA3"/>
+                                                <constraint firstAttribute="trailing" secondItem="BvL-jZ-jU5" secondAttribute="trailing" constant="20" symbolic="YES" id="9w7-wt-slF"/>
+                                                <constraint firstItem="Jy8-TI-2Fg" firstAttribute="leading" secondItem="HlP-AH-hcm" secondAttribute="leadingMargin" constant="8" id="haL-Hb-3je"/>
+                                                <constraint firstItem="Jy8-TI-2Fg" firstAttribute="centerY" secondItem="HlP-AH-hcm" secondAttribute="centerY" id="mNb-EG-r4b"/>
+                                                <constraint firstItem="BvL-jZ-jU5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Jy8-TI-2Fg" secondAttribute="trailing" constant="8" id="wBD-9Z-hna"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="eNT-FO-Enp" userLabel="Zone Last Used Cell">
-                                        <rect key="frame" x="0.0" y="618" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="617" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eNT-FO-Enp" id="XV0-8s-A7x">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Used" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qA2-Ds-DcH">
-                                                    <rect key="frame" x="16" y="11.5" width="77" height="21"/>
+                                                    <rect key="frame" x="8" y="11.5" width="77" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -914,29 +923,37 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="oqi-te-h8O" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qA2-Ds-DcH" secondAttribute="trailing" constant="8" symbolic="YES" id="T7V-sK-Jw4"/>
-                                                <constraint firstItem="qA2-Ds-DcH" firstAttribute="leading" secondItem="XV0-8s-A7x" secondAttribute="leadingMargin" id="jiK-bE-pfn"/>
-                                                <constraint firstItem="oqi-te-h8O" firstAttribute="trailing" secondItem="XV0-8s-A7x" secondAttribute="trailingMargin" id="LTf-kn-4er"/>
                                                 <constraint firstItem="qA2-Ds-DcH" firstAttribute="centerY" secondItem="XV0-8s-A7x" secondAttribute="centerY" id="3Wm-cE-bs7"/>
+                                                <constraint firstItem="oqi-te-h8O" firstAttribute="trailing" secondItem="XV0-8s-A7x" secondAttribute="trailingMargin" id="LTf-kn-4er"/>
+                                                <constraint firstItem="oqi-te-h8O" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qA2-Ds-DcH" secondAttribute="trailing" constant="8" symbolic="YES" id="T7V-sK-Jw4"/>
                                                 <constraint firstItem="oqi-te-h8O" firstAttribute="centerY" secondItem="XV0-8s-A7x" secondAttribute="centerY" id="fiy-YL-ryd"/>
+                                                <constraint firstItem="qA2-Ds-DcH" firstAttribute="leading" secondItem="XV0-8s-A7x" secondAttribute="leadingMargin" id="jiK-bE-pfn"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" textLabel="7T6-N0-60Z" style="IBUITableViewCellStyleDefault" id="mTE-Fe-AKh" userLabel="Zone Reset Cell">
-                                        <rect key="frame" x="0.0" y="662" width="320" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="mTE-Fe-AKh" userLabel="Zone Reset Cell">
+                                        <rect key="frame" x="0.0" y="661" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mTE-Fe-AKh" id="YbP-La-e6C">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="mTE-Fe-AKh" id="YbP-La-e6C">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Reset" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7T6-N0-60Z">
-                                                    <rect key="frame" x="16" y="0.0" width="288" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NZM-P9-VM0">
+                                                    <rect key="frame" x="8" y="5.5" width="44" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" systemColor="systemRedColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                    <state key="normal" title="Reset">
+                                                        <color key="titleColor" systemColor="systemRedColor"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="onResetButtonAction:" destination="MPF-t1-Li3" eventType="touchUpInside" id="oCL-K3-WTG"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="NZM-P9-VM0" firstAttribute="centerY" secondItem="YbP-La-e6C" secondAttribute="centerY" id="826-02-jQW"/>
+                                                <constraint firstItem="NZM-P9-VM0" firstAttribute="leading" secondItem="YbP-La-e6C" secondAttribute="leadingMargin" id="IJN-Fu-uFG"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NZM-P9-VM0" secondAttribute="trailing" constant="20" symbolic="YES" id="ILy-2L-H7w"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -954,10 +971,10 @@
                         <outlet property="mBalanceIncreaseButton" destination="TsR-k9-w2G" id="Hio-R3-zej"/>
                         <outlet property="mBalanceSlider" destination="NbQ-l2-npl" id="JJH-re-YsR"/>
                         <outlet property="mFavoriteSwitch" destination="BvL-jZ-jU5" id="pJp-4g-wUT"/>
-                        <outlet property="mZoneName" destination="3co-cP-U0c" id="qRn-xj-EVy"/>
                         <outlet property="mLastUsedLabel" destination="oqi-te-h8O" id="1EW-rc-dCr"/>
                         <outlet property="mMonoAudioSwitch" destination="qlS-23-djo" id="vge-xw-bLo"/>
                         <outlet property="mMuteSwitch" destination="3lF-hm-iWx" id="ioT-2A-Vba"/>
+                        <outlet property="mResetButton" destination="NZM-P9-VM0" id="e5w-9s-JwH"/>
                         <outlet property="mResetCell" destination="mTE-Fe-AKh" id="VEh-Ce-7fP"/>
                         <outlet property="mSoundModeCell" destination="h55-Pc-ONO" id="4Qu-Hs-rm8"/>
                         <outlet property="mSoundModeLabel" destination="CTw-yV-eXz" id="XMu-FH-bLv"/>
@@ -965,6 +982,7 @@
                         <outlet property="mVolumeDecreaseButton" destination="2D7-D6-tEd" id="eAI-3d-Pdf"/>
                         <outlet property="mVolumeIncreaseButton" destination="mlO-8j-gwu" id="1GU-Vd-cBh"/>
                         <outlet property="mVolumeSlider" destination="zJ7-hM-FJ6" id="S53-SB-JRh"/>
+                        <outlet property="mZoneName" destination="3co-cP-U0c" id="qRn-xj-EVy"/>
                         <segue destination="xT9-hf-wVK" kind="unwind" identifier="DidDisconnect" unwindAction="prepareForUnwind:" id="fbC-4c-BXS"/>
                         <segue destination="nAF-3K-k0R" kind="show" identifier="Equalizer Bands Detail Segue" id="cHn-dV-wRd"/>
                         <segue destination="IAY-dd-6ON" kind="show" identifier="Equalizer Preset Chooser Segue" id="nj0-Sv-61G"/>
