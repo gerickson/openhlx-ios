@@ -100,6 +100,9 @@ public:
                                         NSDate *aDate);
 
 private:
+    HLX::Common::Status ObjectReset(ClientObjectsPreferencesModel &aObjectsPreferencesModel,
+                                    const HLX::Model::IdentifierModel::IdentifierType &aObjectIdentifier);
+
     HLX::Common::Status LoadPreferences(void);
     HLX::Common::Status LoadPreferences(NSDictionary *aControllerDictionary);
     HLX::Common::Status LoadGroupsPreferences(NSDictionary *aControllerDictionary);

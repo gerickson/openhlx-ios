@@ -262,31 +262,21 @@ ObjectSetLastUsedDate(ClientObjectsPreferencesModel &aObjectsPreferencesModel, c
 }
 
 static Status
-ObjectReset(NSMutableDictionary *aControllerDictionary, NSString *aObjectsKey, const IdentifierModel::IdentifierType &aObjectIdentifier)
+ObjectReset(ClientObjectsPreferencesModel &aObjectsPreferencesModel,
+            const IdentifierModel::IdentifierType &aObjectIdentifier)
 {
-    Status lRetval = kStatus_Success;
+    Status                               lRetval = kStatus_Success;
 
-    return (lRetval);
-}
 
-static Status
-ObjectReset(NSString *aControllerIdentifier, NSString *aObjectsKey, const IdentifierModel::IdentifierType &aObjectIdentifier)
-{
-    NSUserDefaults *      lDefaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *        lImmutableControllerDefaults;
-    NSMutableDictionary * lMutableControllerDefaults;
-    Status                lRetval = kStatus_Success;
+    // There may be no preferences at all for this object. Consequently,
+    // it is expected that there may be no object preferences model.
 
-    lImmutableControllerDefaults = [lDefaults dictionaryForKey: aControllerIdentifier];
-    nlEXPECT(lImmutableControllerDefaults != nullptr, done);
-
-    lMutableControllerDefaults = [NSMutableDictionary dictionaryWithDictionary: lImmutableControllerDefaults];
-    nlREQUIRE_ACTION(lMutableControllerDefaults != nullptr, done, lRetval = -EINVAL);
-
-    lRetval = ObjectReset(lMutableControllerDefaults, aObjectsKey, aObjectIdentifier);
-    nlREQUIRE_SUCCESS(lRetval, done);
-
-    [lDefaults setObject: lMutableControllerDefaults forKey: aControllerIdentifier];
+    lRetval = aObjectsPreferencesModel.RemoveObjectPreferences(aObjectIdentifier);
+    if (lRetval == -ENOENT)
+    {
+        lRetval = kStatus_Success;
+    }
+    nlEXPECT_SUCCESS(lRetval, done);
 
  done:
     return (lRetval);
@@ -655,9 +645,7 @@ ClientPreferencesController :: GroupReset(const GroupModel::IdentifierType &aGro
 {
     Status  lRetval = kStatus_Success;
 
-    lRetval = Detail::ObjectReset(mControllerIdentifier,
-                                  kGroupsKey,
-                                  aGroupIdentifier);
+    lRetval = ObjectReset(mGroupsPreferences, aGroupIdentifier);
     nlREQUIRE_SUCCESS(lRetval, done);
 
  done:
@@ -669,9 +657,7 @@ ClientPreferencesController :: ZoneReset(const ZoneModel::IdentifierType &aZoneI
 {
     Status  lRetval = kStatus_Success;
 
-    lRetval = Detail::ObjectReset(mControllerIdentifier,
-                                  kZonesKey,
-                                  aZoneIdentifier);
+    lRetval = ObjectReset(mZonesPreferences, aZoneIdentifier);
     nlREQUIRE_SUCCESS(lRetval, done);
 
  done:
@@ -815,6 +801,25 @@ ClientPreferencesController :: ZoneSetFavorite(const ZoneModel::IdentifierType &
                                         aZoneIdentifier,
                                         aFavorite,
                                         aDate);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lRetval = StorePreferences();
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
+}
+
+// MARK: TBD
+
+Status
+ClientPreferencesController :: ObjectReset(ClientObjectsPreferencesModel &aObjectsPreferencesModel,
+                                           const IdentifierModel::IdentifierType &aObjectIdentifier)
+{
+    Status  lRetval = kStatus_Success;
+
+    lRetval = Detail::ObjectReset(aObjectsPreferencesModel,
+                                  aObjectIdentifier);
     nlREQUIRE_SUCCESS(lRetval, done);
 
     lRetval = StorePreferences();
