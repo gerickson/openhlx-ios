@@ -76,7 +76,7 @@ typedef NSInteger ShowStyle NS_TYPED_ENUM;
      *  A pointer to the global app HLX client controller instance.
      *
      */
-    ClientController *                            mClientController;
+    ClientController *                              mClientController;
 
     /**
      *  A scoped pointer to the default HLX client controller
@@ -90,7 +90,7 @@ typedef NSInteger ShowStyle NS_TYPED_ENUM;
      *  zones.
      *
      */
-    ShowStyle                                     mShowStyle;
+    ShowStyle                                       mShowStyle;
 }
 
 // MARK: Properties
