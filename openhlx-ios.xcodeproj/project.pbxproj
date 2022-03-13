@@ -245,6 +245,8 @@
 		0BE8CBCE265B2FD700A17FCC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B2BFAD823BD4FAC00C66853 /* Localizable.strings */; };
 		0BE8CBD0265B2FD700A17FCC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BBD822822B932E400554609 /* Main.storyboard */; };
 		0BEFB2872302702D00EFE74D /* ZoneDetailViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFB2862302702D00EFE74D /* ZoneDetailViewController.mm */; };
+		0BF1CEC627DEB5580031FD3C /* GroupsOrZonesSortViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BF1CEC427DEB5580031FD3C /* GroupsOrZonesSortViewController.mm */; };
+		0BF1CEC727DEB5580031FD3C /* GroupsOrZonesSortViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BF1CEC427DEB5580031FD3C /* GroupsOrZonesSortViewController.mm */; };
 		0BF7FCE42584469000F9836B /* CommandNameSetBufferBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF7FCA72584468C00F9836B /* CommandNameSetBufferBasis.cpp */; };
 		0BF7FCE52584469000F9836B /* CommandBalanceBufferBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF7FCA82584468D00F9836B /* CommandBalanceBufferBasis.cpp */; };
 		0BF7FCE62584469000F9836B /* CommandSourcesRegularExpressionBases.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF7FCAF2584468D00F9836B /* CommandSourcesRegularExpressionBases.cpp */; };
@@ -751,6 +753,8 @@
 		0BE8201C238196E300287DAE /* IdentifiersCollection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = IdentifiersCollection.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/model/IdentifiersCollection.hpp; sourceTree = "<absolute>"; };
 		0BEFB2852302702C00EFE74D /* ZoneDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZoneDetailViewController.h; path = Source/ZoneDetailViewController.h; sourceTree = SOURCE_ROOT; };
 		0BEFB2862302702D00EFE74D /* ZoneDetailViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ZoneDetailViewController.mm; path = Source/ZoneDetailViewController.mm; sourceTree = SOURCE_ROOT; };
+		0BF1CEC427DEB5580031FD3C /* GroupsOrZonesSortViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GroupsOrZonesSortViewController.mm; sourceTree = "<group>"; };
+		0BF1CEC527DEB5580031FD3C /* GroupsOrZonesSortViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsOrZonesSortViewController.h; sourceTree = "<group>"; };
 		0BF7FCA72584468C00F9836B /* CommandNameSetBufferBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandNameSetBufferBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/CommandNameSetBufferBasis.cpp; sourceTree = "<absolute>"; };
 		0BF7FCA82584468D00F9836B /* CommandBalanceBufferBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandBalanceBufferBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/CommandBalanceBufferBasis.cpp; sourceTree = "<absolute>"; };
 		0BF7FCA92584468D00F9836B /* CommandBalanceBufferBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CommandBalanceBufferBasis.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/CommandBalanceBufferBasis.hpp; sourceTree = "<absolute>"; };
@@ -957,6 +961,8 @@
 				0B7B9B5522F4D28000D542DF /* GroupsAndZonesTableViewCell.mm */,
 				0B7B9B5722F4D28100D542DF /* GroupsAndZonesTableViewController.h */,
 				0B7B9B5622F4D28100D542DF /* GroupsAndZonesTableViewController.mm */,
+				0BF1CEC527DEB5580031FD3C /* GroupsOrZonesSortViewController.h */,
+				0BF1CEC427DEB5580031FD3C /* GroupsOrZonesSortViewController.mm */,
 				0BBD823122B932E600554609 /* main.mm */,
 				0BC145EE22CEAAD600EE32AC /* RefreshViewController.h */,
 				0BC145ED22CEAAD500EE32AC /* RefreshViewController.mm */,
@@ -1824,6 +1830,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0BE8CBB1265B2FD700A17FCC /* ConnectViewController.mm in Sources */,
+				0BF1CEC727DEB5580031FD3C /* GroupsOrZonesSortViewController.mm in Sources */,
 				0BE8CBB2265B2FD700A17FCC /* ZoneDetailViewController.mm in Sources */,
 				0BE8CBB3265B2FD700A17FCC /* RefreshViewController.mm in Sources */,
 				0BE8CBB4265B2FD700A17FCC /* ConnectHistoryController.mm in Sources */,
@@ -1994,6 +2001,7 @@
 				0BC145EF22CEAAD600EE32AC /* RefreshViewController.mm in Sources */,
 				0BB8D6FE25155B2B009D083A /* ConnectHistoryController.mm in Sources */,
 				0B2388FD258EE9F3004C6E4A /* ToneDetailViewController.mm in Sources */,
+				0BF1CEC627DEB5580031FD3C /* GroupsOrZonesSortViewController.mm in Sources */,
 				0B7B9B5922F4D28100D542DF /* GroupsAndZonesTableViewController.mm in Sources */,
 				0BDA00ED2307784600BD75C6 /* SourceChooserTableViewCell.mm in Sources */,
 				0B6041D827CEF56B0002F835 /* ClientObjectsPreferencesModel.cpp in Sources */,
