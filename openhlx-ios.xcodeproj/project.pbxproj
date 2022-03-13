@@ -744,6 +744,7 @@
 		0BDCE9EC27BF390800D64FF1 /* HeartUnfilled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HeartUnfilled@2x.png"; sourceTree = "<group>"; };
 		0BDCE9ED27BF390800D64FF1 /* HeartFilled@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HeartFilled@3x.png"; sourceTree = "<group>"; };
 		0BDCE9EE27BF390800D64FF1 /* HeartUnfilled@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HeartUnfilled@3x.png"; sourceTree = "<group>"; };
+		0BDFC7D327DEA21800F112B7 /* ClientPreferencesControllerDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClientPreferencesControllerDelegate.hpp; sourceTree = "<group>"; };
 		0BE3109723B0125A00AFC4F5 /* GroupDetailViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GroupDetailViewController.mm; path = Source/GroupDetailViewController.mm; sourceTree = SOURCE_ROOT; };
 		0BE3109823B0125A00AFC4F5 /* GroupDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupDetailViewController.h; path = Source/GroupDetailViewController.h; sourceTree = SOURCE_ROOT; };
 		0BE8201B238196E300287DAE /* IdentifiersCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IdentifiersCollection.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/model/IdentifiersCollection.cpp; sourceTree = "<absolute>"; };
@@ -931,6 +932,7 @@
 				0B6041C127CEED120002F835 /* ClientObjectsPreferencesModel.hpp */,
 				0BB94FEA27CB411D0055B422 /* ClientPreferencesController.hpp */,
 				0BB94FE927CB411D0055B422 /* ClientPreferencesController.mm */,
+				0BDFC7D327DEA21800F112B7 /* ClientPreferencesControllerDelegate.hpp */,
 				0BB8D6FC25155B2B009D083A /* ConnectHistoryController.h */,
 				0BB8D6FD25155B2B009D083A /* ConnectHistoryController.mm */,
 				0BB62F2F22D91C000013E943 /* ConnectHistoryViewController.h */,
