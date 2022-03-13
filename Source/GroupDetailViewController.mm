@@ -92,11 +92,9 @@ class Controller;
     lStatus = mClientController->GetApplicationController()->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
-    [self refreshGroupFavorite];
-    [self refreshGroupLastUsedDate];
     [self refreshGroupMute];
     [self refreshGroupName];
-    [self refreshGroupReset];
+    [self refreshGroupPreferences];
     [self refreshGroupSourceName];
     [self refreshGroupVolume];
 
@@ -241,6 +239,36 @@ done:
     }
 
 done:
+    return;
+}
+
+/**
+ *  @brief
+ *    This is the action handler for the group preferences reset
+ *    button.
+ *
+ *  @param[in]  aSender  The entity that triggered this action handler.
+ *
+ */
+- (IBAction) onResetButtonAction: (id)aSender
+{
+    DeclareScopedFunctionTracer(lTracer);
+
+    if (aSender == self.mResetButton)
+    {
+        GroupModel::IdentifierType  lIdentifier;
+        Status                      lStatus;
+
+        lStatus = mGroup->GetIdentifier(lIdentifier);
+        nlREQUIRE_SUCCESS(lStatus, done);
+
+        lStatus = mClientController->GetPreferencesController().GroupReset(lIdentifier);
+        nlREQUIRE_SUCCESS(lStatus, done);
+
+        [self refreshGroupPreferences];
+    }
+
+ done:
     return;
 }
 
@@ -439,6 +467,13 @@ done:
 
  done:
     return;
+}
+
+- (void) refreshGroupPreferences
+{
+    [self refreshGroupFavorite];
+    [self refreshGroupLastUsedDate];
+    [self refreshGroupReset];
 }
 
 - (void) refreshGroupSourceName
