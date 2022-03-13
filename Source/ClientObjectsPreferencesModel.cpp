@@ -115,6 +115,22 @@ ClientObjectsPreferencesModel :: SetObjectPreferences(const IdentifierType &aObj
     return (lRetval);
 }
 
+Status
+ClientObjectsPreferencesModel :: RemoveObjectPreferences(const IdentifierType &aObjectIdentifier)
+{
+    const size_t  lCount  = mPreferences.erase(aObjectIdentifier);
+    Status        lRetval = kStatus_Success;
+
+
+    // There may be no preferences at all for this object. Consequently,
+    // it is expected that there may be a zero (0) count for the erasure.
+
+    nlEXPECT_ACTION(lCount > 0, done, lRetval = -ENOENT);
+
+ done:
+    return (lRetval);
+}
+
 bool
 ClientObjectsPreferencesModel :: operator ==(const ClientObjectsPreferencesModel &aClientObjectsPreferencesModel) const
 {

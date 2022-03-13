@@ -32,6 +32,8 @@ public:
 
     HLX::Common::Status SetObjectPreferences(const IdentifierType &aObjectIdentifier, const ClientObjectPreferencesModel &aObjectPreferencesModel);
 
+    HLX::Common::Status RemoveObjectPreferences(const IdentifierType &aObjectIdentifier);
+
     bool operator ==(const ClientObjectsPreferencesModel &aClientObjectsPreferencesModel) const;
 
 private:
