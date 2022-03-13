@@ -227,11 +227,13 @@ ObjectSetFavorite(ClientObjectsPreferencesModel &aObjectsPreferencesModel, const
 }
 
 static Status
-ObjectSetLastUsedDate(ClientObjectsPreferencesModel &aObjectsPreferencesModel, const IdentifierModel::IdentifierType &aObjectIdentifier, NSDate **aLastUsedDate)
+ObjectSetLastUsedDate(ClientObjectsPreferencesModel &aObjectsPreferencesModel,
+                      const IdentifierModel::IdentifierType &aObjectIdentifier,
+                      NSDate *aLastUsedDate)
 {
     ClientObjectPreferencesModel *             lObjectPreferencesModel = nullptr;
-    ClientObjectPreferencesModel         lTempPreferencesModel;
-    ClientLastUsedDateModel::LastUsedDateType  lLastUsedDate = (__bridge_retained CFDateRef)*aLastUsedDate;
+    ClientObjectPreferencesModel               lTempPreferencesModel;
+    ClientLastUsedDateModel::LastUsedDateType  lLastUsedDate = (__bridge CFDateRef)aLastUsedDate;
     Status                                     lRetval = kStatus_Success;
 
     lRetval = aObjectsPreferencesModel.GetObjectPreferences(aObjectIdentifier, lObjectPreferencesModel);
@@ -755,6 +757,21 @@ ClientPreferencesController :: GroupSetFavorite(const GroupModel::IdentifierType
 }
 
 Status
+ClientPreferencesController :: GroupSetLastUsedDate(const GroupModel::IdentifierType &aGroupIdentifier,
+                                                    NSDate *aLastUsedDate)
+{
+    Status   lRetval = kStatus_Success;
+
+    lRetval = Detail::ObjectSetLastUsedDate(mGroupsPreferences,
+                                            aGroupIdentifier,
+                                            aLastUsedDate);
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
+ done:
+    return (lRetval);
+}
+
+Status
 ClientPreferencesController :: ZoneSetFavorite(const ZoneModel::IdentifierType &aZoneIdentifier,
                                                const FavoriteType &aFavorite)
 {
@@ -762,6 +779,21 @@ ClientPreferencesController :: ZoneSetFavorite(const ZoneModel::IdentifierType &
     Status   lRetval = kStatus_Success;
 
     lRetval = ZoneSetFavorite(aZoneIdentifier, aFavorite, lNow);
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
+ done:
+    return (lRetval);
+}
+
+Status
+ClientPreferencesController :: ZoneSetLastUsedDate(const ZoneModel::IdentifierType &aZoneIdentifier,
+                                                   NSDate *aLastUsedDate)
+{
+    Status   lRetval = kStatus_Success;
+
+    lRetval = Detail::ObjectSetLastUsedDate(mZonesPreferences,
+                                            aZoneIdentifier,
+                                            aLastUsedDate);
     nlREQUIRE(lRetval >= kStatus_Success, done);
 
  done:

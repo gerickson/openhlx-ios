@@ -95,9 +95,13 @@ public:
     HLX::Common::Status GroupSetFavorite(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
                                          const FavoriteType &aFavorite,
                                          NSDate *aDate);
+    HLX::Common::Status GroupSetLastUsedDate(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
+                                         NSDate *aDate);
     HLX::Common::Status ZoneSetFavorite(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
                                         const FavoriteType &aFavorite,
                                         NSDate *aDate);
+    HLX::Common::Status ZoneSetLastUsedDate(const HLX::Model::ZoneModel::IdentifierType &aGroupIdentifier,
+                                         NSDate *aDate);
 
 private:
     HLX::Common::Status ObjectReset(ClientObjectsPreferencesModel &aObjectsPreferencesModel,
