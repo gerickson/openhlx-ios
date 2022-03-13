@@ -33,6 +33,7 @@
 #import <OpenHLX/Model/ZoneModel.hpp>
 
 #import "ClientObjectsPreferencesModel.hpp"
+#import "ClientPreferencesControllerDelegate.hpp"
 
 
 class ClientPreferencesController
@@ -47,6 +48,11 @@ public:
     // Initializers
 
     HLX::Common::Status Init(void);
+
+    // Delegate Management
+
+    ClientPreferencesControllerDelegate *GetDelegate(void) const;
+    HLX::Common::Status SetDelegate(ClientPreferencesControllerDelegate *aDelegate);
 
     // Bind/unbind
 
@@ -108,7 +114,8 @@ private:
     typedef ClientObjectsPreferencesModel ClientGroupsPreferencesModel;
     typedef ClientObjectsPreferencesModel ClientZonesPreferencesModel;
 
-    NSString *                    mControllerIdentifier;
-    ClientGroupsPreferencesModel  mGroupsPreferences;
-    ClientGroupsPreferencesModel  mZonesPreferences;
+    NSString *                            mControllerIdentifier;
+    ClientGroupsPreferencesModel          mGroupsPreferences;
+    ClientGroupsPreferencesModel          mZonesPreferences;
+    ClientPreferencesControllerDelegate*  mDelegate;
 };

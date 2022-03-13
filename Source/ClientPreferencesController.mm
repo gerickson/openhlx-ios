@@ -557,7 +557,8 @@ done:
 ClientPreferencesController :: ClientPreferencesController(void) :
     mControllerIdentifier(nullptr),
     mGroupsPreferences(),
-    mZonesPreferences()
+    mZonesPreferences(),
+    mDelegate(nullptr)
 {
     return;
 }
@@ -574,6 +575,31 @@ ClientPreferencesController :: Init(void)
 {
     Status lRetval = kStatus_Success;
 
+    return (lRetval);
+}
+
+// MARK: Delegate Management
+
+ClientPreferencesControllerDelegate *
+ClientPreferencesController :: GetDelegate(void) const
+{
+    return (mDelegate);
+}
+
+Status
+ClientPreferencesController :: SetDelegate(ClientPreferencesControllerDelegate *aDelegate)
+{
+    Status lRetval = kStatus_Success;
+
+    if (aDelegate == mDelegate)
+    {
+        lRetval = kStatus_ValueAlreadySet;
+        goto done;
+    }
+
+    mDelegate = aDelegate;
+
+done:
     return (lRetval);
 }
 
