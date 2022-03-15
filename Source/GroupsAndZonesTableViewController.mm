@@ -537,26 +537,31 @@ public:
 
         while (lCurrentParameter != mLastParameter)
         {
-            const NSComparisonResult lComparison =
-                lCurrentParameter->mSortFunction(mClientController,
-                                                 aFirst,
-                                                 aSecond);
+            if ((lCurrentParameter->mSortKey      != kSortKey_Invalid) &&
+                (lCurrentParameter->mSortFunction != nullptr         ))
+            {
+                const NSComparisonResult lComparison =
+                    lCurrentParameter->mSortFunction(mClientController,
+                                                     aFirst,
+                                                     aSecond);
 
-            if (((lCurrentParameter->mSortOrder.mAscending) &&
-                 (lComparison == NSOrderedAscending)) ||
-                ((!lCurrentParameter->mSortOrder.mAscending) && (lComparison == NSOrderedDescending)))
-            {
-                lRetval = true;
-                break;
-            }
-            else if (lComparison == NSOrderedSame)
-            {
-                goto next_sort_parameter;
-            }
-            else
-            {
-                lRetval = false;
-                break;
+                if (lComparison == NSOrderedSame)
+                {
+                    goto next_sort_parameter;
+                }
+                else if (((lCurrentParameter->mSortOrder.mAscending) &&
+                          (lComparison == NSOrderedAscending)) ||
+                         ((!lCurrentParameter->mSortOrder.mAscending) &&
+                          (lComparison == NSOrderedDescending)))
+                {
+                    lRetval = true;
+                    break;
+                }
+                else
+                {
+                    lRetval = false;
+                    break;
+                }
             }
     
         next_sort_parameter:
@@ -603,32 +608,47 @@ class ZoneSortFunctor :
     ~ZoneSortFunctor(void) = default;
 };
 
+static void ClearAndInitializeIdentifiers(const IdentifierModel::IdentifierType &aIdentifiersMax,
+                                          ObjectIdentifiers &aIdentifiers)
+{
+    aIdentifiers.clear();
+
+    for (auto lIdentifier = IdentifierModel::kIdentifierMin;
+         lIdentifier <= aIdentifiersMax;
+         lIdentifier++)
+    {
+        aIdentifiers.push_back(lIdentifier);
+    }
+}
+
+static void SortIdentifiers(const IdentifierModel::IdentifierType &aIdentifiersMax,
+                            const ObjectSortFunctorBasis &aSortFunctor,
+                            ObjectIdentifiers &aIdentifiers)
+{
+    ClearAndInitializeIdentifiers(aIdentifiersMax, aIdentifiers);
+
+    std::sort(aIdentifiers.begin(),
+              aIdentifiers.end(),
+              aSortFunctor);
+}                           
+
 static void SortGroupIdentifiers(ClientController &aClientController,
                                  SortParameters::const_iterator aCurrentParameter,
                                  SortParameters::const_iterator aLastParameter,
                                  ObjectIdentifiers &aIdentifiers)
 {
-    IdentifierModel::IdentifierType  lIdentifiersMax = 0;
-    Status                           lStatus;
-    GroupSortFunctor                 lGroupSortFunctor(aClientController,
+    const GroupSortFunctor           lGroupSortFunctor(aClientController,
                                                        aCurrentParameter,
                                                        aLastParameter);
+    IdentifierModel::IdentifierType  lIdentifiersMax = 0;
+    Status                           lStatus;
 
     lStatus = aClientController.GetApplicationController()->GroupsGetMax(lIdentifiersMax);
     nlREQUIRE_SUCCESS(lStatus, done);
 
-    aIdentifiers.clear();
-
-    for (IdentifierModel::IdentifierType lIdentifier = IdentifierModel::kIdentifierMin;
-         lIdentifier <= lIdentifiersMax;
-         lIdentifier++)
-    {
-        aIdentifiers.push_back(lIdentifier);
-    }
-
-    std::sort(aIdentifiers.begin(),
-              aIdentifiers.end(),
-              lGroupSortFunctor);
+    SortIdentifiers(lIdentifiersMax,
+                    lGroupSortFunctor,
+                    aIdentifiers);
 
  done:
     return;
@@ -637,29 +657,20 @@ static void SortGroupIdentifiers(ClientController &aClientController,
 static void SortZoneIdentifiers(ClientController &aClientController,
                                 SortParameters::const_iterator aCurrentParameter,
                                 SortParameters::const_iterator aLastParameter,
-                                std::vector<IdentifierModel::IdentifierType> &aIdentifiers)
+                                ObjectIdentifiers &aIdentifiers)
 {
-    IdentifierModel::IdentifierType  lIdentifiersMax = 0;
-    Status                           lStatus;
-    ZoneSortFunctor                  lZoneSortFunctor(aClientController,
+    const ZoneSortFunctor            lZoneSortFunctor(aClientController,
                                                       aCurrentParameter,
                                                       aLastParameter);
+    IdentifierModel::IdentifierType  lIdentifiersMax = 0;
+    Status                           lStatus;
 
     lStatus = aClientController.GetApplicationController()->ZonesGetMax(lIdentifiersMax);
     nlREQUIRE_SUCCESS(lStatus, done);
 
-    aIdentifiers.clear();
-
-    for (IdentifierModel::IdentifierType lIdentifier = IdentifierModel::kIdentifierMin;
-         lIdentifier <= lIdentifiersMax;
-         lIdentifier++)
-    {
-        aIdentifiers.push_back(lIdentifier);
-    }
-
-    std::sort(aIdentifiers.begin(),
-              aIdentifiers.end(),
-              lZoneSortFunctor);
+    SortIdentifiers(lIdentifiersMax,
+                    lZoneSortFunctor,
+                    aIdentifiers);
 
  done:
     return;
