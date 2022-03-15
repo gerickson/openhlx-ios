@@ -26,6 +26,10 @@
 
 #import "GroupsAndZonesTableViewController.h"
 
+#import <algorithm>
+#import <array>
+#import <vector>
+
 #include <Foundation/Foundation.h>
 
 #include <LogUtilities/LogUtilities.hpp>
@@ -62,14 +66,638 @@ class Controller;
 
 };
 
+typedef std::vector<IdentifierModel::IdentifierType> ObjectIdentifiers;
+
 @interface GroupsAndZonesTableViewController ()
 {
-
+    ObjectIdentifiers mGroupIdentifiers;
+    ObjectIdentifiers mZoneIdentifiers;
 }
 
 @end
 
 @implementation GroupsAndZonesTableViewController
+
+static NSComparisonResult
+BooleanCompare(const bool &aFirst,
+               const bool &aSecond)
+{
+    NSComparisonResult lRetval;
+
+    if (aFirst < aSecond)
+        lRetval = NSOrderedAscending;
+    else if (aFirst > aSecond)
+        lRetval = NSOrderedDescending;
+    else
+        lRetval = NSOrderedSame;
+
+    return (lRetval);
+}
+
+static NSComparisonResult
+GroupCompare(ClientController &aClientController,
+             const IdentifierModel::IdentifierType &aFirstIdentifier,
+             const IdentifierModel::IdentifierType &aSecondIdentifier,
+             NSComparisonResult (*aCompare)(const GroupModel &aFirst, const GroupModel &aSecond))
+{
+    const GroupModel * lFirstModel  = nullptr;
+    const GroupModel * lSecondModel = nullptr;
+    Status             lStatus;
+    NSComparisonResult lRetval = NSOrderedSame;
+    
+    lStatus = aClientController.GetApplicationController()->GroupGet(aFirstIdentifier, lFirstModel);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lStatus = aClientController.GetApplicationController()->GroupGet(aSecondIdentifier, lSecondModel);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lRetval = aCompare(*lFirstModel, *lSecondModel);
+
+done:
+    return (lRetval);
+}
+
+static NSComparisonResult
+ZoneCompare(ClientController &aClientController,
+             const IdentifierModel::IdentifierType &aFirstIdentifier,
+             const IdentifierModel::IdentifierType &aSecondIdentifier,
+             NSComparisonResult (*aCompare)(const ZoneModel &aFirst, const ZoneModel &aSecond))
+{
+    const ZoneModel *  lFirstModel  = nullptr;
+    const ZoneModel *  lSecondModel = nullptr;
+    Status             lStatus;
+    NSComparisonResult lRetval = NSOrderedSame;
+    
+    lStatus = aClientController.GetApplicationController()->ZoneGet(aFirstIdentifier, lFirstModel);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lStatus = aClientController.GetApplicationController()->ZoneGet(aSecondIdentifier, lSecondModel);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lRetval = aCompare(*lFirstModel, *lSecondModel);
+
+done:
+    return (lRetval);
+}
+
+static NSComparisonResult
+GroupFavoriteCompare(ClientController &aClientController,
+                     const IdentifierModel::IdentifierType &aFirstIdentifier,
+                     const IdentifierModel::IdentifierType &aSecondIdentifier)
+{
+    ClientObjectPreferencesModel::FavoriteType  lFirstFavorite = false;
+    ClientObjectPreferencesModel::FavoriteType  lSecondFavorite = false;
+    Status                                      lStatus;
+    NSComparisonResult                          lRetval = NSOrderedSame;
+
+    lStatus = aClientController.GetPreferencesController().GroupGetFavorite(aFirstIdentifier, lFirstFavorite);
+    (void)lStatus;
+
+    lStatus = aClientController.GetPreferencesController().GroupGetFavorite(aSecondIdentifier, lSecondFavorite);
+    (void)lStatus;
+
+    lRetval = BooleanCompare(lFirstFavorite, lSecondFavorite);
+
+done:
+    return (lRetval);
+}
+
+static NSComparisonResult
+ZoneFavoriteCompare(ClientController &aClientController,
+                    const IdentifierModel::IdentifierType &aFirstIdentifier,
+                    const IdentifierModel::IdentifierType &aSecondIdentifier)
+{
+    ClientObjectPreferencesModel::FavoriteType  lFirstFavorite = false;
+    ClientObjectPreferencesModel::FavoriteType  lSecondFavorite = false;
+    Status                                      lStatus;
+    NSComparisonResult                          lRetval = NSOrderedSame;
+
+    lStatus = aClientController.GetPreferencesController().ZoneGetFavorite(aFirstIdentifier, lFirstFavorite);
+    (void)lStatus;
+
+    lStatus = aClientController.GetPreferencesController().ZoneGetFavorite(aSecondIdentifier, lSecondFavorite);
+    (void)lStatus;
+
+    lRetval = BooleanCompare(lFirstFavorite, lSecondFavorite);
+
+done:
+    return (lRetval);
+
+}
+
+static NSComparisonResult
+DateCompare(NSDate * aFirst,
+            NSDate * aSecond)
+{
+    NSComparisonResult  lRetval = NSOrderedSame;
+
+    if ((aFirst != nullptr) && (aSecond != nullptr))
+    {
+        lRetval = [aFirst compare: aSecond];
+    }
+    else if ((aFirst == nullptr) && (aSecond == nullptr))
+    {
+        lRetval = NSOrderedSame;
+    }
+    else
+    {
+        lRetval = ((aSecond == nullptr) ? NSOrderedAscending : NSOrderedDescending);
+    }
+
+    return (lRetval);
+}
+
+static NSComparisonResult
+GroupLastUsedDateCompare(ClientController &aClientController,
+                         const IdentifierModel::IdentifierType &aFirstIdentifier,
+                         const IdentifierModel::IdentifierType &aSecondIdentifier)
+{
+    NSDate *            lFirstLastUsedDate  = nullptr;
+    NSDate *            lSecondLastUsedDate = nullptr;
+    Status              lStatus;
+    NSComparisonResult  lRetval = NSOrderedSame;
+
+    lStatus = aClientController.GetPreferencesController().GroupGetLastUsedDate(aFirstIdentifier, &lFirstLastUsedDate);
+    (void)lStatus;
+
+    lStatus = aClientController.GetPreferencesController().GroupGetLastUsedDate(aSecondIdentifier, &lSecondLastUsedDate);
+    (void)lStatus;
+
+    lRetval = DateCompare(lFirstLastUsedDate, lSecondLastUsedDate);
+
+done:
+    return (lRetval);
+}
+
+static NSComparisonResult
+ZoneLastUsedDateCompare(ClientController &aClientController,
+                        const IdentifierModel::IdentifierType &aFirstIdentifier,
+                        const IdentifierModel::IdentifierType &aSecondIdentifier)
+{
+    NSDate *            lFirstLastUsedDate  = nullptr;
+    NSDate *            lSecondLastUsedDate = nullptr;
+    Status              lStatus;
+    NSComparisonResult  lRetval = NSOrderedSame;
+
+    lStatus = aClientController.GetPreferencesController().ZoneGetLastUsedDate(aFirstIdentifier, &lFirstLastUsedDate);
+    (void)lStatus;
+
+    lStatus = aClientController.GetPreferencesController().ZoneGetLastUsedDate(aSecondIdentifier, &lSecondLastUsedDate);
+    (void)lStatus;
+
+    lRetval = DateCompare(lFirstLastUsedDate, lSecondLastUsedDate);
+
+done:
+    return (lRetval);
+}
+
+static NSComparisonResult
+IdentifierCompare(const IdentifierModel::IdentifierType &aFirst,
+                  const IdentifierModel::IdentifierType &aSecond)
+{
+    NSComparisonResult lRetval;
+
+    if (aFirst < aSecond)
+        lRetval = NSOrderedAscending;
+    else if (aFirst > aSecond)
+        lRetval = NSOrderedDescending;
+    else
+        lRetval = NSOrderedSame;
+
+    return (lRetval);
+}
+
+template <class Object>
+static NSComparisonResult
+ObjectIdentifierCompare(const Object &aFirstObject,
+                        const Object &aSecondObject)
+{
+    IdentifierModel::IdentifierType  lFirstIdentifier  = IdentifierModel::kIdentifierInvalid;
+    IdentifierModel::IdentifierType  lSecondIdentifier = IdentifierModel::kIdentifierInvalid;;
+    Status                           lStatus;
+    NSComparisonResult               lRetval = NSOrderedSame;
+
+    lStatus = aFirstObject.GetIdentifier(lFirstIdentifier);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lStatus = aSecondObject.GetIdentifier(lSecondIdentifier);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lRetval = IdentifierCompare(lFirstIdentifier, lSecondIdentifier);
+
+ done:
+    return (lRetval);
+}
+
+static NSComparisonResult
+GroupIdentifierCompare(const GroupModel &aFirst,
+                       const GroupModel &aSecond)
+{
+    return (ObjectIdentifierCompare<GroupModel>(aFirst, aSecond));
+}
+
+static NSComparisonResult
+ZoneIdentifierCompare(const ZoneModel &aFirst,
+                      const ZoneModel &aSecond)
+{
+    return (ObjectIdentifierCompare<ZoneModel>(aFirst, aSecond));
+}
+
+static NSComparisonResult
+GroupIdentifierCompare(ClientController &aClientController,
+                const IdentifierModel::IdentifierType &aFirstIdentifier,
+                const IdentifierModel::IdentifierType &aSecondIdentifier)
+{
+    const NSComparisonResult lRetval = GroupCompare(aClientController,
+                                                    aFirstIdentifier,
+                                                    aSecondIdentifier,
+                                                    GroupIdentifierCompare);
+
+    return (lRetval);
+}
+
+static NSComparisonResult
+ZoneIdentifierCompare(ClientController &aClientController,
+                const IdentifierModel::IdentifierType &aFirstIdentifier,
+                const IdentifierModel::IdentifierType &aSecondIdentifier)
+{
+    const NSComparisonResult lRetval = ZoneCompare(aClientController,
+                                                    aFirstIdentifier,
+                                                    aSecondIdentifier,
+                                                    ZoneIdentifierCompare);
+
+    return (lRetval);
+}
+
+template <class Object>
+static NSComparisonResult
+ObjectMuteCompare(const Object &aFirstObject,
+                  const Object &aSecondObject)
+{
+    VolumeModel::MuteType   lFirstMute = false;
+    VolumeModel::MuteType   lSecondMute = false;
+    Status                  lStatus;
+    NSComparisonResult      lRetval = NSOrderedSame;
+
+    lStatus = aFirstObject.GetMute(lFirstMute);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lStatus = aSecondObject.GetMute(lSecondMute);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lRetval = BooleanCompare(lFirstMute, lSecondMute);
+
+ done:
+    return (lRetval);
+}
+
+static NSComparisonResult
+GroupMuteCompare(const GroupModel &aFirst,
+                 const GroupModel &aSecond)
+{
+    return (ObjectMuteCompare<GroupModel>(aFirst, aSecond));
+}
+
+static NSComparisonResult
+ZoneMuteCompare(const ZoneModel &aFirst,
+                const ZoneModel &aSecond)
+{
+    return (ObjectMuteCompare<ZoneModel>(aFirst, aSecond));
+}
+
+static NSComparisonResult
+GroupMuteCompare(ClientController &aClientController,
+                const IdentifierModel::IdentifierType &aFirstIdentifier,
+                const IdentifierModel::IdentifierType &aSecondIdentifier)
+{
+    const NSComparisonResult lRetval = GroupCompare(aClientController,
+                                                    aFirstIdentifier,
+                                                    aSecondIdentifier,
+                                                    GroupMuteCompare);
+
+    return (lRetval);
+}
+
+static NSComparisonResult
+ZoneMuteCompare(ClientController &aClientController,
+                const IdentifierModel::IdentifierType &aFirstIdentifier,
+                const IdentifierModel::IdentifierType &aSecondIdentifier)
+{
+    const NSComparisonResult lRetval = ZoneCompare(aClientController,
+                                                    aFirstIdentifier,
+                                                    aSecondIdentifier,
+                                                    ZoneMuteCompare);
+
+    return (lRetval);
+}
+
+static NSComparisonResult
+NameCompare(const char *aFirst,
+            const char *aSecond)
+{
+    const int          lComparison = strcmp(aFirst, aSecond);
+    NSComparisonResult lRetval;
+
+    if (lComparison < 0)
+        lRetval = NSOrderedAscending;
+    else if (lComparison > 0)
+        lRetval = NSOrderedDescending;
+    else
+        lRetval = NSOrderedSame;
+
+    return (lRetval);
+}
+
+template <class Object>
+static NSComparisonResult
+ObjectNameCompare(const Object &aFirstObject,
+                  const Object &aSecondObject)
+{
+    const char *        lFirstName = nullptr;
+    const char *        lSecondName = nullptr;
+    Status              lStatus;
+    NSComparisonResult  lRetval = NSOrderedSame;
+
+    lStatus = aFirstObject.GetName(lFirstName);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lStatus = aSecondObject.GetName(lSecondName);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lRetval = NameCompare(lFirstName, lSecondName);
+
+ done:
+    return (lRetval);
+}
+
+static NSComparisonResult
+GroupNameCompare(const GroupModel &aFirst,
+                 const GroupModel &aSecond)
+{
+    return (ObjectNameCompare<GroupModel>(aFirst, aSecond));
+}
+
+static NSComparisonResult
+ZoneNameCompare(const ZoneModel &aFirst,
+                const ZoneModel &aSecond)
+{
+    return (ObjectNameCompare<ZoneModel>(aFirst, aSecond));
+}
+
+static NSComparisonResult
+GroupNameCompare(ClientController &aClientController,
+                const IdentifierModel::IdentifierType &aFirstIdentifier,
+                const IdentifierModel::IdentifierType &aSecondIdentifier)
+{
+    const NSComparisonResult lRetval = GroupCompare(aClientController,
+                                                    aFirstIdentifier,
+                                                    aSecondIdentifier,
+                                                    GroupNameCompare);
+
+    return (lRetval);
+}
+
+static NSComparisonResult
+ZoneNameCompare(ClientController &aClientController,
+                const IdentifierModel::IdentifierType &aFirstIdentifier,
+                const IdentifierModel::IdentifierType &aSecondIdentifier)
+{
+    const NSComparisonResult lRetval = ZoneCompare(aClientController,
+                                                    aFirstIdentifier,
+                                                    aSecondIdentifier,
+                                                    ZoneNameCompare);
+
+    return (lRetval);
+}
+
+enum SortKey
+{
+    kSortKey_Invalid       = -1,
+
+    kSortKey_Min           = 0,
+
+    kSortKey_Identifier    = kSortKey_Min,
+    kSortKey_Favorite,
+    kSortKey_LastUsedDate,
+    kSortKey_Mute,
+    kSortKey_Name,
+
+    kSortKey_Max,
+    kSortKey_Count         = kSortKey_Max
+};
+
+enum
+{
+    kSortOrder_Descending = false,
+    kSortOrder_Ascending  = true
+};
+
+union SortOrder
+{
+    bool mAscending;
+    bool mLowestToHighest;
+    bool mIsFavorite;
+    bool mOldestToNewest;
+    bool mIsMuted;
+    bool mAToZ;
+};
+
+typedef NSComparisonResult (*SortFunction)(ClientController &aClientController,
+                                           const IdentifierModel::IdentifierType &aFirstIdentifier,
+                                           const IdentifierModel::IdentifierType &aSecondIdentifier);
+
+struct SortParameter
+{
+    SortKey      mSortKey;
+    SortOrder    mSortOrder;
+    SortFunction mSortFunction;
+};
+
+typedef std::array<SortParameter, kSortKey_Count> SortParameters;
+
+class ObjectSortFunctorBasis
+{
+public:
+    ObjectSortFunctorBasis(ClientController &aClientController,
+                           SortParameters::const_iterator aFirstParameter,
+                           SortParameters::const_iterator aLastParameter) :
+        mClientController(aClientController),
+        mFirstParameter(aFirstParameter),
+        mLastParameter(aLastParameter)
+    {
+        return;
+    }
+    ~ObjectSortFunctorBasis(void) = default;
+
+    bool operator ()(const ObjectIdentifiers::value_type &aFirst,
+                     const ObjectIdentifiers::value_type &aSecond) const
+    {
+        SortParameters::const_iterator lCurrentParameter = mFirstParameter;
+        bool                           lRetval = false;
+
+        while (lCurrentParameter != mLastParameter)
+        {
+            const NSComparisonResult lComparison =
+                lCurrentParameter->mSortFunction(mClientController,
+                                                 aFirst,
+                                                 aSecond);
+
+            if (((lCurrentParameter->mSortOrder.mAscending) &&
+                 (lComparison == NSOrderedAscending)) ||
+                ((!lCurrentParameter->mSortOrder.mAscending) && (lComparison == NSOrderedDescending)))
+            {
+                lRetval = true;
+                break;
+            }
+            else if (lComparison == NSOrderedSame)
+            {
+                goto next_sort_parameter;
+            }
+            else
+            {
+                lRetval = false;
+                break;
+            }
+    
+        next_sort_parameter:
+            lCurrentParameter++;
+        }
+
+        return (lRetval);
+    }
+
+    ClientController &              mClientController;
+    SortParameters::const_iterator  mFirstParameter;
+    SortParameters::const_iterator  mLastParameter;
+};
+
+class GroupSortFunctor :
+    public ObjectSortFunctorBasis
+{
+ public:
+    GroupSortFunctor(ClientController &aClientController,
+                     SortParameters::const_iterator aFirstParameter,
+                     SortParameters::const_iterator aLastParameter) :
+        ObjectSortFunctorBasis(aClientController,
+                               aFirstParameter,
+                                aLastParameter)
+    {
+        return;
+    }
+    ~GroupSortFunctor(void) = default;
+};
+
+class ZoneSortFunctor :
+    public ObjectSortFunctorBasis
+{
+ public:
+    ZoneSortFunctor(ClientController &aClientController,
+                    SortParameters::const_iterator aCurrentParameter,
+                    SortParameters::const_iterator aLastParameter) :
+        ObjectSortFunctorBasis(aClientController,
+                               aCurrentParameter,
+                               aLastParameter)
+    {
+        return;
+    }
+    ~ZoneSortFunctor(void) = default;
+};
+
+static void SortGroupIdentifiers(ClientController &aClientController,
+                                 SortParameters::const_iterator aCurrentParameter,
+                                 SortParameters::const_iterator aLastParameter,
+                                 ObjectIdentifiers &aIdentifiers)
+{
+    IdentifierModel::IdentifierType  lIdentifiersMax = 0;
+    Status                           lStatus;
+    GroupSortFunctor                 lGroupSortFunctor(aClientController,
+                                                       aCurrentParameter,
+                                                       aLastParameter);
+
+    lStatus = aClientController.GetApplicationController()->GroupsGetMax(lIdentifiersMax);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    aIdentifiers.clear();
+
+    for (IdentifierModel::IdentifierType lIdentifier = IdentifierModel::kIdentifierMin;
+         lIdentifier <= lIdentifiersMax;
+         lIdentifier++)
+    {
+        aIdentifiers.push_back(lIdentifier);
+    }
+
+    std::sort(aIdentifiers.begin(),
+              aIdentifiers.end(),
+              lGroupSortFunctor);
+
+ done:
+    return;
+}
+
+static void SortZoneIdentifiers(ClientController &aClientController,
+                                SortParameters::const_iterator aCurrentParameter,
+                                SortParameters::const_iterator aLastParameter,
+                                std::vector<IdentifierModel::IdentifierType> &aIdentifiers)
+{
+    IdentifierModel::IdentifierType  lIdentifiersMax = 0;
+    Status                           lStatus;
+    ZoneSortFunctor                  lZoneSortFunctor(aClientController,
+                                                      aCurrentParameter,
+                                                      aLastParameter);
+
+    lStatus = aClientController.GetApplicationController()->ZonesGetMax(lIdentifiersMax);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    aIdentifiers.clear();
+
+    for (IdentifierModel::IdentifierType lIdentifier = IdentifierModel::kIdentifierMin;
+         lIdentifier <= lIdentifiersMax;
+         lIdentifier++)
+    {
+        aIdentifiers.push_back(lIdentifier);
+    }
+
+    std::sort(aIdentifiers.begin(),
+              aIdentifiers.end(),
+              lZoneSortFunctor);
+
+ done:
+    return;
+}
+
+#if 0
+static const SortParameters sGroupSortParameters = {{
+    { kSortKey_Mute,         kSortOrder_Ascending,  GroupMuteCompare         },
+    { kSortKey_LastUsedDate, kSortOrder_Descending, GroupLastUsedDateCompare },
+    { kSortKey_Favorite,     kSortOrder_Descending, GroupFavoriteCompare     },
+    { kSortKey_Name,         kSortOrder_Ascending,  GroupNameCompare         },
+    { kSortKey_Identifier,   kSortOrder_Ascending,  GroupIdentifierCompare   },
+}};
+
+static const SortParameters sZoneSortParameters = {{
+    { kSortKey_Mute,         kSortOrder_Ascending,  ZoneMuteCompare          },
+    { kSortKey_LastUsedDate, kSortOrder_Descending, ZoneLastUsedDateCompare  },
+    { kSortKey_Favorite,     kSortOrder_Descending, ZoneFavoriteCompare      },
+    { kSortKey_Name,         kSortOrder_Ascending,  ZoneNameCompare          },
+    { kSortKey_Identifier,   kSortOrder_Ascending,  ZoneIdentifierCompare    },
+}};
+#else
+static const SortParameters sGroupSortParameters = {{
+    { kSortKey_Identifier,   kSortOrder_Ascending,  GroupIdentifierCompare   },
+    { kSortKey_Invalid,      0,                     nullptr                  },
+    { kSortKey_Invalid,      0,                     nullptr                  },
+    { kSortKey_Invalid,      0,                     nullptr                  },
+    { kSortKey_Invalid,      0,                     nullptr                  },
+}};
+
+static const SortParameters sZoneSortParameters = {{
+    { kSortKey_Identifier,   kSortOrder_Ascending,  ZoneIdentifierCompare    },
+    { kSortKey_Invalid,      0,                     nullptr                  },
+    { kSortKey_Invalid,      0,                     nullptr                  },
+    { kSortKey_Invalid,      0,                     nullptr                  },
+    { kSortKey_Invalid,      0,                     nullptr                  },
+}};
+#endif
 
 // MARK: View Delegation
 
@@ -116,6 +744,24 @@ class Controller;
     return;
 }
 
+static void
+LogIdentifiers(const char *aWhich, ObjectIdentifiers &aIdentifiers)
+{
+    ObjectIdentifiers::const_iterator lCurrent = aIdentifiers.begin();
+    ObjectIdentifiers::const_iterator lLast = aIdentifiers.end();
+
+    Log::Debug().Write("%s identifiers:", aWhich);
+
+    while (lCurrent != lLast)
+    {
+        Log::Debug().Write(" %hhu", *lCurrent);
+
+        lCurrent++;
+    }
+
+    Log::Debug().Write("\n");
+}
+
 - (void) viewWillAppear: (BOOL)aAnimated
 {
     Status  lStatus;
@@ -127,6 +773,17 @@ class Controller;
 
     lStatus = mClientController->GetApplicationController()->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
+
+    SortGroupIdentifiers(*mClientController,
+                         sGroupSortParameters.begin(),
+                         sGroupSortParameters.end(),
+                         mGroupIdentifiers);
+    LogIdentifiers("Group", mGroupIdentifiers);
+    SortZoneIdentifiers(*mClientController,
+                        sZoneSortParameters.begin(),
+                        sZoneSortParameters.end(),
+                        mZoneIdentifiers);
+    LogIdentifiers("Zone", mZoneIdentifiers);
 
     [self.tableView reloadData];
 
@@ -343,6 +1000,17 @@ done:
 
 // MARK: Workers
 
+- (IdentifierModel::IdentifierType) mapRowToIdentifier: (const NSUInteger &)aRow
+           asGroup: (const bool &)aAsGroup
+{
+    const size_t                          lIndex  = aRow;
+    const IdentifierModel::IdentifierType lRetval = ((aAsGroup) ?
+                                                     mGroupIdentifiers[lIndex] :
+                                                     mZoneIdentifiers[lIndex]);
+
+    return (lRetval);
+}
+
 - (void) configureReusableCell: (GroupsAndZonesTableViewCell *)aCell
                   forIndexPath: (NSIndexPath *)aIndexPath
 {
@@ -361,7 +1029,8 @@ done:
         // UIKit table rows are zero based. Consequently, increment
         // the row by one to account for this.
 
-        lStatus = [aCell configureCellForIdentifier: (lRow + 1)
+        lStatus = [aCell configureCellForIdentifier: [self mapRowToIdentifier: lRow
+                                                                      asGroup: lAsGroup]
                                      withController: *mClientController
                                             asGroup: lAsGroup];
         nlVERIFY_SUCCESS(lStatus);
