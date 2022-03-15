@@ -714,45 +714,7 @@ static const SortParameters sZoneSortParameters = {{
 
 - (void) viewDidLoad
 {
-    UIBarButtonItem *lFlexibleSpaceButtonItem;
-    UIBarButtonItem *lFilterButtonItem;
-    UIBarButtonItem *lSortButtonItem;
-    NSArray         *lToolbarItems;
-
     [super viewDidLoad];
-
-    lFlexibleSpaceButtonItem = [[ UIBarButtonItem alloc ] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace
-                                                                               target:nil
-                                                                               action:nil];
-    nlREQUIRE(lFlexibleSpaceButtonItem != nullptr, done);
-
-    lFilterButtonItem = [[ UIBarButtonItem alloc ] initWithTitle: @"Filter"
-                                                           style: UIBarButtonItemStylePlain
-                                                          target: self
-                                                          action: @selector(onFilterButtonAction:)];
-    nlREQUIRE(lFilterButtonItem != nullptr, done);
-
-    lSortButtonItem = [[ UIBarButtonItem alloc ] initWithTitle: @"Sort"
-                                                           style: UIBarButtonItemStylePlain
-                                                          target: self
-                                                          action: @selector(onSortButtonAction:)];
-    nlREQUIRE(lSortButtonItem != nullptr, done);
-
-    lToolbarItems = [ NSArray arrayWithObjects: lFlexibleSpaceButtonItem,
-                                                lFilterButtonItem,
-                                                lFlexibleSpaceButtonItem,
-                                                lSortButtonItem,
-                                                lFlexibleSpaceButtonItem,
-                                                nil ];
-    nlREQUIRE(lToolbarItems != nullptr, done);
-
-    [self setToolbarItems: lToolbarItems];
-
-    [self.navigationController setToolbarHidden: NO
-                               animated: YES];
-
- done:
-    return;
 }
 
 static void

@@ -95,6 +95,11 @@ typedef NSInteger ShowStyle NS_TYPED_ENUM;
 
 // MARK: Properties
 
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *    mFilterButtonItem;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *    mSortButtonItem;
+
 /**
  *  A pointer to a segmented control indicating whether to render the
  *  table view as groups or zones.
