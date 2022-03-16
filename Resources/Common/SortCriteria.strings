@@ -20,57 +20,57 @@
  */
 
 /* String to use for the group or zone favorite status sort key criteria */
-"FavoriteSortKeyCriteria" = "Favorite";
+"FavoriteSortKeyCriteriaKey" = "Favorite";
 
 /* String to use for the group or zone identifier sort key criteria */
-"IdentifierSortKeyCriteria" = "Internal Identifier";
+"IdentifierSortKeyCriteriaKey" = "Internal Identifier";
 
 /* String to use for the group or zone last used date sort key criteria */
-"LastUsedDateSortKeyCriteria" = "Last Used Date";
+"LastUsedDateSortKeyCriteriaKey" = "Last Used Date";
 
 /* String to use for the group or zone volume mute status sort key criteria */
-"MuteSortKeyCriteria" = "Mute";
+"MuteSortKeyCriteriaKey" = "Mute";
 
 /* String to use for the group or zone name sort key criteria */
-"NameSortKeyCriteria" = "Name";
+"NameSortKeyCriteriaKey" = "Name";
 
 /* String to use for the group or zone generic ascending sort order criteria */
-"AscendingSortOrderCriteria" = "Ascending";
+"AscendingSortOrderCriteriaKey" = "Ascending";
 
 /* String to use for the group or zone generic descending sort order criteria */
-"DescendingSortOrderCriteria" = "Descending";
+"DescendingSortOrderCriteriaKey" = "Descending";
 
 /* String to use for the group or zone alphabetic ascending sort order criteria */
-"AlphabeticAscendingSortOrderCriteria" = "A to Z";
+"AlphabeticAscendingSortOrderCriteriaKey" = "A to Z";
 
 /* String to use for the group or zone alphabetic descending sort order criteria */
-"AlphabeticDescendingSortOrderCriteria" = "Z to A";
+"AlphabeticDescendingSortOrderCriteriaKey" = "Z to A";
 
 /* String to use for the group or zone date ascending sort order criteria */
-"DateAscendingSortOrderCriteria" = "Least recent to most recent";
+"DateAscendingSortOrderCriteriaKey" = "Least recent to most recent";
 
 /* String to use for the group or zone date descending sort order criteria */
-"DateDescendingSortOrderCriteria" = "Most recent to least recent";
+"DateDescendingSortOrderCriteriaKey" = "Most recent to least recent";
 
 /* String to use for the group or zone favorite ascending sort order criteria */
-"FavoriteAscendingSortOrderCriteria" = "Favorite to not favorite";
+"FavoriteAscendingSortOrderCriteriaKey" = "Favorite to not favorite";
 
 /* String to use for the group or zone favorite descending sort order criteria */
-"FavoriteDescendingSortOrderCriteria" = "Not favorite to favorite";
+"FavoriteDescendingSortOrderCriteriaKey" = "Not favorite to favorite";
 
 /* String to use for the group or zone mute ascending sort order criteria */
-"MuteAscendingSortOrderCriteria" = "Muted to not muted";
+"MuteAscendingSortOrderCriteriaKey" = "Muted to not muted";
 
 /* String to use for the group or zone mute descending sort order criteria */
-"MuteDescendingSortOrderCriteria" = "Not muted to muted";
+"MuteDescendingSortOrderCriteriaKey" = "Not muted to muted";
 
 /* String to use for the group or zone numeric ascending sort order criteria */
-"NumericAscendingSortOrderCriteria" = "Lowest to highest";
+"NumericAscendingSortOrderCriteriaKey" = "Lowest to highest";
 
 /* String to use for the group or zone numeric descending sort order criteria */
-"NumericDescendingSortOrderCriteria" = "Highest to lowest";
+"NumericDescendingSortOrderCriteriaKey" = "Highest to lowest";
 
 /* String to use for formatting the group or zone ascending or descending sort order criteria
  * order and detail. For example: 'Ascending: Highest to lowest'.
  */
-"SortOrderCriteriaOrderAndDetailFormat" = "%1$@: %2$@";
+"SortOrderCriteriaOrderAndDetailFormatKey" = "%1$@: %2$@";
