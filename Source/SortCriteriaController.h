@@ -40,7 +40,7 @@
 
 // MARK: Initialization
 
-- (SortCriteriaController *)initAsGroup: (const bool &)aAsGroup;
+- (SortCriteriaController *)initWithPreferencesKey: (NSString *)aPreferencesKey asGroup: (const bool &)aAsGroup;
 
 // MARK: Introspection
 
