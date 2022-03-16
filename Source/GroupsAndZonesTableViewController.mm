@@ -42,6 +42,7 @@
 
 #import "ApplicationControllerDelegate.hpp"
 #import "GroupsAndZonesTableViewCell.h"
+#import "GroupsOrZonesSortViewController.h"
 #import "GroupDetailViewController.h"
 #import "SortCriteriaController.h"
 #import "UIViewController+HLXClientDidDisconnectDelegateDefaultImplementations.h"
@@ -206,6 +207,12 @@ done:
     }
     else if (aSender == self.mSortButtonItem)
     {
+        const bool                         lAsGroup = (mShowStyle == kShowStyleGroups);
+        GroupsOrZonesSortViewController *  lGroupsOrZonesSortViewController = [aSegue destinationViewController];
+
+        [lGroupsOrZonesSortViewController setClientController: *mClientController];
+        [lGroupsOrZonesSortViewController setSortCriteriaController: ((lAsGroup) ? mGroupSortCriteriaController : mZoneSortCriteriaController)];
+
         lStatus = mClientController->GetApplicationController()->SetDelegate(nullptr);
         nlREQUIRE_SUCCESS(lStatus, done);
     }
