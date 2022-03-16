@@ -172,22 +172,32 @@ done:
 - (IBAction) onEditButtonItemAction: (id)aSender
 {
     DeclareScopedFunctionTracer(lTracer);
-    const bool lIsEditing  = [self.tableView isEditing];
-    const bool lIsAnimated = true;
 
-    if (lIsEditing)
+    if (aSender == self.mEditButtonItem)
     {
-        [self.tableView setEditing: !lIsEditing
-                          animated: lIsAnimated];
+        const bool lIsEditing  = [self.tableView isEditing];
+        const bool lIsAnimated = true;
 
-        [self.mEditButtonItem setTitle: @"Edit"];
-    }
-    else
-    {
-        [self.mEditButtonItem setTitle: @"Done"];
+        if (lIsEditing)
+        {
+            [self.navigationController setToolbarHidden: lIsEditing
+                                               animated: lIsAnimated];
 
-        [self.tableView setEditing: !lIsEditing
-                          animated: lIsAnimated];
+            [self.tableView setEditing: !lIsEditing
+                              animated: lIsAnimated];
+
+            [self.mEditButtonItem setTitle: @"Edit"];
+        }
+        else
+        {
+            [self.mEditButtonItem setTitle: @"Done"];
+
+            [self.tableView setEditing: !lIsEditing
+                              animated: lIsAnimated];
+
+            [self.navigationController setToolbarHidden: lIsEditing
+                                               animated: lIsAnimated];
+        }
     }
 }
 
