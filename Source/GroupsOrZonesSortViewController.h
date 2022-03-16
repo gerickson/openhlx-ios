@@ -54,11 +54,15 @@ class ApplicationControllerDelegate;
      *  A pointer to the global app HLX client controller instance.
      *
      */
-    ClientController *                              mClientController;
+    ClientController *                                 mClientController;
 
 }
 
 // MARK: Properties
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem * mAddCriteriaButtonItem;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem * mEditButtonItem;
 
 // MARK: Instance Methods
 
@@ -66,6 +70,10 @@ class ApplicationControllerDelegate;
 
 - (id) initWithCoder: (NSCoder *)aDecoder;
 - (id) initWithNibName: (NSString *)aNibName bundle: (NSBundle *)aNibBundle;
+
+// MARK: Actions
+
+- (IBAction) onEditButtonItemAction: (id)aSender;
 
 // MARK: Setters
 

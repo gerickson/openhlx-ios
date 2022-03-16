@@ -119,6 +119,13 @@ using namespace Nuovations;
     return;
 }
 
+// MARK: Actions
+
+- (IBAction) onEditButtonItemAction: (id)aSender
+{
+    DeclareScopedFunctionTracer(lTracer);
+}
+
 // MARK: Setters
 
 /**
