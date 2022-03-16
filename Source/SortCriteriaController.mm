@@ -218,7 +218,7 @@ GroupCompare(ClientController &aClientController,
     const GroupModel * lSecondModel = nullptr;
     Status             lStatus;
     NSComparisonResult lRetval = NSOrderedSame;
-    
+
     lStatus = aClientController.GetApplicationController()->GroupGet(aFirstIdentifier, lFirstModel);
     nlREQUIRE_SUCCESS(lStatus, done);
 
@@ -241,7 +241,7 @@ ZoneCompare(ClientController &aClientController,
     const ZoneModel *  lSecondModel = nullptr;
     Status             lStatus;
     NSComparisonResult lRetval = NSOrderedSame;
-    
+
     lStatus = aClientController.GetApplicationController()->ZoneGet(aFirstIdentifier, lFirstModel);
     nlREQUIRE_SUCCESS(lStatus, done);
 
@@ -714,7 +714,7 @@ InitAndSortZoneIdentifiers(ClientController &aClientController,
 
 // Global Variables
 
-#if 0
+#if 1
 static const SortParameters sGroupSortParameters = {{
     { kSortKey_Mute,         SortOrder::kSortOrder_Ascending,  GroupMuteCompare         },
     { kSortKey_LastUsedDate, SortOrder::kSortOrder_Descending, GroupLastUsedDateCompare },
@@ -752,6 +752,7 @@ static const SortParameters sZoneSortParameters = {{
 
 @interface SortCriteriaController ()
 {
+    NSString *                 mPreferencesKey;
     bool                       mAsGroup;
     Detail::ObjectIdentifiers  mIdentifiers;
 
@@ -782,28 +783,189 @@ static const SortParameters sZoneSortParameters = {{
  *    An initialized connect history object.
  *
  */
-- (SortCriteriaController *)initAsGroup: (const bool &)aAsGroup
+- (SortCriteriaController *)initWithPreferencesKey: (NSString *)aPreferencesKey asGroup: (const bool &)aAsGroup;
 {
-    mAsGroup = aAsGroup;
+    Status                   lStatus;
+    SortCriteriaController * lRetval = nullptr;
 
-    return (self);
+
+    nlREQUIRE(aPreferencesKey != nullptr, done);
+
+    mPreferencesKey = aPreferencesKey;
+    mAsGroup        = aAsGroup;
+
+    lStatus = [self loadPreferences];
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lRetval = self;
+
+ done:
+    return (lRetval);
 }
 
 // MARK: Introspection
 
 - (NSUInteger) count
 {
-    NSUInteger lRetval = 0;
+    const Detail::SortParameters & lSortParameters = ((mAsGroup) ? Detail::sGroupSortParameters : Detail::sZoneSortParameters);
+    NSUInteger                     lRetval = 0;
 
-    if (mAsGroup)
+    lRetval = lSortParameters.size();
+
+    return (lRetval);
+}
+
+static NSString *
+SortKeyDescription(const Detail::SortKey &aSortKey)
+{
+    NSString * lRetval;
+
+    switch (aSortKey)
     {
-        lRetval = Detail::sGroupSortParameters.size();
-    }
-    else
-    {
-        lRetval = Detail::sZoneSortParameters.size();
+
+    case Detail::kSortKey_Favorite:
+        lRetval = NSLocalizedStringFromTable(@"FavoriteSortKeyCriteriaKey", @"SortCriteria", @"");
+        break;
+
+    case Detail::kSortKey_Identifier:
+        lRetval = NSLocalizedStringFromTable(@"IdentifierSortKeyCriteriaKey", @"SortCriteria", @"");
+        break;
+
+    case Detail::kSortKey_LastUsedDate:
+        lRetval = NSLocalizedStringFromTable(@"LastUsedDateSortKeyCriteriaKey", @"SortCriteria", @"");
+        break;
+
+    case Detail::kSortKey_Mute:
+        lRetval = NSLocalizedStringFromTable(@"MuteSortKeyCriteriaKey", @"SortCriteria", @"");
+        break;
+
+    case Detail::kSortKey_Name:
+        lRetval = NSLocalizedStringFromTable(@"NameSortKeyCriteriaKey", @"SortCriteria", @"");
+        break;
+
+    default:
+        lRetval = nullptr;
+        break;
+
     }
 
+    return (lRetval);
+}
+
+- (NSString *) sortKeyDescriptionAtIndex: (NSUInteger)aIndex
+{
+    const Detail::SortParameters & lSortParameters = ((mAsGroup) ? Detail::sGroupSortParameters : Detail::sZoneSortParameters);
+    NSString *                     lRetval         = nullptr;
+
+    nlREQUIRE(aIndex < lSortParameters.size(), done);
+
+    lRetval = SortKeyDescription(lSortParameters[aIndex].mSortKey);
+    nlREQUIRE(lRetval != nullptr, done);
+
+ done:
+    return (lRetval);
+}
+
+static NSString *
+SortOrderDescription(const Detail::SortOrder &aSortOrder)
+{
+    NSString * lRetval;
+
+    switch (aSortOrder)
+    {
+
+    case Detail::SortOrder::kSortOrder_Ascending:
+        lRetval = NSLocalizedStringFromTable(@"AscendingSortOrderCriteriaKey", @"SortCriteria", @"");
+        break;
+
+    case Detail::SortOrder::kSortOrder_Descending:
+        lRetval = NSLocalizedStringFromTable(@"DescendingSortOrderCriteriaKey", @"SortCriteria", @"");
+        break;
+
+    default:
+        lRetval = nullptr;
+        break;
+
+    }
+
+    return (lRetval);
+}
+
+- (NSString *) sortOrderDescriptionAtIndex: (NSUInteger)aIndex
+{
+    const Detail::SortParameters & lSortParameters = ((mAsGroup) ? Detail::sGroupSortParameters : Detail::sZoneSortParameters);
+    NSString *                     lRetval         = nullptr;
+
+    nlREQUIRE(aIndex < lSortParameters.size(), done);
+
+    lRetval = SortOrderDescription(lSortParameters[aIndex].mSortOrder);
+    nlREQUIRE(lRetval != nullptr, done);
+
+done:
+   return (lRetval);
+}
+
+static NSString *
+SortOrderForKeyDescription(const Detail::SortOrder &aSortOrder,
+                           const Detail::SortKey &aSortKey)
+{
+    NSString * const               kSortOrderForKeyDescription[Detail::SortKey::kSortKey_Count][2] = {
+        [Detail::SortKey::kSortKey_Favorite]     = {
+            @"FavoriteAscendingSortOrderCriteriaKey",
+            @"FavoriteDescendingSortOrderCriteriaKey"
+        },
+        [Detail::SortKey::kSortKey_Identifier]   = {
+            @"NumericAscendingSortOrderCriteriaKey",
+            @"NumericDescendingSortOrderCriteriaKey"
+        },
+        [Detail::SortKey::kSortKey_LastUsedDate] = {
+            @"DateAscendingSortOrderCriteriaKey",
+            @"DateDescendingSortOrderCriteriaKey"
+        },
+        [Detail::SortKey::kSortKey_Mute]         = {
+            @"MuteAscendingSortOrderCriteriaKey",
+            @"MuteDescendingSortOrderCriteriaKey"
+        },
+        [Detail::SortKey::kSortKey_Name]         = {
+            @"AlphabeticAscendingSortOrderCriteriaKey",
+            @"AlphabeticDescendingSortOrderCriteriaKey"
+        }
+    };
+    NSString *                     lLocalizedStringKey;
+    NSString *                     lRetval         = nullptr;
+
+    nlREQUIRE(aSortKey < Detail::SortKey::kSortKey_Max, done);
+
+    lLocalizedStringKey = kSortOrderForKeyDescription[aSortKey][static_cast<size_t>(aSortOrder)];
+
+    lRetval = NSLocalizedStringFromTable(lLocalizedStringKey, @"SortCriteria", @"");
+
+done:
+    return (lRetval);
+}
+
+- (NSString *) sortOrderDetailDescriptionAtIndex: (NSUInteger)aIndex
+{
+    const Detail::SortParameters & lSortParameters = ((mAsGroup) ? Detail::sGroupSortParameters : Detail::sZoneSortParameters);
+    NSString *                     lSortOrderDescription = nullptr;
+    NSString *                     lSortOrderForKeyDescription = nullptr;
+    NSString *                     lRetval         = nullptr;
+
+
+    nlREQUIRE(aIndex < lSortParameters.size(), done);
+
+    lSortOrderDescription = SortOrderDescription(lSortParameters[aIndex].mSortOrder);
+    nlREQUIRE(lSortOrderDescription != nullptr, done);
+
+    lSortOrderForKeyDescription = SortOrderForKeyDescription(lSortParameters[aIndex].mSortOrder,
+                                                             lSortParameters[aIndex].mSortKey);
+    nlREQUIRE(lSortOrderForKeyDescription != nullptr, done);
+
+    lRetval = [[NSString alloc] initWithFormat: NSLocalizedStringFromTable(@"SortOrderCriteriaOrderAndDetailFormatKey", @"SortCriteria", @""), lSortOrderDescription,
+        lSortOrderForKeyDescription];
+    nlREQUIRE(lRetval != nullptr, done);
+
+ done:
     return (lRetval);
 }
 
@@ -836,7 +998,7 @@ static const SortParameters sZoneSortParameters = {{
         lStatus = Detail::InitAndSortZoneIdentifiers(aClientController,
                                                      Detail::sZoneSortParameters.begin(),
                                                      Detail::sZoneSortParameters.end(),
-                                             mIdentifiers);
+                                                     mIdentifiers);
         nlREQUIRE_SUCCESS(lStatus, done);
     }
 
@@ -884,6 +1046,64 @@ static const SortParameters sZoneSortParameters = {{
                                     Detail::sZoneSortParameters.end(),
                                     mIdentifiers);
     }
+
+ done:
+    return (lRetval);
+}
+
+- (Status) loadPreferences: (NSDictionary *)aSortCriteriaDictionary
+{
+    Status lRetval = kStatus_Success;
+
+    return (lRetval);
+}
+
+- (Status) loadPreferences
+{
+    NSDictionary *  lSortCriteriaDictionary;
+    Status          lRetval = kStatus_Success;
+
+    lSortCriteriaDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey: mPreferencesKey];
+    Log::Debug().Write("Loading lSortCriteriaDictionary %p for key %s\n", lSortCriteriaDictionary, [mPreferencesKey UTF8String]);
+    nlEXPECT(lSortCriteriaDictionary != nullptr, done);
+
+    Log::Debug().Write("lSortCriteriaDictionary: %s\n",
+                       [[lSortCriteriaDictionary description] UTF8String]);
+
+    lRetval = [self loadPreferences: lSortCriteriaDictionary];
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
+
+}
+
+- (Status) storePreferences: (NSMutableDictionary *)aSortCriteriaDictionary
+{
+    Status                 lRetval = kStatus_Success;
+
+    return (lRetval);
+}
+
+- (Status) storePreferences
+{
+    NSMutableDictionary *  lSortCriteriaDictionary;
+    Status                 lRetval = kStatus_Success;
+
+
+    lSortCriteriaDictionary = [[NSMutableDictionary alloc] init];
+    nlREQUIRE_ACTION(lSortCriteriaDictionary != nullptr, done, lRetval = -ENOMEM);
+
+    lRetval = [self storePreferences: lSortCriteriaDictionary];
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    Log::Debug().Write("Storing lSortCriteriaDictionary %p for key %s\n", lSortCriteriaDictionary, [mPreferencesKey UTF8String]);
+
+    Log::Debug().Write("lSortCriteriaDictionary: %s\n",
+                       [[lSortCriteriaDictionary description] UTF8String]);
+
+    [[NSUserDefaults standardUserDefaults] setObject: lSortCriteriaDictionary
+                                              forKey: mPreferencesKey];
 
  done:
     return (lRetval);

@@ -45,6 +45,9 @@
 // MARK: Introspection
 
 - (NSUInteger) count;
+- (NSString *) sortKeyDescriptionAtIndex: (NSUInteger)aIndex;
+- (NSString *) sortOrderDescriptionAtIndex: (NSUInteger)aIndex;
+- (NSString *) sortOrderDetailDescriptionAtIndex: (NSUInteger)aIndex;
 
 // MARK: Getters
 
