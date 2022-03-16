@@ -266,6 +266,11 @@ done:
     DeclareScopedFunctionTracer(lTracer);
 }
 
+- (void) tableView: (UITableView *)aTableView commitEditingStyle: (UITableViewCellEditingStyle)aEditingStyle forRowAtIndexPath:(NSIndexPath *)aIndexPath
+{
+    DeclareScopedFunctionTracer(lTracer);
+}
+
 // MARK: Workers
 
 - (void) configureReusableCell: (UITableViewCell *)aCell
