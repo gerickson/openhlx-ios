@@ -69,3 +69,8 @@
 
 /* String to use for the group or zone numeric descending sort order criteria */
 "NumericDescendingSortOrderCriteria" = "Highest to lowest";
+
+/* String to use for formatting the group or zone ascending or descending sort order criteria
+ * order and detail. For example: 'Ascending: Highest to lowest'.
+ */
+"SortOrderCriteriaOrderAndDetailFormat" = "%1$@: %2$@";
