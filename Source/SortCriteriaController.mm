@@ -791,6 +791,22 @@ static const SortParameters sZoneSortParameters = {{
 
 // MARK: Introspection
 
+- (NSUInteger) count
+{
+    NSUInteger lRetval = 0;
+
+    if (mAsGroup)
+    {
+        lRetval = Detail::sGroupSortParameters.size();
+    }
+    else
+    {
+        lRetval = Detail::sZoneSortParameters.size();
+    }
+
+    return (lRetval);
+}
+
 // MARK: Setters
 
 /**

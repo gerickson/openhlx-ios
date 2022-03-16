@@ -44,6 +44,10 @@
 
 // MARK: Introspection
 
+- (NSUInteger) count;
+
+// MARK: Getters
+
 // MARK: Setters
 
 - (void) setClientController: (ClientController &)aClientController;
