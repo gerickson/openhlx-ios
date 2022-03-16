@@ -503,7 +503,7 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Sort Criteria" id="350-J3-N97">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="Gco-zm-RrU">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="Gco-zm-RrU">
                             <connections>
                                 <action selector="onEditButtonItemAction:" destination="XkW-Si-s6m" id="yh9-ca-xJa"/>
                             </connections>
@@ -1709,7 +1709,7 @@
             <objects>
                 <navigationController toolbarHidden="NO" id="LxV-Bt-A93" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Lhh-bp-7Jg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Bei-aO-1OR">
