@@ -68,7 +68,8 @@ class Controller;
 
 };
 
-typedef std::vector<IdentifierModel::IdentifierType> ObjectIdentifiers;
+NSString * const kGroupSortCriteriaKey = @"Group Sort Criteria";
+NSString * const kZoneSortCriteriaKey  = @"Zone Sort Critiera";
 
 @interface GroupsAndZonesTableViewController ()
 {
@@ -168,10 +169,12 @@ done:
 
     mShowStyle = self.mGroupZoneSegmentedControl.selectedSegmentIndex;
 
-    mGroupSortCriteriaController = [[SortCriteriaController alloc] initAsGroup: true];
+    mGroupSortCriteriaController = [[SortCriteriaController alloc] initWithPreferencesKey: kGroupSortCriteriaKey
+                                                                                  asGroup: true];
     nlREQUIRE(mGroupSortCriteriaController != nullptr, done);
 
-    mZoneSortCriteriaController = [[SortCriteriaController alloc] initAsGroup: false];
+    mZoneSortCriteriaController  = [[SortCriteriaController alloc] initWithPreferencesKey: kZoneSortCriteriaKey
+   asGroup: false];
     nlREQUIRE(mZoneSortCriteriaController != nullptr, done);
 
  done:
