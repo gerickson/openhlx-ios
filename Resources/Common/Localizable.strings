@@ -23,3 +23,9 @@
 
 /* String to use when there is no last used date */
 "NeverUsedDateKey" = "Never";
+
+/* String to use for a Edit/Done bar button item in Edit state */
+"EditDoneEditTitleKey" = "Edit";
+
+/* String to use for a Edit/Done bar button item in Edit state */
+"EditDoneDoneTitleKey" = "Done";
