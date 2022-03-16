@@ -186,11 +186,11 @@ done:
             [self.tableView setEditing: !lIsEditing
                               animated: lIsAnimated];
 
-            [self.mEditButtonItem setTitle: @"Edit"];
+            [self.mEditButtonItem setTitle: NSLocalizedString(@"EditDoneEditTitleKey", @"")];
         }
         else
         {
-            [self.mEditButtonItem setTitle: @"Done"];
+            [self.mEditButtonItem setTitle: NSLocalizedString(@"EditDoneDoneTitleKey", @"")];
 
             [self.tableView setEditing: !lIsEditing
                               animated: lIsAnimated];
