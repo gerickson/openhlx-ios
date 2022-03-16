@@ -28,16 +28,35 @@
 
 #import <LogUtilities/LogUtilities.hpp>
 
+#include <OpenHLX/Client/ApplicationController.hpp>
+#include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
+
+#import "SortCriteriaController.h"
 #import "UIViewController+HLXClientDidDisconnectDelegateDefaultImplementations.h"
 #import "UIViewController+TopViewController.h"
 
 
+using namespace HLX;
+using namespace HLX::Common;
 using namespace Nuovations;
 
 
 @interface GroupsOrZonesSortViewController ()
 {
+    /**
+     *  A pointer to the global app HLX client controller instance.
+     *
+     */
+    ClientController *                              mClientController;
 
+    SortCriteriaController *                        mSortCriteriaController;
+
+    /**
+     *  A scoped pointer to the default HLX client controller
+     *  delegate.
+     *
+     */
+    std::unique_ptr<ApplicationControllerDelegate>  mApplicationControllerDelegate;
 }
 
 @end
@@ -53,9 +72,18 @@ using namespace Nuovations;
 
 - (void) viewWillAppear: (BOOL)aAnimated
 {
+    Status  lStatus;
+
+
     [super viewWillAppear: aAnimated];
 
+    lStatus = mClientController->GetApplicationController()->SetDelegate(mApplicationControllerDelegate.get());
+    nlREQUIRE_SUCCESS(lStatus, done);
+
     [self.tableView reloadData];
+
+done:
+    return;
 }
 
 // MARK: Initializers
@@ -116,6 +144,26 @@ using namespace Nuovations;
  */
 - (void) initCommon
 {
+    mApplicationControllerDelegate.reset(new ApplicationControllerDelegate(self));
+    nlREQUIRE(mApplicationControllerDelegate != nullptr, done);
+
+done:
+    return;
+}
+
+- (void)prepareForSegue: (UIStoryboardSegue *)aSegue sender: (id)aSender
+{
+    DeclareScopedFunctionTracer(lTracer);
+    Status lStatus;
+
+    Log::Debug().Write("aSegue %p (%s) aSender %p (%s)\n",
+                       aSegue, [[aSegue description] UTF8String],
+                       aSender, [[aSender description] UTF8String]);
+
+    lStatus = mClientController->GetApplicationController()->SetDelegate(nullptr);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+ done:
     return;
 }
 
@@ -142,6 +190,11 @@ using namespace Nuovations;
     mClientController = &aClientController;
 }
 
+- (void) setSortCriteriaController: (SortCriteriaController *)aSortCriteriaController
+{
+    mSortCriteriaController = aSortCriteriaController;
+}
+
 // MARK: Table View Data Source Delegation
 
 - (NSInteger) numberOfSectionsInTableView: (UITableView *)aTableView
@@ -155,14 +208,48 @@ using namespace Nuovations;
 {
     NSInteger                        lRetval = 0;
 
+
+    nlREQUIRE(aSection == 0, done);
+    nlREQUIRE(mSortCriteriaController != nullptr, done);
+
+    lRetval = [mSortCriteriaController count];
+
+done:
     return (lRetval);
 }
 
 - (UITableViewCell *) tableView: (UITableView *)aTableView cellForRowAtIndexPath: (NSIndexPath *)aIndexPath
 {
+    NSString *         lCellIdentifier = @"Sort Criteria Table View Cell";
     UITableViewCell *  lRetval = nullptr;
 
+
+    lRetval = [aTableView dequeueReusableCellWithIdentifier: lCellIdentifier];
+    nlREQUIRE(lRetval != nullptr, done);
+
+    [self configureReusableCell: lRetval
+                   forIndexPath: aIndexPath];
+
+ done:
     return (lRetval);
+}
+
+// MARK: Workers
+
+- (void) configureReusableCell: (UITableViewCell *)aCell
+                  forIndexPath: (NSIndexPath *)aIndexPath
+{
+    const NSUInteger  lSection = aIndexPath.section;
+    const NSUInteger  lRow = aIndexPath.row;
+
+
+    nlREQUIRE(lSection == 0, done);
+
+    aCell.textLabel.text = @"Test Sort Key";
+    aCell.detailTextLabel.text = @"Test Sort Order";
+
+ done:
+    return;
 }
 
 // MARK: Controller Delegations
