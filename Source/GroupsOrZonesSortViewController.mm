@@ -172,6 +172,23 @@ done:
 - (IBAction) onEditButtonItemAction: (id)aSender
 {
     DeclareScopedFunctionTracer(lTracer);
+    const bool lIsEditing  = [self.tableView isEditing];
+    const bool lIsAnimated = true;
+
+    if (lIsEditing)
+    {
+        [self.tableView setEditing: !lIsEditing
+                          animated: lIsAnimated];
+
+        [self.mEditButtonItem setTitle: @"Edit"];
+    }
+    else
+    {
+        [self.mEditButtonItem setTitle: @"Done"];
+
+        [self.tableView setEditing: !lIsEditing
+                          animated: lIsAnimated];
+    }
 }
 
 // MARK: Setters
@@ -232,6 +249,11 @@ done:
 
  done:
     return (lRetval);
+}
+
+- (void) tableView: (UITableView *)aTableView moveRowAtIndexPath: (NSIndexPath *)aSourceIndexPath toIndexPath: (NSIndexPath *)aDestinationIndexPath
+{
+    DeclareScopedFunctionTracer(lTracer);
 }
 
 // MARK: Workers
