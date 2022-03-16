@@ -50,6 +50,8 @@
 		0B51DB3C27868204003EAE48 /* NetworkStateChangeNotifications.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B51DB3A27868204003EAE48 /* NetworkStateChangeNotifications.cpp */; };
 		0B5783D827E15B5E001A4B51 /* SortCriteria.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B5783D727E15B5E001A4B51 /* SortCriteria.strings */; };
 		0B5783D927E15B5E001A4B51 /* SortCriteria.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0B5783D727E15B5E001A4B51 /* SortCriteria.strings */; };
+		0B5783EE27E196AB001A4B51 /* SortCriteriaController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0B5783ED27E196AB001A4B51 /* SortCriteriaController.mm */; };
+		0B5783EF27E196AB001A4B51 /* SortCriteriaController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0B5783ED27E196AB001A4B51 /* SortCriteriaController.mm */; };
 		0B6041C227CEED120002F835 /* ClientFavoriteModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B6041BF27CEED120002F835 /* ClientFavoriteModel.cpp */; };
 		0B6041D727CEF56B0002F835 /* ClientObjectPreferencesModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B6041D527CEF56B0002F835 /* ClientObjectPreferencesModel.cpp */; };
 		0B6041D827CEF56B0002F835 /* ClientObjectsPreferencesModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B6041D627CEF56B0002F835 /* ClientObjectsPreferencesModel.cpp */; };
@@ -490,6 +492,8 @@
 		0B565E7723FB31C3001C71DB /* ConnectionBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ConnectionBuffer.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/ConnectionBuffer.hpp; sourceTree = "<absolute>"; };
 		0B565E7823FB31C3001C71DB /* ConnectionBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConnectionBuffer.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/ConnectionBuffer.cpp; sourceTree = "<absolute>"; };
 		0B5783D727E15B5E001A4B51 /* SortCriteria.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = SortCriteria.strings; sourceTree = "<group>"; };
+		0B5783EC27E196AB001A4B51 /* SortCriteriaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortCriteriaController.h; sourceTree = "<group>"; };
+		0B5783ED27E196AB001A4B51 /* SortCriteriaController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SortCriteriaController.mm; sourceTree = "<group>"; };
 		0B6041BD27CEED120002F835 /* ClientFavoriteModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClientFavoriteModel.hpp; sourceTree = "<group>"; };
 		0B6041BE27CEED120002F835 /* ClientLastUsedDateModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClientLastUsedDateModel.hpp; sourceTree = "<group>"; };
 		0B6041BF27CEED120002F835 /* ClientFavoriteModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClientFavoriteModel.cpp; sourceTree = "<group>"; };
@@ -969,6 +973,8 @@
 				0BBD823122B932E600554609 /* main.mm */,
 				0BC145EE22CEAAD600EE32AC /* RefreshViewController.h */,
 				0BC145ED22CEAAD500EE32AC /* RefreshViewController.mm */,
+				0B5783EC27E196AB001A4B51 /* SortCriteriaController.h */,
+				0B5783ED27E196AB001A4B51 /* SortCriteriaController.mm */,
 				0B0C72912585DBD500BAE465 /* SoundModeChooserTableViewCell.h */,
 				0B0C72902585DBD500BAE465 /* SoundModeChooserTableViewCell.mm */,
 				0B0C72932585DE4800BAE465 /* SoundModeChooserViewController.h */,
@@ -1859,6 +1865,7 @@
 				0BE8CBC5265B2FD700A17FCC /* EqualizerBandsDetailViewController.mm in Sources */,
 				0BE8CBC6265B2FD700A17FCC /* ConnectHistoryViewTableCell.mm in Sources */,
 				0BE8CBC7265B2FD700A17FCC /* EqualizerBandsDetailTableViewCell.mm in Sources */,
+				0B5783EF27E196AB001A4B51 /* SortCriteriaController.mm in Sources */,
 				0BE8CBC8265B2FD700A17FCC /* GroupDetailViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2002,6 +2009,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B5783EE27E196AB001A4B51 /* SortCriteriaController.mm in Sources */,
 				0BBD822722B932E400554609 /* ConnectViewController.mm in Sources */,
 				0BEFB2872302702D00EFE74D /* ZoneDetailViewController.mm in Sources */,
 				0BC145EF22CEAAD600EE32AC /* RefreshViewController.mm in Sources */,
