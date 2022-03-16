@@ -32,6 +32,7 @@
 
 #import "ApplicationControllerDelegate.hpp"
 #import "ClientController.hpp"
+#import "SortCriteriaController.h"
 
 
 namespace HLX
@@ -50,12 +51,6 @@ class ApplicationControllerDelegate;
 
 @interface GroupsOrZonesSortViewController : UITableViewController <ApplicationControllerDelegate>
 {
-    /**
-     *  A pointer to the global app HLX client controller instance.
-     *
-     */
-    ClientController *                                 mClientController;
-
 }
 
 // MARK: Properties
@@ -78,6 +73,7 @@ class ApplicationControllerDelegate;
 // MARK: Setters
 
 - (void) setClientController: (ClientController &)aClientController; 
+- (void) setSortCriteriaController: (SortCriteriaController *)aSortCriteriaController;
 
 @end
 
