@@ -484,7 +484,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="zEA-XZ-jVR" kind="show" identifier="Sort Criteria Chooser/Editor Segue" id="N8b-oX-U5A"/>
+                                    <segue destination="zEA-XZ-jVR" kind="show" identifier="Sort Criteria Editor Segue" id="N8b-oX-U5A"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -496,7 +496,11 @@
                     </tableView>
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="CiP-FQ-OOi"/>
-                        <barButtonItem systemItem="add" id="M6C-dk-6g2"/>
+                        <barButtonItem systemItem="add" id="M6C-dk-6g2">
+                            <connections>
+                                <segue destination="zEA-XZ-jVR" kind="show" identifier="Sort Criteria Chooser Segue" id="6bV-Rq-ZKF"/>
+                            </connections>
+                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Sort Criteria" id="350-J3-N97">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="Gco-zm-RrU">
@@ -1705,7 +1709,7 @@
             <objects>
                 <navigationController toolbarHidden="NO" id="LxV-Bt-A93" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Lhh-bp-7Jg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Bei-aO-1OR">
@@ -1802,6 +1806,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="NoA-8i-REi"/>
         <segue reference="wJl-ni-0wM"/>
+        <segue reference="6bV-Rq-ZKF"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="groupTableViewBackgroundColor">
