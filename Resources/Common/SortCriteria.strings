@@ -19,6 +19,10 @@
  *      strings for the project.
  */
 
+/*
+ * Sort Key
+ */
+
 /* String to use for the group or zone favorite status sort key criteria */
 "FavoriteSortKeyCriteriaKey" = "Favorite";
 
@@ -34,11 +38,19 @@
 /* String to use for the group or zone name sort key criteria */
 "NameSortKeyCriteriaKey" = "Name";
 
+/*
+ * Sort Order
+ */
+
 /* String to use for the group or zone generic ascending sort order criteria */
 "AscendingSortOrderCriteriaKey" = "Ascending";
 
 /* String to use for the group or zone generic descending sort order criteria */
 "DescendingSortOrderCriteriaKey" = "Descending";
+
+/*
+ * Sort Order for Sort Key Detail
+ */
 
 /* String to use for the group or zone alphabetic ascending sort order criteria */
 "AlphabeticAscendingSortOrderCriteriaKey" = "A to Z";
@@ -53,16 +65,16 @@
 "DateDescendingSortOrderCriteriaKey" = "Most recent to least recent";
 
 /* String to use for the group or zone favorite ascending sort order criteria */
-"FavoriteAscendingSortOrderCriteriaKey" = "Favorite to not favorite";
+"FavoriteAscendingSortOrderCriteriaKey" = "Not favorite to favorite";
 
 /* String to use for the group or zone favorite descending sort order criteria */
-"FavoriteDescendingSortOrderCriteriaKey" = "Not favorite to favorite";
+"FavoriteDescendingSortOrderCriteriaKey" = "Favorite to not favorite";
 
 /* String to use for the group or zone mute ascending sort order criteria */
-"MuteAscendingSortOrderCriteriaKey" = "Muted to not muted";
+"MuteAscendingSortOrderCriteriaKey" = "Not muted to muted";
 
 /* String to use for the group or zone mute descending sort order criteria */
-"MuteDescendingSortOrderCriteriaKey" = "Not muted to muted";
+"MuteDescendingSortOrderCriteriaKey" = "Muted to not muted";
 
 /* String to use for the group or zone numeric ascending sort order criteria */
 "NumericAscendingSortOrderCriteriaKey" = "Lowest to highest";
