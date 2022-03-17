@@ -31,6 +31,7 @@
 #include <OpenHLX/Client/ApplicationController.hpp>
 #include <OpenHLX/Client/ApplicationControllerDelegate.hpp>
 
+#import "SortCriteriaChooserEditorViewController.h"
 #import "SortCriteriaController.h"
 #import "UIViewController+HLXClientDidDisconnectDelegateDefaultImplementations.h"
 #import "UIViewController+TopViewController.h"
