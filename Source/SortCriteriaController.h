@@ -45,9 +45,9 @@
 // MARK: Introspection
 
 - (NSUInteger) count;
-- (NSString *) sortKeyDescriptionAtIndex: (NSUInteger)aIndex;
-- (NSString *) sortOrderDescriptionAtIndex: (NSUInteger)aIndex;
-- (NSString *) sortOrderDetailDescriptionAtIndex: (NSUInteger)aIndex;
+- (NSString *) sortKeyDescriptionAtIndex: (const NSUInteger &)aIndex;
+- (NSString *) sortOrderDescriptionAtIndex: (const NSUInteger &)aIndex;
+- (NSString *) sortOrderDetailDescriptionAtIndex: (const NSUInteger &)aIndex;
 
 // MARK: Getters
 
@@ -56,6 +56,8 @@
 - (void) setClientController: (ClientController &)aClientController;
 
 // MARK: Mutation
+
+- (HLX::Common::Status) removeSortCriteriaAtIndex: (const NSUInteger &)aIndex;
 
 // MARK: Workers
 

@@ -852,7 +852,7 @@ SortKeyDescription(const Detail::SortKey &aSortKey)
     return (lRetval);
 }
 
-- (NSString *) sortKeyDescriptionAtIndex: (NSUInteger)aIndex
+- (NSString *) sortKeyDescriptionAtIndex: (const NSUInteger &)aIndex
 {
     const Detail::SortParameters & lSortParameters = ((mAsGroup) ? Detail::sGroupSortParameters : Detail::sZoneSortParameters);
     NSString *                     lRetval         = nullptr;
@@ -891,7 +891,7 @@ SortOrderDescription(const Detail::SortOrder &aSortOrder)
     return (lRetval);
 }
 
-- (NSString *) sortOrderDescriptionAtIndex: (NSUInteger)aIndex
+- (NSString *) sortOrderDescriptionAtIndex: (const NSUInteger &)aIndex
 {
     const Detail::SortParameters & lSortParameters = ((mAsGroup) ? Detail::sGroupSortParameters : Detail::sZoneSortParameters);
     NSString *                     lRetval         = nullptr;
@@ -909,26 +909,28 @@ static NSString *
 SortOrderForKeyDescription(const Detail::SortOrder &aSortOrder,
                            const Detail::SortKey &aSortKey)
 {
+    static const size_t            kAscendingIndex = static_cast<size_t>(Detail::SortOrder::kSortOrder_Ascending);
+    static const size_t            kDescendingIndex = static_cast<size_t>(Detail::SortOrder::kSortOrder_Descending);
     NSString * const               kSortOrderForKeyDescription[Detail::SortKey::kSortKey_Count][2] = {
         [Detail::SortKey::kSortKey_Favorite]     = {
-            @"FavoriteAscendingSortOrderCriteriaKey",
-            @"FavoriteDescendingSortOrderCriteriaKey"
+            [kDescendingIndex] = @"FavoriteDescendingSortOrderCriteriaKey",
+            [kAscendingIndex]  = @"FavoriteAscendingSortOrderCriteriaKey"
         },
         [Detail::SortKey::kSortKey_Identifier]   = {
-            @"NumericAscendingSortOrderCriteriaKey",
-            @"NumericDescendingSortOrderCriteriaKey"
+            [kDescendingIndex] = @"NumericDescendingSortOrderCriteriaKey",
+            [kAscendingIndex]  = @"NumericAscendingSortOrderCriteriaKey"
         },
         [Detail::SortKey::kSortKey_LastUsedDate] = {
-            @"DateAscendingSortOrderCriteriaKey",
-            @"DateDescendingSortOrderCriteriaKey"
+            [kDescendingIndex] = @"DateDescendingSortOrderCriteriaKey",
+            [kAscendingIndex]  = @"DateAscendingSortOrderCriteriaKey"
         },
         [Detail::SortKey::kSortKey_Mute]         = {
-            @"MuteAscendingSortOrderCriteriaKey",
-            @"MuteDescendingSortOrderCriteriaKey"
+            [kDescendingIndex] = @"MuteDescendingSortOrderCriteriaKey",
+            [kAscendingIndex]  = @"MuteAscendingSortOrderCriteriaKey"
         },
         [Detail::SortKey::kSortKey_Name]         = {
-            @"AlphabeticAscendingSortOrderCriteriaKey",
-            @"AlphabeticDescendingSortOrderCriteriaKey"
+            [kDescendingIndex] = @"AlphabeticDescendingSortOrderCriteriaKey",
+            [kAscendingIndex]  = @"AlphabeticAscendingSortOrderCriteriaKey"
         }
     };
     NSString *                     lLocalizedStringKey;
@@ -944,7 +946,7 @@ done:
     return (lRetval);
 }
 
-- (NSString *) sortOrderDetailDescriptionAtIndex: (NSUInteger)aIndex
+- (NSString *) sortOrderDetailDescriptionAtIndex: (const NSUInteger &)aIndex
 {
     const Detail::SortParameters & lSortParameters = ((mAsGroup) ? Detail::sGroupSortParameters : Detail::sZoneSortParameters);
     NSString *                     lSortOrderDescription = nullptr;
@@ -1009,6 +1011,14 @@ done:
 }
 
 // MARK: Mutation
+
+- (Status) removeSortCriteriaAtIndex: (const NSUInteger &)aIndex
+{
+    DeclareScopedFunctionTracer(lTracer);
+    Status lRetval = kStatus_Success;
+
+    return (lRetval);
+}
 
 // MARK: Workers
 

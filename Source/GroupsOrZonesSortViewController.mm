@@ -269,6 +269,21 @@ done:
 - (void) tableView: (UITableView *)aTableView commitEditingStyle: (UITableViewCellEditingStyle)aEditingStyle forRowAtIndexPath:(NSIndexPath *)aIndexPath
 {
     DeclareScopedFunctionTracer(lTracer);
+    const NSUInteger  lSection = aIndexPath.section;
+    const NSUInteger  lRow = aIndexPath.row;
+    Status            lStatus;
+
+
+    nlREQUIRE(lSection == 0, done);
+
+    if (aEditingStyle == UITableViewCellEditingStyleDelete)
+    {
+        lStatus = [mSortCriteriaController removeSortCriteriaAtIndex: lRow];
+        nlREQUIRE_SUCCESS(lStatus, done);
+    }
+
+ done:
+    return;
 }
 
 // MARK: Workers
