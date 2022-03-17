@@ -675,7 +675,7 @@
                             <outlet property="delegate" destination="zEA-XZ-jVR" id="jgW-KC-40q"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="uF0-iU-OWi"/>
+                    <navigationItem key="navigationItem" title="Choose / Edit Criteria" id="uF0-iU-OWi"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gdn-Fo-izv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
