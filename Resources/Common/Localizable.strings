@@ -29,3 +29,9 @@
 
 /* String to use for a Edit/Done bar button item in Edit state */
 "EditDoneDoneTitleKey" = "Done";
+
+/* String to use for the Sort Criteria Editor/Chooser Table View Controller title in add/choose mode */
+"SortCriteriaChooserEditorTableViewControllerModeAddTitleKey" = "Add Criteria";
+
+/* String to use for the Sort Criteria Editor/Chooser Table View Controller title in edit mode */
+"SortCriteriaChooserEditorTableViewControllerModeEditTitleKey" = "Edit Criteria";
