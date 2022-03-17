@@ -528,7 +528,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="Keys" id="09T-mK-UpS" userLabel="Sort Key Section">
+                            <tableViewSection headerTitle="Key" id="09T-mK-UpS" userLabel="Sort Key Section">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" textLabel="c1R-xN-WVh" style="IBUITableViewCellStyleDefault" id="iwh-BK-8YC" userLabel="Favorite Sort Key Cell">
                                         <rect key="frame" x="0.0" y="28" width="320" height="43.5"/>
