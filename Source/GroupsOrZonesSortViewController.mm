@@ -158,7 +158,7 @@ done:
     Status lStatus;
 
     Log::Debug().Write("aSegue %p (%s) aSender %p (%s)\n",
-                       aSegue, [[aSegue description] UTF8String],
+                       aSegue, [[aSegue identifier] UTF8String],
                        aSender, [[aSender description] UTF8String]);
 
     lStatus = mClientController->GetApplicationController()->SetDelegate(nullptr);
