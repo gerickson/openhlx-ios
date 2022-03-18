@@ -601,24 +601,6 @@ ClearAndInitializeIdentifiers(const IdentifierModel::IdentifierType &aIdentifier
 }
 
 static void
-LogIdentifiers(const char *aWhich, ObjectIdentifiers &aIdentifiers)
-{
-    ObjectIdentifiers::const_iterator lCurrent = aIdentifiers.begin();
-    ObjectIdentifiers::const_iterator lLast = aIdentifiers.end();
-
-    Log::Debug().Write("%s identifiers:", aWhich);
-
-    while (lCurrent != lLast)
-    {
-        Log::Debug().Write(" %hhu", *lCurrent);
-
-        lCurrent++;
-    }
-
-    Log::Debug().Write("\n");
-}
-
-static void
 SortIdentifiers(const IdentifierModel::IdentifierType &aIdentifiersMax,
                 const ObjectSortFunctorBasis &aSortFunctor,
                 ObjectIdentifiers &aIdentifiers)
