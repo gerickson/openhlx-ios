@@ -35,3 +35,9 @@
 
 /* String to use for the Sort Criteria Editor/Chooser Table View Controller title in edit mode */
 "SortCriteriaChooserEditorTableViewControllerModeEditTitleKey" = "Edit Criteria";
+
+/* String to use for the Sort Criteria Editor/Chooser Table View sort key section title */
+"SortCriteriaChooserEditorTableViewSortKeySectionTitleKey" = "Key";
+
+/* String to use for the Sort Criteria Editor/Chooser Table View sort order section title */
+"SortCriteriaChooserEditorTableViewSortOrderSectionTitleKey" = "Order";
