@@ -80,7 +80,7 @@ struct SortParameter
     SortFunction mSortFunction;
 };
 
-typedef std::array<SortParameter, SortKey::kSortKey_Count> SortParameters;
+typedef std::vector<SortParameter> SortParameters;
 typedef std::vector<IdentifierModel::IdentifierType> ObjectIdentifiers;
 
 class ObjectSortFunctorBasis
@@ -715,53 +715,91 @@ InitAndSortZoneIdentifiers(ClientController &aClientController,
 
 // Global Variables
 
-#if 1
-static const SortParameters sGroupSortParameters = {{
-    { kSortKey_Mute,         SortOrder::kSortOrder_Ascending,  GroupMuteCompare         },
-    { kSortKey_LastUsedDate, SortOrder::kSortOrder_Descending, GroupLastUsedDateCompare },
-    { kSortKey_Favorite,     SortOrder::kSortOrder_Descending, GroupFavoriteCompare     },
-    { kSortKey_Name,         SortOrder::kSortOrder_Ascending,  GroupNameCompare         },
-    { kSortKey_Identifier,   SortOrder::kSortOrder_Ascending,  GroupIdentifierCompare   },
-}};
+// Default Group and Zone Sort Parameters
 
-static const SortParameters sZoneSortParameters = {{
-    { kSortKey_Mute,         SortOrder::kSortOrder_Ascending,  ZoneMuteCompare          },
-    { kSortKey_LastUsedDate, SortOrder::kSortOrder_Descending, ZoneLastUsedDateCompare  },
-    { kSortKey_Favorite,     SortOrder::kSortOrder_Descending, ZoneFavoriteCompare      },
-    { kSortKey_Name,         SortOrder::kSortOrder_Ascending,  ZoneNameCompare          },
-    { kSortKey_Identifier,   SortOrder::kSortOrder_Ascending,  ZoneIdentifierCompare    },
-}};
-#else
-static const SortParameters sGroupSortParameters = {{
-    { kSortKey_Identifier,   SortOrder::kSortOrder_Ascending,  GroupIdentifierCompare   },
-    { kSortKey_Invalid,      SortOrder::kSortOrder_Ascending,  nullptr                  },
-    { kSortKey_Invalid,      SortOrder::kSortOrder_Ascending,  nullptr                  },
-    { kSortKey_Invalid,      SortOrder::kSortOrder_Ascending,  nullptr                  },
-    { kSortKey_Invalid,      SortOrder::kSortOrder_Ascending,  nullptr                  },
-}};
+static constexpr SortParameter  sDefaultGroupSortParameter = {
+    SortKey::kSortKey_Identifier,
+    SortOrder::kSortOrder_Ascending,
+    GroupIdentifierCompare
+};
+static constexpr SortParameter  sDefaultZoneSortParameter = {
+    SortKey::kSortKey_Identifier,
+    SortOrder::kSortOrder_Ascending,
+    ZoneIdentifierCompare
+};
 
-static const SortParameters sZoneSortParameters = {{
-    { kSortKey_Identifier,   SortOrder::kSortOrder_Ascending,  ZoneIdentifierCompare    },
-    { kSortKey_Invalid,      SortOrder::kSortOrder_Ascending,  nullptr                  },
-    { kSortKey_Invalid,      SortOrder::kSortOrder_Ascending,  nullptr                  },
-    { kSortKey_Invalid,      SortOrder::kSortOrder_Ascending,  nullptr                  },
-    { kSortKey_Invalid,      SortOrder::kSortOrder_Ascending,  nullptr                  },
-}};
-#endif
+// Possible Group and Zone Sort Parameters
+
+static constexpr SortParameter sGroupSortParameters[SortKey::kSortKey_Count] = {
+    [SortKey::kSortKey_Favorite] = {
+        SortKey::kSortKey_Favorite,
+        SortOrder::kSortOrder_Descending,
+        GroupFavoriteCompare
+    },
+    [SortKey::kSortKey_Identifier] = {
+        SortKey::kSortKey_Identifier,
+        SortOrder::kSortOrder_Ascending,
+        GroupIdentifierCompare
+    },
+    [SortKey::kSortKey_LastUsedDate] = {
+        SortKey::kSortKey_LastUsedDate,
+        SortOrder::kSortOrder_Descending,
+        GroupLastUsedDateCompare
+    },
+    [SortKey::kSortKey_Mute] = {
+        SortKey::kSortKey_Mute,
+        SortOrder::kSortOrder_Ascending,
+        GroupMuteCompare
+    },
+    [SortKey::kSortKey_Name] = {
+        SortKey::kSortKey_Name,
+        SortOrder::kSortOrder_Ascending,
+        GroupNameCompare
+    }
+};
+
+static constexpr  SortParameter sZoneSortParameters[SortKey::kSortKey_Count] = {
+    [SortKey::kSortKey_Favorite] = {
+        SortKey::kSortKey_Favorite,
+        SortOrder::kSortOrder_Descending,
+        ZoneFavoriteCompare
+    },
+    [SortKey::kSortKey_Identifier] = {
+        SortKey::kSortKey_Identifier,
+        SortOrder::kSortOrder_Ascending,
+        ZoneIdentifierCompare
+    },
+    [SortKey::kSortKey_LastUsedDate] = {
+        SortKey::kSortKey_LastUsedDate,
+        SortOrder::kSortOrder_Descending,
+        ZoneLastUsedDateCompare
+    },
+    [SortKey::kSortKey_Mute] = {
+        SortKey::kSortKey_Mute,
+        SortOrder::kSortOrder_Ascending,
+        ZoneMuteCompare
+    },
+    [SortKey::kSortKey_Name] = {
+        SortKey::kSortKey_Name,
+        SortOrder::kSortOrder_Ascending,
+        ZoneNameCompare
+    }
+};
 
 }; // namespace Detail
 
 @interface SortCriteriaController ()
 {
-    NSString *                 mPreferencesKey;
-    bool                       mAsGroup;
-    Detail::ObjectIdentifiers  mIdentifiers;
-
     /**
      *  A pointer to the global app HLX client controller instance.
      *
      */
     ClientController *         mClientController;
+
+    NSString *                 mPreferencesKey;
+    bool                       mAsGroup;
+    Detail::SortParameters     mSortParameters;
+    Detail::ObjectIdentifiers  mIdentifiers;
 }
 
 @end
@@ -808,10 +846,19 @@ static const SortParameters sZoneSortParameters = {{
 
 - (NSUInteger) count
 {
-    const Detail::SortParameters & lSortParameters = ((mAsGroup) ? Detail::sGroupSortParameters : Detail::sZoneSortParameters);
-    NSUInteger                     lRetval = 0;
+    const Detail::SortParameters & lSortParameters = mSortParameters;
+    NSUInteger                     lRetval         = 0;
 
     lRetval = lSortParameters.size();
+
+    return (lRetval);
+}
+
+- (const Detail::SortParameter &) defaultSortParameter
+{
+    const Detail::SortParameter &lRetval = ((mAsGroup) ?
+                                            Detail::sDefaultGroupSortParameter :
+                                            Detail::sDefaultZoneSortParameter);
 
     return (lRetval);
 }
@@ -855,7 +902,7 @@ SortKeyDescription(const Detail::SortKey &aSortKey)
 
 - (NSString *) sortKeyDescriptionAtIndex: (const NSUInteger &)aIndex
 {
-    const Detail::SortParameters & lSortParameters = ((mAsGroup) ? Detail::sGroupSortParameters : Detail::sZoneSortParameters);
+    const Detail::SortParameters & lSortParameters = mSortParameters;
     NSString *                     lRetval         = nullptr;
 
     nlREQUIRE(aIndex < lSortParameters.size(), done);
@@ -894,7 +941,7 @@ SortOrderDescription(const Detail::SortOrder &aSortOrder)
 
 - (NSString *) sortOrderDescriptionAtIndex: (const NSUInteger &)aIndex
 {
-    const Detail::SortParameters & lSortParameters = ((mAsGroup) ? Detail::sGroupSortParameters : Detail::sZoneSortParameters);
+    const Detail::SortParameters & lSortParameters = mSortParameters;
     NSString *                     lRetval         = nullptr;
 
     nlREQUIRE(aIndex < lSortParameters.size(), done);
@@ -949,10 +996,10 @@ done:
 
 - (NSString *) sortOrderDetailDescriptionAtIndex: (const NSUInteger &)aIndex
 {
-    const Detail::SortParameters & lSortParameters = ((mAsGroup) ? Detail::sGroupSortParameters : Detail::sZoneSortParameters);
-    NSString *                     lSortOrderDescription = nullptr;
+    const Detail::SortParameters & lSortParameters             = mSortParameters;
+    NSString *                     lSortOrderDescription       = nullptr;
     NSString *                     lSortOrderForKeyDescription = nullptr;
-    NSString *                     lRetval         = nullptr;
+    NSString *                     lRetval                     = nullptr;
 
 
     nlREQUIRE(aIndex < lSortParameters.size(), done);
@@ -991,16 +1038,16 @@ done:
     if (mAsGroup)
     {
         lStatus = Detail::InitAndSortGroupIdentifiers(aClientController,
-                                                      Detail::sGroupSortParameters.begin(),
-                                                      Detail::sGroupSortParameters.end(),
+                                                      mSortParameters.begin(),
+                                                      mSortParameters.end(),
                                                       mIdentifiers);
         nlREQUIRE_SUCCESS(lStatus, done);
     }
     else
     {
         lStatus = Detail::InitAndSortZoneIdentifiers(aClientController,
-                                                     Detail::sZoneSortParameters.begin(),
-                                                     Detail::sZoneSortParameters.end(),
+                                                     mSortParameters.begin(),
+                                                     mSortParameters.end(),
                                                      mIdentifiers);
         nlREQUIRE_SUCCESS(lStatus, done);
     }
@@ -1061,15 +1108,15 @@ done:
     if (mAsGroup)
     {
         Detail::SortGroupIdentifiers(*mClientController,
-                                     Detail::sGroupSortParameters.begin(),
-                                     Detail::sGroupSortParameters.end(),
+                                     mSortParameters.begin(),
+                                     mSortParameters.end(),
                                      mIdentifiers);
     }
     else
     {
         Detail::SortZoneIdentifiers(*mClientController,
-                                    Detail::sZoneSortParameters.begin(),
-                                    Detail::sZoneSortParameters.end(),
+                                    mSortParameters.begin(),
+                                    mSortParameters.end(),
                                     mIdentifiers);
     }
 
@@ -1091,7 +1138,7 @@ done:
 
     lSortCriteriaDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey: mPreferencesKey];
     Log::Debug().Write("Loading lSortCriteriaDictionary %p for key %s\n", lSortCriteriaDictionary, [mPreferencesKey UTF8String]);
-    nlEXPECT(lSortCriteriaDictionary != nullptr, done);
+    nlEXPECT(lSortCriteriaDictionary != nullptr, copy_default);
 
     Log::Debug().Write("lSortCriteriaDictionary: %s\n",
                        [[lSortCriteriaDictionary description] UTF8String]);
@@ -1099,9 +1146,13 @@ done:
     lRetval = [self loadPreferences: lSortCriteriaDictionary];
     nlREQUIRE_SUCCESS(lRetval, done);
 
- done:
+done:
     return (lRetval);
 
+copy_default:
+     mSortParameters.push_back([self defaultSortParameter]);
+
+     return (lRetval);
 }
 
 - (Status) storePreferences: (NSMutableDictionary *)aSortCriteriaDictionary
