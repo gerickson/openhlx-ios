@@ -155,14 +155,30 @@ done:
 - (void)prepareForSegue: (UIStoryboardSegue *)aSegue sender: (id)aSender
 {
     DeclareScopedFunctionTracer(lTracer);
+    const bool kControllerWillAdd = [[aSegue identifier] isEqual: @"Sort Criteria Chooser Segue"];
+    const bool kControllerWillEdit = [[aSegue identifier] isEqual: @"Sort Criteria Editor Segue"];
     Status lStatus;
 
-    Log::Debug().Write("aSegue %p (%s) aSender %p (%s)\n",
-                       aSegue, [[aSegue identifier] UTF8String],
-                       aSender, [[aSender description] UTF8String]);
 
-    lStatus = mClientController->GetApplicationController()->SetDelegate(nullptr);
-    nlREQUIRE_SUCCESS(lStatus, done);
+    if (kControllerWillAdd || kControllerWillEdit)
+    {
+        SortCriteriaChooserEditorViewController *  lSortCriteriaChooserEditorViewController = [aSegue destinationViewController];
+
+        [lSortCriteriaChooserEditorViewController setApplicationController: mClientController->GetApplicationController()];
+        [lSortCriteriaChooserEditorViewController setSortCriteriaController: mSortCriteriaController];
+
+        if (kControllerWillAdd)
+        {
+            [lSortCriteriaChooserEditorViewController setSortCriteriaControllerMode: SortCriteriaControllerModeAdd];
+        }
+        else if (kControllerWillEdit)
+        {
+            [lSortCriteriaChooserEditorViewController setSortCriteriaControllerMode: SortCriteriaControllerModeEdit];
+        }
+
+        lStatus = mClientController->GetApplicationController()->SetDelegate(nullptr);
+        nlREQUIRE_SUCCESS(lStatus, done);
+    }
 
  done:
     return;
