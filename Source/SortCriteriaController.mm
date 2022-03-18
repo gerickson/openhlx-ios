@@ -24,6 +24,7 @@
 
 #import "SortCriteriaController.h"
 
+#import <algorithm>
 #import <array>
 #import <vector>
 
@@ -1022,9 +1023,24 @@ done:
 
 // MARK: Workers
 
+- (NSInteger) mapIdentifierToIndex: (const IdentifierModel::IdentifierType &)aIdentifier
+{
+    Detail::ObjectIdentifiers::const_iterator lResult = std::find(mIdentifiers.cbegin(),
+                                                                  mIdentifiers.cend(),
+                                                                  aIdentifier);
+    NSInteger                                 lRetval = NSNotFound;
+
+    nlREQUIRE(lResult != mIdentifiers.end(), done);
+
+    lRetval = static_cast<NSInteger>(std::distance(mIdentifiers.cbegin(), lResult));
+
+ done:
+    return (lRetval);
+}
+
 - (IdentifierModel::IdentifierType) mapIndexToIdentifier: (const NSUInteger &)aIndex
 {
-    const size_t lIndex = aIndex;
+    const size_t                    lIndex  = aIndex;
     IdentifierModel::IdentifierType lRetval = IdentifierModel::kIdentifierInvalid;
 
     nlREQUIRE(lIndex < mIdentifiers.size(), done);
