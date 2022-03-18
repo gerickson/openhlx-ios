@@ -1226,7 +1226,7 @@ done:
     Status     lRetval = kStatus_Success;
 
     lSortCriteriaArray = [[NSUserDefaults standardUserDefaults] arrayForKey: mPreferencesKey];
-    Log::Debug().Write("Loading lSortCriteriaArray %p for key %s\n", lSortCriteriaArray, [mPreferencesKey UTF8String]);
+    Log::Debug().Write("Loading lSortCriteriaArray %p for key \"%s\"\n", lSortCriteriaArray, [mPreferencesKey UTF8String]);
     nlEXPECT(lSortCriteriaArray != nullptr, copy_default_parameter);
 
     Log::Debug().Write("lSortCriteriaArray: %s\n",
@@ -1271,7 +1271,7 @@ done:
     lRetval = [self storePreferences: lSortCriteriaArray];
     nlREQUIRE_SUCCESS(lRetval, done);
 
-    Log::Debug().Write("Storing lSortCriteriaArray %p for key %s\n", lSortCriteriaArray, [mPreferencesKey UTF8String]);
+    Log::Debug().Write("Storing lSortCriteriaArray %p for key \"%s\"\n", lSortCriteriaArray, [mPreferencesKey UTF8String]);
 
     Log::Debug().Write("lSortCriteriaArray: %s\n",
                        [[lSortCriteriaArray description] UTF8String]);
