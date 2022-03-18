@@ -152,6 +152,8 @@
 		0BA5D41422D9220900E837EF /* EqualizerBandModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D40E22D9220900E837EF /* EqualizerBandModel.cpp */; };
 		0BA5D41522D9220900E837EF /* EqualizerPresetsModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D41022D9220900E837EF /* EqualizerPresetsModel.cpp */; };
 		0BA5D41622D9220900E837EF /* EqualizerPresetModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5D41222D9220900E837EF /* EqualizerPresetModel.cpp */; };
+		0BAABC8327E544C10095C146 /* SortParameter_Detail.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BAABC8127E544C10095C146 /* SortParameter_Detail.mm */; };
+		0BAABC8427E544C10095C146 /* SortParameter_Detail.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BAABC8127E544C10095C146 /* SortParameter_Detail.mm */; };
 		0BAD2A2327E3F00A0058778B /* SortCriteriaChooserEditorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD2A2127E3F0090058778B /* SortCriteriaChooserEditorViewController.mm */; };
 		0BAD2A2427E3F00A0058778B /* SortCriteriaChooserEditorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD2A2127E3F0090058778B /* SortCriteriaChooserEditorViewController.mm */; };
 		0BB62F3022D91C000013E943 /* ConnectHistoryViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BB62F2E22D91C000013E943 /* ConnectHistoryViewController.mm */; };
@@ -681,6 +683,8 @@
 		0BA5D41022D9220900E837EF /* EqualizerPresetsModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EqualizerPresetsModel.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/model/EqualizerPresetsModel.cpp; sourceTree = "<absolute>"; };
 		0BA5D41122D9220900E837EF /* EqualizerPresetModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = EqualizerPresetModel.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/model/EqualizerPresetModel.hpp; sourceTree = "<absolute>"; };
 		0BA5D41222D9220900E837EF /* EqualizerPresetModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EqualizerPresetModel.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/model/EqualizerPresetModel.cpp; sourceTree = "<absolute>"; };
+		0BAABC8127E544C10095C146 /* SortParameter_Detail.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SortParameter_Detail.mm; sourceTree = "<group>"; };
+		0BAABC8227E544C10095C146 /* SortParameter_Detail.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SortParameter_Detail.hpp; sourceTree = "<group>"; };
 		0BAD2A2127E3F0090058778B /* SortCriteriaChooserEditorViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SortCriteriaChooserEditorViewController.mm; sourceTree = "<group>"; };
 		0BAD2A2227E3F0090058778B /* SortCriteriaChooserEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortCriteriaChooserEditorViewController.h; sourceTree = "<group>"; };
 		0BB62F2E22D91C000013E943 /* ConnectHistoryViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ConnectHistoryViewController.mm; path = Source/ConnectHistoryViewController.mm; sourceTree = SOURCE_ROOT; };
@@ -981,6 +985,8 @@
 				0BAD2A2127E3F0090058778B /* SortCriteriaChooserEditorViewController.mm */,
 				0B5783EC27E196AB001A4B51 /* SortCriteriaController.h */,
 				0B5783ED27E196AB001A4B51 /* SortCriteriaController.mm */,
+				0BAABC8227E544C10095C146 /* SortParameter_Detail.hpp */,
+				0BAABC8127E544C10095C146 /* SortParameter_Detail.mm */,
 				0B0C72912585DBD500BAE465 /* SoundModeChooserTableViewCell.h */,
 				0B0C72902585DBD500BAE465 /* SoundModeChooserTableViewCell.mm */,
 				0B0C72932585DE4800BAE465 /* SoundModeChooserViewController.h */,
@@ -1873,6 +1879,7 @@
 				0BE8CBC6265B2FD700A17FCC /* ConnectHistoryViewTableCell.mm in Sources */,
 				0BE8CBC7265B2FD700A17FCC /* EqualizerBandsDetailTableViewCell.mm in Sources */,
 				0B5783EF27E196AB001A4B51 /* SortCriteriaController.mm in Sources */,
+				0BAABC8427E544C10095C146 /* SortParameter_Detail.mm in Sources */,
 				0BE8CBC8265B2FD700A17FCC /* GroupDetailViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2046,6 +2053,7 @@
 				0B238917258F1584004C6E4A /* EqualizerPresetChooserViewController.mm in Sources */,
 				0B238919258F1584004C6E4A /* EqualizerBandsDetailViewController.mm in Sources */,
 				0B40B63C250ED1A6009A65DA /* ConnectHistoryViewTableCell.mm in Sources */,
+				0BAABC8327E544C10095C146 /* SortParameter_Detail.mm in Sources */,
 				0B6041EC27CEF7CB0002F835 /* ClientLastUsedDateModel.cpp in Sources */,
 				0B238918258F1584004C6E4A /* EqualizerBandsDetailTableViewCell.mm in Sources */,
 				0BE3109923B0125A00AFC4F5 /* GroupDetailViewController.mm in Sources */,
