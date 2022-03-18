@@ -522,7 +522,7 @@
         <!--Sort Criteria Chooser / Editor Controller-->
         <scene sceneID="g5k-9j-Df8">
             <objects>
-                <tableViewController hidesBottomBarWhenPushed="YES" id="zEA-XZ-jVR" userLabel="Sort Criteria Chooser / Editor Controller" sceneMemberID="viewController">
+                <tableViewController hidesBottomBarWhenPushed="YES" id="zEA-XZ-jVR" userLabel="Sort Criteria Chooser / Editor Controller" customClass="SortCriteriaChooserEditorViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="byw-Iz-cSX" userLabel="Sort Criteria Table View">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
