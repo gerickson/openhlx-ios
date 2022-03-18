@@ -210,11 +210,10 @@ done:
     }
     else if (aSender == self.mSortButtonItem)
     {
-        const bool                         lAsGroup = (mShowStyle == kShowStyleGroups);
         GroupsOrZonesSortViewController *  lGroupsOrZonesSortViewController = [aSegue destinationViewController];
 
         [lGroupsOrZonesSortViewController setClientController: *mClientController];
-        [lGroupsOrZonesSortViewController setSortCriteriaController: ((lAsGroup) ? mGroupSortCriteriaController : mZoneSortCriteriaController)];
+        [lGroupsOrZonesSortViewController setSortCriteriaController: [self sortCriteriaController]];
 
         lStatus = mClientController->GetApplicationController()->SetDelegate(nullptr);
         nlREQUIRE_SUCCESS(lStatus, done);
@@ -254,6 +253,23 @@ done:
 - (IBAction) onSortButtonAction: (id)aSender
 {
     DeclareScopedFunctionTracer(lTracer);
+}
+
+// MARK: Getters
+
+- (bool) asGroup
+{
+    return (mShowStyle == kShowStyleGroups);
+}
+
+- (SortCriteriaController *) sortCriteriaController
+{
+    const bool               kAsGroup = [self asGroup];
+    SortCriteriaController * lRetval  = ((kAsGroup) ?
+                                         mGroupSortCriteriaController :
+                                         mZoneSortCriteriaController);
+
+    return (lRetval);
 }
 
 // MARK: Setters
@@ -312,11 +328,11 @@ done:
 
 - (UITableViewCell *) tableView: (UITableView *)aTableView cellForRowAtIndexPath: (NSIndexPath *)aIndexPath
 {
-    const bool                     lAsGroup = (mShowStyle == kShowStyleGroups);
-    GroupsAndZonesTableViewCell *  lRetval = nullptr;
+    const bool                     kAsGroup        = [self asGroup];
     NSString *                     lCellIdentifier = nullptr;
+    GroupsAndZonesTableViewCell *  lRetval         = nullptr;
 
-    if (lAsGroup)
+    if (kAsGroup)
     {
         lCellIdentifier = @"Group Table View Cell";
     }
@@ -338,12 +354,18 @@ done:
 
 // MARK: Workers
 
-- (IdentifierModel::IdentifierType) mapRowToIdentifier: (const NSUInteger &)aRow
-           asGroup: (const bool &)aAsGroup
+- (NSInteger) mapIdentifierToRow: (const IdentifierModel::IdentifierType &)aIdentifier
 {
-    const IdentifierModel::IdentifierType lRetval = ((aAsGroup) ?
-                                                     [mGroupSortCriteriaController mapIndexToIdentifier: aRow] :
-                                                     [mZoneSortCriteriaController  mapIndexToIdentifier: aRow]);
+    const NSInteger lRetval = [[self sortCriteriaController] mapIdentifierToIndex: aIdentifier];
+
+    Log::Debug().Write("Mapped identifier %hhu to row %ld\n", aIdentifier, lRetval);
+
+    return (lRetval);
+}
+
+- (IdentifierModel::IdentifierType) mapRowToIdentifier: (const NSUInteger &)aRow
+{
+    const IdentifierModel::IdentifierType lRetval = [[self sortCriteriaController] mapIndexToIdentifier: aRow];
 
     return (lRetval);
 }
@@ -359,17 +381,16 @@ done:
 
     if ((mShowStyle == kShowStyleGroups) || (mShowStyle == kShowStyleZones))
     {
-        const bool  lAsGroup = (mShowStyle == kShowStyleGroups);
+        const bool  kAsGroup = [self asGroup];
         Status      lStatus;
 
         // HLX identifiers are one rather than zero based; however,
         // UIKit table rows are zero based. Consequently, increment
         // the row by one to account for this.
 
-        lStatus = [aCell configureCellForIdentifier: [self mapRowToIdentifier: lRow
-                                                                      asGroup: lAsGroup]
+        lStatus = [aCell configureCellForIdentifier: [self mapRowToIdentifier: lRow]
                                      withController: *mClientController
-                                            asGroup: lAsGroup];
+                                            asGroup: kAsGroup];
         nlVERIFY_SUCCESS(lStatus);
     }
 
@@ -388,7 +409,10 @@ done:
 
 - (void) controllerStateDidChange: (HLX::Client::Application::ControllerBasis &)aController withNotification: (const StateChange::NotificationBasis &)aStateChangeNotification
 {
-    const StateChange::Type  lType = aStateChangeNotification.GetType();
+    const bool               kAsGroups = [self asGroup];
+    const bool               kAsZones  = !kAsGroups;
+    const NSInteger          kSection  = 0;
+    const StateChange::Type  lType     = aStateChangeNotification.GetType();
     NSIndexPath *            lIndexPath;
 
     switch (lType)
@@ -399,13 +423,14 @@ done:
     case StateChange::kStateChangeType_GroupSource:
     case StateChange::kStateChangeType_GroupVolume:
         {
-            if (mShowStyle == kShowStyleGroups)
+            if (kAsGroups)
             {
-                const StateChange::GroupsNotificationBasis &lSCN = static_cast<const StateChange::GroupsNotificationBasis &>(aStateChangeNotification);
-                const NSUInteger lRow = (lSCN.GetIdentifier() - 1);
+                const StateChange::GroupsNotificationBasis & lSCN        = static_cast<const StateChange::GroupsNotificationBasis &>(aStateChangeNotification);
+                const IdentifierModel::IdentifierType        lIdentifier = lSCN.GetIdentifier();
+                const NSUInteger                             lRow        = [self mapIdentifierToRow: lIdentifier];
 
                 lIndexPath = [NSIndexPath indexPathForRow: lRow
-                                          inSection: 0];
+                                          inSection: kSection];
 
                 [self.tableView reloadRowsAtIndexPaths: [NSArray arrayWithObject: lIndexPath]
                                 withRowAnimation: UITableViewRowAnimationNone];
@@ -422,13 +447,14 @@ done:
     case StateChange::kStateChangeType_ZoneSource:
     case StateChange::kStateChangeType_ZoneVolume:
         {
-            if (mShowStyle == kShowStyleZones)
+            if (kAsZones)
             {
-                const StateChange::ZonesNotificationBasis &lSCN = static_cast<const StateChange::ZonesNotificationBasis &>(aStateChangeNotification);
-                const NSUInteger lRow = (lSCN.GetIdentifier() - 1);
+                const StateChange::ZonesNotificationBasis &  lSCN        = static_cast<const StateChange::ZonesNotificationBasis &>(aStateChangeNotification);
+                const IdentifierModel::IdentifierType        lIdentifier = lSCN.GetIdentifier();
+                const NSUInteger                             lRow        = [self mapIdentifierToRow: lIdentifier];
 
                 lIndexPath = [NSIndexPath indexPathForRow: lRow
-                                          inSection: 0];
+                                          inSection: kSection];
 
                 [self.tableView reloadRowsAtIndexPaths: [NSArray arrayWithObject: lIndexPath]
                                 withRowAnimation: UITableViewRowAnimationNone];
