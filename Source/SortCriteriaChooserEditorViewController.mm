@@ -28,6 +28,7 @@
 
 #include <OpenHLX/Utilities/Assert.hpp>
 
+#import "SortParameter_Detail.hpp"
 #import "UIViewController+HLXClientDidDisconnectDelegateDefaultImplementations.h"
 #import "UIViewController+TopViewController.h"
 
@@ -35,6 +36,24 @@
 using namespace HLX::Common;
 using namespace Nuovations;
 
+
+namespace Detail
+{
+
+// MARK: Type Definitions
+
+typedef NS_ENUM(NSUInteger, TableSection)
+{
+    kTableSection_Min   = 0,
+
+    kTableSection_Key   = kTableSection_Min,
+    kTableSection_Order,
+
+    kTableSection_Max,
+    kTableSection_Count = kTableSection_Max
+};
+
+}; // namespace Detail
 
 @interface SortCriteriaChooserEditorViewController ()
 {
@@ -145,7 +164,7 @@ done:
     Status lStatus;
 
     Log::Debug().Write("aSegue %p (%s) aSender %p (%s)\n",
-                       aSegue, [[aSegue description] UTF8String],
+                       aSegue, [[aSegue identifier] UTF8String],
                        aSender, [[aSender description] UTF8String]);
 
     lStatus = mApplicationController->SetDelegate(nullptr);
@@ -186,10 +205,165 @@ done:
 
 // MARK: Table View Data Source Delegation
 
+- (NSInteger) numberOfSectionsInTableView: (UITableView *)aTableView
+{
+    return (Detail::TableSection::kTableSection_Count);
+}
+
+- (NSString *) tableView: (UITableView *)aTableView titleForHeaderInSection: (NSInteger)aSection
+{
+    NSString * lRetval = nullptr;
+
+    if (aSection == Detail::TableSection::kTableSection_Key)
+    {
+        lRetval = NSLocalizedString(@"SortCriteriaChooserEditorTableViewSortKeySectionTitleKey" , @"");
+    }
+    else if (aSection == Detail::TableSection::kTableSection_Order)
+    {
+        lRetval = NSLocalizedString(@"SortCriteriaChooserEditorTableViewSortOrderSectionTitleKey" , @"");
+    }
+
+    return (lRetval);
+}
+
+- (NSInteger) tableViewKeySectionNumberOfRows: (UITableView *)aTableView 
+{
+    return (5);
+}
+
+- (NSInteger) tableViewOrderSectionNumberOfRows: (UITableView *)aTableView
+{
+    return (2);
+}
+
+- (NSInteger) tableView: (UITableView *)aTableView numberOfRowsInSection: (NSInteger)aSection
+{
+    NSInteger lRetval = 0;
+
+    if (aSection == Detail::TableSection::kTableSection_Key)
+    {
+        lRetval = [self tableViewKeySectionNumberOfRows: aTableView];
+    }
+    else if (aSection == Detail::TableSection::kTableSection_Order)
+    {
+        lRetval = [self tableViewOrderSectionNumberOfRows: aTableView];
+    }
+    
+    return (lRetval);
+}
+
+- (UITableViewCell *) tableView: (UITableView *)aTableView
+                  keyCellForRow: (const NSUInteger &)aRow
+{
+    static NSString * const kCellIdentifier = @"Sort Key Prototype Cell";
+    UITableViewCell *       lRetval         = nullptr;
+
+    lRetval = [aTableView dequeueReusableCellWithIdentifier: kCellIdentifier];
+    nlREQUIRE(lRetval != nullptr, done);
+
+    [self configureReusableKeyCell: lRetval
+                            forRow: aRow];
+
+ done:
+    return (lRetval);
+}
+
+- (UITableViewCell *) tableView: (UITableView *)aTableView
+                orderCellForRow: (const NSUInteger &)aRow
+{
+    static NSString * const kCellIdentifier = @"Sort Order Prototype Cell";
+    UITableViewCell *       lRetval         = nullptr;
+
+    lRetval = [aTableView dequeueReusableCellWithIdentifier: kCellIdentifier];
+    nlREQUIRE(lRetval != nullptr, done);
+
+    [self configureReusableOrderCell: lRetval
+                              forRow: aRow];
+
+ done:
+    return (lRetval);
+}
+
+- (UITableViewCell *) tableView: (UITableView *)aTableView cellForRowAtIndexPath: (NSIndexPath *)aIndexPath
+{
+    const NSUInteger  lSection = aIndexPath.section;
+    const NSUInteger  lRow     = aIndexPath.row;
+    UITableViewCell * lRetval  = nullptr;
+
+
+    if (lSection == Detail::TableSection::kTableSection_Key)
+    {
+        lRetval = [self     tableView: aTableView
+                        keyCellForRow: lRow];
+    }
+    else if (lSection == Detail::TableSection::kTableSection_Order)
+    {
+        lRetval = [self       tableView: aTableView
+                        orderCellForRow: lRow];
+    }
+
+    return (lRetval);
+}
+
+- (void) tableView: (UITableView *)aTableView keySectionDidSelectRow: (const NSUInteger &)aRow
+{
+    DeclareScopedFunctionTracer(lTracer);
+
+}
+
+- (void) tableView: (UITableView *)aTableView orderSectionDidSelectRow: (const NSUInteger &)aRow
+{
+    DeclareScopedFunctionTracer(lTracer);
+
+}
+
 - (void) tableView: (UITableView *)aTableView didSelectRowAtIndexPath: (NSIndexPath *)aIndexPath
 {
-    const NSUInteger                   lSection = aIndexPath.section;
-    const NSUInteger                   lRow = aIndexPath.row;
+    DeclareScopedFunctionTracer(lTracer);
+    const NSUInteger  lSection = aIndexPath.section;
+    const NSUInteger  lRow     = aIndexPath.row;
+
+    if (lSection == Detail::TableSection::kTableSection_Key)
+    {
+        [self              tableView: aTableView
+              keySectionDidSelectRow: lRow];
+    }
+    else if (lSection == Detail::TableSection::kTableSection_Order)
+    {
+        [self                tableView: aTableView
+              orderSectionDidSelectRow: lRow];
+
+    }
+}
+
+// MARK: Workers
+
+- (void) configureReusableKeyCell: (UITableViewCell *)aCell
+                           forRow: (const NSUInteger &)aRow
+{
+    const Detail::SortKey  lSortKey = static_cast<Detail::SortKey>(aRow);
+
+    aCell.textLabel.text       = Detail::SortKeyDescription(lSortKey);
+    aCell.tag                  = static_cast<NSInteger>(lSortKey);
+    
+    // A n key cell is either selected or not but is additionally disabled depending on the
+    // collection of sort parameters already configured in the sort criteria controller.
+    
+    aCell.accessoryType        = UITableViewCellAccessoryNone;
+}
+
+- (void) configureReusableOrderCell: (UITableViewCell *)aCell
+                             forRow: (const NSUInteger &)aRow
+{
+    const Detail::SortOrder  lSortOrder = static_cast<Detail::SortOrder>(aRow);
+
+    aCell.textLabel.text       = Detail::SortOrderDescription(lSortOrder);
+    aCell.detailTextLabel.text = @"TBD";
+    aCell.tag                  = static_cast<NSInteger>(lSortOrder);
+    
+    // An order cell is either selected or not but is never disabled.
+    
+    aCell.accessoryType        = UITableViewCellAccessoryNone;
 }
 
 // MARK: Controller Delegations
