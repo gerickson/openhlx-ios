@@ -192,29 +192,7 @@ done:
 
     if (aSender == self.mEditButtonItem)
     {
-        const bool lIsEditing  = [self.tableView isEditing];
-        const bool lIsAnimated = true;
-
-        if (lIsEditing)
-        {
-            [self.navigationController setToolbarHidden: lIsEditing
-                                               animated: lIsAnimated];
-
-            [self.tableView setEditing: !lIsEditing
-                              animated: lIsAnimated];
-
-            [self.mEditButtonItem setTitle: NSLocalizedString(@"EditDoneEditTitleKey", @"")];
-        }
-        else
-        {
-            [self.mEditButtonItem setTitle: NSLocalizedString(@"EditDoneDoneTitleKey", @"")];
-
-            [self.tableView setEditing: !lIsEditing
-                              animated: lIsAnimated];
-
-            [self.navigationController setToolbarHidden: lIsEditing
-                                               animated: lIsAnimated];
-        }
+        [self refreshEditDoneControls];
     }
 }
 
@@ -319,6 +297,33 @@ done:
 
  done:
     return;
+}
+
+- (void) refreshEditDoneControls
+{
+    const bool lIsEditing  = [self.tableView isEditing];
+    const bool lIsAnimated = true;
+
+    if (lIsEditing)
+    {
+        [self.navigationController setToolbarHidden: lIsEditing
+                                           animated: lIsAnimated];
+
+        [self.tableView setEditing: !lIsEditing
+                          animated: lIsAnimated];
+
+        [self.mEditButtonItem setTitle: NSLocalizedString(@"EditDoneEditTitleKey", @"")];
+    }
+    else
+    {
+        [self.mEditButtonItem setTitle: NSLocalizedString(@"EditDoneDoneTitleKey", @"")];
+
+        [self.tableView setEditing: !lIsEditing
+                          animated: lIsAnimated];
+
+        [self.navigationController setToolbarHidden: lIsEditing
+                                           animated: lIsAnimated];
+    }
 }
 
 // MARK: Controller Delegations
