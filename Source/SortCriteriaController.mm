@@ -22,11 +22,14 @@
  *
  */
 
+
 #import "SortCriteriaController.h"
 
 #import <algorithm>
 #import <array>
 #import <vector>
+
+#import <errno.h>
 
 #import <LogUtilities/LogUtilities.hpp>
 
