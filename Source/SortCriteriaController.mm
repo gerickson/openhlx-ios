@@ -713,6 +713,110 @@ InitAndSortZoneIdentifiers(ClientController &aClientController,
     return (lRetval);
 }
 
+static Status
+StorePreferences(const SortParameter &aSortParameter,
+                 NSMutableDictionary * aSortParameterDictionary)
+{
+    NSString *lSortKeyValueString   = nullptr;
+    NSString *lSortOrderValueString = nullptr;
+    Status    lRetval = kStatus_Success;
+
+    // Sort Key
+
+    switch (aSortParameter.mSortKey)
+    {
+
+    case Detail::kSortKey_Favorite:
+        lSortKeyValueString = @"Favorite";
+        break;
+
+    case Detail::kSortKey_Identifier:
+        lSortKeyValueString = @"Identifier";
+        break;
+
+    case Detail::kSortKey_LastUsedDate:
+        lSortKeyValueString = @"Last Used Date";
+        break;
+
+    case Detail::kSortKey_Mute:
+        lSortKeyValueString = @"Mute";
+        break;
+
+    case Detail::kSortKey_Name:
+        lSortKeyValueString = @"Name";
+        break;
+
+    default:
+        break;
+
+    }
+
+    [aSortParameterDictionary setObject: lSortKeyValueString
+                              forKey: @"Key"];
+
+    // Sort Order
+
+    switch (aSortParameter.mSortOrder)
+    {
+    case Detail::SortOrder::kSortOrder_Ascending:
+        lSortOrderValueString = @"Ascending";
+        break;
+
+    case Detail::SortOrder::kSortOrder_Descending:
+        lSortOrderValueString = @"Descending";
+        break;
+
+    default:
+        break;
+
+    }
+
+    [aSortParameterDictionary setObject: lSortOrderValueString
+                              forKey: @"Order"];
+
+    return (lRetval);
+}
+
+static Status
+StorePreferences(const SortParameter &aSortParameter,
+                 NSMutableArray * aSortCriteriaArray)
+{
+    NSMutableDictionary * lSortParameterDictionary;
+    Status lRetval = kStatus_Success;
+
+    lSortParameterDictionary = [[NSMutableDictionary alloc] init];
+    nlREQUIRE_ACTION(lSortParameterDictionary != nullptr, done, lRetval = -ENOMEM);
+
+    lRetval = StorePreferences(aSortParameter, lSortParameterDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    [aSortCriteriaArray addObject: lSortParameterDictionary];
+
+ done:
+    return (lRetval);
+}
+
+static Status
+StorePreferences(const SortParameters &aSortParameters,
+                 NSMutableArray * aSortCriteriaArray)
+{
+    SortParameters::const_iterator lCurrentParameter = aSortParameters.cbegin();
+    SortParameters::const_iterator lLastParameter    = aSortParameters.cend();
+    Status                         lRetval           = kStatus_Success;
+
+    while (lCurrentParameter != lLastParameter)
+    {
+        lRetval = StorePreferences(*lCurrentParameter,
+                                   aSortCriteriaArray);
+        nlREQUIRE_SUCCESS(lRetval, done);
+
+        lCurrentParameter++;
+    }
+
+ done:
+    return (lRetval);
+}
+
 // Global Variables
 
 // Default Group and Zone Sort Parameters
@@ -1124,7 +1228,7 @@ done:
     return (lRetval);
 }
 
-- (Status) loadPreferences: (NSDictionary *)aSortCriteriaDictionary
+- (Status) loadPreferences: (NSArray *)aSortCriteriaArray
 {
     Status lRetval = kStatus_Success;
 
@@ -1133,53 +1237,61 @@ done:
 
 - (Status) loadPreferences
 {
-    NSDictionary *  lSortCriteriaDictionary;
-    Status          lRetval = kStatus_Success;
+    NSArray *  lSortCriteriaArray;
+    Status     lRetval = kStatus_Success;
 
-    lSortCriteriaDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey: mPreferencesKey];
-    Log::Debug().Write("Loading lSortCriteriaDictionary %p for key %s\n", lSortCriteriaDictionary, [mPreferencesKey UTF8String]);
-    nlEXPECT(lSortCriteriaDictionary != nullptr, copy_default);
+    lSortCriteriaArray = [[NSUserDefaults standardUserDefaults] arrayForKey: mPreferencesKey];
+    Log::Debug().Write("Loading lSortCriteriaArray %p for key %s\n", lSortCriteriaArray, [mPreferencesKey UTF8String]);
+    nlEXPECT(lSortCriteriaArray != nullptr, copy_default_parameter);
 
-    Log::Debug().Write("lSortCriteriaDictionary: %s\n",
-                       [[lSortCriteriaDictionary description] UTF8String]);
+    Log::Debug().Write("lSortCriteriaArray: %s\n",
+                       [[lSortCriteriaArray description] UTF8String]);
 
-    lRetval = [self loadPreferences: lSortCriteriaDictionary];
+    lRetval = [self loadPreferences: lSortCriteriaArray];
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    return (lRetval);
+
+copy_default_parameter:
+    mSortParameters.push_back([self defaultSortParameter]);
+
+    lRetval = [self storePreferences];
     nlREQUIRE_SUCCESS(lRetval, done);
 
 done:
     return (lRetval);
-
-copy_default:
-     mSortParameters.push_back([self defaultSortParameter]);
-
-     return (lRetval);
 }
 
-- (Status) storePreferences: (NSMutableDictionary *)aSortCriteriaDictionary
+- (Status) storePreferences: (NSMutableArray *)aSortCriteriaArray
 {
-    Status                 lRetval = kStatus_Success;
+    Status  lRetval = kStatus_Success;
 
+    lRetval = Detail::StorePreferences(mSortParameters,
+                                       aSortCriteriaArray);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+ done:
     return (lRetval);
 }
 
 - (Status) storePreferences
 {
-    NSMutableDictionary *  lSortCriteriaDictionary;
-    Status                 lRetval = kStatus_Success;
+    NSMutableArray *  lSortCriteriaArray;
+    Status            lRetval = kStatus_Success;
 
 
-    lSortCriteriaDictionary = [[NSMutableDictionary alloc] init];
-    nlREQUIRE_ACTION(lSortCriteriaDictionary != nullptr, done, lRetval = -ENOMEM);
+    lSortCriteriaArray = [[NSMutableArray alloc] init];
+    nlREQUIRE_ACTION(lSortCriteriaArray != nullptr, done, lRetval = -ENOMEM);
 
-    lRetval = [self storePreferences: lSortCriteriaDictionary];
+    lRetval = [self storePreferences: lSortCriteriaArray];
     nlREQUIRE_SUCCESS(lRetval, done);
 
-    Log::Debug().Write("Storing lSortCriteriaDictionary %p for key %s\n", lSortCriteriaDictionary, [mPreferencesKey UTF8String]);
+    Log::Debug().Write("Storing lSortCriteriaArray %p for key %s\n", lSortCriteriaArray, [mPreferencesKey UTF8String]);
 
-    Log::Debug().Write("lSortCriteriaDictionary: %s\n",
-                       [[lSortCriteriaDictionary description] UTF8String]);
+    Log::Debug().Write("lSortCriteriaArray: %s\n",
+                       [[lSortCriteriaArray description] UTF8String]);
 
-    [[NSUserDefaults standardUserDefaults] setObject: lSortCriteriaDictionary
+    [[NSUserDefaults standardUserDefaults] setObject: lSortCriteriaArray
                                               forKey: mPreferencesKey];
 
  done:
