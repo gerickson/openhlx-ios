@@ -32,12 +32,15 @@
 #import "ApplicationControllerDelegate.hpp"
 #import "ClientController.hpp"
 #import "SortCriteriaController.h"
+#import "SortParameter_Detail.hpp"
 
 
-typedef NS_ENUM(NSInteger, SortCriteriaControllerMode) {
+typedef NS_ENUM(NSInteger, SortCriteriaControllerMode)
+{
     SortCriteriaControllerModeAdd,
     SortCriteriaControllerModeEdit
 };
+
 @interface SortCriteriaChooserEditorViewController : UITableViewController <ApplicationControllerDelegate>
 {
 }

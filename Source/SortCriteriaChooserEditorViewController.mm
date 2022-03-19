@@ -72,7 +72,12 @@ typedef NS_ENUM(NSUInteger, TableSection)
      */
     std::unique_ptr<ApplicationControllerDelegate>  mApplicationControllerDelegate;
 
-    SortCriteriaControllerMode                      mSortCriteriaControllerMode;                  
+    SortCriteriaControllerMode                      mSortCriteriaControllerMode;
+    
+    NSInteger                                       mInitiallySelectedSortKey;
+    NSInteger                                       mCurrentlySelectedSortKey;
+    NSInteger                                       mInitiallySelectedSortOrder;
+    NSInteger                                       mCurrentlySelectedSortOrder;
 }
 
 @end
@@ -153,6 +158,10 @@ done:
     nlREQUIRE(mApplicationControllerDelegate != nullptr, done);
 
     mSortCriteriaControllerMode = SortCriteriaControllerModeAdd;
+    mInitiallySelectedSortKey   = NSNotFound;
+    mCurrentlySelectedSortKey   = NSNotFound;
+    mInitiallySelectedSortOrder = NSNotFound;
+    mCurrentlySelectedSortOrder = NSNotFound;
 
 done:
     return;
@@ -307,19 +316,92 @@ done:
 
 - (void) tableView: (UITableView *)aTableView keySectionDidSelectRow: (const NSUInteger &)aRow
 {
-    DeclareScopedFunctionTracer(lTracer);
+    const NSInteger   lCurrentlySelectedSortKey = aRow;
+    
+    if (lCurrentlySelectedSortKey != mCurrentlySelectedSortKey)
+    {
+        NSMutableSet *    lReloadIndexPaths;
+        NSIndexPath *     lOldIndexPath;
+        NSIndexPath *     lNewIndexPath;
 
+        lReloadIndexPaths = [[NSMutableSet setWithCapacity: 2] init];
+        nlREQUIRE(lReloadIndexPaths != nullptr, done);
+
+        if (mCurrentlySelectedSortKey != NSNotFound)
+        {
+            lOldIndexPath = [NSIndexPath indexPathForRow: mCurrentlySelectedSortKey
+                                               inSection: Detail::TableSection::kTableSection_Key];
+            nlREQUIRE(lOldIndexPath != nullptr, done);
+            
+            [lReloadIndexPaths addObject: lOldIndexPath];
+        }
+        
+        lNewIndexPath = [NSIndexPath indexPathForRow: lCurrentlySelectedSortKey
+                                           inSection: Detail::TableSection::kTableSection_Key];
+        nlREQUIRE(lNewIndexPath != nullptr, done);
+        
+        [lReloadIndexPaths addObject: lNewIndexPath];
+        
+        mCurrentlySelectedSortKey = lCurrentlySelectedSortKey;
+        
+        // Refresh the cells for the previously- and newly-selected rows.
+
+        [self.tableView reloadRowsAtIndexPaths: [lReloadIndexPaths allObjects]
+                              withRowAnimation: UITableViewRowAnimationNone];
+
+        // Always refresh the entirety of the order section. The detail description changes per
+        // selected sort key.
+        
+        [self.tableView reloadSections: [NSIndexSet indexSetWithIndex: Detail::TableSection::kTableSection_Order]
+                      withRowAnimation: UITableViewRowAnimationNone];
+    }
+
+done:
+    return;
 }
 
 - (void) tableView: (UITableView *)aTableView orderSectionDidSelectRow: (const NSUInteger &)aRow
 {
-    DeclareScopedFunctionTracer(lTracer);
+    const NSInteger   lCurrentlySelectedSortOrder = aRow;
+    
+    if (lCurrentlySelectedSortOrder != mCurrentlySelectedSortOrder)
+    {
+        NSMutableSet *    lReloadIndexPaths;
+        NSIndexPath *     lOldIndexPath;
+        NSIndexPath *     lNewIndexPath;
 
+        lReloadIndexPaths = [[NSMutableSet setWithCapacity: 2] init];
+        nlREQUIRE(lReloadIndexPaths != nullptr, done);
+
+        if (mCurrentlySelectedSortOrder != NSNotFound)
+        {
+            lOldIndexPath = [NSIndexPath indexPathForRow: mCurrentlySelectedSortOrder
+                                               inSection: Detail::TableSection::kTableSection_Order];
+            nlREQUIRE(lOldIndexPath != nullptr, done);
+            
+            [lReloadIndexPaths addObject: lOldIndexPath];
+        }
+        
+        lNewIndexPath = [NSIndexPath indexPathForRow: lCurrentlySelectedSortOrder
+                                           inSection: Detail::TableSection::kTableSection_Order];
+        nlREQUIRE(lNewIndexPath != nullptr, done);
+        
+        [lReloadIndexPaths addObject: lNewIndexPath];
+        
+        mCurrentlySelectedSortOrder = lCurrentlySelectedSortOrder;
+        
+        // Refresh the cells for the previously- and newly-selected rows.
+
+        [self.tableView reloadRowsAtIndexPaths: [lReloadIndexPaths allObjects]
+                              withRowAnimation: UITableViewRowAnimationNone];
+    }
+
+done:
+    return;
 }
 
 - (void) tableView: (UITableView *)aTableView didSelectRowAtIndexPath: (NSIndexPath *)aIndexPath
 {
-    DeclareScopedFunctionTracer(lTracer);
     const NSUInteger  lSection = aIndexPath.section;
     const NSUInteger  lRow     = aIndexPath.row;
 
@@ -342,14 +424,37 @@ done:
                            forRow: (const NSUInteger &)aRow
 {
     const Detail::SortKey  lSortKey = static_cast<Detail::SortKey>(aRow);
+    bool                   lIsDisabled;
 
     aCell.textLabel.text       = Detail::SortKeyDescription(lSortKey);
     aCell.tag                  = static_cast<NSInteger>(lSortKey);
     
-    // A n key cell is either selected or not but is additionally disabled depending on the
+    // A key cell is either selected or not but is additionally disabled depending on the
     // collection of sort parameters already configured in the sort criteria controller.
     
-    aCell.accessoryType        = UITableViewCellAccessoryNone;
+    lIsDisabled = [mSortCriteriaController hasSortKey: lSortKey];
+    
+    if (lIsDisabled)
+    {
+        aCell.alpha                  = 0.5f;
+        aCell.textLabel.alpha        = 0.5f;
+        aCell.userInteractionEnabled = false;
+    }
+    else
+    {
+        aCell.alpha                  = 1.0f;
+        aCell.textLabel.alpha        = 1.0f;
+        aCell.userInteractionEnabled = true;
+    }
+    
+    if (aRow == mCurrentlySelectedSortKey)
+    {
+        aCell.accessoryType        = UITableViewCellAccessoryCheckmark;
+    }
+    else
+    {
+        aCell.accessoryType        = UITableViewCellAccessoryNone;
+    }
 }
 
 - (void) configureReusableOrderCell: (UITableViewCell *)aCell
@@ -357,13 +462,31 @@ done:
 {
     const Detail::SortOrder  lSortOrder = static_cast<Detail::SortOrder>(aRow);
 
+
     aCell.textLabel.text       = Detail::SortOrderDescription(lSortOrder);
-    aCell.detailTextLabel.text = @"TBD";
     aCell.tag                  = static_cast<NSInteger>(lSortOrder);
+
+    if (mCurrentlySelectedSortKey   != NSNotFound)
+    {
+        const Detail::SortKey   lSortKey = static_cast<Detail::SortKey>(mCurrentlySelectedSortKey);
+        
+        aCell.detailTextLabel.text = Detail::SortOrderForKeyDescription(lSortOrder, lSortKey);
+    }
+    else
+    {
+        aCell.detailTextLabel.text = nullptr;
+    }
     
     // An order cell is either selected or not but is never disabled.
     
-    aCell.accessoryType        = UITableViewCellAccessoryNone;
+    if (aRow == mCurrentlySelectedSortOrder)
+    {
+        aCell.accessoryType        = UITableViewCellAccessoryCheckmark;
+    }
+    else
+    {
+        aCell.accessoryType        = UITableViewCellAccessoryNone;
+    }
 }
 
 // MARK: Controller Delegations
