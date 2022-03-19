@@ -28,6 +28,7 @@
 #import <OpenHLX/Model/IdentifierModel.hpp>
 
 #import "ClientController.hpp"
+#import "SortParameter_Detail.hpp"
 
 
 @interface SortCriteriaController : NSObject
@@ -45,6 +46,10 @@
 // MARK: Introspection
 
 - (NSUInteger) count;
+- (bool) hasSortKey: (const Detail::SortKey &)aSortKey;
+- (Detail::SortKey) sortKeyAtIndex: (const NSUInteger &)aIndex;
+- (Detail::SortOrder) sortOrderAtIndex: (const NSUInteger &)aIndex;
+- (Detail::SortOrder) sortOrderForSortKey: (const Detail::SortKey &)aSortKey;
 - (NSString *) sortKeyDescriptionAtIndex: (const NSUInteger &)aIndex;
 - (NSString *) sortOrderDescriptionAtIndex: (const NSUInteger &)aIndex;
 - (NSString *) sortOrderDetailDescriptionAtIndex: (const NSUInteger &)aIndex;

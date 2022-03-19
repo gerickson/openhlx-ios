@@ -1180,6 +1180,68 @@ ZoneSortFunctor :: ZoneSortFunctor(ClientController &aClientController,
     return (lRetval);
 }
 
+- (bool) hasSortKey: (const Detail::SortKey &)aSortKey
+{
+    Detail::SortParameters::const_iterator lCurrentParameter = mSortParameters.cbegin();
+    Detail::SortParameters::const_iterator lLastParameter    = mSortParameters.cend();
+    bool                                   lRetval           = false;
+
+    while (lCurrentParameter != lLastParameter)
+    {
+        lRetval = (lCurrentParameter->mSortKey == aSortKey);
+
+        if (lRetval)
+            break;
+
+        lCurrentParameter++;
+    }
+
+    return (lRetval);
+}
+
+- (Detail::SortKey) sortKeyAtIndex: (const NSUInteger &)aIndex
+{
+    Detail::SortKey lRetval = Detail::SortKey::kSortKey_Invalid;
+
+    nlREQUIRE(aIndex < mSortParameters.size(), done);
+
+    lRetval = mSortParameters[aIndex].mSortKey;
+
+done:
+    return (lRetval);
+}
+
+- (Detail::SortOrder) sortOrderAtIndex: (const NSUInteger &)aIndex
+{
+    Detail::SortOrder lRetval = Detail::SortOrder::kSortOrder_Ascending;
+
+    nlREQUIRE(aIndex < mSortParameters.size(), done);
+
+    lRetval = mSortParameters[aIndex].mSortOrder;
+
+done:
+    return (lRetval);
+}
+
+- (Detail::SortOrder) sortOrderForSortKey: (const Detail::SortKey &)aSortKey
+{
+    Detail::SortParameters::const_iterator lCurrentParameter = mSortParameters.cbegin();
+    Detail::SortParameters::const_iterator lLastParameter    = mSortParameters.cend();
+    Detail::SortOrder                      lRetval = Detail::SortOrder::kSortOrder_Ascending;
+
+    while (lCurrentParameter != lLastParameter)
+    {
+        if (lCurrentParameter->mSortKey == aSortKey)
+        {
+            lRetval = lCurrentParameter->mSortOrder;
+            break;
+        }
+
+        lCurrentParameter++;
+    }
+
+    return (lRetval);
+}
 
 - (NSString *) sortKeyDescriptionAtIndex: (const NSUInteger &)aIndex
 {
