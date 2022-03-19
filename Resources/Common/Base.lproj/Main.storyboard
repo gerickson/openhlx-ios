@@ -429,7 +429,7 @@
                     <navigationItem key="navigationItem" id="PB0-6c-59A">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="cqJ-90-pbm">
-                            <rect key="frame" x="95.5" y="9" width="129" height="32"/>
+                            <rect key="frame" x="95.5" y="6" width="129" height="32"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Groups"/>
@@ -526,6 +526,11 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="byw-Iz-cSX" userLabel="Sort Criteria Table View">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="4oV-l5-vvd">
+                            <rect key="frame" x="0.0" y="155" width="320" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Sort Key Prototype Cell" textLabel="c1R-xN-WVh" style="IBUITableViewCellStyleDefault" id="iwh-BK-8YC" userLabel="Sort Key Prototype Cell">
                                 <rect key="frame" x="0.0" y="28" width="320" height="43.5"/>
@@ -1387,6 +1392,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="zLi-Xf-Hl0">
+                            <rect key="frame" x="0.0" y="99.5" width="320" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="Sound Mode Chooser View Cell" textLabel="Aoa-11-FO3" style="IBUITableViewCellStyleDefault" id="E2T-wS-6Rm" customClass="SoundModeChooserTableViewCell">
                                 <rect key="frame" x="0.0" y="28" width="320" height="43.5"/>
@@ -1431,6 +1441,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="mUV-Ti-fqr">
+                            <rect key="frame" x="0.0" y="99.5" width="320" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="Source Chooser View Cell" textLabel="Sw4-8T-5cL" style="IBUITableViewCellStyleDefault" id="m7z-WG-GPd" customClass="SourceChooserTableViewCell">
                                 <rect key="frame" x="0.0" y="28" width="320" height="43.5"/>
@@ -1691,7 +1706,7 @@
             <objects>
                 <navigationController id="frY-uq-LbW" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cd0-zN-pzC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
