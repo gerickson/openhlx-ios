@@ -68,6 +68,10 @@ struct SortParameter
 
 // MARK: Function Prototypes
 
+extern bool       IsSortKeyValid(const Detail::SortKey &aSortKey);
+extern bool       IsSortOrderValid(const Detail::SortOrder &aSortOrder);
+extern bool       IsSortParameterValid(const Detail::SortParameter &aSortParameter);
+
 extern NSString * SortKeyDescription(const Detail::SortKey &aSortKey);
 extern NSString * SortOrderDescription(const Detail::SortOrder &aSortOrder);
 extern NSString * SortOrderForKeyDescription(const Detail::SortOrder &aSortOrder,

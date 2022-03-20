@@ -38,10 +38,40 @@ namespace Detail
 
 static NSString * const kSortCriteriaTableName               = @"SortCriteria";
 
+bool
+IsSortKeyValid(const SortKey &aSortKey)
+{
+    const bool lRetval = ((aSortKey   >= SortKey::kSortKey_Min) &&
+                          (aSortKey   <  SortKey::kSortKey_Max));
+
+    return (lRetval);
+}
+
+bool
+IsSortOrderValid(const SortOrder &aSortOrder)
+{
+    const bool lRetval = ((aSortOrder   >= SortOrder::kSortOrder_Min) &&
+                          (aSortOrder   <  SortOrder::kSortOrder_Max));
+
+    return (lRetval);
+}
+
+bool
+IsSortParameterValid(const SortParameter &aSortParameter)
+{
+    const bool lRetval = (IsSortKeyValid(aSortParameter.mSortKey) &&
+                          IsSortOrderValid(aSortParameter.mSortOrder));
+
+    return (lRetval);
+}
+
 NSString *
 SortKeyDescription(const Detail::SortKey &aSortKey)
 {
-    NSString * lRetval;
+    NSString * lRetval = nullptr;
+
+
+    nlREQUIRE(IsSortKeyValid(aSortKey), done);
 
     switch (aSortKey)
     {
@@ -72,18 +102,21 @@ SortKeyDescription(const Detail::SortKey &aSortKey)
         break;
 
     default:
-        lRetval = nullptr;
         break;
 
     }
 
+ done:
     return (lRetval);
 }
 
 NSString *
 SortOrderDescription(const Detail::SortOrder &aSortOrder)
 {
-    NSString * lRetval;
+    NSString * lRetval = nullptr;
+
+
+    nlREQUIRE(IsSortOrderValid(aSortOrder), done);
 
     switch (aSortOrder)
     {
@@ -99,11 +132,11 @@ SortOrderDescription(const Detail::SortOrder &aSortOrder)
         break;
 
     default:
-        lRetval = nullptr;
         break;
 
     }
 
+ done:
     return (lRetval);
 }
 
@@ -111,9 +144,9 @@ NSString *
 SortOrderForKeyDescription(const Detail::SortOrder &aSortOrder,
                            const Detail::SortKey &aSortKey)
 {
-    static const size_t            kAscendingIndex = static_cast<size_t>(Detail::SortOrder::kSortOrder_Ascending);
-    static const size_t            kDescendingIndex = static_cast<size_t>(Detail::SortOrder::kSortOrder_Descending);
-    NSString * const               kSortOrderForKeyDescription[Detail::SortKey::kSortKey_Count][2] = {
+    static constexpr size_t        kAscendingIndex = static_cast<size_t>(Detail::SortOrder::kSortOrder_Ascending);
+    static constexpr size_t        kDescendingIndex = static_cast<size_t>(Detail::SortOrder::kSortOrder_Descending);
+    NSString * const               kSortOrderForKeyDescription[Detail::SortKey::kSortKey_Count][Detail::kSortOrder_Count] = {
         [Detail::SortKey::kSortKey_Favorite]     = {
             [kDescendingIndex] = @"FavoriteDescendingSortOrderCriteriaKey",
             [kAscendingIndex]  = @"FavoriteAscendingSortOrderCriteriaKey"
@@ -138,9 +171,11 @@ SortOrderForKeyDescription(const Detail::SortOrder &aSortOrder,
     NSString *                     lLocalizedStringKey;
     NSString *                     lRetval         = nullptr;
 
-    nlREQUIRE(aSortKey < Detail::SortKey::kSortKey_Max, done);
 
-    lLocalizedStringKey = kSortOrderForKeyDescription[aSortKey][static_cast<size_t>(aSortOrder)];
+    nlREQUIRE(IsSortKeyValid(aSortKey), done);
+    nlREQUIRE(IsSortOrderValid(aSortOrder), done);
+
+    lLocalizedStringKey = kSortOrderForKeyDescription[aSortKey][aSortOrder];
 
     lRetval = NSLocalizedStringFromTable(lLocalizedStringKey,
                                          Detail::kSortCriteriaTableName, @"");
@@ -165,7 +200,8 @@ SortOrderForKeyDetailDescription(const Detail::SortOrder &aSortOrder,
                                                              aSortKey);
     nlREQUIRE(lSortOrderForKeyDescription != nullptr, done);
 
-    lRetval = [[NSString alloc] initWithFormat: NSLocalizedStringFromTable(@"SortOrderCriteriaOrderAndDetailFormatKey",
+    lRetval = [[NSString alloc] initWithFormat:
+        NSLocalizedStringFromTable(@"SortOrderCriteriaOrderAndDetailFormatKey",
                                    Detail::kSortCriteriaTableName,
                                    @""),
         lSortOrderDescription,
