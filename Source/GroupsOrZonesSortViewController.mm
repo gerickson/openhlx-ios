@@ -155,17 +155,31 @@ done:
 - (void)prepareForSegue: (UIStoryboardSegue *)aSegue sender: (id)aSender
 {
     DeclareScopedFunctionTracer(lTracer);
-    const bool kControllerWillAdd = [[aSegue identifier] isEqual: @"Sort Criteria Chooser Segue"];
+    const bool kControllerWillAdd  = [[aSegue identifier] isEqual: @"Sort Criteria Chooser Segue"];
     const bool kControllerWillEdit = [[aSegue identifier] isEqual: @"Sort Criteria Editor Segue"];
-    Status lStatus;
+    Status     lStatus;
 
 
     if (kControllerWillAdd || kControllerWillEdit)
     {
         SortCriteriaChooserEditorViewController *  lSortCriteriaChooserEditorViewController = [aSegue destinationViewController];
+        NSInteger                                  lRow;
+
+        if ([aSender isKindOfClass: [UITableViewCell class]])
+        {
+            NSIndexPath * lIndexPath = [self.tableView indexPathForCell: aSender];
+
+            lRow = lIndexPath.row;
+        }
+        else
+        {
+            lRow = NSNotFound;
+        }
 
         [lSortCriteriaChooserEditorViewController setApplicationController: mClientController->GetApplicationController()];
         [lSortCriteriaChooserEditorViewController setSortCriteriaController: mSortCriteriaController];
+        [lSortCriteriaChooserEditorViewController setSortKey: [self sortKeyForRow: lRow]];
+        [lSortCriteriaChooserEditorViewController setSortOrder: [self sortOrderForRow: lRow]];
 
         if (kControllerWillAdd)
         {
@@ -195,6 +209,24 @@ done:
         [self refreshEditDoneControls];
     }
 }
+
+// MARK: Introspection
+
+- (Detail::SortKey) sortKeyForRow: (const NSInteger &)aRow
+{
+    const Detail::SortKey lRetval = [mSortCriteriaController sortKeyAtIndex: aRow];
+
+    return (lRetval);
+}
+
+- (Detail::SortOrder) sortOrderForRow: (const NSInteger &)aRow
+{
+    const Detail::SortOrder lRetval = [mSortCriteriaController sortOrderAtIndex: aRow];
+
+    return (lRetval);
+}
+
+// MARK: Getters
 
 // MARK: Setters
 
