@@ -970,7 +970,7 @@ LoadSortOrderPreference(SortParameter &aSortParameter,
     }
     else
     {
-        lSortOrder = SortOrder::kSortOrder_Ascending;
+        lSortOrder = SortOrder::kSortOrder_Invalid;
         lRetval    = kError_InvalidConfiguration;
         nlREQUIRE_SUCCESS(lRetval, done);
     }
