@@ -1045,8 +1045,7 @@ ObjectSortFunctorBasis :: operator ()(const ObjectIdentifiers::value_type &aFirs
 
     while (lCurrentParameter != mLastParameter)
     {
-        if ((lCurrentParameter->mSortKey != SortKey::kSortKey_Invalid) &&
-            (lCurrentParameter->mSortKey <  SortKey::kSortKey_Max))
+        if (IsSortParameterValid(*lCurrentParameter))
         {
             const SortFunction       lSortFunction   = mSortKeyToFunctionMap[lCurrentParameter->mSortKey];
             const NSComparisonResult lSortComparison =
