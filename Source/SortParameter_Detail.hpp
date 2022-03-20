@@ -47,10 +47,17 @@ enum SortKey
     kSortKey_Count         = kSortKey_Max
 };
 
-enum class SortOrder : bool
+enum SortOrder
 {
-    kSortOrder_Descending = false,
-    kSortOrder_Ascending  = true
+    kSortOrder_Invalid     = -1,
+
+    kSortOrder_Min         = false,
+
+    kSortOrder_Descending  = kSortOrder_Min,
+    kSortOrder_Ascending   = true,
+
+    kSortOrder_Max,
+    kSortOrder_Count       = kSortOrder_Max
 };
 
 struct SortParameter
