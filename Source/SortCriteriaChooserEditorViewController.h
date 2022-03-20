@@ -63,5 +63,7 @@ typedef NS_ENUM(NSInteger, SortCriteriaControllerMode)
 - (void) setApplicationController: (MutableApplicationControllerPointer)aApplicationController;
 - (void) setSortCriteriaController: (SortCriteriaController *)aSortCriteriaController;
 - (void) setSortCriteriaControllerMode: (const SortCriteriaControllerMode &)aSortCriteriaControllerMode;
+- (void) setSortKey: (const Detail::SortKey &)aSortKey;
+- (void) setSortOrder: (const Detail::SortOrder &)aSortOrder;
 
 @end

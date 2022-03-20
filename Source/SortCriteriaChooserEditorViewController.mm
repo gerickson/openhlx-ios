@@ -73,6 +73,9 @@ typedef NS_ENUM(NSUInteger, TableSection)
     std::unique_ptr<ApplicationControllerDelegate>  mApplicationControllerDelegate;
 
     SortCriteriaControllerMode                      mSortCriteriaControllerMode;
+
+    Detail::SortKey                                 mSortKey;
+    Detail::SortOrder                               mSortOrder;
     
     NSInteger                                       mInitiallySelectedSortKey;
     NSInteger                                       mCurrentlySelectedSortKey;
@@ -158,6 +161,10 @@ done:
     nlREQUIRE(mApplicationControllerDelegate != nullptr, done);
 
     mSortCriteriaControllerMode = SortCriteriaControllerModeAdd;
+
+    mSortKey                    = Detail::kSortKey_Invalid;
+    mSortOrder                  = Detail::kSortOrder_Invalid;
+
     mInitiallySelectedSortKey   = NSNotFound;
     mCurrentlySelectedSortKey   = NSNotFound;
     mInitiallySelectedSortOrder = NSNotFound;
@@ -210,6 +217,16 @@ done:
 - (void) setSortCriteriaControllerMode: (const SortCriteriaControllerMode &)aSortCriteriaControllerMode
 {
     mSortCriteriaControllerMode = aSortCriteriaControllerMode;
+}
+
+- (void) setSortKey: (const Detail::SortKey &)aSortKey
+{
+    mSortKey = aSortKey;
+}
+
+- (void) setSortOrder: (const Detail::SortOrder &)aSortOrder
+{
+    mSortOrder = aSortOrder;
 }
 
 // MARK: Table View Data Source Delegation
@@ -447,7 +464,7 @@ done:
         aCell.userInteractionEnabled = true;
     }
     
-    if (aRow == mCurrentlySelectedSortKey)
+    if (aRow == mCurrentlySelectedSortKey || ((Detail::IsSortKeyValid(mSortKey)) && (mSortKey == lSortKey)))
     {
         aCell.accessoryType        = UITableViewCellAccessoryCheckmark;
     }
@@ -479,7 +496,7 @@ done:
     
     // An order cell is either selected or not but is never disabled.
     
-    if (aRow == mCurrentlySelectedSortOrder)
+    if ((aRow == mCurrentlySelectedSortOrder) || (Detail::IsSortOrderValid(mSortOrder) && (mSortOrder == lSortOrder)))
     {
         aCell.accessoryType        = UITableViewCellAccessoryCheckmark;
     }
