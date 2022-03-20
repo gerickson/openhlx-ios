@@ -237,12 +237,12 @@ done:
 
 - (NSInteger) tableViewKeySectionNumberOfRows: (UITableView *)aTableView 
 {
-    return (5);
+    return (Detail::SortKey::kSortKey_Count);
 }
 
 - (NSInteger) tableViewOrderSectionNumberOfRows: (UITableView *)aTableView
 {
-    return (2);
+    return (Detail::SortOrder::kSortOrder_Count);
 }
 
 - (NSInteger) tableView: (UITableView *)aTableView numberOfRowsInSection: (NSInteger)aSection
