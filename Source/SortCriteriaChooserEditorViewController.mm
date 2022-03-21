@@ -77,9 +77,7 @@ typedef NS_ENUM(NSUInteger, TableSection)
     Detail::SortKey                                 mSortKey;
     Detail::SortOrder                               mSortOrder;
 
-    NSInteger                                       mInitiallySelectedSortKey;
     NSInteger                                       mCurrentlySelectedSortKey;
-    NSInteger                                       mInitiallySelectedSortOrder;
     NSInteger                                       mCurrentlySelectedSortOrder;
 }
 
@@ -165,9 +163,7 @@ done:
     mSortKey                    = Detail::kSortKey_Invalid;
     mSortOrder                  = Detail::kSortOrder_Invalid;
 
-    mInitiallySelectedSortKey   = NSNotFound;
     mCurrentlySelectedSortKey   = NSNotFound;
-    mInitiallySelectedSortOrder = NSNotFound;
     mCurrentlySelectedSortOrder = NSNotFound;
 
 done:
