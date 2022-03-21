@@ -46,6 +46,7 @@
 // MARK: Introspection
 
 - (NSUInteger) count;
+- (bool) hasAllCriteria;
 - (bool) hasSortKey: (const Detail::SortKey &)aSortKey;
 - (Detail::SortKey) sortKeyAtIndex: (const NSUInteger &)aIndex;
 - (Detail::SortOrder) sortOrderAtIndex: (const NSUInteger &)aIndex;
@@ -63,6 +64,8 @@
 // MARK: Mutation
 
 - (HLX::Common::Status) removeSortCriteriaAtIndex: (const NSUInteger &)aIndex;
+- (HLX::Common::Status) replaceSortCriteriaAtIndex: (const NSUInteger &)aIndex
+withCriteria: (const Detail::SortParameter &)aCriteria;
 
 // MARK: Workers
 

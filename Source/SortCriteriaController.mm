@@ -1162,10 +1162,18 @@ ZoneSortFunctor :: ZoneSortFunctor(ClientController &aClientController,
 
 - (NSUInteger) count
 {
-    const Detail::SortParameters & lSortParameters = mSortParameters;
-    NSUInteger                     lRetval         = 0;
+    NSUInteger  lRetval = 0;
 
-    lRetval = lSortParameters.size();
+    lRetval = mSortParameters.size();
+
+    return (lRetval);
+}
+
+- (bool) hasAllCriteria
+{
+    bool  lRetval;
+
+    lRetval = (mSortParameters.size() == Detail::SortKey::kSortKey_Count);
 
     return (lRetval);
 }
@@ -1244,12 +1252,11 @@ done:
 
 - (NSString *) sortKeyDescriptionAtIndex: (const NSUInteger &)aIndex
 {
-    const Detail::SortParameters & lSortParameters = mSortParameters;
-    NSString *                     lRetval         = nullptr;
+    NSString *  lRetval = nullptr;
 
-    nlREQUIRE(aIndex < lSortParameters.size(), done);
+    nlREQUIRE(aIndex < mSortParameters.size(), done);
 
-    lRetval = Detail::SortKeyDescription(lSortParameters[aIndex].mSortKey);
+    lRetval = Detail::SortKeyDescription(mSortParameters[aIndex].mSortKey);
     nlREQUIRE(lRetval != nullptr, done);
 
  done:
@@ -1258,12 +1265,11 @@ done:
 
 - (NSString *) sortOrderDescriptionAtIndex: (const NSUInteger &)aIndex
 {
-    const Detail::SortParameters & lSortParameters = mSortParameters;
-    NSString *                     lRetval         = nullptr;
+    NSString *  lRetval = nullptr;
 
-    nlREQUIRE(aIndex < lSortParameters.size(), done);
+    nlREQUIRE(aIndex < mSortParameters.size(), done);
 
-    lRetval = Detail::SortOrderDescription(lSortParameters[aIndex].mSortOrder);
+    lRetval = Detail::SortOrderDescription(mSortParameters[aIndex].mSortOrder);
     nlREQUIRE(lRetval != nullptr, done);
 
 done:
@@ -1272,14 +1278,13 @@ done:
 
 - (NSString *) sortOrderDetailDescriptionAtIndex: (const NSUInteger &)aIndex
 {
-    const Detail::SortParameters & lSortParameters = mSortParameters;
-    NSString *                     lRetval         = nullptr;
+    NSString *  lRetval = nullptr;
 
 
-    nlREQUIRE(aIndex < lSortParameters.size(), done);
+    nlREQUIRE(aIndex < mSortParameters.size(), done);
 
-    lRetval = Detail::SortOrderForKeyDetailDescription(lSortParameters[aIndex].mSortOrder,
-                                                       lSortParameters[aIndex].mSortKey);
+    lRetval = Detail::SortOrderForKeyDetailDescription(mSortParameters[aIndex].mSortOrder,
+                                                       mSortParameters[aIndex].mSortKey);
     nlREQUIRE(lRetval != nullptr, done);
 
  done:
@@ -1332,6 +1337,25 @@ done:
     DeclareScopedFunctionTracer(lTracer);
     Status lRetval = kStatus_Success;
 
+    nlREQUIRE_ACTION(aIndex < mSortParameters.size(), done, lRetval = -EINVAL);
+
+    mSortParameters.erase(mSortParameters.begin() + aIndex);
+
+ done:
+    return (lRetval);
+}
+
+- (Status) replaceSortCriteriaAtIndex: (const NSUInteger &)aIndex
+withCriteria: (const Detail::SortParameter &)aCriteria
+{
+    DeclareScopedFunctionTracer(lTracer);
+    Status lRetval = kStatus_Success;
+
+    nlREQUIRE_ACTION(aIndex < mSortParameters.size(), done, lRetval = -EINVAL);
+
+    mSortParameters[aIndex] = aCriteria;
+
+ done:
     return (lRetval);
 }
 
