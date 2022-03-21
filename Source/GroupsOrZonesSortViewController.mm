@@ -338,6 +338,8 @@ done:
 
     if (lIsEditing)
     {
+        // The table is editing, put everything to non-editing state.
+
         [self.navigationController setToolbarHidden: lIsEditing
                                            animated: lIsAnimated];
 
@@ -348,12 +350,19 @@ done:
     }
     else
     {
+        const bool lCanAddCriteria = ![mSortCriteriaController hasAllCriteria];
+
+        // The table is not editing, put everything to editing state.
+
+        [self.navigationController setToolbarHidden: !lCanAddCriteria
+                                           animated: lIsAnimated];
+
         [self.mEditButtonItem setTitle: NSLocalizedString(@"EditDoneDoneTitleKey", @"")];
 
         [self.tableView setEditing: !lIsEditing
                           animated: lIsAnimated];
 
-        [self.navigationController setToolbarHidden: lIsEditing
+        [self.navigationController setToolbarHidden: !lCanAddCriteria
                                            animated: lIsAnimated];
     }
 }
