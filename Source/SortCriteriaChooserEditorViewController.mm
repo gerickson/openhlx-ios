@@ -453,7 +453,7 @@ done:
                            forRow: (const NSUInteger &)aRow
 {
     const Detail::SortKey  lSortKey = static_cast<Detail::SortKey>(aRow);
-    bool                   lIsDisabled;
+    bool                   lMightBeDisabled;
 
     aCell.textLabel.text       = Detail::SortKeyDescription(lSortKey);
     aCell.tag                  = static_cast<NSInteger>(lSortKey);
@@ -461,9 +461,9 @@ done:
     // A key cell is either selected or not but is additionally disabled depending on the
     // collection of sort parameters already configured in the sort criteria controller.
 
-    lIsDisabled = [mSortCriteriaController hasSortKey: lSortKey];
+    lMightBeDisabled = [mSortCriteriaController hasSortKey: lSortKey];
 
-    if (lIsDisabled)
+    if (lMightBeDisabled && (mSortCriteriaControllerMode == SortCriteriaControllerModeAdd))
     {
         aCell.alpha                  = 0.5f;
         aCell.textLabel.alpha        = 0.5f;
