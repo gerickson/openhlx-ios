@@ -1332,6 +1332,27 @@ done:
 
 // MARK: Mutation
 
+- (Status) insertSortCriteria: (const Detail::SortParameter &)aCriteria
+                      atIndex: (const NSUInteger &)aIndex
+{
+    DeclareScopedFunctionTracer(lTracer);
+    Status lRetval = kStatus_Success;
+
+    nlREQUIRE_ACTION(aIndex <= mSortParameters.size(), done, lRetval = -EINVAL);
+
+    if (aIndex == mSortParameters.size())
+    {
+        mSortParameters.push_back(aCriteria);
+    }
+    else
+    {
+        mSortParameters.insert(mSortParameters.begin() + aIndex, aCriteria);
+    }
+
+done:
+   return (lRetval);
+}
+
 - (Status) removeSortCriteriaAtIndex: (const NSUInteger &)aIndex
 {
     DeclareScopedFunctionTracer(lTracer);
@@ -1346,7 +1367,7 @@ done:
 }
 
 - (Status) replaceSortCriteriaAtIndex: (const NSUInteger &)aIndex
-withCriteria: (const Detail::SortParameter &)aCriteria
+                         withCriteria: (const Detail::SortParameter &)aCriteria
 {
     DeclareScopedFunctionTracer(lTracer);
     Status lRetval = kStatus_Success;

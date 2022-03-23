@@ -63,9 +63,11 @@
 
 // MARK: Mutation
 
+- (HLX::Common::Status) insertSortCriteria: (const Detail::SortParameter &)aCriteria
+                                   atIndex: (const NSUInteger &)aIndex;
 - (HLX::Common::Status) removeSortCriteriaAtIndex: (const NSUInteger &)aIndex;
 - (HLX::Common::Status) replaceSortCriteriaAtIndex: (const NSUInteger &)aIndex
-withCriteria: (const Detail::SortParameter &)aCriteria;
+                                      withCriteria: (const Detail::SortParameter &)aCriteria;
 
 // MARK: Workers
 
