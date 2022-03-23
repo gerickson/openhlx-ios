@@ -163,23 +163,26 @@ done:
     if (kControllerWillAdd || kControllerWillEdit)
     {
         SortCriteriaChooserEditorViewController *  lSortCriteriaChooserEditorViewController = [aSegue destinationViewController];
-        NSInteger                                  lRow;
+
 
         if ([aSender isKindOfClass: [UITableViewCell class]])
         {
             NSIndexPath * lIndexPath = [self.tableView indexPathForCell: aSender];
+            NSInteger     lRow       = lIndexPath.row;
 
             lRow = lIndexPath.row;
+
+            [lSortCriteriaChooserEditorViewController setSortKey: [self sortKeyForRow: lRow]];
+            [lSortCriteriaChooserEditorViewController setSortOrder: [self sortOrderForRow: lRow]];
         }
         else
         {
-            lRow = NSNotFound;
+            [lSortCriteriaChooserEditorViewController setSortKey: Detail::kSortKey_Invalid];
+            [lSortCriteriaChooserEditorViewController setSortOrder: Detail::kSortOrder_Invalid];
         }
 
         [lSortCriteriaChooserEditorViewController setApplicationController: mClientController->GetApplicationController()];
         [lSortCriteriaChooserEditorViewController setSortCriteriaController: mSortCriteriaController];
-        [lSortCriteriaChooserEditorViewController setSortKey: [self sortKeyForRow: lRow]];
-        [lSortCriteriaChooserEditorViewController setSortOrder: [self sortOrderForRow: lRow]];
 
         if (kControllerWillAdd)
         {
