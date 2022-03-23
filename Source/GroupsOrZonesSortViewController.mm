@@ -73,7 +73,8 @@ using namespace Nuovations;
 
 - (void) viewWillAppear: (BOOL)aAnimated
 {
-    Status  lStatus;
+    const bool  lShouldNotBeEditing = true;
+    Status      lStatus;
 
 
     [super viewWillAppear: aAnimated];
@@ -81,7 +82,7 @@ using namespace Nuovations;
     lStatus = mClientController->GetApplicationController()->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
-    [self refreshEditDoneControls];
+    [self refreshEditDoneControls: lShouldNotBeEditing];
 
     [self.tableView reloadData];
 
@@ -209,7 +210,9 @@ done:
 {
     if (aSender == self.mEditButtonItem)
     {
-        [self refreshEditDoneControls];
+        const bool lShouldNotBeEditing = [self.tableView isEditing];
+
+        [self refreshEditDoneControls: lShouldNotBeEditing];
     }
 }
 
@@ -336,19 +339,18 @@ done:
     return;
 }
 
-- (void) refreshEditDoneControls
+- (void) refreshEditDoneControls: (const bool &)aShouldNotBeEditing
 {
-    const bool lIsEditing  = [self.tableView isEditing];
     const bool lIsAnimated = true;
 
-    if (lIsEditing)
+    if (aShouldNotBeEditing)
     {
         // The table is editing, put everything to non-editing state.
 
-        [self.navigationController setToolbarHidden: lIsEditing
+        [self.navigationController setToolbarHidden: aShouldNotBeEditing
                                            animated: lIsAnimated];
 
-        [self.tableView setEditing: !lIsEditing
+        [self.tableView setEditing: !aShouldNotBeEditing
                           animated: lIsAnimated];
 
         [self.mEditButtonItem setTitle: NSLocalizedString(@"EditDoneEditTitleKey", @"")];
@@ -364,7 +366,7 @@ done:
 
         [self.mEditButtonItem setTitle: NSLocalizedString(@"EditDoneDoneTitleKey", @"")];
 
-        [self.tableView setEditing: !lIsEditing
+        [self.tableView setEditing: !aShouldNotBeEditing
                           animated: lIsAnimated];
 
         [self.navigationController setToolbarHidden: !lCanAddCriteria
