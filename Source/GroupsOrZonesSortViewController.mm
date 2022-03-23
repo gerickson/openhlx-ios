@@ -81,6 +81,8 @@ using namespace Nuovations;
     lStatus = mClientController->GetApplicationController()->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
+    [self refreshEditDoneControls];
+
     [self.tableView reloadData];
 
 done:
