@@ -310,6 +310,8 @@ done:
     {
         lStatus = [mSortCriteriaController removeSortCriteriaAtIndex: lRow];
         nlREQUIRE_SUCCESS(lStatus, done);
+
+        [self.tableView reloadData];
     }
 
  done:
