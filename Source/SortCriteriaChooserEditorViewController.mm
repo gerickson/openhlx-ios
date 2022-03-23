@@ -77,6 +77,7 @@ typedef NS_ENUM(NSUInteger, TableSection)
     Detail::SortKey                                 mSortKey;
     Detail::SortOrder                               mSortOrder;
 
+    NSInteger                                       mInitialCount;
     NSInteger                                       mCurrentlySelectedSortKey;
     NSInteger                                       mCurrentlySelectedSortOrder;
 }
@@ -121,6 +122,8 @@ typedef NS_ENUM(NSUInteger, TableSection)
     lStatus = mApplicationController->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
+    mInitialCount = [mSortCriteriaController count];
+
 done:
     return;
 }
@@ -163,6 +166,7 @@ done:
     mSortKey                    = Detail::kSortKey_Invalid;
     mSortOrder                  = Detail::kSortOrder_Invalid;
 
+    mInitialCount               = NSNotFound;
     mCurrentlySelectedSortKey   = NSNotFound;
     mCurrentlySelectedSortOrder = NSNotFound;
 
@@ -373,11 +377,13 @@ done:
         [self.tableView reloadRowsAtIndexPaths: [lReloadIndexPaths allObjects]
                               withRowAnimation: UITableViewRowAnimationNone];
 
-        // Always refresh the entirety of the order section. The detail description changes per
-        // selected sort key.
+        // Always refresh the entirety of the order section. The
+        // detail description changes per selected sort key.
 
         [self.tableView reloadSections: [NSIndexSet indexSetWithIndex: Detail::TableSection::kTableSection_Order]
                       withRowAnimation: UITableViewRowAnimationNone];
+
+        [self maybeAddOrReplaceSortCriteria];
     }
 
 done:
@@ -419,6 +425,8 @@ done:
 
         [self.tableView reloadRowsAtIndexPaths: [lReloadIndexPaths allObjects]
                               withRowAnimation: UITableViewRowAnimationNone];
+
+        [self maybeAddOrReplaceSortCriteria];
     }
 
 done:
@@ -511,6 +519,33 @@ done:
     else
     {
         aCell.accessoryType        = UITableViewCellAccessoryNone;
+    }
+}
+
+- (void) maybeAddOrReplaceSortCriteria
+{
+    if (mSortCriteriaControllerMode == SortCriteriaControllerModeAdd)
+    {
+        if (Detail::IsSortKeyValid(mSortKey) &&
+            Detail::IsSortOrderValid(mSortOrder))
+        {
+            const NSInteger              lCurrentCount  = [mSortCriteriaController count];
+            const Detail::SortParameter  lSortParameter = { mSortKey, mSortOrder };
+            Status                       lStatus;
+
+            if (lCurrentCount == mInitialCount)
+            {
+                lStatus = [mSortCriteriaController insertSortCriteria: lSortParameter
+                                                              atIndex: mInitialCount];
+                nlVERIFY_SUCCESS(lStatus);
+            }
+            else if (lCurrentCount == mInitialCount + 1)
+            {
+                lStatus = [mSortCriteriaController replaceSortCriteriaAtIndex: mInitialCount
+                                                                 withCriteria: lSortParameter];
+                nlVERIFY_SUCCESS(lStatus);
+            }
+        }
     }
 }
 
