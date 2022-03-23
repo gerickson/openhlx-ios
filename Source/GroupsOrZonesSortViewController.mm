@@ -207,8 +207,6 @@ done:
 
 - (IBAction) onEditButtonItemAction: (id)aSender
 {
-    DeclareScopedFunctionTracer(lTracer);
-
     if (aSender == self.mEditButtonItem)
     {
         [self refreshEditDoneControls];

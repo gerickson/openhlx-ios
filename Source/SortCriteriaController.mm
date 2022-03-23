@@ -1335,7 +1335,6 @@ done:
 - (Status) insertSortCriteria: (const Detail::SortParameter &)aCriteria
                       atIndex: (const NSUInteger &)aIndex
 {
-    DeclareScopedFunctionTracer(lTracer);
     Status lRetval = kStatus_Success;
 
     nlREQUIRE_ACTION(aIndex <= mSortParameters.size(), done, lRetval = -EINVAL);
