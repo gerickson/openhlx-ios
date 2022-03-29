@@ -75,6 +75,7 @@
 - (NSInteger) mapIdentifierToIndex: (const HLX::Model::IdentifierModel::IdentifierType &)aIdentifier;
 - (HLX::Model::IdentifierModel::IdentifierType) mapIndexToIdentifier: (const NSUInteger &)aIndex;
 - (HLX::Common::Status) sortIdentifiers;
+- (HLX::Common::Status) storePreferences;
 
 @end
 
