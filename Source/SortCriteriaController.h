@@ -48,6 +48,7 @@
 - (NSUInteger) count;
 - (bool) hasAllCriteria;
 - (bool) hasSortKey: (const Detail::SortKey &)aSortKey;
+- (NSUInteger) indexOfSortKey: (const Detail::SortKey &)aSortKey;
 - (Detail::SortKey) sortKeyAtIndex: (const NSUInteger &)aIndex;
 - (Detail::SortOrder) sortOrderAtIndex: (const NSUInteger &)aIndex;
 - (Detail::SortOrder) sortOrderForSortKey: (const Detail::SortKey &)aSortKey;

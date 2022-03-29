@@ -1193,6 +1193,9 @@ ZoneSortFunctor :: ZoneSortFunctor(ClientController &aClientController,
     Detail::SortParameters::const_iterator lLastParameter    = mSortParameters.cend();
     bool                                   lRetval           = false;
 
+
+    nlREQUIRE(IsSortKeyValid(aSortKey), done);
+
     while (lCurrentParameter != lLastParameter)
     {
         lRetval = (lCurrentParameter->mSortKey == aSortKey);
@@ -1203,6 +1206,31 @@ ZoneSortFunctor :: ZoneSortFunctor(ClientController &aClientController,
         lCurrentParameter++;
     }
 
+done:
+    return (lRetval);
+}
+
+- (NSUInteger) indexOfSortKey: (const Detail::SortKey &)aSortKey
+{
+    Detail::SortParameters::const_iterator lCurrentParameter = mSortParameters.cbegin();
+    Detail::SortParameters::const_iterator lLastParameter    = mSortParameters.cend();
+    NSUInteger                             lRetval           = NSNotFound;
+
+
+    nlREQUIRE(IsSortKeyValid(aSortKey), done);
+
+    while (lCurrentParameter != lLastParameter)
+    {
+        if (lCurrentParameter->mSortKey == aSortKey)
+        {
+            lRetval = std::distance(mSortParameters.cbegin(), lCurrentParameter);
+            break;
+        }
+
+        lCurrentParameter++;
+    }
+
+ done:
     return (lRetval);
 }
 
@@ -1354,7 +1382,6 @@ done:
 
 - (Status) removeSortCriteriaAtIndex: (const NSUInteger &)aIndex
 {
-    DeclareScopedFunctionTracer(lTracer);
     Status lRetval = kStatus_Success;
 
     nlREQUIRE_ACTION(aIndex < mSortParameters.size(), done, lRetval = -EINVAL);
@@ -1368,7 +1395,6 @@ done:
 - (Status) replaceSortCriteriaAtIndex: (const NSUInteger &)aIndex
                          withCriteria: (const Detail::SortParameter &)aCriteria
 {
-    DeclareScopedFunctionTracer(lTracer);
     Status lRetval = kStatus_Success;
 
     nlREQUIRE_ACTION(aIndex < mSortParameters.size(), done, lRetval = -EINVAL);
