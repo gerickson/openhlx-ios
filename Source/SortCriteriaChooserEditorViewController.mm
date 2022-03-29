@@ -546,11 +546,17 @@ done:
                 lStatus = [mSortCriteriaController insertSortCriteria: lSortParameter
                                                               atIndex: mInitialCount];
                 nlREQUIRE_SUCCESS(lStatus, done);
+
+                lStatus = [mSortCriteriaController storePreferences];
+                nlREQUIRE_SUCCESS(lStatus, done);
             }
             else if (lCurrentCount == mInitialCount + 1)
             {
                 lStatus = [mSortCriteriaController replaceSortCriteriaAtIndex: mInitialCount
                                                                  withCriteria: lSortParameter];
+                nlREQUIRE_SUCCESS(lStatus, done);
+
+                lStatus = [mSortCriteriaController storePreferences];
                 nlREQUIRE_SUCCESS(lStatus, done);
             }
         }
@@ -567,6 +573,9 @@ done:
             {
                 lStatus = [mSortCriteriaController replaceSortCriteriaAtIndex: mInitialIndex
                                                                  withCriteria: lSortParameter];
+                nlREQUIRE_SUCCESS(lStatus, done);
+
+                lStatus = [mSortCriteriaController storePreferences];
                 nlREQUIRE_SUCCESS(lStatus, done);
             }
         }
