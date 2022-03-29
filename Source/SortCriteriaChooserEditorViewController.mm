@@ -78,6 +78,7 @@ typedef NS_ENUM(NSUInteger, TableSection)
     Detail::SortOrder                               mSortOrder;
 
     NSInteger                                       mInitialCount;
+    NSInteger                                       mInitialIndex;
     NSInteger                                       mCurrentlySelectedSortKey;
     NSInteger                                       mCurrentlySelectedSortOrder;
 }
@@ -123,6 +124,7 @@ typedef NS_ENUM(NSUInteger, TableSection)
     nlREQUIRE_SUCCESS(lStatus, done);
 
     mInitialCount = [mSortCriteriaController count];
+    mInitialIndex = [mSortCriteriaController indexOfSortKey: mSortKey];
 
 done:
     return;
@@ -383,6 +385,9 @@ done:
         [self.tableView reloadSections: [NSIndexSet indexSetWithIndex: Detail::TableSection::kTableSection_Order]
                       withRowAnimation: UITableViewRowAnimationNone];
 
+        // If there's a selected sort key and order, add (add mode) or
+        // replace (edit mode) a sort criteria.
+
         [self maybeAddOrReplaceSortCriteria];
     }
 
@@ -425,6 +430,9 @@ done:
 
         [self.tableView reloadRowsAtIndexPaths: [lReloadIndexPaths allObjects]
                               withRowAnimation: UITableViewRowAnimationNone];
+
+        // If there's a selected sort key and order, add (add mode) or
+        // replace (edit mode) a sort criteria.
 
         [self maybeAddOrReplaceSortCriteria];
     }
@@ -537,16 +545,35 @@ done:
             {
                 lStatus = [mSortCriteriaController insertSortCriteria: lSortParameter
                                                               atIndex: mInitialCount];
-                nlVERIFY_SUCCESS(lStatus);
+                nlREQUIRE_SUCCESS(lStatus, done);
             }
             else if (lCurrentCount == mInitialCount + 1)
             {
                 lStatus = [mSortCriteriaController replaceSortCriteriaAtIndex: mInitialCount
                                                                  withCriteria: lSortParameter];
-                nlVERIFY_SUCCESS(lStatus);
+                nlREQUIRE_SUCCESS(lStatus, done);
             }
         }
     }
+    else if (mSortCriteriaControllerMode == SortCriteriaControllerModeEdit)
+    {
+        if (Detail::IsSortKeyValid(mSortKey) &&
+            Detail::IsSortOrderValid(mSortOrder))
+        {
+            const Detail::SortParameter  lSortParameter = { mSortKey, mSortOrder };
+            Status                       lStatus;
+
+            if (mInitialIndex != NSNotFound)
+            {
+                lStatus = [mSortCriteriaController replaceSortCriteriaAtIndex: mInitialIndex
+                                                                 withCriteria: lSortParameter];
+                nlREQUIRE_SUCCESS(lStatus, done);
+            }
+        }
+    }
+
+ done:
+    return;
 }
 
 // MARK: Controller Delegations
