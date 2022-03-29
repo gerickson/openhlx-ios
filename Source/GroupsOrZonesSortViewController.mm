@@ -296,12 +296,42 @@ done:
 
 - (void) tableView: (UITableView *)aTableView moveRowAtIndexPath: (NSIndexPath *)aSourceIndexPath toIndexPath: (NSIndexPath *)aDestinationIndexPath
 {
-    DeclareScopedFunctionTracer(lTracer);
+    const NSUInteger      lDestinationSection = aDestinationIndexPath.section;
+    const NSUInteger      lDestinationRow     = aDestinationIndexPath.row;
+    const NSUInteger      lSourceSection      = aSourceIndexPath.section;
+    const NSUInteger      lSourceRow          = aSourceIndexPath.row;
+    Detail::SortParameter lSortParameter;
+    Status                lStatus;
+
+
+    nlREQUIRE(lDestinationSection == 0, done);
+    nlREQUIRE(lSourceSection == 0, done);
+
+    Log::Debug().Write("Would move criteria from index %lu to index %lu\n",
+                       lSourceRow, lDestinationRow);
+
+    lSortParameter.mSortKey = [mSortCriteriaController sortKeyAtIndex: lSourceRow];
+    nlREQUIRE(Detail::IsSortKeyValid(lSortParameter.mSortKey), done);
+
+    lSortParameter.mSortOrder = [mSortCriteriaController sortOrderAtIndex: lSourceRow];
+    nlREQUIRE(Detail::IsSortOrderValid(lSortParameter.mSortOrder), done);
+
+    lStatus = [mSortCriteriaController removeSortCriteriaAtIndex: lSourceRow];
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lStatus = [mSortCriteriaController insertSortCriteria: lSortParameter
+                                                  atIndex: lDestinationRow];
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    lStatus = [mSortCriteriaController storePreferences];
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+ done:
+    return;
 }
 
 - (void) tableView: (UITableView *)aTableView commitEditingStyle: (UITableViewCellEditingStyle)aEditingStyle forRowAtIndexPath:(NSIndexPath *)aIndexPath
 {
-    DeclareScopedFunctionTracer(lTracer);
     const NSUInteger  lSection = aIndexPath.section;
     const NSUInteger  lRow = aIndexPath.row;
     Status            lStatus;
@@ -312,6 +342,9 @@ done:
     if (aEditingStyle == UITableViewCellEditingStyleDelete)
     {
         lStatus = [mSortCriteriaController removeSortCriteriaAtIndex: lRow];
+        nlREQUIRE_SUCCESS(lStatus, done);
+
+        lStatus = [mSortCriteriaController storePreferences];
         nlREQUIRE_SUCCESS(lStatus, done);
 
         [self.tableView reloadData];
