@@ -754,8 +754,32 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="9aC-Vt-9fa" userLabel="Group Reset Cell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" textLabel="im1-2a-vSF" detailTextLabel="cGm-HZ-aE4" style="IBUITableViewCellStyleValue1" id="Lg0-MT-8Ku" userLabel="Group Use Count Cell">
                                         <rect key="frame" x="0.0" y="386" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Lg0-MT-8Ku" id="7eB-lP-8KZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Use Count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="im1-2a-vSF">
+                                                    <rect key="frame" x="16" y="12" width="80.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Use Count" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cGm-HZ-aE4">
+                                                    <rect key="frame" x="223.5" y="12" width="80.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="9aC-Vt-9fa" userLabel="Group Reset Cell">
+                                        <rect key="frame" x="0.0" y="430" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9aC-Vt-9fa" id="dGz-Yq-0w4">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -796,6 +820,7 @@
                         <outlet property="mResetButton" destination="c6z-tn-Rcv" id="udU-Hj-jQi"/>
                         <outlet property="mResetCell" destination="9aC-Vt-9fa" id="eh0-x6-8yc"/>
                         <outlet property="mSourceName" destination="Dio-vk-59G" id="aGt-id-ZgD"/>
+                        <outlet property="mUseCountLabel" destination="cGm-HZ-aE4" id="A2G-Yt-yZq"/>
                         <outlet property="mVolumeDecreaseButton" destination="ia7-wZ-sjS" id="0sn-Mn-StD"/>
                         <outlet property="mVolumeIncreaseButton" destination="TqX-Bk-EYj" id="v0C-ld-HG4"/>
                         <outlet property="mVolumeSlider" destination="oPb-co-NdC" id="pDx-KS-PaD"/>
@@ -1083,8 +1108,32 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="mTE-Fe-AKh" userLabel="Zone Reset Cell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" textLabel="Xab-1v-6L1" detailTextLabel="UeZ-DE-vic" style="IBUITableViewCellStyleValue1" id="Y8W-1I-ay6" userLabel="Zone Use Count Cell">
                                         <rect key="frame" x="0.0" y="661" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Y8W-1I-ay6" id="0v0-BL-HEh">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Use Count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xab-1v-6L1">
+                                                    <rect key="frame" x="16" y="12" width="80.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Use Count" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UeZ-DE-vic">
+                                                    <rect key="frame" x="223.5" y="12" width="80.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" id="mTE-Fe-AKh" userLabel="Zone Reset Cell">
+                                        <rect key="frame" x="0.0" y="705" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="mTE-Fe-AKh" id="YbP-La-e6C">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1131,6 +1180,7 @@
                         <outlet property="mSoundModeCell" destination="h55-Pc-ONO" id="4Qu-Hs-rm8"/>
                         <outlet property="mSoundModeLabel" destination="CTw-yV-eXz" id="XMu-FH-bLv"/>
                         <outlet property="mSourceName" destination="REd-Vh-R0T" id="C4x-kU-zbm"/>
+                        <outlet property="mUseCountLabel" destination="UeZ-DE-vic" id="9S6-Mo-eXt"/>
                         <outlet property="mVolumeDecreaseButton" destination="2D7-D6-tEd" id="eAI-3d-Pdf"/>
                         <outlet property="mVolumeIncreaseButton" destination="mlO-8j-gwu" id="1GU-Vd-cBh"/>
                         <outlet property="mVolumeSlider" destination="zJ7-hM-FJ6" id="S53-SB-JRh"/>
@@ -1624,7 +1674,7 @@
             <objects>
                 <navigationController toolbarHidden="NO" id="LxV-Bt-A93" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Lhh-bp-7Jg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Bei-aO-1OR">
@@ -1706,7 +1756,7 @@
             <objects>
                 <navigationController id="frY-uq-LbW" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cd0-zN-pzC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -1719,7 +1769,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="NoA-8i-REi"/>
+        <segue reference="NYg-7C-wab"/>
         <segue reference="wJl-ni-0wM"/>
         <segue reference="6bV-Rq-ZKF"/>
     </inferredMetricsTieBreakers>
