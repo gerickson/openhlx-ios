@@ -366,7 +366,7 @@ done:
     nlREQUIRE(lSection == 0, done);
 
     aCell.textLabel.text       = [mSortCriteriaController sortKeyDescriptionAtIndex: lRow];
-    aCell.detailTextLabel.text = [mSortCriteriaController sortOrderDetailDescriptionAtIndex: lRow];
+    aCell.detailTextLabel.text = [mSortCriteriaController sortOrderForKeyDescriptionAtIndex: lRow];
 
  done:
     return;
