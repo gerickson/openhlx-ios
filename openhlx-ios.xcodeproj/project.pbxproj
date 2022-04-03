@@ -255,6 +255,8 @@
 		0BEFB2872302702D00EFE74D /* ZoneDetailViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BEFB2862302702D00EFE74D /* ZoneDetailViewController.mm */; };
 		0BF1CEC627DEB5580031FD3C /* GroupsOrZonesSortViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BF1CEC427DEB5580031FD3C /* GroupsOrZonesSortViewController.mm */; };
 		0BF1CEC727DEB5580031FD3C /* GroupsOrZonesSortViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0BF1CEC427DEB5580031FD3C /* GroupsOrZonesSortViewController.mm */; };
+		0BF4C23227F966600008501F /* ClientUseCountModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF4C23027F966600008501F /* ClientUseCountModel.cpp */; };
+		0BF4C23327F966600008501F /* ClientUseCountModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF4C23027F966600008501F /* ClientUseCountModel.cpp */; };
 		0BF7FCE42584469000F9836B /* CommandNameSetBufferBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF7FCA72584468C00F9836B /* CommandNameSetBufferBasis.cpp */; };
 		0BF7FCE52584469000F9836B /* CommandBalanceBufferBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF7FCA82584468D00F9836B /* CommandBalanceBufferBasis.cpp */; };
 		0BF7FCE62584469000F9836B /* CommandSourcesRegularExpressionBases.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF7FCAF2584468D00F9836B /* CommandSourcesRegularExpressionBases.cpp */; };
@@ -770,6 +772,8 @@
 		0BEFB2862302702D00EFE74D /* ZoneDetailViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ZoneDetailViewController.mm; path = Source/ZoneDetailViewController.mm; sourceTree = SOURCE_ROOT; };
 		0BF1CEC427DEB5580031FD3C /* GroupsOrZonesSortViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GroupsOrZonesSortViewController.mm; sourceTree = "<group>"; };
 		0BF1CEC527DEB5580031FD3C /* GroupsOrZonesSortViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsOrZonesSortViewController.h; sourceTree = "<group>"; };
+		0BF4C23027F966600008501F /* ClientUseCountModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClientUseCountModel.cpp; sourceTree = "<group>"; };
+		0BF4C23127F966600008501F /* ClientUseCountModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClientUseCountModel.hpp; sourceTree = "<group>"; };
 		0BF7FCA72584468C00F9836B /* CommandNameSetBufferBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandNameSetBufferBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/CommandNameSetBufferBasis.cpp; sourceTree = "<absolute>"; };
 		0BF7FCA82584468D00F9836B /* CommandBalanceBufferBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CommandBalanceBufferBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/CommandBalanceBufferBasis.cpp; sourceTree = "<absolute>"; };
 		0BF7FCA92584468D00F9836B /* CommandBalanceBufferBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CommandBalanceBufferBasis.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/CommandBalanceBufferBasis.hpp; sourceTree = "<absolute>"; };
@@ -952,6 +956,8 @@
 				0BB94FEA27CB411D0055B422 /* ClientPreferencesController.hpp */,
 				0BB94FE927CB411D0055B422 /* ClientPreferencesController.mm */,
 				0BDFC7D327DEA21800F112B7 /* ClientPreferencesControllerDelegate.hpp */,
+				0BF4C23027F966600008501F /* ClientUseCountModel.cpp */,
+				0BF4C23127F966600008501F /* ClientUseCountModel.hpp */,
 				0BB8D6FC25155B2B009D083A /* ConnectHistoryController.h */,
 				0BB8D6FD25155B2B009D083A /* ConnectHistoryController.mm */,
 				0BB62F2F22D91C000013E943 /* ConnectHistoryViewController.h */,
@@ -1868,6 +1874,7 @@
 				0BE8CBBB265B2FD700A17FCC /* GroupsAndZonesTableViewCell.mm in Sources */,
 				0BE8CBBC265B2FD700A17FCC /* SourceChooserViewController.mm in Sources */,
 				0BE8CBBD265B2FD700A17FCC /* UIViewController+HLXClientDidDisconnectDelegateDefaultImplementations.mm in Sources */,
+				0BF4C23327F966600008501F /* ClientUseCountModel.cpp in Sources */,
 				0BE8CBBE265B2FD700A17FCC /* SoundModeChooserTableViewCell.mm in Sources */,
 				0BE8CBBF265B2FD700A17FCC /* UIViewController+TopViewController.mm in Sources */,
 				0BE8CBC0265B2FD700A17FCC /* ApplicationControllerDelegate.mm in Sources */,
@@ -2050,6 +2057,7 @@
 				0BBD822422B932E400554609 /* AppDelegate.mm in Sources */,
 				0BB62F3022D91C000013E943 /* ConnectHistoryViewController.mm in Sources */,
 				0B6041C227CEED120002F835 /* ClientFavoriteModel.cpp in Sources */,
+				0BF4C23227F966600008501F /* ClientUseCountModel.cpp in Sources */,
 				0B238917258F1584004C6E4A /* EqualizerPresetChooserViewController.mm in Sources */,
 				0B238919258F1584004C6E4A /* EqualizerBandsDetailViewController.mm in Sources */,
 				0B40B63C250ED1A6009A65DA /* ConnectHistoryViewTableCell.mm in Sources */,
