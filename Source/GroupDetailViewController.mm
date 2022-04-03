@@ -473,6 +473,7 @@ done:
 {
     [self refreshGroupFavorite];
     [self refreshGroupLastUsedDate];
+    [self refreshGroupUseCount];
     [self refreshGroupReset];
 }
 
@@ -529,6 +530,67 @@ done:
 
 done:
     self.mResetCell.hidden = !lHasPreferences;
+}
+
+static NSNumberFormatter *
+CreateUseCountFormatter(void)
+{
+    NSNumberFormatter *lRetval = nullptr;
+
+    lRetval = [[NSNumberFormatter alloc] init];
+    nlREQUIRE(lRetval != nullptr, done);
+
+    [lRetval setFormatterBehavior: NSNumberFormatterBehaviorDefault];
+    [lRetval setNumberStyle:       NSNumberFormatterNoStyle];
+
+ done:
+    return (lRetval);
+}
+
+static NSString *
+CreateUseCount(const ClientPreferencesController::UseCountType &aUseCount)
+{
+    NSNumberFormatter *  lUseCountFormatter = nullptr;
+    NSNumber *           lUseCount = nullptr;
+    NSString *           lRetval = nullptr;
+
+
+    lUseCountFormatter = CreateUseCountFormatter();
+    nlREQUIRE(lUseCountFormatter != nullptr, done);
+
+    lUseCount = [[NSNumber alloc] initWithUnsignedInt: aUseCount];
+    nlREQUIRE(lUseCount != nullptr, done);
+
+    lRetval = [lUseCountFormatter stringFromNumber: lUseCount];
+    nlREQUIRE(lRetval != nullptr, done);
+
+ done:
+    return (lRetval);
+}
+
+- (void) refreshGroupUseCount
+{
+    GroupModel::IdentifierType                 lIdentifier;
+    ClientPreferencesController::UseCountType  lUseCount;
+    Status                                     lStatus;
+
+
+    lStatus = mGroup->GetIdentifier(lIdentifier);
+    nlREQUIRE_SUCCESS(lStatus, done);
+
+    // There may be no preferences at all for this group or there may
+    // be no last used date preference for this group. Consequently, it
+    // is expected that this call can and likely will fail. A default
+    // last used date string has already been defaulted above to a
+    // sane value to handle such a failure.
+
+    lStatus = mClientController->GetPreferencesController().GroupGetUseCount(lIdentifier, lUseCount);
+    nlEXPECT_SUCCESS(lStatus, done);
+
+ done:
+    self.mUseCountLabel.text   = CreateUseCount(lUseCount);
+
+    return;
 }
 
 - (void) refreshGroupVolume
