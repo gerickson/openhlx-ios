@@ -89,25 +89,29 @@ public:
 
     // Setters
 
-    // With implicit date
+    // With implicit date and an incremented use count
 
     HLX::Common::Status GroupSetFavorite(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
                                          const FavoriteType &aFavorite);
     HLX::Common::Status ZoneSetFavorite(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
                                         const FavoriteType &aFavorite);
 
-    // With explicit date
+    // With explicit date or use count
 
     HLX::Common::Status GroupSetFavorite(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
                                          const FavoriteType &aFavorite,
                                          NSDate *aDate);
     HLX::Common::Status GroupSetLastUsedDate(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
                                          NSDate *aDate);
+    HLX::Common::Status GroupSetUseCount(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
+                                         const UseCountType &aUseCount);
     HLX::Common::Status ZoneSetFavorite(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
                                         const FavoriteType &aFavorite,
                                         NSDate *aDate);
     HLX::Common::Status ZoneSetLastUsedDate(const HLX::Model::ZoneModel::IdentifierType &aGroupIdentifier,
                                          NSDate *aDate);
+    HLX::Common::Status ZoneSetUseCount(const HLX::Model::ZoneModel::IdentifierType &aGroupIdentifier,
+                                        const UseCountType &aUseCount);
 
 private:
     HLX::Common::Status ObjectReset(ClientObjectsPreferencesModel &aObjectsPreferencesModel,

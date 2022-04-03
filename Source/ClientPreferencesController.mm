@@ -47,6 +47,7 @@ using namespace std;
 static NSString * kFavoriteKey     = @"Favorite";
 static NSString * kGroupsKey       = @"Groups";
 static NSString * kLastUsedDateKey = @"Last Used";
+static NSString * kUseCountKey     = @"Use Count";
 static NSString * kZonesKey        = @"Zones";
 
 namespace Detail
@@ -119,7 +120,7 @@ GetObjectIdentifier(NSString *aObjectIdentifier)
 
     lObjectIdentifier = [lObjectIdentifierFormatter numberFromString: aObjectIdentifier];
     nlREQUIRE(lObjectIdentifier != nullptr, done);
-        
+
     lRetval = [lObjectIdentifier unsignedCharValue];
 
  done:
@@ -222,18 +223,23 @@ ObjectSetFavorite(ClientObjectsPreferencesModel &aObjectsPreferencesModel, const
     {
         lRetval = lTempPreferencesModel.Init();
         nlREQUIRE_SUCCESS(lRetval, done);
-        
+
         lObjectPreferencesModel = &lTempPreferencesModel;
     }
 
     if (lObjectPreferencesModel != nullptr)
     {
+        ClientPreferencesController::UseCountType lNewUseCount;
+
         lRetval = lObjectPreferencesModel->SetFavorite(aFavorite);
         nlREQUIRE(lRetval >= kStatus_Success, done);
 
         lRetval = lObjectPreferencesModel->SetLastUsedDate((__bridge CFDateRef)(aDate));
         nlREQUIRE(lRetval >= kStatus_Success, done);
-    
+
+        lRetval = lObjectPreferencesModel->IncrementUseCount(lNewUseCount);
+        nlREQUIRE(lRetval >= kStatus_Success, done);
+
         if (lObjectPreferencesModel == &lTempPreferencesModel)
         {
             lRetval = aObjectsPreferencesModel.SetObjectPreferences(aObjectIdentifier,
@@ -262,7 +268,7 @@ ObjectSetLastUsedDate(ClientObjectsPreferencesModel &aObjectsPreferencesModel,
     {
         lRetval = lTempPreferencesModel.Init();
         nlREQUIRE_SUCCESS(lRetval, done);
-        
+
         lObjectPreferencesModel = &lTempPreferencesModel;
     }
 
@@ -270,6 +276,40 @@ ObjectSetLastUsedDate(ClientObjectsPreferencesModel &aObjectsPreferencesModel,
     {
         lRetval = lObjectPreferencesModel->SetLastUsedDate(lLastUsedDate);
         nlREQUIRE_SUCCESS(lRetval, done);
+
+        if (lObjectPreferencesModel == &lTempPreferencesModel)
+        {
+            lRetval = aObjectsPreferencesModel.SetObjectPreferences(aObjectIdentifier,
+                                                                    *lObjectPreferencesModel);
+            nlREQUIRE_SUCCESS(lRetval, done);
+        }
+    }
+
+ done:
+    return (lRetval);
+}
+
+static Status
+ObjectSetUseCount(ClientObjectsPreferencesModel &aObjectsPreferencesModel, const IdentifierModel::IdentifierType &aObjectIdentifier, const ClientPreferencesController::UseCountType &aUseCount)
+{
+    ClientObjectPreferencesModel *       lObjectPreferencesModel = nullptr;
+    ClientObjectPreferencesModel         lTempPreferencesModel;
+    Status                               lRetval = kStatus_Success;
+
+    lRetval = aObjectsPreferencesModel.GetObjectPreferences(aObjectIdentifier, lObjectPreferencesModel);
+
+    if (lRetval == -ENOENT)
+    {
+        lRetval = lTempPreferencesModel.Init();
+        nlREQUIRE_SUCCESS(lRetval, done);
+
+        lObjectPreferencesModel = &lTempPreferencesModel;
+    }
+
+    if (lObjectPreferencesModel != nullptr)
+    {
+        lRetval = lObjectPreferencesModel->SetUseCount(aUseCount);
+        nlREQUIRE(lRetval >= kStatus_Success, done);
 
         if (lObjectPreferencesModel == &lTempPreferencesModel)
         {
@@ -349,6 +389,28 @@ done:
 }
 
 static Status
+LoadObjectUseCountPreference(ClientObjectPreferencesModel &aObjectPreferencesModel,
+                             NSString *aUseCountKey,
+                             NSDictionary *aObjectDictionary)
+{
+    NSNumber *                       lUseCountNumber;
+    Status                           lRetval = kStatus_Success;
+
+
+    nlREQUIRE_ACTION(aUseCountKey != nullptr, done, lRetval = -EINVAL);
+    nlREQUIRE_ACTION(aObjectDictionary != nullptr, done, lRetval = -EINVAL);
+
+    lUseCountNumber = [aObjectDictionary objectForKey: aUseCountKey];
+    nlEXPECT(lUseCountNumber != nullptr, done);
+
+    lRetval = aObjectPreferencesModel.SetUseCount([lUseCountNumber unsignedIntValue]);
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
+done:
+   return (lRetval);
+}
+
+static Status
 LoadObjectPreferences(ClientObjectPreferencesModel &aObjectPreferencesModel,
                       NSString *aObjectKey,
                       NSDictionary *aObjectsDictionary)
@@ -371,6 +433,11 @@ LoadObjectPreferences(ClientObjectPreferencesModel &aObjectPreferencesModel,
     lRetval = LoadObjectLastUsedDatePreference(aObjectPreferencesModel,
                                                kLastUsedDateKey,
                                                lObjectDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lRetval = LoadObjectUseCountPreference(aObjectPreferencesModel,
+                                           kUseCountKey,
+                                           lObjectDictionary);
     nlREQUIRE_SUCCESS(lRetval, done);
 
 done:
@@ -400,7 +467,7 @@ LoadObjectsPreferences(ClientObjectsPreferencesModel &aObjectsPreferencesModel,
     {
         IdentifierModel::IdentifierType  lObjectIdentifier;
         ClientObjectPreferencesModel     lObjectPreferencesModel;
-                           
+
 
         lRetval = lObjectPreferencesModel.Init();
         nlREQUIRE_SUCCESS(lRetval, done);
@@ -468,6 +535,31 @@ done:
 }
 
 static Status
+StoreObjectUseCountPreference(const ClientObjectPreferencesModel &aObjectPreferencesModel,
+                              NSString *aUseCountKey,
+                              NSMutableDictionary *aObjectDictionary)
+{
+    ClientPreferencesController::UseCountType  lUseCount;
+    NSNumber *                                 lUseCountNumber;
+    Status                                     lRetval = kStatus_Success;
+
+    nlREQUIRE_ACTION(aUseCountKey != nullptr, done, lRetval = -EINVAL);
+    nlREQUIRE_ACTION(aObjectDictionary != nullptr, done, lRetval = -EINVAL);
+
+    lRetval = aObjectPreferencesModel.GetUseCount(lUseCount);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lUseCountNumber = [[NSNumber alloc] initWithUnsignedInt: lUseCount];
+    nlREQUIRE_ACTION(lUseCountNumber != nullptr, done, lRetval = -ENOMEM);
+
+    [aObjectDictionary setObject: lUseCountNumber
+                          forKey: aUseCountKey];
+
+done:
+   return (lRetval);
+}
+
+static Status
 StoreObjectPreferences(const ClientObjectPreferencesModel &aObjectPreferencesModel,
                        NSString *aObjectKey,
                        NSMutableDictionary *aObjectsDictionary)
@@ -489,6 +581,11 @@ StoreObjectPreferences(const ClientObjectPreferencesModel &aObjectPreferencesMod
     lRetval = StoreObjectLastUsedDatePreference(aObjectPreferencesModel,
                                                 kLastUsedDateKey,
                                                 lObjectDictionary);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+    lRetval = StoreObjectUseCountPreference(aObjectPreferencesModel,
+                                            kUseCountKey,
+                                            lObjectDictionary);
     nlREQUIRE_SUCCESS(lRetval, done);
 
     [aObjectsDictionary setObject: lObjectDictionary
@@ -515,18 +612,18 @@ StoreObjectsPreferences(const ClientObjectsPreferencesModel &aObjectsPreferences
 
     lObjectsDictionary = [[NSMutableDictionary alloc] init];
     nlREQUIRE_ACTION(lObjectsDictionary != nullptr, done, lRetval = -ENOMEM);
-    
+
     lRetval = lObjectIdentifiersCollection.Init();
     nlREQUIRE_SUCCESS(lRetval, done);
-    
+
     lRetval = aObjectsPreferencesModel.GetObjectIdentifiers(lObjectIdentifiersCollection);
     nlREQUIRE_SUCCESS(lRetval, done);
-    
+
     lRetval = lObjectIdentifiersCollection.GetCount(lObjectIdentifierCount);
     nlREQUIRE_SUCCESS(lRetval, done);
 
     lObjectIdentifiers.resize(lObjectIdentifierCount);
-    
+
     lRetval = lObjectIdentifiersCollection.GetIdentifiers(&lObjectIdentifiers[0],
                                                           lObjectIdentifierCount);
     nlREQUIRE_SUCCESS(lRetval, done);
@@ -551,7 +648,7 @@ StoreObjectsPreferences(const ClientObjectsPreferencesModel &aObjectsPreferences
                                          lObjectKey,
                                          lObjectsDictionary);
         nlREQUIRE_SUCCESS(lRetval, done);
-        
+
         lObjectIdentifierIterator++;
     }
 
@@ -818,6 +915,21 @@ ClientPreferencesController :: GroupSetLastUsedDate(const GroupModel::Identifier
 }
 
 Status
+ClientPreferencesController :: GroupSetUseCount(const GroupModel::IdentifierType &aGroupIdentifier,
+                                                const UseCountType &aUseCount)
+{
+    Status   lRetval = kStatus_Success;
+
+    lRetval = Detail::ObjectSetUseCount(mGroupsPreferences,
+                                        aGroupIdentifier,
+                                        aUseCount);
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
+ done:
+    return (lRetval);
+}
+
+Status
 ClientPreferencesController :: ZoneSetFavorite(const ZoneModel::IdentifierType &aZoneIdentifier,
                                                const FavoriteType &aFavorite)
 {
@@ -840,6 +952,21 @@ ClientPreferencesController :: ZoneSetLastUsedDate(const ZoneModel::IdentifierTy
     lRetval = Detail::ObjectSetLastUsedDate(mZonesPreferences,
                                             aZoneIdentifier,
                                             aLastUsedDate);
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
+ done:
+    return (lRetval);
+}
+
+Status
+ClientPreferencesController :: ZoneSetUseCount(const ZoneModel::IdentifierType &aZoneIdentifier,
+                                               const UseCountType &aUseCount)
+{
+    Status   lRetval = kStatus_Success;
+
+    lRetval = Detail::ObjectSetUseCount(mZonesPreferences,
+                                        aZoneIdentifier,
+                                        aUseCount);
     nlREQUIRE(lRetval >= kStatus_Success, done);
 
  done:
