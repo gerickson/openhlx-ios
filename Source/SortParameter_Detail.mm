@@ -101,6 +101,11 @@ SortKeyDescription(const Detail::SortKey &aSortKey)
                                              Detail::kSortCriteriaTableName, @"");
         break;
 
+    case Detail::kSortKey_UseCount:
+        lRetval = NSLocalizedStringFromTable(@"UseCountSortKeyCriteriaKey",
+                                             Detail::kSortCriteriaTableName, @"");
+        break;
+
     default:
         break;
 
@@ -166,6 +171,10 @@ SortOrderForKeyDescription(const Detail::SortOrder &aSortOrder,
         [Detail::SortKey::kSortKey_Name]         = {
             [kDescendingIndex] = @"AlphabeticDescendingSortOrderCriteriaKey",
             [kAscendingIndex]  = @"AlphabeticAscendingSortOrderCriteriaKey"
+        },
+        [Detail::SortKey::kSortKey_UseCount]         = {
+            [kDescendingIndex] = @"NumericDescendingSortOrderCriteriaKey",
+            [kAscendingIndex]  = @"NumericAscendingSortOrderCriteriaKey"
         }
     };
     NSString *                     lLocalizedStringKey;
