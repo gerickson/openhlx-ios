@@ -30,6 +30,7 @@ public:
     HLX::Common::Status SetFavorite(const FavoriteType &aFavorite);
     HLX::Common::Status SetLastUsedDate(const LastUsedDateType &aLastUsedDate);
     HLX::Common::Status SetUseCount(const UseCountType &aUseCount);
+    HLX::Common::Status IncrementUseCount(UseCountType &aUseCount);
 
     bool operator ==(const ClientObjectPreferencesModel &aClientObjectPreferencesModel) const;
 

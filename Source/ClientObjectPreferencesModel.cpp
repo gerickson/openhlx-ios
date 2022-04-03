@@ -138,6 +138,18 @@ ClientObjectPreferencesModel :: SetUseCount(const UseCountType &aUseCount)
     return (lRetval);
 }
 
+Status
+ClientObjectPreferencesModel :: IncrementUseCount(UseCountType &aUseCount)
+{
+    Status lRetval = kStatus_Success;
+
+    lRetval = mUseCount.IncrementUseCount(aUseCount);
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
+ done:
+    return (lRetval);
+}
+
 bool
 ClientObjectPreferencesModel :: operator ==(const ClientObjectPreferencesModel &aClientObjectPreferencesModel) const
 {
