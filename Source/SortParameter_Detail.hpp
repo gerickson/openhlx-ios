@@ -42,6 +42,7 @@ enum SortKey
     kSortKey_LastUsedDate,
     kSortKey_Mute,
     kSortKey_Name,
+    kSortKey_UseCount,
 
     kSortKey_Max,
     kSortKey_Count         = kSortKey_Max
