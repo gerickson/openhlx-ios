@@ -21,6 +21,9 @@ ClientObjectPreferencesModel :: Init(void)
     lRetval = mLastUsedDate.Init();
     nlREQUIRE(lRetval >= kStatus_Success, done);
 
+    lRetval = mUseCount.Init();
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
 done:
     if (lRetval == kStatus_ValueAlreadySet)
     {
@@ -41,6 +44,9 @@ ClientObjectPreferencesModel :: Init(const ClientObjectPreferencesModel &aClient
     lRetval = mLastUsedDate.Init(aClientObjectPreferencesModel.mLastUsedDate);
     nlREQUIRE(lRetval >= kStatus_Success, done);
 
+    lRetval = mUseCount.Init(aClientObjectPreferencesModel.mUseCount);
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
  done:
     if (lRetval == kStatus_ValueAlreadySet)
     {
@@ -55,6 +61,7 @@ ClientObjectPreferencesModel :: operator =(const ClientObjectPreferencesModel &a
 {
     mFavorite      = aClientObjectPreferencesModel.mFavorite;
     mLastUsedDate  = aClientObjectPreferencesModel.mLastUsedDate;
+    mUseCount      = aClientObjectPreferencesModel.mUseCount;
 
     return (*this);
 }
@@ -77,6 +84,18 @@ ClientObjectPreferencesModel :: GetLastUsedDate(LastUsedDateType &aLastUsedDate)
     Status lRetval = kStatus_Success;
 
     lRetval = mLastUsedDate.GetLastUsedDate(aLastUsedDate);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
+}
+
+Status
+ClientObjectPreferencesModel :: GetUseCount(UseCountType &aUseCount) const
+{
+    Status lRetval = kStatus_Success;
+
+    lRetval = mUseCount.GetUseCount(aUseCount);
     nlREQUIRE_SUCCESS(lRetval, done);
 
  done:
@@ -107,9 +126,22 @@ ClientObjectPreferencesModel :: SetLastUsedDate(const LastUsedDateType &aLastUse
     return (lRetval);
 }
 
+Status
+ClientObjectPreferencesModel :: SetUseCount(const UseCountType &aUseCount)
+{
+    Status lRetval = kStatus_Success;
+
+    lRetval = mUseCount.SetUseCount(aUseCount);
+    nlREQUIRE(lRetval >= kStatus_Success, done);
+
+ done:
+    return (lRetval);
+}
+
 bool
 ClientObjectPreferencesModel :: operator ==(const ClientObjectPreferencesModel &aClientObjectPreferencesModel) const
 {
     return ((mFavorite     == aClientObjectPreferencesModel.mFavorite    ) &&
-            (mLastUsedDate == aClientObjectPreferencesModel.mLastUsedDate));
+            (mLastUsedDate == aClientObjectPreferencesModel.mLastUsedDate) &&
+            (mUseCount     == aClientObjectPreferencesModel.mUseCount    ));
 }
