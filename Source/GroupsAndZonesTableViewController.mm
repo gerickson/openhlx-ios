@@ -100,6 +100,8 @@ NSString * const kZoneSortCriteriaKey  = @"Zone Sort Critiera";
     lStatus = mClientController->GetApplicationController()->SetDelegate(mApplicationControllerDelegate.get());
     nlREQUIRE_SUCCESS(lStatus, done);
 
+    [[self sortCriteriaController] sortIdentifiers];
+
     [self.tableView reloadData];
 
 done:
@@ -238,6 +240,8 @@ done:
     if (aSender == self.mGroupZoneSegmentedControl)
     {
         mShowStyle = self.mGroupZoneSegmentedControl.selectedSegmentIndex;
+
+        [[self sortCriteriaController] sortIdentifiers];
 
         [self.tableView reloadData];
     }
@@ -432,6 +436,8 @@ done:
                 lIndexPath = [NSIndexPath indexPathForRow: lRow
                                           inSection: kSection];
 
+                [[self sortCriteriaController] sortIdentifiers];
+
                 [self.tableView reloadRowsAtIndexPaths: [NSArray arrayWithObject: lIndexPath]
                                 withRowAnimation: UITableViewRowAnimationNone];
             }
@@ -439,6 +445,8 @@ done:
         break;
 
     case StateChange::kStateChangeType_SourceName:
+            [[self sortCriteriaController] sortIdentifiers];
+
         [self.tableView reloadData];
         break;
 
@@ -455,6 +463,8 @@ done:
 
                 lIndexPath = [NSIndexPath indexPathForRow: lRow
                                           inSection: kSection];
+
+                [[self sortCriteriaController] sortIdentifiers];
 
                 [self.tableView reloadRowsAtIndexPaths: [NSArray arrayWithObject: lIndexPath]
                                 withRowAnimation: UITableViewRowAnimationNone];
