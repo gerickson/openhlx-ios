@@ -158,6 +158,14 @@ static NSComparisonResult GroupNameCompare(ClientController &aClientController,
 static NSComparisonResult ZoneNameCompare(ClientController &aClientController,
                                           const IdentifierModel::IdentifierType &aFirstIdentifier,
                                           const IdentifierModel::IdentifierType &aSecondIdentifier);
+static NSComparisonResult UseCountCompare(const ClientObjectPreferencesModel::UseCountType &aFirst,
+                                          const ClientObjectPreferencesModel::UseCountType &aSecond);
+static NSComparisonResult GroupUseCountCompare(ClientController &aClientController,
+                                               const IdentifierModel::IdentifierType &aFirstIdentifier,
+                                               const IdentifierModel::IdentifierType &aSecondIdentifier);
+static NSComparisonResult ZoneUseCountCompare(ClientController &aClientController,
+                                              const IdentifierModel::IdentifierType &aFirstIdentifier,
+                                              const IdentifierModel::IdentifierType &aSecondIdentifier);
 static void ClearAndInitializeIdentifiers(const IdentifierModel::IdentifierType &aIdentifiersMax,
                                           ObjectIdentifiers &aIdentifiers);
 static void SortIdentifiers(const IdentifierModel::IdentifierType &aIdentifiersMax,
@@ -282,7 +290,8 @@ static constexpr SortFunctions const   sGroupSortKeyToFunctionMap = {{
     [SortKey::kSortKey_Identifier]   = GroupIdentifierCompare,
     [SortKey::kSortKey_LastUsedDate] = GroupLastUsedDateCompare,
     [SortKey::kSortKey_Mute]         = GroupMuteCompare,
-    [SortKey::kSortKey_Name]         = GroupNameCompare
+    [SortKey::kSortKey_Name]         = GroupNameCompare,
+    [SortKey::kSortKey_UseCount]     = GroupUseCountCompare
 }};
 
 static constexpr SortFunctions const   sZoneSortKeyToFunctionMap = {{
@@ -290,7 +299,8 @@ static constexpr SortFunctions const   sZoneSortKeyToFunctionMap = {{
     [SortKey::kSortKey_Identifier]   = ZoneIdentifierCompare,
     [SortKey::kSortKey_LastUsedDate] = ZoneLastUsedDateCompare,
     [SortKey::kSortKey_Mute]         = ZoneMuteCompare,
-    [SortKey::kSortKey_Name]         = ZoneNameCompare
+    [SortKey::kSortKey_Name]         = ZoneNameCompare,
+    [SortKey::kSortKey_UseCount]     = ZoneUseCountCompare
 }};
 
 // MARK: Preferences Keys and Values
@@ -302,6 +312,7 @@ static NSString * const kPreferencesSortKeyIdentiferValue    = @"Identifier";
 static NSString * const kPreferencesSortKeyLastUsedDateValue = @"Last Used Date";
 static NSString * const kPreferencesSortKeyMuteValue         = @"Mute";
 static NSString * const kPreferencesSortKeyNameValue         = @"Name";
+static NSString * const kPreferencesSortKeyUseCountValue     = @"Use Count";
 
 static NSString * const kPreferencesSortOrderKey             = @"Order";
 
@@ -648,6 +659,69 @@ ZoneNameCompare(ClientController &aClientController,
     return (lRetval);
 }
 
+static NSComparisonResult UseCountCompare(const ClientObjectPreferencesModel::UseCountType &aFirst,
+                                          const ClientObjectPreferencesModel::UseCountType &aSecond)
+{
+    NSComparisonResult lRetval;
+
+    if (aFirst < aSecond)
+        lRetval = NSOrderedAscending;
+    else if (aFirst > aSecond)
+        lRetval = NSOrderedDescending;
+    else
+        lRetval = NSOrderedSame;
+
+    return (lRetval);
+}
+
+static NSComparisonResult
+GroupUseCountCompare(ClientController &aClientController,
+                     const IdentifierModel::IdentifierType &aFirstIdentifier,
+                     const IdentifierModel::IdentifierType &aSecondIdentifier)
+{
+    ClientObjectPreferencesModel::UseCountType  lFirstUseCount  = 0;
+    ClientObjectPreferencesModel::UseCountType  lSecondUseCount = 0;
+    Status                                      lStatus;
+    NSComparisonResult                          lRetval = NSOrderedSame;
+
+    lStatus = aClientController.GetPreferencesController().GroupGetUseCount(aFirstIdentifier,
+                                                                            lFirstUseCount);
+    (void)lStatus;
+
+    lStatus = aClientController.GetPreferencesController().GroupGetUseCount(aSecondIdentifier,
+                                                                            lSecondUseCount);
+    (void)lStatus;
+
+    lRetval = UseCountCompare(lFirstUseCount, lSecondUseCount);
+
+done:
+    return (lRetval);
+}
+
+static NSComparisonResult
+ZoneUseCountCompare(ClientController &aClientController,
+                    const IdentifierModel::IdentifierType &aFirstIdentifier,
+                    const IdentifierModel::IdentifierType &aSecondIdentifier)
+{
+    ClientObjectPreferencesModel::UseCountType  lFirstUseCount  = 0;
+    ClientObjectPreferencesModel::UseCountType  lSecondUseCount = 0;
+    Status                                      lStatus;
+    NSComparisonResult                          lRetval = NSOrderedSame;
+
+    lStatus = aClientController.GetPreferencesController().ZoneGetUseCount(aFirstIdentifier,
+                                                                           lFirstUseCount);
+    (void)lStatus;
+
+    lStatus = aClientController.GetPreferencesController().ZoneGetUseCount(aSecondIdentifier,
+                                                                           lSecondUseCount);
+    (void)lStatus;
+
+    lRetval = UseCountCompare(lFirstUseCount, lSecondUseCount);
+
+done:
+    return (lRetval);
+
+}
 
 static void
 ClearAndInitializeIdentifiers(const IdentifierModel::IdentifierType &aIdentifiersMax,
