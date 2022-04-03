@@ -117,6 +117,12 @@ class ApplicationControllerDelegate;
 @property (weak, nonatomic) IBOutlet UILabel *          mSourceName;
 
 /**
+ *  A pointer to the label which describes the use count of the group.
+ *
+ */
+@property (weak, nonatomic) IBOutlet UILabel *          mUseCountLabel;
+
+/**
  *  A pointer to the button for decreasing the volume level.
  *
  */

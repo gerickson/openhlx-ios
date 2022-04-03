@@ -168,6 +168,12 @@ class ApplicationControllerDelegate;
 @property (weak, nonatomic) IBOutlet UILabel *          mSoundModeLabel;
 
 /**
+ *  A pointer to the label which describes the use count of the zone.
+ *
+ */
+@property (weak, nonatomic) IBOutlet UILabel *          mUseCountLabel;
+
+/**
  *  A pointer to the button for decreasing the volume level.
  *
  */
