@@ -54,7 +54,8 @@
 - (Detail::SortOrder) sortOrderForSortKey: (const Detail::SortKey &)aSortKey;
 - (NSString *) sortKeyDescriptionAtIndex: (const NSUInteger &)aIndex;
 - (NSString *) sortOrderDescriptionAtIndex: (const NSUInteger &)aIndex;
-- (NSString *) sortOrderDetailDescriptionAtIndex: (const NSUInteger &)aIndex;
+- (NSString *) sortOrderForKeyDescriptionAtIndex: (const NSUInteger &)aIndex;
+- (NSString *) sortOrderForKeyDetailDescriptionAtIndex: (const NSUInteger &)aIndex;
 
 // MARK: Getters
 

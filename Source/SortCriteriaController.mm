@@ -1304,7 +1304,23 @@ done:
    return (lRetval);
 }
 
-- (NSString *) sortOrderDetailDescriptionAtIndex: (const NSUInteger &)aIndex
+- (NSString *) sortOrderForKeyDescriptionAtIndex: (const NSUInteger &)aIndex
+{
+    NSString *  lRetval = nullptr;
+
+
+    nlREQUIRE(aIndex < mSortParameters.size(), done);
+
+    lRetval = Detail::SortOrderForKeyDescription(mSortParameters[aIndex].mSortOrder,
+                                                 mSortParameters[aIndex].mSortKey);
+    nlREQUIRE(lRetval != nullptr, done);
+
+ done:
+    return (lRetval);
+}
+
+
+- (NSString *) sortOrderForKeyDetailDescriptionAtIndex: (const NSUInteger &)aIndex
 {
     NSString *  lRetval = nullptr;
 
