@@ -38,6 +38,9 @@
 /* String to use for the group or zone name sort key criteria */
 "NameSortKeyCriteriaKey" = "Name";
 
+/* String to use for the group or zone use count sort key criteria */
+"UseCountSortKeyCriteriaKey" = "Use Count";
+
 /*
  * Sort Order
  */
