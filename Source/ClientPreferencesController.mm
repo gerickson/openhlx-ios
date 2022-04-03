@@ -190,6 +190,26 @@ ObjectGetLastUsedDate(const ClientObjectsPreferencesModel &aObjectsPreferencesMo
 }
 
 static Status
+ObjectGetUseCount(const ClientObjectsPreferencesModel &aObjectsPreferencesModel, const IdentifierModel::IdentifierType &aObjectIdentifier, ClientPreferencesController::UseCountType &aUseCount)
+{
+    const ClientObjectPreferencesModel * lObjectPreferencesModel = nullptr;
+    Status                               lRetval = kStatus_Success;
+
+
+    // There may be no preferences at all for this object. Consequently,
+    // it is expected that there may be no object preferences model.
+
+    lRetval = aObjectsPreferencesModel.GetObjectPreferences(aObjectIdentifier, lObjectPreferencesModel);
+    nlEXPECT_SUCCESS(lRetval, done);
+
+    lRetval = lObjectPreferencesModel->GetUseCount(aUseCount);
+    nlREQUIRE_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
+}
+
+static Status
 ObjectSetFavorite(ClientObjectsPreferencesModel &aObjectsPreferencesModel, const IdentifierModel::IdentifierType &aObjectIdentifier, const ClientPreferencesController::FavoriteType &aFavorite, NSDate *aDate)
 {
     ClientObjectPreferencesModel *       lObjectPreferencesModel = nullptr;
@@ -713,6 +733,19 @@ ClientPreferencesController :: GroupGetLastUsedDate(const GroupModel::Identifier
 }
 
 Status
+ClientPreferencesController :: GroupGetUseCount(const GroupModel::IdentifierType &aGroupIdentifier,
+                                                UseCountType &aUseCount) const
+{
+    Status  lRetval = kStatus_Success;
+
+    lRetval = Detail::ObjectGetUseCount(mGroupsPreferences, aGroupIdentifier, aUseCount);
+    nlEXPECT_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
+}
+
+Status
 ClientPreferencesController :: ZoneGetFavorite(const ZoneModel::IdentifierType &aZoneIdentifier,
                                                FavoriteType &aFavorite) const
 {
@@ -732,6 +765,19 @@ ClientPreferencesController :: ZoneGetLastUsedDate(const ZoneModel::IdentifierTy
     Status  lRetval = kStatus_Success;
 
     lRetval = Detail::ObjectGetLastUsedDate(mZonesPreferences, aZoneIdentifier, aLastUsedDate);
+    nlEXPECT_SUCCESS(lRetval, done);
+
+ done:
+    return (lRetval);
+}
+
+Status
+ClientPreferencesController :: ZoneGetUseCount(const ZoneModel::IdentifierType &aZoneIdentifier,
+                                               UseCountType &aUseCount) const
+{
+    Status  lRetval = kStatus_Success;
+
+    lRetval = Detail::ObjectGetUseCount(mZonesPreferences, aZoneIdentifier, aUseCount);
     nlEXPECT_SUCCESS(lRetval, done);
 
  done:

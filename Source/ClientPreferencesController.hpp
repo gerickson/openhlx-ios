@@ -39,7 +39,8 @@
 class ClientPreferencesController
 {
 public:
-    typedef bool FavoriteType;
+    typedef ClientObjectPreferencesModel::FavoriteType FavoriteType;
+    typedef ClientObjectPreferencesModel::UseCountType UseCountType;
 
 public:
     ClientPreferencesController(void);
@@ -76,10 +77,15 @@ public:
                                          FavoriteType &aFavorite) const;
     HLX::Common::Status GroupGetLastUsedDate(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
                                              NSDate **aDate) const;
+    HLX::Common::Status GroupGetUseCount(const HLX::Model::GroupModel::IdentifierType &aGroupIdentifier,
+                                         UseCountType &aUseCount) const;
     HLX::Common::Status ZoneGetFavorite(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
                                         FavoriteType &aFavorite) const;
     HLX::Common::Status ZoneGetLastUsedDate(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
                                             NSDate **aDate) const;
+    HLX::Common::Status ZoneGetUseCount(const HLX::Model::ZoneModel::IdentifierType &aZoneIdentifier,
+                                        UseCountType &aUseCount) const;
+
 
     // Setters
 
