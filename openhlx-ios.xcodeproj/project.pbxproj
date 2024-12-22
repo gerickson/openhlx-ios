@@ -48,6 +48,7 @@
 		0B40B63C250ED1A6009A65DA /* ConnectHistoryViewTableCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0B40B63B250ED1A6009A65DA /* ConnectHistoryViewTableCell.mm */; };
 		0B4981E22659C7EC00C735BB /* Parse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B4981E02659C7EC00C735BB /* Parse.cpp */; };
 		0B51DB3C27868204003EAE48 /* NetworkStateChangeNotifications.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B51DB3A27868204003EAE48 /* NetworkStateChangeNotifications.cpp */; };
+		0B5F0A102D18C0BE00DC16E9 /* OutputModelBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B5F0A0F2D18C0BE00DC16E9 /* OutputModelBasis.cpp */; };
 		0B6238472565F42300E07B8D /* EqualizerPresetsControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B62383E2565F42200E07B8D /* EqualizerPresetsControllerBasis.cpp */; };
 		0B6238482565F42300E07B8D /* SourcesControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B62383F2565F42200E07B8D /* SourcesControllerBasis.cpp */; };
 		0B6238492565F42300E07B8D /* GroupsControllerBasis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B6238412565F42200E07B8D /* GroupsControllerBasis.cpp */; };
@@ -467,6 +468,8 @@
 		0B565E6E23FB30C0001C71DB /* libopenhlx-common.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libopenhlx-common.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B565E7723FB31C3001C71DB /* ConnectionBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ConnectionBuffer.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/ConnectionBuffer.hpp; sourceTree = "<absolute>"; };
 		0B565E7823FB31C3001C71DB /* ConnectionBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConnectionBuffer.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/ConnectionBuffer.cpp; sourceTree = "<absolute>"; };
+		0B5F0A0E2D18C0BE00DC16E9 /* OutputModelBasis.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = OutputModelBasis.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/model/OutputModelBasis.hpp; sourceTree = "<absolute>"; };
+		0B5F0A0F2D18C0BE00DC16E9 /* OutputModelBasis.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OutputModelBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/model/OutputModelBasis.cpp; sourceTree = "<absolute>"; };
 		0B62383D2565F42200E07B8D /* FavoritesControllerBasis.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FavoritesControllerBasis.hpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/FavoritesControllerBasis.hpp; sourceTree = "<absolute>"; };
 		0B62383E2565F42200E07B8D /* EqualizerPresetsControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EqualizerPresetsControllerBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/EqualizerPresetsControllerBasis.cpp; sourceTree = "<absolute>"; };
 		0B62383F2565F42200E07B8D /* SourcesControllerBasis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SourcesControllerBasis.cpp; path = /Users/gerickson/Source/git/github.com/gerickson/openhlx/src/lib/common/SourcesControllerBasis.cpp; sourceTree = "<absolute>"; };
@@ -975,6 +978,8 @@
 				0B05B7DF22D920FE007DEB54 /* NameModel.hpp */,
 				0B91560926CC35450048B995 /* NetworkModel.cpp */,
 				0B91560826CC35450048B995 /* NetworkModel.hpp */,
+				0B5F0A0F2D18C0BE00DC16E9 /* OutputModelBasis.cpp */,
+				0B5F0A0E2D18C0BE00DC16E9 /* OutputModelBasis.hpp */,
 				0B1396ED2565B7180029DB14 /* ToneModel.cpp */,
 				0B1396EE2565B7180029DB14 /* ToneModel.hpp */,
 				0B05B7DC22D920FD007DEB54 /* SoundModel.cpp */,
@@ -1718,6 +1723,7 @@
 				0BE8201D238196E300287DAE /* IdentifiersCollection.cpp in Sources */,
 				0B05B7F722D920FE007DEB54 /* SourceModel.cpp in Sources */,
 				0B829886235942FD00BECF76 /* FavoritesModel.cpp in Sources */,
+				0B5F0A102D18C0BE00DC16E9 /* OutputModelBasis.cpp in Sources */,
 				0BA5D41422D9220900E837EF /* EqualizerBandModel.cpp in Sources */,
 				0B05B7F322D920FE007DEB54 /* ZonesModel.cpp in Sources */,
 				0BA5D41622D9220900E837EF /* EqualizerPresetModel.cpp in Sources */,
