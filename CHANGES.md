@@ -1,3 +1,7 @@
+1.0.2 (2024-12-22)
+
+    * Updated to reflect upstream OpenHLX 1.2.2 package.
+
 1.0.1 (2021-09-13)
 
     * Updated to reflect upstream OpenHLX 1.1 package.
