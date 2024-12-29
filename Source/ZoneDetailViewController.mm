@@ -579,6 +579,30 @@ static bool shouldHideSection(const NSInteger &aSection)
     return (lRetval);
 }
 
+/**
+ *  @brief
+ *    Return whether the table view section associated with the
+ *    specified table view index path should be hidden.
+ *
+ *  @param[in]  aIndexPath  A pointer to the immutable table view
+ *                          index path for which to determine
+ *                          whether it should be hidden.
+ *
+ *  @returns
+ *    True if the table view section associated with @a aIndexPath
+ *    should be hidden; otherwise, false.
+ *
+ *  @private
+ *
+ */
+static bool shouldHideSection(const NSIndexPath *aIndexPath)
+{
+    const NSUInteger lSection = aIndexPath.section;
+    const bool lRetval = shouldHideSection(lSection);
+
+    return (lRetval);
+}
+
 - (NSInteger)tableView: (UITableView *)aTableView numberOfRowsInSection: (NSInteger)aSection
 {
     NSInteger lRetval;
