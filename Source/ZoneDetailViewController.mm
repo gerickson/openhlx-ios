@@ -537,6 +537,19 @@ done:
 // and sound sections are suppressed with numberOfRowsInSection
 // returning zero (0) and the latter three returning 0.1f, effectively
 // suppressing the display of the sections and/or rows.
+//
+// We also need to set the header and footer text to "clear"; otherwise, the
+// hidden sections will render atop one another and under the "< Back"
+// navigation view element. To accomplish this, the following methods are
+// overridden:
+//
+//   - titleForHeaderInSection
+//   - titleForFooterInSection
+//   - viewForHeaderInSection
+//   - viewForFooterInSection
+//
+// The following static functions overloads, shouldHideSection, encapsulate
+// the determination of whether to hide a section for the above overrides.
 
 /**
  *  @brief
