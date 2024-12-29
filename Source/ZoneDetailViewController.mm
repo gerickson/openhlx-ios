@@ -605,26 +605,9 @@ static bool shouldHideSection(const NSIndexPath *aIndexPath)
 
 - (NSInteger)tableView: (UITableView *)aTableView numberOfRowsInSection: (NSInteger)aSection
 {
-    NSInteger lRetval;
-
-
-    switch (aSection)
-    {
-
-#if !(OPENHLX_INSTALLER)
-    case kSectionBalance:
-    case kSectionSound:
-        lRetval = 0;
-        break;
-#endif // !(OPENHLX_INSTALLER)
-
-    case kSectionSource:
-    case kSectionVolume:
-    default:
-        lRetval = [super tableView: aTableView numberOfRowsInSection: aSection];
-        break;
-
-    }
+    const NSInteger lRetval = (shouldHideSection(aSection) ?
+                               0 :
+                               [super tableView: aTableView numberOfRowsInSection: aSection]);
 
     return (lRetval);
 }
