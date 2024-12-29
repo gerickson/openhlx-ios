@@ -537,10 +537,38 @@ done:
 // and sound sections are suppressed with numberOfRowsInSection
 // returning zero (0) and the latter three returning 0.1f, effectively
 // suppressing the display of the sections and/or rows.
+//
+// We also need to set the header and footer text to "clear"; otherwise, the
+// hidden sections will render atop one another and under the "< Back"
+// navigation view element. To accomplish this, the following methods are
+// overridden:
+//
+//   - titleForHeaderInSection
+//   - titleForFooterInSection
+//   - viewForHeaderInSection
+//   - viewForFooterInSection
+//
+// The following static functions overloads, shouldHideSection, encapsulate
+// the determination of whether to hide a section for the above overrides.
 
-- (NSInteger)tableView: (UITableView *)aTableView numberOfRowsInSection: (NSInteger)aSection
+/**
+ *  @brief
+ *    Return whether the specified table view section should be hidden.
+ *
+ *  @param[in]  aSection  A reference to the immutable table view
+ *                        section identifier for which to determine
+ *                        whether it should be hidden.
+ *
+ *  @returns
+ *    True if the table view section associated with @a aSection should
+ *    be hidden; otherwise, false.
+ *
+ *  @private
+ *
+ */
+static bool shouldHideSection(const NSInteger &aSection)
 {
-    NSInteger lRetval;
+    bool lRetval = false;
 
 
     switch (aSection)
@@ -549,96 +577,113 @@ done:
 #if !(OPENHLX_INSTALLER)
     case kSectionBalance:
     case kSectionSound:
-        lRetval = 0;
+        lRetval = true;
         break;
 #endif // !(OPENHLX_INSTALLER)
 
     case kSectionSource:
     case kSectionVolume:
     default:
-        lRetval = [super tableView: aTableView numberOfRowsInSection: aSection];
+        lRetval = false;
         break;
 
     }
+
+    return (lRetval);
+}
+
+/**
+ *  @brief
+ *    Return whether the table view section associated with the
+ *    specified table view index path should be hidden.
+ *
+ *  @param[in]  aIndexPath  A pointer to the immutable table view
+ *                          index path for which to determine
+ *                          whether it should be hidden.
+ *
+ *  @returns
+ *    True if the table view section associated with @a aIndexPath
+ *    should be hidden; otherwise, false.
+ *
+ *  @private
+ *
+ */
+static bool shouldHideSection(const NSIndexPath *aIndexPath)
+{
+    const NSUInteger lSection = aIndexPath.section;
+    const bool lRetval = shouldHideSection(lSection);
+
+    return (lRetval);
+}
+
+- (NSInteger)tableView: (UITableView *)aTableView numberOfRowsInSection: (NSInteger)aSection
+{
+    const NSInteger lRetval = (shouldHideSection(aSection) ?
+                               0 :
+                               [super tableView: aTableView numberOfRowsInSection: aSection]);
 
     return (lRetval);
 }
 
 - (CGFloat)tableView: (UITableView *)aTableView heightForRowAtIndexPath: (NSIndexPath *)aIndexPath
 {
-    const NSUInteger lSection = aIndexPath.section;
-    CGFloat          lRetval;
-
-
-    switch (lSection)
-    {
-
-#if !(OPENHLX_INSTALLER)
-    case kSectionBalance:
-    case kSectionSound:
-        lRetval = 0.1f;
-        break;
-#endif // !(OPENHLX_INSTALLER)
-
-    case kSectionSource:
-    case kSectionVolume:
-    default:
-        lRetval = [super tableView: aTableView heightForRowAtIndexPath: aIndexPath];
-        break;
-
-    }
+    const CGFloat lRetval = (shouldHideSection(aIndexPath) ?
+                             0.01f :
+                             [super tableView: aTableView heightForRowAtIndexPath: aIndexPath]);
 
     return (lRetval);
 }
 
 - (CGFloat)tableView: (UITableView *)aTableView heightForHeaderInSection: (NSInteger)aSection
 {
-    CGFloat lRetval;
-
-
-    switch (aSection)
-    {
-
-#if !(OPENHLX_INSTALLER)
-    case kSectionBalance:
-    case kSectionSound:
-        lRetval = 0.1f;
-        break;
-#endif // !(OPENHLX_INSTALLER)
-
-    case kSectionSource:
-    case kSectionVolume:
-    default:
-        lRetval = [super tableView: aTableView heightForHeaderInSection: aSection];
-        break;
-
-    }
+    const CGFloat lRetval = (shouldHideSection(aSection) ?
+                             0.01f :
+                             [super tableView: aTableView heightForHeaderInSection: aSection]);
 
     return (lRetval);
 }
 
 - (CGFloat)tableView: (UITableView *)aTableView heightForFooterInSection: (NSInteger)aSection
 {
-    CGFloat lRetval;
+    const CGFloat lRetval = (shouldHideSection(aSection) ?
+                             0.01f :
+                             [super tableView: aTableView heightForFooterInSection: aSection]);
 
+    return (lRetval);
+}
 
-    switch (aSection)
-    {
+- (nullable NSString *)tableView: (UITableView *)aTableView titleForHeaderInSection: (NSInteger)aSection
+{
+    NSString * lRetval = (shouldHideSection(aSection) ?
+                          @"" :
+                         [super tableView: aTableView titleForHeaderInSection: aSection]);
 
-#if !(OPENHLX_INSTALLER)
-    case kSectionBalance:
-    case kSectionSound:
-        lRetval = 0.1f;
-        break;
-#endif // !(OPENHLX_INSTALLER)
+    return (lRetval);
+}
 
-    case kSectionSource:
-    case kSectionVolume:
-    default:
-        lRetval = [super tableView: aTableView heightForFooterInSection: aSection];
-        break;
+- (nullable NSString *)tableView: (UITableView *)aTableView titleForFooterInSection: (NSInteger)aSection
+{
+    NSString * lRetval = (shouldHideSection(aSection) ?
+                          @"" :
+                         [super tableView: aTableView titleForFooterInSection: aSection]);
 
-    }
+    return (lRetval);
+}
+
+- (nullable UIView *)tableView: (UITableView *)aTableView viewForHeaderInSection: (NSInteger)aSection
+{
+    UIView * lRetval = (shouldHideSection(aSection) ?
+                        nullptr :
+                        [super tableView: aTableView viewForHeaderInSection: aSection]);
+
+    return (lRetval);
+}
+
+- (nullable UIView *)tableView: (UITableView *)aTableView viewForFooterInSection: (NSInteger)aSection
+{
+    UIView * lRetval = (shouldHideSection(aSection) ?
+                        nullptr :
+                        [super tableView: aTableView viewForFooterInSection: aSection]);
 
     return (lRetval);
 }

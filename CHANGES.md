@@ -1,3 +1,9 @@
+1.0.3 (2024-12-29)
+
+    * Addressed an issue in the Open HLX app in which unused content
+      otherwise intended for the Open HLX Installer app were incorrectly
+      rendering under the zone detail navigation view "< Back" element.
+
 1.0.2 (2024-12-22)
 
     * Updated to reflect upstream OpenHLX 1.2.2 package.
