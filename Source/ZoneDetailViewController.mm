@@ -657,6 +657,24 @@ static bool shouldHideSection(const NSIndexPath *aIndexPath)
     return (lRetval);
 }
 
+- (nullable UIView *)tableView: (UITableView *)aTableView viewForHeaderInSection: (NSInteger)aSection
+{
+    UIView * lRetval = (shouldHideSection(aSection) ?
+                        nullptr :
+                        [super tableView: aTableView viewForHeaderInSection: aSection]);
+
+    return (lRetval);
+}
+
+- (nullable UIView *)tableView: (UITableView *)aTableView viewForFooterInSection: (NSInteger)aSection
+{
+    UIView * lRetval = (shouldHideSection(aSection) ?
+                        nullptr :
+                        [super tableView: aTableView viewForFooterInSection: aSection]);
+
+    return (lRetval);
+}
+
 - (void)tableView: (UITableView *)aTableView accessoryButtonTappedForRowWithIndexPath: (NSIndexPath *)aIndexPath;
 {
 #if OPENHLX_INSTALLER
