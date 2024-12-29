@@ -538,6 +538,47 @@ done:
 // returning zero (0) and the latter three returning 0.1f, effectively
 // suppressing the display of the sections and/or rows.
 
+/**
+ *  @brief
+ *    Return whether the specified table view section should be hidden.
+ *
+ *  @param[in]  aSection  A reference to the immutable table view
+ *                        section identifier for which to determine
+ *                        whether it should be hidden.
+ *
+ *  @returns
+ *    True if the table view section associated with @a aSection should
+ *    be hidden; otherwise, false.
+ *
+ *  @private
+ *
+ */
+static bool shouldHideSection(const NSInteger &aSection)
+{
+    bool lRetval = false;
+
+
+    switch (aSection)
+    {
+
+#if !(OPENHLX_INSTALLER)
+    case kSectionBalance:
+    case kSectionSound:
+        lRetval = true;
+        break;
+#endif // !(OPENHLX_INSTALLER)
+
+    case kSectionSource:
+    case kSectionVolume:
+    default:
+        lRetval = false;
+        break;
+
+    }
+
+    return (lRetval);
+}
+
 - (NSInteger)tableView: (UITableView *)aTableView numberOfRowsInSection: (NSInteger)aSection
 {
     NSInteger lRetval;
